@@ -1,0 +1,10 @@
+development.env
+.eslintrc
+.gitignore
+.prettierignore
+.prettierrc
+Procfile
+README.md
+yarn-error.log
+dist
+node_modules

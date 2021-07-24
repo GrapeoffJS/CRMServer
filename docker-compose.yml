@@ -1,0 +1,25 @@
+version: "3"
+services: 
+    server: 
+        container_name: "server"
+        build: ./
+        ports: 
+            - "4200:4200"
+        depends_on: 
+            - mongodb
+        restart: always
+        links:
+            - mongodb
+        env_file: ./production.env
+
+    mongodb: 
+        container_name: "mongodb"
+        image: mongo:4.4.7-focal
+        restart: always
+        volumes: 
+            - mongodb:/data/db
+        ports: 
+            - "27017:27017"
+
+volumes: 
+    mongodb:  
