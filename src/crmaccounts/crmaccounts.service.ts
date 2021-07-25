@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { createCRMUserDTO } from './DTO/createCRMUserDTO';
 import { genSalt, hash } from 'bcrypt';
-import { HTTP_ERRORS } from './constants';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
@@ -31,9 +30,7 @@ export class CRMAccountsService {
         try {
             return await this.CRMUserModel.create(candidate);
         } catch (err) {
-            throw new BadRequestException(
-                HTTP_ERRORS.USER_WITH_SAME_LOGIN_EXISTS
-            );
+            throw new BadRequestException('USER_WITH_THIS_LOGIN_EXISTS');
         }
     }
 
