@@ -10,7 +10,8 @@ import {
 import { createGroupDTO } from './DTO/createGroupDTO';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { filterDTO } from './DTO/filterDTO';
-import { Group, Schedule } from './models/Group.model';
+import { Group } from './models/Group.model';
+import { Schedule } from './models/Schedule';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 
@@ -50,6 +51,7 @@ export class GroupsService {
             pupil.addTutor(tutor.id, group.id);
             pupil.setGroupSchedule(group.id, group.GLOBAL_SCHEDULE);
             pupil.updateGroupsList(group.id);
+            1;
 
             await pupil.save();
         });
@@ -328,6 +330,15 @@ export class GroupsService {
             throw new NotFoundException();
         }
 
+        const visitedDays = schedule.filter(schedule => {
+            return (
+                schedule.status !== 3 &&
+                moment(schedule.date, 'DD.MM.YYYY').toDate() <=
+                    moment().toDate()
+            );
+        });
+
+        pupil.addVisits(visitedDays.length);
         pupil.localSchedule.set(groupId, schedule);
 
         const saved = await pupil.save();
