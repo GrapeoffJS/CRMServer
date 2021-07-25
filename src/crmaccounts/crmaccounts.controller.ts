@@ -1,14 +1,5 @@
 import CRMUser from './models/CRMUser.model';
 import {
-    ApiBadRequestResponse,
-    ApiCreatedResponse,
-    ApiNotFoundResponse,
-    ApiOkResponse,
-    ApiParam,
-    ApiQuery,
-    ApiTags
-} from '@nestjs/swagger';
-import {
     Body,
     Controller,
     Delete,

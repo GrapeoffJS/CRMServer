@@ -1,7 +1,7 @@
 import Pupil from '../pupils/models/Pupil.model';
-import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Group } from '../groups/models/Group.model';
+import { Module } from '@nestjs/common';
 import { SearchController } from './search.controller';
 import { SearchService } from './search.service';
 import { TypegooseModule } from 'nestjs-typegoose';

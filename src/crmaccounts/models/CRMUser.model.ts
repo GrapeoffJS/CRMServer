@@ -1,12 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Group } from '../../crm/groups/models/Group.model';
+import { GroupHistoryItem } from './GroupHistoryItem';
 import { prop } from '@typegoose/typegoose';
-
-enum Roles {
-    Admin = 'admin',
-    Manager = 'manager',
-    Teacher = 'teacher'
-}
+import { Roles } from './Roles';
 
 export default class CRMUser {
     @prop({ type: String, required: true })
@@ -36,7 +31,7 @@ export default class CRMUser {
     groups: string[];
 
     @prop({ type: () => Array, id: false, required: false, default: [] })
-    groupsHistory: { GROUP_NAME: string; additionDate: string }[];
+    groupsHistory: GroupHistoryItem[];
 
     /**
      * Delete Group from CRMUser by Group id
@@ -46,6 +41,10 @@ export default class CRMUser {
         this.groups.splice(this.groups.indexOf(id), 1);
     }
 
+    /**
+     * Adds group to groups list
+     * @param {string} groupId - Group id
+     */
     public updateGroupsList(groupId: string) {
         this.groups = [...new Set(this.groups).add(groupId)];
     }

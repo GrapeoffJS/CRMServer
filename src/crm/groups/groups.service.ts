@@ -1,19 +1,19 @@
 import CRMUser from 'src/crmaccounts/models/CRMUser.model';
 import moment from 'moment';
 import Pupil from '../pupils/models/Pupil.model';
-import { ADD_PUPILS_ERRORS, CREATE_GROUP_ERRORS } from './constants';
+import { ADD_PUPILS_ERRORS } from './constants';
 import {
     BadRequestException,
     Injectable,
     NotFoundException
 } from '@nestjs/common';
 import { createGroupDTO } from './DTO/createGroupDTO';
-import { ReturnModelType } from '@typegoose/typegoose';
 import { filterDTO } from './DTO/filterDTO';
 import { Group } from './models/Group.model';
-import { Schedule } from './models/Schedule';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
+import { ReturnModelType } from '@typegoose/typegoose';
+import { Schedule } from './models/Schedule';
 
 @Injectable()
 export class GroupsService {

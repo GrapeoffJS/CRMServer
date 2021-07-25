@@ -1,14 +1,7 @@
 import compression from 'compression';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestFactory } from '@nestjs/core';
-import getMongoConnectionUri from './config/getMongoConnectionUri';
-
-const whiteList: string[] = [
-    'https://trusting-khorana-b780d2.netlify.app',
-    'https://cocky-ritchie-52224a.netlify.app/'
-];
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);

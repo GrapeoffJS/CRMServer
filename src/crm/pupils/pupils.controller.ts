@@ -1,15 +1,4 @@
 import Pupil from './models/Pupil.model';
-import {
-    ApiBadRequestResponse,
-    ApiBearerAuth,
-    ApiBody,
-    ApiCreatedResponse,
-    ApiNotFoundResponse,
-    ApiOkResponse,
-    ApiParam,
-    ApiQuery,
-    ApiTags
-} from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import {
     Body,
@@ -25,7 +14,7 @@ import {
     Res,
     UseGuards,
     UsePipes
-} from '@nestjs/common';
+    } from '@nestjs/common';
 import { createPupilDTO } from './DTO/createPupilDTO';
 import { CreatePupilValidationPipe } from './pipes/create-pupil-validation.pipe';
 import { filterDTO } from './DTO/filterDTO';

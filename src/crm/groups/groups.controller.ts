@@ -1,35 +1,25 @@
-import {
-    Controller,
-    Query,
-    Patch,
-    Put,
-    Body,
-    Param,
-    Post,
-    Get,
-    Delete,
-    UsePipes,
-    UseGuards,
-    Res
-} from '@nestjs/common';
-import { GroupsService } from './groups.service';
-import { createGroupDTO } from './DTO/createGroupDTO';
-import { Group } from './models/Group.model';
-import { Schedule } from './models/Schedule';
-import { CreateGroupValidationPipe } from './pipes/create-group-validation.pipe';
 import { AuthGuard } from '../../auth/auth.guard';
-import { Response } from 'express';
 import {
-    ApiBadRequestResponse,
-    ApiBearerAuth,
-    ApiBody,
-    ApiCreatedResponse,
-    ApiNotFoundResponse,
-    ApiOkResponse,
-    ApiParam,
-    ApiTags
-} from '@nestjs/swagger';
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Put,
+    Query,
+    Res,
+    UseGuards,
+    UsePipes
+} from '@nestjs/common';
+import { createGroupDTO } from './DTO/createGroupDTO';
+import { CreateGroupValidationPipe } from './pipes/create-group-validation.pipe';
 import { filterDTO } from './DTO/filterDTO';
+import { Group } from './models/Group.model';
+import { GroupsService } from './groups.service';
+import { Response } from 'express';
+import { Schedule } from './models/Schedule';
 
 @UseGuards(AuthGuard)
 @Controller('/CRM/Groups')

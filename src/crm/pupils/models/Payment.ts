@@ -1,5 +1,5 @@
+import { PaymentTypes } from './PaymentTypes';
 import { prop } from '@typegoose/typegoose';
-import { PaymentTypes } from "./PaymentTypes";
 
 export class Payment {
     @prop({ enum: PaymentTypes, required: true })

@@ -1,6 +1,6 @@
 import Pupil from '../pupils/models/Pupil.model';
-import { Injectable } from '@nestjs/common';
 import { Group } from '../groups/models/Group.model';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { sortBy } from 'lodash';

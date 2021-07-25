@@ -1,4 +1,4 @@
-import { Gender } from './Gender';
+import { Genders } from './Genders';
 import { Group } from '../../groups/models/Group.model';
 import { index, prop } from '@typegoose/typegoose';
 import { Note } from './Note';
@@ -38,7 +38,7 @@ export default class Pupil extends TimeStamps {
     @prop({ type: String, required: true })
     midname: string;
 
-    @prop({ enum: Gender, type: String, required: true })
+    @prop({ enum: Genders, type: String, required: true })
     gender: string;
 
     @prop({ type: Date, required: true })
