@@ -14,7 +14,8 @@ import {
 } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { createGroupDTO } from './DTO/createGroupDTO';
-import { Group, Schedule } from './models/Group.model';
+import { Group } from './models/Group.model';
+import { Schedule } from './models/Schedule';
 import { CreateGroupValidationPipe } from './pipes/create-group-validation.pipe';
 import { AuthGuard } from '../../auth/auth.guard';
 import { Response } from 'express';

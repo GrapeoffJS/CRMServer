@@ -10,7 +10,7 @@ import { createPupilDTO } from './DTO/createPupilDTO';
 import { decode } from 'jsonwebtoken';
 import { filterDTO } from './DTO/filterDTO';
 import { InjectModel } from 'nestjs-typegoose';
-import { PaymentTypes } from './models/Pupil.model';
+import { PaymentTypes } from "./models/PaymentTypes";
 import { Request, Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 

@@ -1,34 +1,8 @@
 import CRMUser from 'src/crmaccounts/models/CRMUser.model';
 import Pupil from '../../pupils/models/Pupil.model';
-import { ApiProperty } from '@nestjs/swagger';
-import { DocumentType, index, prop } from '@typegoose/typegoose';
+import { index, prop } from '@typegoose/typegoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
-
-export class Schedule {
-    @prop({ type: Boolean, required: false })
-    paid: boolean;
-
-    @prop({ type: String, required: false })
-    tutor: string;
-
-    @prop({ type: String })
-    date: string;
-
-    @prop({ type: () => [String] })
-    duration: string[];
-
-    @prop({ type: Number, required: false })
-    status: number;
-
-    @prop({ type: String })
-    message: string;
-
-    @prop({ type: String, required: false })
-    start: string;
-
-    @prop({ type: String, required: false })
-    finish: string;
-}
+import { Schedule } from './Schedule';
 
 @index({ GROUP_NAME: 'text' }, { weights: { GROUP_NAME: 1 } })
 export class Group extends TimeStamps {

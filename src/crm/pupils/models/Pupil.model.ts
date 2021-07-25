@@ -1,56 +1,12 @@
-import CRMUser from '../../../crmaccounts/models/CRMUser.model';
-import { ApiProperty } from '@nestjs/swagger';
+import { Gender } from './Gender';
 import { Group } from '../../groups/models/Group.model';
 import { index, prop } from '@typegoose/typegoose';
-import { Schedule } from '../../groups/models/Group.model';
+import { Note } from './Note';
+import { Payment } from './Payment';
+import { Schedule } from '../../groups/models/Schedule';
 import { Schema } from 'mongoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
-
-enum Gender {
-    Male = 'Мужской',
-    Female = 'Женский'
-}
-
-export enum PaymentTypes {
-    Replenishment,
-    Withdraw
-}
-
-class Note {
-    @prop({ type: String, required: true })
-    author: string;
-
-    @prop({ type: String, required: true })
-    date: string;
-
-    @prop({ type: String, required: true })
-    text: string;
-}
-
-class Payment {
-    @prop({ enum: PaymentTypes, required: true })
-    type: PaymentTypes;
-
-    @prop({ type: String, required: true })
-    date: string;
-
-    @prop({ type: Number, required: true })
-    amount: number;
-
-    @prop({ type: String, required: true })
-    issuer: string;
-
-    @prop({ type: String, required: false, default: '' })
-    subscription?: string;
-}
-
-class Tutor {
-    @prop({ type: String, ref: () => CRMUser, required: true })
-    tutor: string;
-
-    @prop({ type: String, ref: () => Group, required: true })
-    group: string;
-}
+import { Tutor } from './Tutor';
 
 @index(
     {
@@ -125,6 +81,9 @@ export default class Pupil extends TimeStamps {
     @prop({ type: [Tutor], required: false, default: [], _id: false })
     tutors: Tutor[];
 
+    @prop({ type: Number, required: false, default: 0 })
+    private visitsCount: number;
+
     /**
      * Delete group from Pupil by Group id
      * @param {string} id - Group id
@@ -169,5 +128,9 @@ export default class Pupil extends TimeStamps {
 
     public updateGroupsList(groupId: string) {
         this.groups = [...new Set(this.groups).add(groupId)];
+    }
+
+    public addVisits(count: number) {
+        this.visitsCount += count;
     }
 }
