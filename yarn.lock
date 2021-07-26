@@ -666,6 +666,11 @@
     tslib "2.2.0"
     uuid "8.3.2"
 
+"@nestjs/elasticsearch@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/elasticsearch/-/elasticsearch-8.0.0.tgz#e25a4cb4af59a1b75525618a4a1e9b068f46d5f9"
+  integrity sha512-Yr0DldZA2pZGAF77R7CDClbXJd6cKctI5zgFc/6vFARjaHhRwETyeTES/nRiQLCZ+hfWmpRyvu1YX3reNMqW6A==
+
 "@nestjs/jwt@^7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@nestjs/jwt/-/jwt-7.2.0.tgz#d55d15c861b3e0d67a852cbe6131b14c85246852"

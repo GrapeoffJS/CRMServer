@@ -8,6 +8,7 @@ import { CrmModule } from './crm/crm.module';
 import { Module } from '@nestjs/common';
 import { SearchModule } from './crm/search/search.module';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { SearchIndexerModule } from './search-indexer/search-indexer.module';
 
 @Module({
     imports: [
@@ -30,7 +31,8 @@ import { TypegooseModule } from 'nestjs-typegoose';
         CrmaccountsModule,
         AuthModule,
         CrmModule,
-        SearchModule
+        SearchModule,
+        SearchIndexerModule
     ],
     controllers: [],
     providers: []
