@@ -33,14 +33,7 @@ services:
         ports: 
             - "9200:9200"
             - "9300:9300"
-        deploy:
-            resources: 
-                limits:
-                    cpus: '0.50'
-                    memory: 500M
-                reservations:
-                    cpus: '0.25'
-                    memory: 150M
+        mem_limit: 550M
         volumes: 
             - elastic:/usr/share/elasticsearch/data
 volumes: 
