@@ -6,6 +6,7 @@ import { GroupsController } from './groups.controller';
 import { GroupsService } from './groups.service';
 import { Module } from '@nestjs/common';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { SearchIndexerModule } from '../../search-indexer/search-indexer.module';
 
 @Module({
     imports: [
@@ -23,7 +24,8 @@ import { TypegooseModule } from 'nestjs-typegoose';
                 schemaOptions: { collection: 'CRMAccounts' }
             }
         ]),
-        ConfigModule
+        ConfigModule,
+        SearchIndexerModule
     ],
     controllers: [GroupsController],
     providers: [GroupsService]

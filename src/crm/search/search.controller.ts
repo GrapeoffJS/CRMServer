@@ -8,5 +8,7 @@ export class SearchController {
     constructor(private readonly searchIndexer: SearchIndexerService) {}
 
     @Get('/autocompletion')
-    async searchAutocomplete(@Query('query') searchQuery: string) {}
+    async searchAutocomplete(@Query('query') searchQuery: string) {
+        return await this.searchIndexer.searchEverywhere(searchQuery);
+    }
 }

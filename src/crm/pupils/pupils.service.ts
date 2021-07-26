@@ -26,7 +26,7 @@ export class PupilsService {
     async create(createPupilDTO: createPupilDTO): Promise<Pupil> {
         const pupil = await this.PupilModel.create(createPupilDTO);
 
-        this.searchIndexer.createPupilIndex(pupil);
+        await this.searchIndexer.createPupilIndex(pupil);
 
         return pupil;
     }
@@ -103,13 +103,15 @@ export class PupilsService {
             throw new NotFoundException();
         }
 
+        await this.searchIndexer.deletePupilIndex(id);
+
         return pupil;
     }
 
     async edit(id: string, createPupilDTO: createPupilDTO): Promise<Pupil> {
         await this.PupilModel.updateOne({ _id: id }, createPupilDTO);
 
-        return this.PupilModel.findById(id).populate([
+        const pupil = await this.PupilModel.findById(id).populate([
             {
                 path: 'groups',
                 select: '_id GROUP_NAME TUTOR',
@@ -131,6 +133,10 @@ export class PupilsService {
                 ]
             }
         ]);
+
+        await this.searchIndexer.updatePupilIndex(pupil);
+
+        return pupil;
     }
 
     async createPayment(

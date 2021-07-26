@@ -2,7 +2,7 @@ import Pupil from 'src/crm/pupils/models/Pupil.model';
 import { DocumentType } from '@typegoose/typegoose';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Group } from 'src/crm/groups/models/Group.model';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Query } from '@nestjs/common';
 
 @Injectable()
 export class SearchIndexerService {
@@ -66,5 +66,29 @@ export class SearchIndexerService {
         });
     }
 
-    async searchEverywhere(query: string) {}
+    async deletePupilIndex(id: string) {
+        await this.esService.delete({
+            id,
+            index: 'pupils'
+        });
+    }
+
+    async deleteGroupIndex(id: string) {
+        await this.esService.delete({
+            id,
+            index: 'pupils'
+        });
+    }
+
+    async searchEverywhere(query: string) {
+        const correctedQuery = query
+            .split(' ')
+            .map(item => `*${item.toString()}*`)
+            .join(' ');
+
+
+        return await this.esService.search({
+            q: correctedQuery
+        });
+    }
 }

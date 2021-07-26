@@ -14,6 +14,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Schedule } from './models/Schedule';
+import { SearchIndexerService } from '../../search-indexer/search-indexer.service';
 
 @Injectable()
 export class GroupsService {
@@ -23,7 +24,8 @@ export class GroupsService {
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>,
         @InjectModel(CRMUser)
-        private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
+        private readonly CRMUserModel: ReturnModelType<typeof CRMUser>,
+        private readonly searchIndexer: SearchIndexerService
     ) {}
 
     async create(createGroupDTO: createGroupDTO): Promise<Group> {
@@ -57,6 +59,8 @@ export class GroupsService {
         });
 
         await tutor?.save();
+
+        await this.searchIndexer.createGroupIndex(group);
 
         return await this.GroupModel.populate(group, [
             {
@@ -163,6 +167,8 @@ export class GroupsService {
             throw new NotFoundException();
         }
 
+        await this.searchIndexer.deleteGroupIndex(id);
+
         return await this.GroupModel.populate(group, [
             {
                 path: 'PUPILS',
@@ -183,7 +189,8 @@ export class GroupsService {
 
     async edit(id: string, createGroupDTO: createGroupDTO): Promise<Group> {
         await this.GroupModel.updateOne({ _id: id }, createGroupDTO);
-        return await this.GroupModel.findById(id).populate([
+
+        const group = await this.GroupModel.findById(id).populate([
             {
                 path: 'PUPILS',
                 populate: {
@@ -199,6 +206,10 @@ export class GroupsService {
                 }
             }
         ]);
+
+        await this.searchIndexer.updateGroupIndex(group);
+
+        return group;
     }
 
     async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {

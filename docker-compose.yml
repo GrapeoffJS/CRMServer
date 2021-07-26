@@ -7,9 +7,11 @@ services:
             - "4200:4200"
         depends_on: 
             - mongodb
+            - elastic
         restart: always
         links:
             - mongodb
+            - elastic
         env_file: ./production.env
 
     mongodb: 
@@ -21,5 +23,18 @@ services:
         ports: 
             - "27017:27017"
 
+    elastic: 
+        container_name: "elastic"
+        image: elasticsearch:7.13.4
+        restart: always
+        environment: 
+            discovery.type: single-node
+            cluster.name: elastic-crm
+        ports: 
+            - "9200:9200"
+            - "9300:9300"
+        volumes: 
+            - elastic:/usr/share/elasticsearch/data
 volumes: 
     mongodb:  
+    elastic:
