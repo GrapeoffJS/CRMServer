@@ -1,5 +1,5 @@
 import { Group } from '../../crm/groups/models/Group.model';
-import { GroupHistoryItem } from './GroupHistoryItem';
+import { GroupsHistoryItem } from './GroupsHistoryItem';
 import { prop } from '@typegoose/typegoose';
 import { Roles } from './Roles';
 
@@ -31,7 +31,7 @@ export default class CRMUser {
     groups: string[];
 
     @prop({ type: () => Array, id: false, required: false, default: [] })
-    groupsHistory: GroupHistoryItem[];
+    groupsHistory: GroupsHistoryItem[];
 
     /**
      * Delete Group from CRMUser by Group id

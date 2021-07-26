@@ -1,6 +1,6 @@
 import { prop } from '@typegoose/typegoose';
 
-export class GroupHistoryItem {
+export class GroupsHistoryItem {
     @prop({ type: String, required: true })
     GROUP_NAME: string;
 

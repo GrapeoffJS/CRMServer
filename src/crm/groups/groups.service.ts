@@ -339,6 +339,7 @@ export class GroupsService {
         });
 
         pupil.addVisits(visitedDays.length);
+        pupil.addVisitsTo(group.GROUP_NAME, visitedDays.length);
         pupil.localSchedule.set(groupId, schedule);
 
         const saved = await pupil.save();

@@ -1,5 +1,6 @@
 import { Genders } from './Genders';
 import { Group } from '../../groups/models/Group.model';
+import { GroupsHistoryItem } from './GroupsHistoryItem';
 import { index, prop } from '@typegoose/typegoose';
 import { Note } from './Note';
 import { Payment } from './Payment';
@@ -75,14 +76,14 @@ export default class Pupil extends TimeStamps {
     @prop({ type: () => [Note], required: false, _id: false })
     notes: Note[];
 
-    @prop({ type: () => Array, id: false, required: false, default: [] })
-    groupsHistory: { GROUP_NAME: string; additionDate: string }[];
+    @prop({ type: () => Array, _id: false, required: false, default: [] })
+    groupsHistory: GroupsHistoryItem[];
 
     @prop({ type: [Tutor], required: false, default: [], _id: false })
     tutors: Tutor[];
 
     @prop({ type: Number, required: false, default: 0 })
-    private visitsCount: number;
+    private totalVisitsCount: number;
 
     /**
      * Delete group from Pupil by Group id
@@ -97,7 +98,11 @@ export default class Pupil extends TimeStamps {
      * @param {string} groupName - Group name
      */
     public addGroupToHistory(groupName: string, date: string) {
-        this.groupsHistory.push({ GROUP_NAME: groupName, additionDate: date });
+        this.groupsHistory.push({
+            GROUP_NAME: groupName,
+            additionDate: date,
+            visitsCount: 0
+        });
     }
 
     /**
@@ -131,6 +136,21 @@ export default class Pupil extends TimeStamps {
     }
 
     public addVisits(count: number) {
-        this.visitsCount += count;
+        this.totalVisitsCount += count;
+    }
+
+    public addVisitsTo(groupName: string, count: number) {
+        const index = this.groupsHistory.findIndex(
+            historyItem => historyItem.GROUP_NAME === groupName
+        );
+
+        const { GROUP_NAME, additionDate, visitsCount } =
+            this.groupsHistory[index];
+
+        this.groupsHistory.splice(index, 1, {
+            GROUP_NAME,
+            additionDate,
+            visitsCount: visitsCount + count
+        });
     }
 }
