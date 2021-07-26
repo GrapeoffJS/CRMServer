@@ -16,7 +16,11 @@ export class CreateUserValidationPipe implements PipeTransform {
             !value.surname ||
             !value.midname ||
             !value.role
-        )
-            return value;
+        ) {
+	    throw new BadRequestException();
+	}
+
+	return value;
     }
+
 }
