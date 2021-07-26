@@ -4,7 +4,7 @@ import {
     Injectable,
     PipeTransform
 } from '@nestjs/common';
-import { createSubscriptionDTO } from './DTO/createSubscriptionDTO';
+import { createSubscriptionDTO } from '../DTO/createSubscriptionDTO';
 
 @Injectable()
 export class CreateSubscriptionValidationPipe implements PipeTransform {

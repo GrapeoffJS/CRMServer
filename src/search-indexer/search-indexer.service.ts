@@ -11,8 +11,9 @@ export class SearchIndexerService {
     async createPupilIndex(pupil: DocumentType<Pupil>) {
         await this.esService.index({
             id: pupil.id,
-            index: 'Pupils',
+            index: 'pupils',
             body: {
+                type: 'pupil',
                 id: pupil.id,
                 name: pupil.name,
                 surname: pupil.surname,
@@ -27,8 +28,9 @@ export class SearchIndexerService {
     async updatePupilIndex(pupil: DocumentType<Pupil>) {
         await this.esService.update({
             id: pupil.id,
-            index: 'Pupils',
+            index: 'pupils',
             body: {
+                type: 'pupil',
                 id: pupil.id,
                 name: pupil.name,
                 surname: pupil.surname,
@@ -43,8 +45,9 @@ export class SearchIndexerService {
     async createGroupIndex(group: DocumentType<Group>) {
         await this.esService.index({
             id: group.id,
-            index: 'Groups',
+            index: 'groups',
             body: {
+                type: 'group',
                 id: group.id,
                 GROUP_NAME: group.GROUP_NAME
             }
@@ -54,11 +57,14 @@ export class SearchIndexerService {
     async updateGroupIndex(group: DocumentType<Group>) {
         await this.esService.index({
             id: group.id,
-            index: 'Groups',
+            index: 'groups',
             body: {
+                type: 'group',
                 id: group.id,
                 GROUP_NAME: group.GROUP_NAME
             }
         });
     }
+
+    async searchEverywhere(query: string) {}
 }

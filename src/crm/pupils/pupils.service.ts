@@ -13,16 +13,22 @@ import { InjectModel } from 'nestjs-typegoose';
 import { PaymentTypes } from './models/PaymentTypes';
 import { Request, Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
+import { SearchIndexerService } from '../../search-indexer/search-indexer.service';
 
 @Injectable()
 export class PupilsService {
     constructor(
         @InjectModel(Pupil)
-        private readonly PupilModel: ReturnModelType<typeof Pupil>
+        private readonly PupilModel: ReturnModelType<typeof Pupil>,
+        private readonly searchIndexer: SearchIndexerService
     ) {}
 
     async create(createPupilDTO: createPupilDTO): Promise<Pupil> {
-        return await this.PupilModel.create(createPupilDTO);
+        const pupil = await this.PupilModel.create(createPupilDTO);
+
+        this.searchIndexer.createPupilIndex(pupil);
+
+        return pupil;
     }
 
     async findAll(

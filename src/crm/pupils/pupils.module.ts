@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { PupilsController } from './pupils.controller';
 import { PupilsService } from './pupils.service';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { SearchIndexerModule } from '../../search-indexer/search-indexer.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
                 schemaOptions: { collection: 'CRMAccounts' }
             }
         ]),
+        SearchIndexerModule,
         ConfigModule
     ],
     controllers: [PupilsController],

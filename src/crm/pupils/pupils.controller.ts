@@ -14,7 +14,7 @@ import {
     Res,
     UseGuards,
     UsePipes
-    } from '@nestjs/common';
+} from '@nestjs/common';
 import { createPupilDTO } from './DTO/createPupilDTO';
 import { CreatePupilValidationPipe } from './pipes/create-pupil-validation.pipe';
 import { filterDTO } from './DTO/filterDTO';
