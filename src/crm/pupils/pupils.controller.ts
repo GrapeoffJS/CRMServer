@@ -29,6 +29,7 @@ export class PupilsController {
     @UsePipes(CreatePupilValidationPipe)
     @Post()
     async create(@Body() data: createPupilDTO): Promise<Pupil> {
+        console.log(data)
         return await this.PupilsService.create(data);
     }
 

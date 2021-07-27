@@ -29,6 +29,7 @@ export class GroupsController {
     @UsePipes(CreateGroupValidationPipe)
     @Post()
     async create(@Body() createGroupDTO: createGroupDTO): Promise<Group> {
+        console.log(createGroupDTO)
         return await this.GroupsService.create(createGroupDTO);
     }
 
