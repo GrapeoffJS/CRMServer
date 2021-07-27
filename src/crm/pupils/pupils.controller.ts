@@ -26,7 +26,7 @@ import { Request, Response } from 'express';
 export class PupilsController {
     constructor(private readonly PupilsService: PupilsService) {}
 
-    @UsePipes(CreatePupilValidationPipe)
+    // @UsePipes(CreatePupilValidationPipe)
     @Post()
     async create(@Body() data: createPupilDTO): Promise<Pupil> {
         return await this.PupilsService.create(data);
