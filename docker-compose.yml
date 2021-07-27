@@ -35,7 +35,6 @@ services:
         ports: 
             - "9200:9200"
             - "9300:9300"
-        mem_limit: 550M
         ulimits:
             memlock:
                 soft: -1
