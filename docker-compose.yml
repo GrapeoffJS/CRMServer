@@ -28,12 +28,18 @@ services:
         image: elasticsearch:7.13.4
         restart: always
         environment: 
-            discovery.type: single-node
-            cluster.name: elastic-crm
+            - discovery.type=single-node
+            - cluster.name=elastic-crm
+            - bootstrap.memory_lock=true
+            - "ES_JAVA_OPTS:-Xms512m -Xmx512m"
         ports: 
             - "9200:9200"
             - "9300:9300"
         mem_limit: 550M
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
         volumes: 
             - elastic:/usr/share/elasticsearch/data
 volumes: 
