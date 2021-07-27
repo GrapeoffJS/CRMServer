@@ -10,8 +10,6 @@ import { Genders } from '../models/Genders';
 @Injectable()
 export class CreatePupilValidationPipe implements PipeTransform {
     transform(value: createPupilDTO, metadata: ArgumentMetadata) {
-        value.balance = 0;
-
         if (
             !value.name ||
             !value.surname ||
