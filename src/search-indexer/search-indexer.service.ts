@@ -87,7 +87,8 @@ export class SearchIndexerService {
             .join(' ');
 
         return await this.esService.search({
-            q: correctedQuery
+            q: correctedQuery,
+            default_operator: 'AND'
         });
     }
 }
