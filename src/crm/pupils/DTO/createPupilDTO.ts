@@ -39,6 +39,7 @@ export class createPupilDTO {
     @IsNotEmpty()
     parentPhone: string;
 
+    @IsOptional()
     @IsString()
     @IsNotEmpty()
     parentNSM: string;
