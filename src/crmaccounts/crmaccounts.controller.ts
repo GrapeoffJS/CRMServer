@@ -7,8 +7,7 @@ import {
     Param,
     Post,
     Query,
-    Res,
-    UsePipes
+    Res
 } from '@nestjs/common';
 import { createCRMUserDTO } from './DTO/createCRMUserDTO';
 import { CRMAccountsService } from './crmaccounts.service';

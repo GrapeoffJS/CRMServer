@@ -19,9 +19,9 @@ export class Group extends TimeStamps {
         type: String,
         ref: () => CRMUser,
         required: false,
-        default: ''
+        default: null
     })
-    TUTOR: string;
+    TUTOR: string | null;
 
     @prop({ type: Array, ref: () => Pupil, required: false, default: [] })
     PUPILS: string[];

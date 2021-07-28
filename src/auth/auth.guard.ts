@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
     canActivate(
         context: ExecutionContext
     ): boolean | Promise<boolean> | Observable<boolean> {
-        let canActivate: boolean = true;
+        let canActivate = true;
 
         const token = context.switchToHttp().getRequest<Request>()
             .headers?.authorization;
@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
         verify(
             token?.split(' ')[1] || null,
             this.configService.get('JWT_SECRET'),
-            async (err, decoded) => {
+            async err => {
                 if (err) {
                     canActivate = false;
                 }

@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Subscription } from './models/Subscription.model';
+import { updateSubscriptionDTO } from './DTO/updateSubscriptionDTO';
 
 @Injectable()
 export class SubscriptionsService {
@@ -27,12 +28,13 @@ export class SubscriptionsService {
 
     async edit(
         id: string,
-        createSubscriptionDTO: createSubscriptionDTO
+        updateSubscriptionDTO: updateSubscriptionDTO
     ): Promise<Subscription> {
         await this.SubscriptionModel.updateOne(
             { _id: id },
-            createSubscriptionDTO
+            updateSubscriptionDTO
         );
+
         return await this.SubscriptionModel.findById(id);
     }
 

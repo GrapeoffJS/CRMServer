@@ -15,6 +15,7 @@ import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Schedule } from './models/Schedule';
 import { SearchIndexerService } from '../../search-indexer/search-indexer.service';
+import { updateGroupDTO } from './DTO/updateGroupDTO';
 
 @Injectable()
 export class GroupsService {
@@ -47,9 +48,8 @@ export class GroupsService {
                 moment().locale('ru').format('L')
             );
 
-            if (group.TUTOR)
-                pupil.addTutor(tutor.id, group.id);
-            
+            if (group.TUTOR) pupil.addTutor(tutor.id, group.id);
+
             pupil.setGroupSchedule(group.id, group.GLOBAL_SCHEDULE);
             pupil.updateGroupsList(group.id);
 
@@ -79,8 +79,8 @@ export class GroupsService {
     }
 
     async findAll(
-        limit: number = 0,
-        offset: number = 0,
+        limit = 0,
+        offset = 0,
         filters: filterDTO,
         response: Response
     ) {
@@ -185,8 +185,8 @@ export class GroupsService {
         ]);
     }
 
-    async edit(id: string, createGroupDTO: createGroupDTO): Promise<Group> {
-        await this.GroupModel.updateOne({ _id: id }, createGroupDTO);
+    async edit(id: string, updateGroupDTO: updateGroupDTO): Promise<Group> {
+        await this.GroupModel.updateOne({ _id: id }, updateGroupDTO);
 
         const group = await this.GroupModel.findById(id).populate([
             {
@@ -378,16 +378,16 @@ export class GroupsService {
             role: 'teacher'
         });
 
+        if (!tutor) {
+            throw new NotFoundException();
+        }
+
         pupils.forEach(async pupil => {
             pupil.deleteTutor(group.id);
             pupil.addTutor(tutor.id, group.id);
 
             await pupil.save();
         });
-
-        if (!tutor) {
-            throw new NotFoundException();
-        }
 
         group.TUTOR = tutorId;
 

@@ -11,8 +11,7 @@ import {
     Query,
     Res,
     UseGuards,
-    UsePipes,
-    ValidationPipe
+    UsePipes
 } from '@nestjs/common';
 import { createGroupDTO } from './DTO/createGroupDTO';
 import { CreateGroupValidationPipe } from './pipes/create-group-validation.pipe';
@@ -21,6 +20,7 @@ import { Group } from './models/Group.model';
 import { GroupsService } from './groups.service';
 import { Response } from 'express';
 import { Schedule } from './models/Schedule';
+import { updateGroupDTO } from './DTO/updateGroupDTO';
 
 @UseGuards(AuthGuard)
 @Controller('/CRM/Groups')
@@ -66,8 +66,8 @@ export class GroupsController {
 
     @Post('/find')
     async findAll(
-        @Query('limit') limit: number = 0,
-        @Query('offset') offset: number = 0,
+        @Query('limit') limit = 0,
+        @Query('offset') offset = 0,
         @Body('filters') filters: filterDTO,
         @Res() response: Response
     ) {
@@ -100,9 +100,9 @@ export class GroupsController {
     @Patch(':id')
     async edit(
         @Param('id') id: string,
-        @Body() createGroupDTO: createGroupDTO
+        @Body() updateGroupDTO: updateGroupDTO
     ): Promise<Group> {
-        return await this.GroupsService.edit(id, createGroupDTO);
+        return await this.GroupsService.edit(id, updateGroupDTO);
     }
 
     @Post(':id/Teacher')

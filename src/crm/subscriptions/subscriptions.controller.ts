@@ -5,12 +5,12 @@ import {
     Get,
     Param,
     Patch,
-    Post,
-    UsePipes
+    Post
 } from '@nestjs/common';
 import { createSubscriptionDTO } from './DTO/createSubscriptionDTO';
 import { Subscription } from './models/Subscription.model';
 import { SubscriptionsService } from './subscriptions.service';
+import { updateSubscriptionDTO } from './DTO/updateSubscriptionDTO';
 
 @Controller('/CRM/Subscriptions')
 export class SubscriptionsController {
@@ -36,9 +36,9 @@ export class SubscriptionsController {
     @Patch(':id')
     async edit(
         @Param('id') id: string,
-        createSubscriptionDTO: createSubscriptionDTO
+        updateSubscriptionDTO: updateSubscriptionDTO
     ): Promise<Subscription> {
-        return await this.SubscriptionsService.edit(id, createSubscriptionDTO);
+        return await this.SubscriptionsService.edit(id, updateSubscriptionDTO);
     }
 
     @Delete(':id')

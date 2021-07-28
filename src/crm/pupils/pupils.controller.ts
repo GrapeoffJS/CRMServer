@@ -5,21 +5,19 @@ import {
     Controller,
     Delete,
     Get,
-    HttpStatus,
     Param,
     Patch,
     Post,
     Query,
     Req,
     Res,
-    UseGuards,
-    UsePipes,
-    ValidationPipe
+    UseGuards
 } from '@nestjs/common';
 import { createPupilDTO } from './DTO/createPupilDTO';
 import { filterDTO } from './DTO/filterDTO';
 import { PupilsService } from './pupils.service';
 import { Request, Response } from 'express';
+import { updatePupilDTO } from './DTO/updatePupilDTO';
 
 @UseGuards(AuthGuard)
 @Controller('/CRM/Pupils')
@@ -48,8 +46,8 @@ export class PupilsController {
 
     @Post('/find')
     async findAll(
-        @Query('limit') limit: number = 0,
-        @Query('offset') offset: number = 0,
+        @Query('limit') limit = 0,
+        @Query('offset') offset = 0,
         @Body('filters') filters: filterDTO,
         @Res() response: Response
     ) {
@@ -74,9 +72,9 @@ export class PupilsController {
     @Patch('/:id')
     async edit(
         @Param('id') id: string,
-        @Body() createPupilDTO: createPupilDTO
+        @Body() updatePupilDTO: updatePupilDTO
     ): Promise<Pupil> {
-        return await this.PupilsService.edit(id, createPupilDTO);
+        return await this.PupilsService.edit(id, updatePupilDTO);
     }
 
     @Post(':id/Notes')

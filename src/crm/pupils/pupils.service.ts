@@ -14,6 +14,7 @@ import { PaymentTypes } from './models/PaymentTypes';
 import { Request, Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { SearchIndexerService } from '../../search-indexer/search-indexer.service';
+import { updatePupilDTO } from './DTO/updatePupilDTO';
 
 @Injectable()
 export class PupilsService {
@@ -32,8 +33,8 @@ export class PupilsService {
     }
 
     async findAll(
-        limit: number = 0,
-        offset: number = 0,
+        limit = 0,
+        offset = 0,
         filters: filterDTO,
         response: Response
     ) {
@@ -108,8 +109,8 @@ export class PupilsService {
         return pupil;
     }
 
-    async edit(id: string, createPupilDTO: createPupilDTO): Promise<Pupil> {
-        await this.PupilModel.updateOne({ _id: id }, createPupilDTO);
+    async edit(id: string, updatePupilDTO: updatePupilDTO): Promise<Pupil> {
+        await this.PupilModel.updateOne({ _id: id }, updatePupilDTO);
 
         const pupil = await this.PupilModel.findById(id).populate([
             {

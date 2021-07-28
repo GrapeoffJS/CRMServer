@@ -2,7 +2,7 @@ import Pupil from 'src/crm/pupils/models/Pupil.model';
 import { DocumentType } from '@typegoose/typegoose';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Group } from 'src/crm/groups/models/Group.model';
-import { Injectable, Query } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class SearchIndexerService {
@@ -85,7 +85,6 @@ export class SearchIndexerService {
             .split(' ')
             .map(item => `*${item.toString()}*`)
             .join(' ');
-
 
         return await this.esService.search({
             q: correctedQuery
