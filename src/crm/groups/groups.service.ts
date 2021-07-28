@@ -46,7 +46,10 @@ export class GroupsService {
                 group.GROUP_NAME,
                 moment().locale('ru').format('L')
             );
-            pupil.addTutor(tutor.id, group.id);
+
+            if (group.TUTOR)
+                pupil.addTutor(tutor.id, group.id);
+            
             pupil.setGroupSchedule(group.id, group.GLOBAL_SCHEDULE);
             pupil.updateGroupsList(group.id);
 
