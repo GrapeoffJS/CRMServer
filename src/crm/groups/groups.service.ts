@@ -30,6 +30,8 @@ export class GroupsService {
     ) {}
 
     async create(createGroupDTO: createGroupDTO): Promise<Group> {
+        if (createGroupDTO.TUTOR === '') createGroupDTO.TUTOR = null;
+
         const tutor = await this.CRMUserModel.findById(createGroupDTO.TUTOR);
         const group = await this.GroupModel.create(createGroupDTO);
         const pupils = await this.PupilModel.find({

@@ -26,6 +26,6 @@ export class createGroupDTO {
 
     @IsOptional()
     @IsString()
-    @IsMongoId()
+    // @IsMongoId()
     TUTOR?: string | null;
 }
