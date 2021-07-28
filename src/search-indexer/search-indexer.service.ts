@@ -19,7 +19,7 @@ export class SearchIndexerService {
                 surname: pupil.surname,
                 midname: pupil.midname,
                 parentNSM: pupil.parentNSM,
-                phone: pupil.parentPhone,
+                phone: pupil.phone,
                 parentPhone: pupil.parentPhone
             }
         });
@@ -36,7 +36,7 @@ export class SearchIndexerService {
                 surname: pupil.surname,
                 midname: pupil.midname,
                 parentNSM: pupil.parentNSM,
-                phone: pupil.parentPhone,
+                phone: pupil.phone,
                 parentPhone: pupil.parentPhone
             }
         });
