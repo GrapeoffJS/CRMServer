@@ -11,7 +11,8 @@ import {
     Query,
     Res,
     UseGuards,
-    UsePipes
+    UsePipes,
+    ValidationPipe
 } from '@nestjs/common';
 import { createGroupDTO } from './DTO/createGroupDTO';
 import { CreateGroupValidationPipe } from './pipes/create-group-validation.pipe';
@@ -29,7 +30,6 @@ export class GroupsController {
     @UsePipes(CreateGroupValidationPipe)
     @Post()
     async create(@Body() createGroupDTO: createGroupDTO): Promise<Group> {
-        console.log(createGroupDTO)
         return await this.GroupsService.create(createGroupDTO);
     }
 

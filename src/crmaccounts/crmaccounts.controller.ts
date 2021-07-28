@@ -11,7 +11,6 @@ import {
     UsePipes
 } from '@nestjs/common';
 import { createCRMUserDTO } from './DTO/createCRMUserDTO';
-import { CreateUserValidationPipe } from './pipes/create-user-validation.pipe';
 import { CRMAccountsService } from './crmaccounts.service';
 import { Response } from 'express';
 
@@ -47,7 +46,6 @@ export class CRMAccountsController {
         return await this.CRMAccountsService.findOne(id);
     }
 
-    @UsePipes(CreateUserValidationPipe)
     @Post()
     async create(@Body() data: createCRMUserDTO): Promise<CRMUser> {
         return await this.CRMAccountsService.create(data);

@@ -11,7 +11,7 @@ services:
         restart: always
         links:
             - mongodb
-            - elastic
+            # - elastic
         env_file: ./production.env
 
     mongodb: 

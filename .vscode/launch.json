@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach",
+            "name": "CRMServer Debug",
             "port": 9229,
             "request": "attach",
             "skipFiles": [

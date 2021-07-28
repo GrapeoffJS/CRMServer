@@ -13,10 +13,10 @@ import {
     Req,
     Res,
     UseGuards,
-    UsePipes
+    UsePipes,
+    ValidationPipe
 } from '@nestjs/common';
 import { createPupilDTO } from './DTO/createPupilDTO';
-import { CreatePupilValidationPipe } from './pipes/create-pupil-validation.pipe';
 import { filterDTO } from './DTO/filterDTO';
 import { PupilsService } from './pupils.service';
 import { Request, Response } from 'express';
@@ -26,10 +26,8 @@ import { Request, Response } from 'express';
 export class PupilsController {
     constructor(private readonly PupilsService: PupilsService) {}
 
-    @UsePipes(CreatePupilValidationPipe)
     @Post()
     async create(@Body() data: createPupilDTO): Promise<Pupil> {
-        console.log(data)
         return await this.PupilsService.create(data);
     }
 

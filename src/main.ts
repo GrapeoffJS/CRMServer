@@ -2,6 +2,7 @@ import compression from 'compression';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -11,6 +12,7 @@ async function bootstrap() {
     });
     app.use(helmet());
     app.use(compression());
+    app.useGlobalPipes(new ValidationPipe());
 
     // const SwaggerConfig = new DocumentBuilder()
     //     .setTitle('DVMN CRM API')

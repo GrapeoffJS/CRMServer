@@ -11,13 +11,11 @@ import {
 import { createSubscriptionDTO } from './DTO/createSubscriptionDTO';
 import { Subscription } from './models/Subscription.model';
 import { SubscriptionsService } from './subscriptions.service';
-import { CreateSubscriptionValidationPipe } from './pipes/create-subscription-validation.pipe';
 
 @Controller('/CRM/Subscriptions')
 export class SubscriptionsController {
     constructor(private readonly SubscriptionsService: SubscriptionsService) {}
 
-    @UsePipes(CreateSubscriptionValidationPipe)
     @Post()
     async create(
         @Body() createSubscriptionDTO: createSubscriptionDTO

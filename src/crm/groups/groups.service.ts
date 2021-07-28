@@ -29,10 +29,6 @@ export class GroupsService {
     ) {}
 
     async create(createGroupDTO: createGroupDTO): Promise<Group> {
-        if (createGroupDTO.PUPILS.length > createGroupDTO.PLACES) {
-            throw new BadRequestException(ADD_PUPILS_ERRORS.PLACES_OVERFLOW);
-        }
-
         const tutor = await this.CRMUserModel.findById(createGroupDTO.TUTOR);
         const group = await this.GroupModel.create(createGroupDTO);
         const pupils = await this.PupilModel.find({
@@ -53,7 +49,6 @@ export class GroupsService {
             pupil.addTutor(tutor.id, group.id);
             pupil.setGroupSchedule(group.id, group.GLOBAL_SCHEDULE);
             pupil.updateGroupsList(group.id);
-            1;
 
             await pupil.save();
         });
