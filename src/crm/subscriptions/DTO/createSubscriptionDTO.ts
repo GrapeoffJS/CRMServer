@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 
 export class createSubscriptionDTO {
     @IsNotEmpty()
@@ -6,10 +6,10 @@ export class createSubscriptionDTO {
     name: string;
 
     @IsNotEmpty()
-    @IsNumber()
+    @IsString()
     price: number;
 
     @IsNotEmpty()
-    @IsNumber()
+    @IsString()
     houseCount: number;
 }
