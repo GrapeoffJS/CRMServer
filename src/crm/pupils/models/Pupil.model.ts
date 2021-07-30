@@ -138,19 +138,4 @@ export default class Pupil extends TimeStamps {
     public addVisits(count: number) {
         this.totalVisitsCount += count;
     }
-
-    public addVisitsTo(groupName: string, count: number) {
-        const index = this.groupsHistory.findIndex(
-            historyItem => historyItem.GROUP_NAME === groupName
-        );
-
-        const { GROUP_NAME, additionDate, visitsCount } =
-            this.groupsHistory[index];
-
-        this.groupsHistory.splice(index, 1, {
-            GROUP_NAME,
-            additionDate,
-            visitsCount: visitsCount + count
-        });
-    }
 }
