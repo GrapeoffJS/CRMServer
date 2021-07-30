@@ -1,15 +1,15 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+// import { IsString, IsNotEmpty } from 'class-validator';
 
 export class createSubscriptionDTO {
-    @IsNotEmpty()
-    @IsString()
+    // @IsNotEmpty()
+    // @IsString()
     name: string;
 
-    @IsNotEmpty()
-    @IsString()
+    // @IsNotEmpty()
+    // @IsString()
     price: number;
 
-    @IsNotEmpty()
-    @IsString()
+    // @IsNotEmpty()
+    // @IsString()
     houseCount: number;
 }
