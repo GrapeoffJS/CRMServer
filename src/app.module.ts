@@ -9,6 +9,7 @@ import { Module } from '@nestjs/common';
 import { SearchModule } from './crm/search/search.module';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { SearchIndexerModule } from './search-indexer/search-indexer.module';
+import { AuthCheckModule } from './auth-check/auth-check.module';
 
 @Module({
     imports: [
@@ -32,7 +33,8 @@ import { SearchIndexerModule } from './search-indexer/search-indexer.module';
         AuthModule,
         CrmModule,
         SearchModule,
-        SearchIndexerModule
+        SearchIndexerModule,
+        AuthCheckModule
     ],
     controllers: [],
     providers: []

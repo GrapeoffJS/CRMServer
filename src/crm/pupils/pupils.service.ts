@@ -276,6 +276,10 @@ export class PupilsService {
         ]);
     }
 
+    async importFromFile() {
+        
+    }
+
     private createFilterPipeline(filters: filterDTO) {
         if (!filters) return;
 

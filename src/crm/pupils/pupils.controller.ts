@@ -11,13 +11,15 @@ import {
     Query,
     Req,
     Res,
-    UseGuards
+    UseGuards,
+    UseInterceptors
 } from '@nestjs/common';
 import { createPupilDTO } from './DTO/createPupilDTO';
 import { filterDTO } from './DTO/filterDTO';
 import { PupilsService } from './pupils.service';
 import { Request, Response } from 'express';
 import { updatePupilDTO } from './DTO/updatePupilDTO';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @UseGuards(AuthGuard)
 @Controller('/CRM/Pupils')
@@ -93,4 +95,20 @@ export class PupilsController {
     ): Promise<Pupil> {
         return await this.PupilsService.deleteNote(id, Number(number));
     }
+
+    @Post('uploadFile')
+    @UseInterceptors(
+        FileInterceptor('file', {
+            fileFilter: (req, file, cb) => {
+                if (
+                    file.mimetype !== 'text/csv' &&
+                    file.mimetype !==
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                ) {
+                    cb(null, false);
+                }
+            }
+        })
+    )
+    async uploadFile() {}
 }

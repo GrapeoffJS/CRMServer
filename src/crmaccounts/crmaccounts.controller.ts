@@ -51,7 +51,7 @@ export class CRMAccountsController {
     }
 
     @Delete(':id')
-    async delete(@Param('id') id: string): Promise<CRMUser> {
-        return await this.CRMAccountsService.delete(id);
+    async delete(@Param('login') login: string): Promise<CRMUser> {
+        return await this.CRMAccountsService.delete(login);
     }
 }
