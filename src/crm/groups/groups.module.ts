@@ -4,16 +4,15 @@ import { ConfigModule } from '@nestjs/config';
 import { CrudController } from './controllers/crud/crud.controller';
 import { CrudService } from './services/crud/crud.service';
 import { Group } from './models/Group.model';
-import { GroupsController } from './groups.controller';
 import { Module } from '@nestjs/common';
+import { PupilManipulationController } from './controllers/pupil-manipulations/pupil-manipulations.controller';
 import { PupilManipulationsService } from './services/pupil-manipulations/pupil-manipulations.service';
+import { ScheduleController } from './controllers/schedule/schedule.controller';
 import { ScheduleService } from './services/schedule/schedule.service';
 import { SearchIndexerModule } from '../../search-indexer/search-indexer.module';
+import { TutorManipulationsController } from './controllers/tutor-manipulations/tutor-manipulations.controller';
 import { TutorManipulationsService } from './services/tutor-manipulations/tutor-manipulations.service';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { PupilManipulationController } from './controllers/pupil-manipulations/pupil-manipulations.controller';
-import { ScheduleController } from './controllers/schedule/schedule.controller';
-import { TutorManipulationsController } from './controllers/tutor-manipulations/tutor-manipulations.controller';
 
 @Module({
     imports: [
@@ -35,7 +34,6 @@ import { TutorManipulationsController } from './controllers/tutor-manipulations/
         SearchIndexerModule
     ],
     controllers: [
-        GroupsController,
         CrudController,
         PupilManipulationController,
         ScheduleController,
