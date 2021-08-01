@@ -42,7 +42,7 @@ export default class Pupil extends TimeStamps {
     @prop({ enum: Genders, type: String, required: true })
     gender: string;
 
-    @prop({ type: Date, required: true })
+    @prop({ type: Date, required: false })
     age: string;
 
     @prop({ type: String, required: false })

@@ -352,9 +352,30 @@ export class GroupsService {
         pupil.addVisits(visitedDays.length);
         pupil.localSchedule.set(groupId, schedule);
 
-        await pupil.save();
+        const saved = await pupil.save();
 
-        return;
+        return await saved.populate([
+            {
+                path: 'groups',
+                select: '_id GROUP_NAME TUTOR',
+                populate: {
+                    path: 'TUTOR'
+                }
+            },
+            {
+                path: 'tutors',
+                populate: [
+                    {
+                        path: 'tutor',
+                        select: '_id name surname midname'
+                    },
+                    {
+                        path: 'group',
+                        select: '_id GROUP_NAME'
+                    }
+                ]
+            }
+        ]);
     }
 
     async addTutor(groupId: string, tutorId: string): Promise<Group> {

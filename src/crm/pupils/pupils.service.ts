@@ -1,4 +1,5 @@
 import CRMUser from '../../crmaccounts/models/CRMUser.model';
+import csvtojson from 'csvtojson';
 import moment from 'moment';
 import Pupil from './models/Pupil.model';
 import {
@@ -276,11 +277,40 @@ export class PupilsService {
         ]);
     }
 
-    async importFromFile() {
-        
+    async uploadCSV(file: Express.Multer.File) {
+        const errorsOnLines: number[] = [];
+
+        const csvString = Buffer.from(file.buffer).toString('utf-8');
+        const pupils = await csvtojson({
+            ignoreEmpty: true,
+            maxRowLength: 9,
+            delimiter: 'auto'
+        }).fromString(csvString);
+
+        for (let i = 0; i < pupils.length; i++) {
+            const pupil: createPupilDTO = pupils[i];
+            pupil.age = moment(pupil.age, 'DD.MM.YYYY').toISOString();
+
+            try {
+                await this.PupilModel.validate(pupil);
+            } catch (err) {
+                errorsOnLines.push(i + 2);
+            }
+        }
+
+        if (errorsOnLines.length !== 0) {
+            throw new BadRequestException(errorsOnLines);
+        }
+
+        pupils.forEach(async pupil => {
+            const created = await this.PupilModel.create(pupil);
+            await this.searchIndexer.createPupilIndex(created);
+        });
+
+        return;
     }
 
-    private createFilterPipeline(filters: filterDTO) {
+    private createFilterPipeline(filters: filterDTO): any[] {
         if (!filters) return;
 
         const pipeline = [];

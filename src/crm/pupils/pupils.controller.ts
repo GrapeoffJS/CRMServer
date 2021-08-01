@@ -1,6 +1,7 @@
 import Pupil from './models/Pupil.model';
 import { AuthGuard } from 'src/auth/auth.guard';
 import {
+    BadRequestException,
     Body,
     Controller,
     Delete,
@@ -11,6 +12,7 @@ import {
     Query,
     Req,
     Res,
+    UploadedFile,
     UseGuards,
     UseInterceptors
 } from '@nestjs/common';
@@ -96,19 +98,21 @@ export class PupilsController {
         return await this.PupilsService.deleteNote(id, Number(number));
     }
 
-    @Post('uploadFile')
+    @Post('/uploadFile')
     @UseInterceptors(
         FileInterceptor('file', {
-            fileFilter: (req, file, cb) => {
+            fileFilter(req, file, pass) {
                 if (
                     file.mimetype !== 'text/csv' &&
                     file.mimetype !==
                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 ) {
-                    cb(null, false);
-                }
+                    pass(new BadRequestException(), false);
+                } else pass(null, true)
             }
         })
     )
-    async uploadFile() {}
+    async uploadFile(@UploadedFile() file: Express.Multer.File) {
+        return this.PupilsService.uploadCSV(file);
+    }
 }

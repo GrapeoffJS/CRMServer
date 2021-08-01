@@ -4,8 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { PupilsController } from './pupils.controller';
 import { PupilsService } from './pupils.service';
-import { TypegooseModule } from 'nestjs-typegoose';
 import { SearchIndexerModule } from '../../search-indexer/search-indexer.module';
+import { TypegooseModule } from 'nestjs-typegoose';
 
 @Module({
     imports: [
