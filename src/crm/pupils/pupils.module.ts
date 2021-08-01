@@ -6,6 +6,7 @@ import { PupilsController } from './pupils.controller';
 import { PupilsService } from './pupils.service';
 import { SearchIndexerModule } from '../../search-indexer/search-indexer.module';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { ImportFileController } from './import-file.controller';
 
 @Module({
     imports: [
@@ -22,7 +23,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
         SearchIndexerModule,
         ConfigModule
     ],
-    controllers: [PupilsController],
+    controllers: [PupilsController, ImportFileController],
     providers: [PupilsService]
 })
 export class PupilsModule {}

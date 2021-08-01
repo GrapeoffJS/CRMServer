@@ -16,6 +16,7 @@ import { Request, Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { SearchIndexerService } from '../../search-indexer/search-indexer.service';
 import { updatePupilDTO } from './DTO/updatePupilDTO';
+import xlsx from 'xlsx';
 
 @Injectable()
 export class PupilsService {
@@ -289,6 +290,45 @@ export class PupilsService {
 
         for (let i = 0; i < pupils.length; i++) {
             const pupil: createPupilDTO = pupils[i];
+
+            Object.keys(pupil).map(i => (pupil[i] = pupil[i].trim()));
+
+            pupil.age = moment(pupil.age, 'DD.MM.YYYY').toISOString();
+
+            try {
+                await this.PupilModel.validate(pupil);
+            } catch (err) {
+                errorsOnLines.push(i + 2);
+            }
+        }
+
+        if (errorsOnLines.length !== 0) {
+            throw new BadRequestException(errorsOnLines);
+        }
+
+        pupils.forEach(async pupil => {
+            const created = await this.PupilModel.create(pupil);
+            await this.searchIndexer.createPupilIndex(created);
+        });
+
+        return;
+    }
+
+    async uploadXLSX(file: Express.Multer.File, sheetName: string) {
+        const errorsOnLines: number[] = [];
+
+        const uploaded = Buffer.from(file.buffer);
+        const sheet = xlsx.read(uploaded);
+
+        const pupils: createPupilDTO[] = xlsx.utils.sheet_to_json(
+            sheet.Sheets['Ученики']
+        );
+
+        for (let i = 0; i < pupils.length; i++) {
+            const pupil = pupils[i];
+
+            Object.keys(pupil).map(i => (pupil[i] = pupil[i].trim()));
+
             pupil.age = moment(pupil.age, 'DD.MM.YYYY').toISOString();
 
             try {

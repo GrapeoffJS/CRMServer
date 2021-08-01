@@ -97,22 +97,4 @@ export class PupilsController {
     ): Promise<Pupil> {
         return await this.PupilsService.deleteNote(id, Number(number));
     }
-
-    @Post('/uploadFile')
-    @UseInterceptors(
-        FileInterceptor('file', {
-            fileFilter(req, file, pass) {
-                if (
-                    file.mimetype !== 'text/csv' &&
-                    file.mimetype !==
-                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                ) {
-                    pass(new BadRequestException(), false);
-                } else pass(null, true)
-            }
-        })
-    )
-    async uploadFile(@UploadedFile() file: Express.Multer.File) {
-        return this.PupilsService.uploadCSV(file);
-    }
 }

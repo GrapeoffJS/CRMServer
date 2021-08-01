@@ -1,3 +1,4 @@
+import { ImportFileController } from './crm/pupils/import-file.controller';
 import configModuleOptions from './config/configModuleOptions';
 import getMongoConnectionUri from './config/getMongoConnectionUri';
 import mongoConnectionOptions from './config/mongoConnectionOptions';
