@@ -1,9 +1,9 @@
-import { createSubscriptionDTO } from './DTO/createSubscriptionDTO';
+import { CreateSubscriptionDTO } from './DTO/CreateSubscriptionDTO';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Subscription } from './models/Subscription.model';
-import { updateSubscriptionDTO } from './DTO/updateSubscriptionDTO';
+import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
 
 @Injectable()
 export class SubscriptionsService {
@@ -13,7 +13,7 @@ export class SubscriptionsService {
     ) {}
 
     async create(
-        createSubscriptionDTO: createSubscriptionDTO
+        createSubscriptionDTO: CreateSubscriptionDTO
     ): Promise<Subscription> {
         return await this.SubscriptionModel.create(createSubscriptionDTO);
     }
@@ -28,7 +28,7 @@ export class SubscriptionsService {
 
     async edit(
         id: string,
-        updateSubscriptionDTO: updateSubscriptionDTO
+        updateSubscriptionDTO: UpdateSubscriptionDTO
     ): Promise<Subscription> {
         await this.SubscriptionModel.updateOne(
             { _id: id },

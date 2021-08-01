@@ -1,6 +1,6 @@
 import { IsArray, IsObject, IsOptional, IsString } from 'class-validator';
 
-export class filterDTO {
+export class FilterDTO {
     @IsOptional()
     @IsString({ each: true })
     names?: string[];

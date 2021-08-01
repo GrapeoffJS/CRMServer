@@ -4,15 +4,14 @@ import {
     Injectable,
     PipeTransform
 } from '@nestjs/common';
-import { isValidObjectId } from 'mongoose';
-import { createGroupDTO } from '../DTO/createGroupDTO';
+import { CreateGroupDTO } from '../DTO/CreateGroupDTO';
 
 @Injectable()
 export class CreateGroupValidationPipe implements PipeTransform {
     transform(
-        value: createGroupDTO,
+        value: CreateGroupDTO,
         metadata: ArgumentMetadata
-    ): createGroupDTO {
+    ): CreateGroupDTO {
         if (value?.PUPILS?.length > value.PLACES)
             throw new BadRequestException();
 

@@ -4,7 +4,7 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { createCRMUserDTO } from './DTO/createCRMUserDTO';
+import { CreateCRMUserDTO } from './DTO/CreateCRMUserDTO';
 import { genSalt, hash } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
@@ -17,7 +17,7 @@ export class CRMAccountsService {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
-    async create(createUserDTO: createCRMUserDTO): Promise<CRMUser> {
+    async create(createUserDTO: CreateCRMUserDTO): Promise<CRMUser> {
         const candidate = {
             ...createUserDTO
         };

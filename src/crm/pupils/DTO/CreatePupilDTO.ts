@@ -8,40 +8,33 @@ import {
     IsString
 } from 'class-validator';
 
-export class updatePupilDTO {
-    @IsOptional()
+export class CreatePupilDTO {
     @IsNotEmpty()
     @IsString()
     name: string;
 
-    @IsOptional()
     @IsNotEmpty()
     @IsString()
     surname: string;
 
-    @IsOptional()
     @IsNotEmpty()
     @IsString()
     midname: string;
 
-    @IsOptional()
     @IsNotEmpty()
     @IsString()
     @IsEnum(Genders)
     gender: string;
 
-    @IsOptional()
     @IsNotEmpty()
     @IsString()
     @IsISO8601({ strict: true })
     age: string;
 
     @IsOptional()
-    @IsOptional()
     @IsString()
     phone?: string;
 
-    @IsOptional()
     @IsString()
     @IsNotEmpty()
     parentPhone: string;

@@ -1,7 +1,7 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { Roles } from '../models/Roles';
 
-export class createCRMUserDTO {
+export class CreateCRMUserDTO {
     @IsNotEmpty()
     @IsString()
     name: string;

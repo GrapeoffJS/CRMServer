@@ -144,8 +144,8 @@ export default class Pupil extends TimeStamps {
             historyItem => historyItem.GROUP_NAME === groupName
         );
 
-        let { GROUP_NAME, additionDate, visitsCount } =
-            this.groupsHistory[index];
+        const { GROUP_NAME, additionDate } = this.groupsHistory[index];
+        let { visitsCount } = this.groupsHistory[index];
 
         this.groupsHistory.splice(index, 1, {
             GROUP_NAME,

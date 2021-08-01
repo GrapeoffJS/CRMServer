@@ -1,11 +1,5 @@
-import {
-    IsArray,
-    IsBoolean,
-    IsNumber,
-    IsOptional,
-    IsString
-} from 'class-validator';
-export class filterDTO {
+import { IsArray, IsBoolean, IsOptional, IsString } from 'class-validator';
+export class FilterDTO {
     @IsOptional()
     @IsString({ each: true })
     GROUP_NAMES?: string[];

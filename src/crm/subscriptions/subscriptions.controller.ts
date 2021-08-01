@@ -7,42 +7,43 @@ import {
     Patch,
     Post
 } from '@nestjs/common';
-import { createSubscriptionDTO } from './DTO/createSubscriptionDTO';
+import { CreateSubscriptionDTO } from './DTO/CreateSubscriptionDTO';
 import { Subscription } from './models/Subscription.model';
 import { SubscriptionsService } from './subscriptions.service';
-import { updateSubscriptionDTO } from './DTO/updateSubscriptionDTO';
+import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
+import { path } from './path';
 
-@Controller('/CRM/Subscriptions')
+@Controller(path)
 export class SubscriptionsController {
-    constructor(private readonly SubscriptionsService: SubscriptionsService) {}
+    constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
     @Post()
     async create(
-        @Body() createSubscriptionDTO: createSubscriptionDTO
+        @Body() createSubscriptionDTO: CreateSubscriptionDTO
     ): Promise<Subscription> {
-        return await this.SubscriptionsService.create(createSubscriptionDTO);
+        return await this.subscriptionsService.create(createSubscriptionDTO);
     }
 
     @Get()
     async findAll(): Promise<Subscription[]> {
-        return await this.SubscriptionsService.findAll();
+        return await this.subscriptionsService.findAll();
     }
 
     @Get(':id')
     async findById(@Param('id') id: string): Promise<Subscription> {
-        return await this.SubscriptionsService.findById(id);
+        return await this.subscriptionsService.findById(id);
     }
 
     @Patch(':id')
     async edit(
         @Param('id') id: string,
-        updateSubscriptionDTO: updateSubscriptionDTO
+        updateSubscriptionDTO: UpdateSubscriptionDTO
     ): Promise<Subscription> {
-        return await this.SubscriptionsService.edit(id, updateSubscriptionDTO);
+        return await this.subscriptionsService.edit(id, updateSubscriptionDTO);
     }
 
     @Delete(':id')
     async delete(@Param('id') id: string): Promise<Subscription> {
-        return await this.SubscriptionsService.delete(id);
+        return await this.subscriptionsService.delete(id);
     }
 }

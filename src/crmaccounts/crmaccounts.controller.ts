@@ -9,13 +9,14 @@ import {
     Query,
     Res
 } from '@nestjs/common';
-import { createCRMUserDTO } from './DTO/createCRMUserDTO';
+import { CreateCRMUserDTO } from './DTO/CreateCRMUserDTO';
 import { CRMAccountsService } from './crmaccounts.service';
+import { path } from './path';
 import { Response } from 'express';
 
-@Controller('CRMAccounts')
+@Controller(path)
 export class CRMAccountsController {
-    constructor(private readonly CRMAccountsService: CRMAccountsService) {}
+    constructor(private readonly crmAccountsService: CRMAccountsService) {}
 
     @Get()
     async findAll(
@@ -25,14 +26,14 @@ export class CRMAccountsController {
         @Res() response: Response
     ): Promise<void> {
         if (!role) {
-            return await this.CRMAccountsService.findAll(
+            return await this.crmAccountsService.findAll(
                 Number(limit),
                 Number(offset),
                 response
             );
         }
 
-        return await this.CRMAccountsService.findAllByRole(
+        return await this.crmAccountsService.findAllByRole(
             Number(limit),
             Number(offset),
             role,
@@ -42,16 +43,16 @@ export class CRMAccountsController {
 
     @Get(':id')
     async findOne(@Param('id') id: string): Promise<CRMUser> {
-        return await this.CRMAccountsService.findOne(id);
+        return await this.crmAccountsService.findOne(id);
     }
 
     @Post()
-    async create(@Body() data: createCRMUserDTO): Promise<CRMUser> {
-        return await this.CRMAccountsService.create(data);
+    async create(@Body() data: CreateCRMUserDTO): Promise<CRMUser> {
+        return await this.crmAccountsService.create(data);
     }
 
     @Delete(':id')
     async delete(@Param('login') login: string): Promise<CRMUser> {
-        return await this.CRMAccountsService.delete(login);
+        return await this.crmAccountsService.delete(login);
     }
 }

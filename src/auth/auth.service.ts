@@ -1,5 +1,5 @@
 import CRMUser from '../crmaccounts/models/CRMUser.model';
-import { authDTO } from './DTO/authDTO';
+import { AuthDTO } from './DTO/AuthDTO';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { compare } from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
@@ -15,7 +15,7 @@ export class AuthService {
         private readonly configService: ConfigService
     ) {}
 
-    async authenticate(authDTO: authDTO): Promise<{ token: string }> {
+    async authenticate(authDTO: AuthDTO): Promise<{ token: string }> {
         const user = await this.CRMUserModel.findOne({
             login: authDTO.login
         }).select('+password');

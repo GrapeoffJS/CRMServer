@@ -6,15 +6,18 @@ import {
     IsString
 } from 'class-validator';
 
-export class createGroupDTO {
+export class UpdateGroupDTO {
+    @IsOptional()
     @IsString()
     @IsNotEmpty()
     GROUP_NAME: string;
 
+    @IsOptional()
     @IsNumber()
     @IsNotEmpty()
     LEVEL: number;
 
+    @IsOptional()
     @IsNumber()
     @IsNotEmpty()
     PLACES: number;
@@ -26,6 +29,6 @@ export class createGroupDTO {
 
     @IsOptional()
     @IsString()
-    // @IsMongoId()
+    @IsMongoId()
     TUTOR?: string | null;
 }

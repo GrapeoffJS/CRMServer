@@ -1,32 +1,27 @@
-import CRMUser from '../../crmaccounts/models/CRMUser.model';
-import csvtojson from 'csvtojson';
-import moment from 'moment';
-import Pupil from './models/Pupil.model';
+import Pupil from '../../models/Pupil.model';
 import {
     BadRequestException,
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { createPupilDTO } from './DTO/createPupilDTO';
-import { decode } from 'jsonwebtoken';
-import { filterDTO } from './DTO/filterDTO';
+import { CreatePupilDTO } from '../../DTO/CreatePupilDTO';
+import { FilterDTO } from '../../DTO/FilterDTO';
 import { InjectModel } from 'nestjs-typegoose';
-import { PaymentTypes } from './models/PaymentTypes';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { SearchIndexerService } from '../../search-indexer/search-indexer.service';
-import { updatePupilDTO } from './DTO/updatePupilDTO';
-import xlsx from 'xlsx';
+import { SearchIndexerService } from 'src/search-indexer/search-indexer.service';
+import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
+import moment from 'moment';
 
 @Injectable()
-export class PupilsService {
+export class CrudService {
     constructor(
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>,
         private readonly searchIndexer: SearchIndexerService
     ) {}
 
-    async create(createPupilDTO: createPupilDTO): Promise<Pupil> {
+    async create(createPupilDTO: CreatePupilDTO): Promise<Pupil> {
         const pupil = await this.PupilModel.create(createPupilDTO);
 
         await this.searchIndexer.createPupilIndex(pupil);
@@ -37,7 +32,7 @@ export class PupilsService {
     async findAll(
         limit = 0,
         offset = 0,
-        filters: filterDTO,
+        filters: FilterDTO,
         response: Response
     ) {
         if (limit > 150 || limit < 0) {
@@ -111,7 +106,7 @@ export class PupilsService {
         return pupil;
     }
 
-    async edit(id: string, updatePupilDTO: updatePupilDTO): Promise<Pupil> {
+    async edit(id: string, updatePupilDTO: UpdatePupilDTO): Promise<Pupil> {
         await this.PupilModel.updateOne({ _id: id }, updatePupilDTO);
 
         const pupil = await this.PupilModel.findById(id).populate([
@@ -142,215 +137,7 @@ export class PupilsService {
         return pupil;
     }
 
-    async createPayment(
-        id: string,
-        amount: number,
-        subscription: string,
-        request: Request
-    ): Promise<Pupil> {
-        const pupil = await this.PupilModel.findById(id);
-
-        if (!pupil) {
-            throw new NotFoundException();
-        }
-
-        const { name, surname, midname }: CRMUser = decode(
-            request.headers.authorization.split(' ')[1]
-        ) as CRMUser;
-
-        pupil.balance += amount;
-        pupil.paymentHistory.push({
-            amount,
-            subscription,
-            date: moment().locale('ru').format('LL'),
-            issuer: `${surname} ${name} ${midname}`,
-            type:
-                amount >= 0 ? PaymentTypes.Replenishment : PaymentTypes.Withdraw
-        });
-
-        try {
-            const saved = await pupil.save();
-            return await this.PupilModel.populate(saved, [
-                {
-                    path: 'groups',
-                    select: '_id GROUP_NAME TUTOR',
-                    populate: {
-                        path: 'TUTOR'
-                    }
-                },
-                {
-                    path: 'tutors',
-                    populate: [
-                        {
-                            path: 'tutor',
-                            select: '_id name surname midname'
-                        },
-                        {
-                            path: 'group',
-                            select: '_id GROUP_NAME'
-                        }
-                    ]
-                }
-            ]);
-        } catch (err) {
-            throw new BadRequestException();
-        }
-    }
-
-    async addNote(id: string, text: string, request: Request): Promise<Pupil> {
-        const pupil = await this.PupilModel.findById(id);
-        const { name, surname, midname } = decode(
-            request.headers.authorization.split(' ')[1]
-        ) as CRMUser;
-
-        if (!pupil) {
-            throw new NotFoundException();
-        }
-
-        if (!text) {
-            throw new BadRequestException();
-        }
-
-        pupil.notes.push({
-            author: `${surname} ${name} ${midname}`,
-            date: moment().locale('ru').format('LLLL'),
-            text
-        });
-
-        await pupil.save();
-
-        return await this.PupilModel.findById(id).populate([
-            {
-                path: 'groups',
-                select: '_id GROUP_NAME TUTOR',
-                populate: {
-                    path: 'TUTOR'
-                }
-            },
-            {
-                path: 'tutors',
-                populate: [
-                    {
-                        path: 'tutor',
-                        select: '_id name surname midname'
-                    },
-                    {
-                        path: 'group',
-                        select: '_id GROUP_NAME'
-                    }
-                ]
-            }
-        ]);
-    }
-
-    async deleteNote(id: string, number: number): Promise<Pupil> {
-        const pupil = await this.PupilModel.findById(id);
-
-        if (!pupil) {
-            throw new NotFoundException();
-        }
-
-        pupil.notes.splice(number, 1);
-
-        await pupil.save();
-
-        return await this.PupilModel.findById(id).populate([
-            {
-                path: 'groups',
-                select: '_id GROUP_NAME TUTOR',
-                populate: {
-                    path: 'TUTOR'
-                }
-            },
-            {
-                path: 'tutors',
-                populate: [
-                    {
-                        path: 'tutor',
-                        select: '_id name surname midname'
-                    },
-                    {
-                        path: 'group',
-                        select: '_id GROUP_NAME'
-                    }
-                ]
-            }
-        ]);
-    }
-
-    async uploadCSV(file: Express.Multer.File) {
-        const errorsOnLines: number[] = [];
-
-        const csvString = Buffer.from(file.buffer).toString('utf-8');
-        const pupils = await csvtojson({
-            ignoreEmpty: true,
-            maxRowLength: 9,
-            delimiter: 'auto'
-        }).fromString(csvString);
-
-        for (let i = 0; i < pupils.length; i++) {
-            const pupil: createPupilDTO = pupils[i];
-
-            Object.keys(pupil).map(i => (pupil[i] = pupil[i].trim()));
-
-            pupil.age = moment(pupil.age, 'DD.MM.YYYY').toISOString();
-
-            try {
-                await this.PupilModel.validate(pupil);
-            } catch (err) {
-                errorsOnLines.push(i + 2);
-            }
-        }
-
-        if (errorsOnLines.length !== 0) {
-            throw new BadRequestException(errorsOnLines);
-        }
-
-        pupils.forEach(async pupil => {
-            const created = await this.PupilModel.create(pupil);
-            await this.searchIndexer.createPupilIndex(created);
-        });
-
-        return;
-    }
-
-    async uploadXLSX(file: Express.Multer.File, sheetName: string) {
-        const errorsOnLines: number[] = [];
-
-        const uploaded = Buffer.from(file.buffer);
-        const sheet = xlsx.read(uploaded);
-
-        const pupils: createPupilDTO[] = xlsx.utils.sheet_to_json(
-            sheet.Sheets['Ученики']
-        );
-
-        for (let i = 0; i < pupils.length; i++) {
-            const pupil = pupils[i];
-
-            Object.keys(pupil).map(i => (pupil[i] = pupil[i].trim()));
-
-            pupil.age = moment(pupil.age, 'DD.MM.YYYY').toISOString();
-
-            try {
-                await this.PupilModel.validate(pupil);
-            } catch (err) {
-                errorsOnLines.push(i + 2);
-            }
-        }
-
-        if (errorsOnLines.length !== 0) {
-            throw new BadRequestException(errorsOnLines);
-        }
-
-        pupils.forEach(async pupil => {
-            const created = await this.PupilModel.create(pupil);
-            await this.searchIndexer.createPupilIndex(created);
-        });
-
-        return;
-    }
-
-    private createFilterPipeline(filters: filterDTO): any[] {
+    private createFilterPipeline(filters: FilterDTO): any[] {
         if (!filters) return;
 
         const pipeline = [];
