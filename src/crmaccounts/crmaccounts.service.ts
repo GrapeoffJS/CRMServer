@@ -90,7 +90,7 @@ export class CRMAccountsService {
     }
 
     async delete(login: string): Promise<CRMUser> {
-        const user = await this.CRMUserModel.deleteOne({
+        const user = await this.CRMUserModel.findOneAndDelete({
             login: login
         }).populate('groups', '_id GROUP_NAME');
 
@@ -98,6 +98,6 @@ export class CRMAccountsService {
             throw new NotFoundException();
         }
 
-        return;
+        return user;
     }
 }
