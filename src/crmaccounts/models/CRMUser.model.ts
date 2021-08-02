@@ -33,26 +33,14 @@ export default class CRMUser {
     @prop({ type: () => Array, id: false, required: false, default: [] })
     groupsHistory: GroupsHistoryItem[];
 
-    /**
-     * Delete Group from CRMUser by Group id
-     * @param {string} id - Group id
-     */
     public deleteGroup(id: string): void {
         this.groups.splice(this.groups.indexOf(id), 1);
     }
 
-    /**
-     * Adds group to groups list
-     * @param {string} groupId - Group id
-     */
     public updateGroupsList(groupId: string) {
         this.groups = [...new Set(this.groups).add(groupId)];
     }
 
-    /**
-     * Adds group to group history
-     * @param {string} groupName - Group name
-     */
     public addGroupToHistory(groupName: string, date: string) {
         this.groupsHistory.push({ GROUP_NAME: groupName, additionDate: date });
     }

@@ -85,18 +85,10 @@ export default class Pupil extends TimeStamps {
     @prop({ type: Number, required: false, default: 0 })
     private totalVisitsCount: number;
 
-    /**
-     * Delete group from Pupil by Group id
-     * @param {string} id - Group id
-     */
     public deleteGroup(id: string): void {
         this.groups.splice(this.groups.indexOf(id), 1);
     }
 
-    /**
-     * Adds group to group history
-     * @param {string} groupName - Group name
-     */
     public addGroupToHistory(groupName: string, date: string) {
         this.groupsHistory.push({
             GROUP_NAME: groupName,
@@ -105,11 +97,6 @@ export default class Pupil extends TimeStamps {
         });
     }
 
-    /**
-     * Set GLOBAL_SCHEDULE for pupils
-     * @param {string} groupId - Group id
-     * @param {DocumentType<Pupil>[]} pupils - Array of Pupils
-     */
     public setGroupSchedule(groupId: string, schedule: Schedule[]) {
         this.localSchedule.set(groupId, schedule);
     }
