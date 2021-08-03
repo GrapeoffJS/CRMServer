@@ -35,10 +35,6 @@ export class CrudService {
         filters: FilterDTO,
         response: Response
     ) {
-        if (limit > 150 || limit < 0) {
-            throw new BadRequestException();
-        }
-
         const result = await this.PupilModel.aggregate(
             this.createFilterPipeline(filters) || [{ $match: {} }]
         )

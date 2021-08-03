@@ -1,4 +1,5 @@
 import Pupil from '../../models/Pupil.model';
+import { AuthGuard } from 'src/auth/auth.guard';
 import {
     Body,
     Controller,
@@ -8,7 +9,8 @@ import {
     Patch,
     Post,
     Query,
-    Res
+    Res,
+    UseGuards
 } from '@nestjs/common';
 import { CreatePupilDTO } from '../../DTO/CreatePupilDTO';
 import { CrudService } from '../../services/crud/crud.service';
@@ -17,6 +19,7 @@ import { path } from '../../path';
 import { Response } from 'express';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
 
+@UseGuards(AuthGuard)
 @Controller(path)
 export class CrudController {
     constructor(private readonly crudService: CrudService) {}

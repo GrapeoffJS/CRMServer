@@ -78,16 +78,7 @@ export class CrudService {
         ]);
     }
 
-    async findAll(
-        limit = 0,
-        offset = 0,
-        filters: FilterDTO,
-        response: Response
-    ) {
-        if (limit > 150 || limit < 0) {
-            throw new BadRequestException();
-        }
-
+    async findAll(limit, offset, filters: FilterDTO, response: Response) {
         const result = await this.GroupModel.aggregate(
             this.createFilterPipeline(filters) || [{ $match: {} }]
         )

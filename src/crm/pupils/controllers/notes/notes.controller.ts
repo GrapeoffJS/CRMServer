@@ -1,8 +1,18 @@
 import Pupil from '../../models/Pupil.model';
-import { Body, Controller, Delete, Param, Post, Req } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
+import {
+    Body,
+    Controller,
+    Delete,
+    Param,
+    Post,
+    Req,
+    UseGuards
+    } from '@nestjs/common';
 import { NotesService } from '../../services/notes/notes.service';
 import { path } from '../../path';
 
+@UseGuards(AuthGuard)
 @Controller(path)
 export class NotesController {
     constructor(private readonly notesService: NotesService) {}

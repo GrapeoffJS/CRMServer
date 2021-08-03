@@ -1,7 +1,16 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
+import {
+    Body,
+    Controller,
+    Delete,
+    Param,
+    Post,
+    UseGuards
+} from '@nestjs/common';
 import { path } from '../../path';
 import { PupilManipulationsService } from '../../services/pupil-manipulations/pupil-manipulations.service';
 
+@UseGuards(AuthGuard)
 @Controller(path)
 export class PupilManipulationController {
     constructor(

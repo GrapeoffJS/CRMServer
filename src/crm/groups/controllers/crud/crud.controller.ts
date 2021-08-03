@@ -38,8 +38,8 @@ export class CrudController {
     }
     @Post('/find')
     async findAll(
-        @Query('limit') limit = 0,
-        @Query('offset') offset = 0,
+        @Query('limit') limit,
+        @Query('offset') offset,
         @Body('filters') filters: FilterDTO,
         @Res() response: Response
     ) {
