@@ -83,23 +83,25 @@ export class PupilManipulationsService {
         const savedPupil = await pupil.save();
         const savedGroup = await group.save();
 
-        return {
-            group: await this.GroupModel.populate(savedGroup, [
-                {
-                    path: 'PUPILS',
-                    populate: {
-                        path: 'groups',
-                        select: '_id GROUP_NAME'
-                    }
-                },
-                {
-                    path: 'TUTOR',
-                    populate: {
-                        path: 'groups',
-                        select: '_id GROUP_NAME'
-                    }
+        const populatedGroup = await this.GroupModel.populate(savedGroup, [
+            {
+                path: 'PUPILS',
+                populate: {
+                    path: 'groups',
+                    select: '_id GROUP_NAME'
                 }
-            ]),
+            },
+            {
+                path: 'TUTOR',
+                populate: {
+                    path: 'groups',
+                    select: '_id GROUP_NAME'
+                }
+            }
+        ]);
+
+        return {
+            group: populatedGroup,
             pupil: savedPupil
         };
     }

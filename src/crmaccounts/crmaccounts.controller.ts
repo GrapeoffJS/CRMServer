@@ -22,21 +22,13 @@ export class CRMAccountsController {
     async findAll(
         @Query('limit') limit: number,
         @Query('offset') offset: number,
-        @Query('role') role: string,
+        @Query('role') roles: string[],
         @Res() response: Response
-    ): Promise<void> {
-        if (!role) {
-            return await this.crmAccountsService.findAll(
-                Number(limit),
-                Number(offset),
-                response
-            );
-        }
-
-        return await this.crmAccountsService.findAllByRole(
+    ) {
+        return await this.crmAccountsService.findAll(
             Number(limit),
             Number(offset),
-            role,
+            roles,
             response
         );
     }

@@ -41,6 +41,10 @@ export class CrudService {
             .skip(offset)
             .limit(limit);
 
+        const count = await this.PupilModel.aggregate(
+            this.createFilterPipeline(filters) || [{ $match: {} }]
+        ).count('count');
+
         const populated = await this.PupilModel.populate(result, {
             path: 'groups',
             select: '_id GROUP_NAME TUTOR',
@@ -49,9 +53,9 @@ export class CrudService {
             }
         });
 
-        await this.PupilModel.find().countDocuments(async (err, count) => {
-            return response.header('Count', count.toString()).json(populated);
-        });
+        return response
+            .header('Count', count[0].count.toString())
+            .json(populated);
     }
 
     async findById(id: string): Promise<Pupil> {

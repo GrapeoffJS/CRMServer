@@ -37,40 +37,15 @@ export class CRMAccountsService {
     async findAll(
         limit: number,
         offset: number,
-        response: Response
-    ): Promise<void> {
-        if (limit > 150 || limit < 0) {
-            throw new BadRequestException();
-        }
-
-        await this.CRMUserModel.find().countDocuments(async (err, count) => {
-            response.header('Count', count.toString()).json(
-                await this.CRMUserModel.find()
-                    .populate('groups', '_id GROUP_NAME')
-                    .limit(limit || 1)
-                    .skip(offset || 0)
-            );
-        });
-    }
-
-    async findAllByRole(
-        limit: number,
-        offset: number,
-        role: string,
+        roles: string[],
         response: Response
     ) {
-        if (limit > 150 || limit < 0) {
-            throw new BadRequestException();
-        }
-
-        await this.CRMUserModel.find({ role }).countDocuments(
-            { role },
+        await this.CRMUserModel.find({ role: { $in: roles } }).countDocuments(
             async (err, count) => {
-                response.header('Count', count.toString()).json(
-                    await this.CRMUserModel.find({ role })
-                        .populate('groups', '_id GROUP_NAME')
-                        .limit(limit || 1)
+                return response.header('Count', count.toString()).json(
+                    await this.CRMUserModel.find({ role: { $in: roles } })
                         .skip(offset || 0)
+                        .limit(limit || 0)
                 );
             }
         );

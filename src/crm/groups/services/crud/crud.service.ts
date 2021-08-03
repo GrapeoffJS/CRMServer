@@ -85,26 +85,28 @@ export class CrudService {
             .skip(offset)
             .limit(limit);
 
-        this.GroupModel.find().countDocuments(async (err, count) => {
-            return response.header('Count', count.toString()).json(
-                await this.GroupModel.populate(result, [
-                    {
-                        path: 'PUPILS',
-                        populate: {
-                            path: 'groups',
-                            select: '_id GROUP_NAME'
-                        }
-                    },
-                    {
-                        path: 'TUTOR',
-                        populate: {
-                            path: 'groups',
-                            select: '_id GROUP_NAME'
-                        }
+        const count = await this.GroupModel.aggregate(
+            this.createFilterPipeline(filters) || [{ $match: {} }]
+        ).count('count');
+
+        return response.header('Count', count[0].count.toString()).json(
+            await this.GroupModel.populate(result, [
+                {
+                    path: 'PUPILS',
+                    populate: {
+                        path: 'groups',
+                        select: '_id GROUP_NAME'
                     }
-                ])
-            );
-        });
+                },
+                {
+                    path: 'TUTOR',
+                    populate: {
+                        path: 'groups',
+                        select: '_id GROUP_NAME'
+                    }
+                }
+            ])
+        );
     }
 
     async findById(id: string): Promise<Group> {
