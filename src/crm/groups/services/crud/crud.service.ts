@@ -94,7 +94,7 @@ export class CrudService {
             .limit(limit)
             .skip(offset);
 
-        this.GroupModel.find().countDocuments((err, count) => {
+        this.GroupModel.find().countDocuments(async (err, count) => {
             return response.header('Count', count.toString()).json(
                 await this.GroupModel.populate(result, [
                     {
