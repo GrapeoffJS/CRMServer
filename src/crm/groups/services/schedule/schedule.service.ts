@@ -65,18 +65,9 @@ export class ScheduleService {
             throw new NotFoundException();
         }
 
-        const visitedDays = schedule.filter(schedule => {
-            return (
-                schedule.status !== 3 &&
-                moment(schedule.date, 'DD.MM.YYYY').toDate() <=
-                    moment().toDate()
-            );
-        });
-
         pupil.localSchedule.set(groupId, schedule);
 
         const saved = await pupil.save();
-
         return await saved.populate([
             {
                 path: 'groups',

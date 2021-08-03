@@ -82,9 +82,6 @@ export default class Pupil extends TimeStamps {
     @prop({ type: [Tutor], required: false, default: [], _id: false })
     tutors: Tutor[];
 
-    @prop({ type: Number, required: false, default: 0 })
-    private totalVisitsCount: number;
-
     public deleteGroup(id: string): void {
         this.groups.splice(this.groups.indexOf(id), 1);
     }
@@ -92,8 +89,7 @@ export default class Pupil extends TimeStamps {
     public addGroupToHistory(groupName: string, date: string) {
         this.groupsHistory.push({
             GROUP_NAME: groupName,
-            additionDate: date,
-            visitsCount: 0
+            additionDate: date
         });
     }
 

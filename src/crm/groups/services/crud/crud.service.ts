@@ -210,7 +210,7 @@ export class CrudService {
         return group;
     }
 
-    private createFilterPipeline(filters: FilterDTO) {
+    private createFilterPipeline(filters: FilterDTO): any {
         if (!filters) return;
 
         const pipeline: any = [
