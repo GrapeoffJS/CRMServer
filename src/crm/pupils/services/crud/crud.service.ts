@@ -55,9 +55,9 @@ export class CrudService {
             }
         });
 
-        return response
-            .header('Count', populated.length.toString())
-            .json(populated);
+        this.PupilModel.find().countDocuments((err, count) => {
+            return response.header('Count', count.toString()).json(populated);
+        });
     }
 
     async findById(id: string): Promise<Pupil> {

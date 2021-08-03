@@ -94,24 +94,26 @@ export class CrudService {
             .limit(limit)
             .skip(offset);
 
-        return response.header('Count', result.length.toString()).json(
-            await this.GroupModel.populate(result, [
-                {
-                    path: 'PUPILS',
-                    populate: {
-                        path: 'groups',
-                        select: '_id GROUP_NAME'
+        this.GroupModel.find().countDocuments((err, count) => {
+            return response.header('Count', count.toString()).json(
+                await this.GroupModel.populate(result, [
+                    {
+                        path: 'PUPILS',
+                        populate: {
+                            path: 'groups',
+                            select: '_id GROUP_NAME'
+                        }
+                    },
+                    {
+                        path: 'TUTOR',
+                        populate: {
+                            path: 'groups',
+                            select: '_id GROUP_NAME'
+                        }
                     }
-                },
-                {
-                    path: 'TUTOR',
-                    populate: {
-                        path: 'groups',
-                        select: '_id GROUP_NAME'
-                    }
-                }
-            ])
-        );
+                ])
+            );
+        });
     }
 
     async findById(id: string): Promise<Group> {
