@@ -38,8 +38,8 @@ export class CrudService {
         const result = await this.PupilModel.aggregate(
             this.createFilterPipeline(filters) || [{ $match: {} }]
         )
-            .limit(limit)
-            .skip(offset);
+            .skip(offset)
+            .limit(limit);
 
         const populated = await this.PupilModel.populate(result, {
             path: 'groups',

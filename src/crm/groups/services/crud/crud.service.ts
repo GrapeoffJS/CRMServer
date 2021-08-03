@@ -82,8 +82,8 @@ export class CrudService {
         const result = await this.GroupModel.aggregate(
             this.createFilterPipeline(filters) || [{ $match: {} }]
         )
-            .limit(limit)
-            .skip(offset);
+            .skip(offset)
+            .limit(limit);
 
         this.GroupModel.find().countDocuments(async (err, count) => {
             return response.header('Count', count.toString()).json(

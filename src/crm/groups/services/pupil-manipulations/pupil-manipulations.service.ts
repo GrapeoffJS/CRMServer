@@ -64,7 +64,10 @@ export class PupilManipulationsService {
         ]);
     }
 
-    async deletePupil(groupId: string, pupilId: string): Promise<Group> {
+    async deletePupil(
+        groupId: string,
+        pupilId: string
+    ): Promise<{ group: Group; pupil: Pupil }> {
         const group = await this.GroupModel.findById(groupId);
         const pupil = await this.PupilModel.findById(pupilId);
 
@@ -77,24 +80,27 @@ export class PupilManipulationsService {
         pupil.deleteGroup(group.id);
         pupil.deleteTutor(group.id);
 
-        await pupil.save();
+        const savedPupil = await pupil.save();
+        const savedGroup = await group.save();
 
-        const saved = await group.save();
-        return await this.GroupModel.populate(saved, [
-            {
-                path: 'PUPILS',
-                populate: {
-                    path: 'groups',
-                    select: '_id GROUP_NAME'
+        return {
+            group: savedGroup.populate([
+                {
+                    path: 'PUPILS',
+                    populate: {
+                        path: 'groups',
+                        select: '_id GROUP_NAME'
+                    }
+                },
+                {
+                    path: 'TUTOR',
+                    populate: {
+                        path: 'groups',
+                        select: '_id GROUP_NAME'
+                    }
                 }
-            },
-            {
-                path: 'TUTOR',
-                populate: {
-                    path: 'groups',
-                    select: '_id GROUP_NAME'
-                }
-            }
-        ]);
+            ]),
+            pupil: savedPupil
+        };
     }
 }
