@@ -89,24 +89,26 @@ export class CrudService {
             this.createFilterPipeline(filters) || [{ $match: {} }]
         ).count('count');
 
-        return response.header('Count', count[0].count.toString()).json(
-            await this.GroupModel.populate(result, [
-                {
-                    path: 'PUPILS',
-                    populate: {
-                        path: 'groups',
-                        select: '_id GROUP_NAME'
+        return response
+            .header('Count', count[0]?.count?.toString() || '0')
+            .json(
+                await this.GroupModel.populate(result, [
+                    {
+                        path: 'PUPILS',
+                        populate: {
+                            path: 'groups',
+                            select: '_id GROUP_NAME'
+                        }
+                    },
+                    {
+                        path: 'TUTOR',
+                        populate: {
+                            path: 'groups',
+                            select: '_id GROUP_NAME'
+                        }
                     }
-                },
-                {
-                    path: 'TUTOR',
-                    populate: {
-                        path: 'groups',
-                        select: '_id GROUP_NAME'
-                    }
-                }
-            ])
-        );
+                ])
+            );
     }
 
     async findById(id: string): Promise<Group> {

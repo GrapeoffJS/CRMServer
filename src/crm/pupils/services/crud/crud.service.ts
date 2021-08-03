@@ -54,7 +54,7 @@ export class CrudService {
         });
 
         return response
-            .header('Count', count[0].count.toString())
+            .header('Count', count[0]?.count?.toString() || '0')
             .json(populated);
     }
 
