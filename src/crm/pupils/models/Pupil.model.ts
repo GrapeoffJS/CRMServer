@@ -121,23 +121,4 @@ export default class Pupil extends TimeStamps {
     public updateGroupsList(groupId: string) {
         this.groups = [...new Set(this.groups).add(groupId)];
     }
-
-    public addVisits(count: number) {
-        this.totalVisitsCount += count;
-    }
-
-    public addVisitsTo(groupName: string) {
-        const index = this.groupsHistory.findIndex(
-            historyItem => historyItem.GROUP_NAME === groupName
-        );
-
-        const { GROUP_NAME, additionDate } = this.groupsHistory[index];
-        let { visitsCount } = this.groupsHistory[index];
-
-        this.groupsHistory.splice(index, 1, {
-            GROUP_NAME,
-            additionDate,
-            visitsCount: visitsCount++
-        });
-    }
 }
