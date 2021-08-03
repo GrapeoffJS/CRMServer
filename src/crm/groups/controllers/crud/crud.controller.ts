@@ -1,3 +1,4 @@
+import { AuthGuard } from '../../../../auth/auth.guard';
 import {
     Body,
     Controller,
@@ -11,14 +12,16 @@ import {
     UsePipes
 } from '@nestjs/common';
 import { CreateGroupDTO } from '../../DTO/CreateGroupDTO';
-import { FilterDTO } from '../../DTO/FilterDTO';
-import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
-import { Group } from '../../models/Group.model';
-import { path } from '../../path';
 import { CreateGroupValidationPipe } from '../../pipes/create-group-validation.pipe';
 import { CrudService } from '../../services/crud/crud.service';
+import { FilterDTO } from '../../DTO/FilterDTO';
+import { Group } from '../../models/Group.model';
+import { path } from '../../path';
 import { Response } from 'express';
+import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
+import { UseGuards } from '@nestjs/common';
 
+@UseGuards(AuthGuard)
 @Controller(path)
 export class CrudController {
     constructor(private readonly crudService: CrudService) {}

@@ -30,8 +30,8 @@ export class CrudService {
     }
 
     async findAll(
-        limit = 0,
-        offset = 0,
+        limit: number,
+        offset: number,
         filters: FilterDTO,
         response: Response
     ) {
@@ -39,10 +39,8 @@ export class CrudService {
             throw new BadRequestException();
         }
 
-        const filterPipeline = this.createFilterPipeline(filters);
-
         const result = await this.PupilModel.aggregate(
-            filterPipeline || [{ $match: {} }]
+            this.createFilterPipeline(filters) || [{ $match: {} }]
         )
             .limit(limit)
             .skip(offset);
@@ -55,7 +53,7 @@ export class CrudService {
             }
         });
 
-        this.PupilModel.find().countDocuments(async (err, count) => {
+        await this.PupilModel.find().countDocuments(async (err, count) => {
             return response.header('Count', count.toString()).json(populated);
         });
     }

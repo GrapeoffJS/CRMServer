@@ -28,14 +28,14 @@ export class CrudController {
 
     @Post('/find')
     async findAll(
-        @Query('limit') limit = 0,
-        @Query('offset') offset = 0,
+        @Query('limit') limit,
+        @Query('offset') offset,
         @Body('filters') filters: FilterDTO,
         @Res() response: Response
     ) {
         return await this.crudService.findAll(
-            Number(limit) || 0,
-            Number(offset) || 0,
+            Number(limit),
+            Number(offset),
             filters,
             response
         );
