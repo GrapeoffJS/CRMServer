@@ -84,7 +84,7 @@ export class PupilManipulationsService {
         const savedGroup = await group.save();
 
         return {
-            group: savedGroup.populate([
+            group: await this.GroupModel.populate(savedGroup, [
                 {
                     path: 'PUPILS',
                     populate: {
