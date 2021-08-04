@@ -13,7 +13,7 @@ export class Schedule {
     @prop({ type: () => [String] })
     duration: string[];
 
-    @prop({ type: Number, required: false })
+    @prop({ type: Number, required: false, default: 2 })
     status: number;
 
     @prop({ type: String })
