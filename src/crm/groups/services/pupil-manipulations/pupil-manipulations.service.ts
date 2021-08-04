@@ -100,7 +100,7 @@ export class PupilManipulationsService {
             }
         ]);
 
-        const populatedPupil = this.PupilModel.populate(savedPupil, [
+        const populatedPupil = await this.PupilModel.populate(savedPupil, [
             {
                 path: 'groups',
                 select: '_id GROUP_NAME TUTOR',
