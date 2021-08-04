@@ -67,7 +67,7 @@ export class PupilManipulationsService {
     async deletePupil(
         groupId: string,
         pupilId: string
-    ): Promise<{ group: Group; pupil: Pupil }> {
+    ) {
         const group = await this.GroupModel.findById(groupId);
         const pupil = await this.PupilModel.findById(pupilId);
 
@@ -112,7 +112,7 @@ export class PupilManipulationsService {
 
         return {
             group: populatedGroup,
-            pupil: savedPupil
+            pupil: populatedPupil
         };
     }
 }
