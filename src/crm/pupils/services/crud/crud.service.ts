@@ -275,7 +275,7 @@ export class CrudService {
             });
 
             pipeline.push(agesFilter);
-        } else {
+        } else if (!filters.ages && filters.emptyAge === true) {
             pipeline.push({ $match: { age: null } });
         }
 
