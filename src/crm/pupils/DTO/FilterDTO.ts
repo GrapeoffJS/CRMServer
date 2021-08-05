@@ -1,4 +1,10 @@
-import { IsArray, IsObject, IsOptional, IsString } from 'class-validator';
+import {
+    IsArray,
+    IsBoolean,
+    IsObject,
+    IsOptional,
+    IsString
+} from 'class-validator';
 
 export class FilterDTO {
     @IsOptional()
@@ -32,4 +38,8 @@ export class FilterDTO {
     @IsOptional()
     @IsObject()
     balance?: { $gte?: number; $lte?: number; $lt?: number };
+
+    @IsOptional()
+    @IsBoolean()
+    emptyAge?: boolean;
 }

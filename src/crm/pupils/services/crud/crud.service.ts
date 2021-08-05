@@ -12,6 +12,7 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { SearchIndexerService } from 'src/search-indexer/search-indexer.service';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
 import moment from 'moment';
+import { pipe } from 'rxjs';
 
 @Injectable()
 export class CrudService {
@@ -253,6 +254,10 @@ export class CrudService {
                 }
             };
 
+            if (filters.emptyAge === true) {
+                agesFilter.$match.$or.push({ age: null });
+            }
+
             filters?.ages?.forEach(age => {
                 agesFilter.$match.$or.push({
                     age: {
@@ -270,6 +275,8 @@ export class CrudService {
             });
 
             pipeline.push(agesFilter);
+        } else {
+            pipeline.push({ $match: { age: null } });
         }
 
         if (filters.tutors) {

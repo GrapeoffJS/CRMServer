@@ -85,6 +85,6 @@ export class ImportFileService {
             await this.searchIndexer.createPupilIndex(created);
         });
 
-        return;
+        return 'SUCCESS';
     }
 }
