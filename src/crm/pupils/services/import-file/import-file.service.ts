@@ -52,14 +52,14 @@ export class ImportFileService {
         return;
     }
 
-    async uploadXLSX(file: Express.Multer.File, sheetName: string) {
+    async uploadXLSX(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];
 
         const uploaded = Buffer.from(file.buffer);
         const sheet = xlsx.read(uploaded);
 
         const pupils: CreatePupilDTO[] = xlsx.utils.sheet_to_json(
-            sheet.Sheets[sheetName]
+            sheet.Sheets[sheet.SheetNames[0]]
         );
 
         for (let i = 0; i < pupils.length; i++) {

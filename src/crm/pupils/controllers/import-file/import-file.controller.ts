@@ -13,7 +13,7 @@ import { ImportFileService } from '../../services/import-file/import-file.servic
 import { MimeTypes } from '../../MimeTypes';
 import { path } from '../../path';
 
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller(path)
 export class ImportFileController {
     constructor(private readonly importFileService: ImportFileService) {}
@@ -31,16 +31,13 @@ export class ImportFileController {
             }
         })
     )
-    async uploadFile(
-        @UploadedFile() file: Express.Multer.File,
-        @Query('sheetName') sheetName: string
-    ) {
+    async uploadFile(@UploadedFile() file: Express.Multer.File) {
         if (file.mimetype === MimeTypes.CSV) {
             return this.importFileService.uploadCSV(file);
         }
 
         if (file.mimetype === MimeTypes.XLSX) {
-            return this.importFileService.uploadXLSX(file, sheetName);
+            return this.importFileService.uploadXLSX(file);
         }
     }
 }
