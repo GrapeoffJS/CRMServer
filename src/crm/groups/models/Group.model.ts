@@ -1,10 +1,9 @@
 import CRMUser from 'src/crmaccounts/models/CRMUser.model';
 import Pupil from '../../pupils/models/Pupil.model';
-import { index, prop } from '@typegoose/typegoose';
+import { prop } from '@typegoose/typegoose';
 import { Schedule } from './Schedule';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
-@index({ GROUP_NAME: 'text' }, { weights: { GROUP_NAME: 1 } })
 export class Group extends TimeStamps {
     @prop({ type: String, required: true })
     GROUP_NAME: string;
