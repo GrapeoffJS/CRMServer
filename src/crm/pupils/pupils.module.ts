@@ -10,7 +10,6 @@ import { NotesController } from './controllers/notes/notes.controller';
 import { NotesService } from './services/notes/notes.service';
 import { PaymentController } from './controllers/payment/payment.controller';
 import { PaymentService } from './services/payment/payment.service';
-import { SearchIndexerModule } from '../../search-indexer/search-indexer.module';
 import { TypegooseModule } from 'nestjs-typegoose';
 
 @Module({
@@ -25,7 +24,6 @@ import { TypegooseModule } from 'nestjs-typegoose';
                 schemaOptions: { collection: 'CRMAccounts' }
             }
         ]),
-        SearchIndexerModule,
         ConfigModule
     ],
     controllers: [

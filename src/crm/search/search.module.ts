@@ -1,11 +1,23 @@
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { Module } from '@nestjs/common';
 import { SearchController } from './search.controller';
-import { SearchIndexerModule } from '../../search-indexer/search-indexer.module';
+import { SearchService } from './search.service';
 
 @Module({
-    imports: [ConfigModule, SearchIndexerModule],
+    imports: [
+        ElasticsearchModule.registerAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory(configService: ConfigService) {
+                return {
+                    node: configService.get('ELASTIC_SEARCH_URI')
+                };
+            }
+        }),
+        ConfigModule
+    ],
     controllers: [SearchController],
-    providers: []
+    providers: [SearchService]
 })
 export class SearchModule {}

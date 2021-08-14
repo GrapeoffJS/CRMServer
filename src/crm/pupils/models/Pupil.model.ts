@@ -1,14 +1,26 @@
 import { Genders } from './Genders';
 import { Group } from '../../groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
-import { prop, pre } from '@typegoose/typegoose';
+import { prop, post } from '@typegoose/typegoose';
 import { Note } from './Note';
 import { Payment } from './Payment';
 import { Schedule } from '../../groups/models/Schedule';
 import { Schema } from 'mongoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { Tutor } from './Tutor';
+import { SearchIndexer } from '../../../SearchIndexer/SearchIndexer';
 
+const Indexer = SearchIndexer.getInstance();
+
+@post<Pupil>('save', pupil => {
+    Indexer.indexPupil(pupil);
+})
+@post<Pupil>('findOneAndUpdate', pupil => {
+    Indexer.updatePupil(pupil);
+})
+@post<Pupil>('findOneAndDelete', pupil => {
+    Indexer.deletePupil(pupil);
+})
 export default class Pupil extends TimeStamps {
     @prop({ type: String, required: true })
     name: string;

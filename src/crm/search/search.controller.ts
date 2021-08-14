@@ -1,15 +1,18 @@
 import { AuthGuard } from '../../auth/auth.guard';
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
-import { SearchIndexerService } from '../../search-indexer/search-indexer.service';
 import { path } from './path';
+import { SearchService } from './search.service';
 
 @UseGuards(AuthGuard)
 @Controller(path)
 export class SearchController {
-    constructor(private readonly searchIndexer: SearchIndexerService) {}
+    constructor(private readonly SearchService: SearchService) {}
 
     @Get('/autocompletion')
-    async searchAutocomplete(@Query('query') searchQuery: string) {
-        return await this.searchIndexer.searchEverywhere(searchQuery);
+    async search(
+        @Query('query') searchQuery: string,
+        @Query('tutorId') tutorId: string
+    ) {
+        return this.SearchService.search(searchQuery, tutorId);
     }
 }

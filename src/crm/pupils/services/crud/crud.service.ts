@@ -1,32 +1,22 @@
 import Pupil from '../../models/Pupil.model';
-import {
-    BadRequestException,
-    Injectable,
-    NotFoundException
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePupilDTO } from '../../DTO/CreatePupilDTO';
 import { FilterDTO } from '../../DTO/FilterDTO';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { SearchIndexerService } from 'src/search-indexer/search-indexer.service';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
 import moment from 'moment';
-import { pipe } from 'rxjs';
 
 @Injectable()
 export class CrudService {
     constructor(
         @InjectModel(Pupil)
-        private readonly PupilModel: ReturnModelType<typeof Pupil>,
-        private readonly searchIndexer: SearchIndexerService
+        private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
     async create(createPupilDTO: CreatePupilDTO): Promise<Pupil> {
         const pupil = await this.PupilModel.create(createPupilDTO);
-
-        await this.searchIndexer.createPupilIndex(pupil);
-
         return pupil;
     }
 
@@ -100,13 +90,11 @@ export class CrudService {
             throw new NotFoundException();
         }
 
-        await this.searchIndexer.deletePupilIndex(id);
-
         return pupil;
     }
 
     async edit(id: string, updatePupilDTO: UpdatePupilDTO): Promise<Pupil> {
-        await this.PupilModel.updateOne({ _id: id }, updatePupilDTO);
+        await this.PupilModel.findOneAndUpdate({ _id: id }, updatePupilDTO);
 
         const pupil = await this.PupilModel.findById(id).populate([
             {
@@ -130,8 +118,6 @@ export class CrudService {
                 ]
             }
         ]);
-
-        await this.searchIndexer.updatePupilIndex(pupil);
 
         return pupil;
     }

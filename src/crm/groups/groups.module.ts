@@ -9,7 +9,6 @@ import { PupilManipulationController } from './controllers/pupil-manipulations/p
 import { PupilManipulationsService } from './services/pupil-manipulations/pupil-manipulations.service';
 import { ScheduleController } from './controllers/schedule/schedule.controller';
 import { ScheduleService } from './services/schedule/schedule.service';
-import { SearchIndexerModule } from '../../search-indexer/search-indexer.module';
 import { TutorManipulationsController } from './controllers/tutor-manipulations/tutor-manipulations.controller';
 import { TutorManipulationsService } from './services/tutor-manipulations/tutor-manipulations.service';
 import { TypegooseModule } from 'nestjs-typegoose';
@@ -30,8 +29,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
                 schemaOptions: { collection: 'CRMAccounts' }
             }
         ]),
-        ConfigModule,
-        SearchIndexerModule
+        ConfigModule
     ],
     controllers: [
         CrudController,

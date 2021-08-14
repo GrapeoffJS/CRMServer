@@ -1,18 +1,13 @@
 import CRMUser from 'src/crmaccounts/models/CRMUser.model';
 import moment from 'moment';
 import Pupil from 'src/crm/pupils/models/Pupil.model';
-import {
-    BadRequestException,
-    Injectable,
-    NotFoundException
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateGroupDTO } from '../../DTO/CreateGroupDTO';
 import { FilterDTO } from '../../DTO/FilterDTO';
 import { Group } from '../../models/Group.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { SearchIndexerService } from 'src/search-indexer/search-indexer.service';
 import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
 
 @Injectable()
@@ -23,8 +18,7 @@ export class CrudService {
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>,
         @InjectModel(CRMUser)
-        private readonly CRMUserModel: ReturnModelType<typeof CRMUser>,
-        private readonly searchIndexer: SearchIndexerService
+        private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
     async create(createGroupDTO: CreateGroupDTO): Promise<Group> {
@@ -57,8 +51,6 @@ export class CrudService {
         });
 
         await tutor?.save();
-
-        await this.searchIndexer.createGroupIndex(group);
 
         return await this.GroupModel.populate(group, [
             {
@@ -162,8 +154,6 @@ export class CrudService {
             throw new NotFoundException();
         }
 
-        await this.searchIndexer.deleteGroupIndex(id);
-
         return await this.GroupModel.populate(group, [
             {
                 path: 'PUPILS',
@@ -183,7 +173,7 @@ export class CrudService {
     }
 
     async edit(id: string, updateGroupDTO: UpdateGroupDTO): Promise<Group> {
-        await this.GroupModel.updateOne({ _id: id }, updateGroupDTO);
+        await this.GroupModel.findOneAndUpdate({ _id: id }, updateGroupDTO);
 
         const group = await this.GroupModel.findById(id).populate([
             {
@@ -201,8 +191,6 @@ export class CrudService {
                 }
             }
         ]);
-
-        await this.searchIndexer.updateGroupIndex(group);
 
         return group;
     }

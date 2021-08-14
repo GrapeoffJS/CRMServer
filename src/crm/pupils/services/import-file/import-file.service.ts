@@ -6,14 +6,12 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePupilDTO } from '../../DTO/CreatePupilDTO';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { SearchIndexerService } from '../../../../search-indexer/search-indexer.service';
 
 @Injectable()
 export class ImportFileService {
     constructor(
         @InjectModel(Pupil)
-        private readonly PupilModel: ReturnModelType<typeof Pupil>,
-        private readonly searchIndexer: SearchIndexerService
+        private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
     async uploadCSV(file: Express.Multer.File) {
@@ -46,7 +44,6 @@ export class ImportFileService {
 
         pupils.forEach(async pupil => {
             const created = await this.PupilModel.create(pupil);
-            await this.searchIndexer.createPupilIndex(created);
         });
 
         return;
@@ -82,7 +79,6 @@ export class ImportFileService {
 
         pupils.forEach(async pupil => {
             const created = await this.PupilModel.create(pupil);
-            await this.searchIndexer.createPupilIndex(created);
         });
 
         return 'SUCCESS';

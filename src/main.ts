@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { SearchIndexer } from './SearchIndexer/SearchIndexer';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -13,6 +14,10 @@ async function bootstrap() {
     app.use(helmet());
     app.use(compression());
     app.useGlobalPipes(new ValidationPipe());
+
+    SearchIndexer.getInstance().connect({
+        node: process.env.ELASTIC_SEARCH_URI
+    });
 
     // const SwaggerConfig = new DocumentBuilder()
     //     .setTitle('DVMN CRM API')

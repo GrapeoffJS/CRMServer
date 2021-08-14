@@ -1,9 +1,21 @@
 import CRMUser from 'src/crmaccounts/models/CRMUser.model';
 import Pupil from '../../pupils/models/Pupil.model';
-import { prop } from '@typegoose/typegoose';
+import { prop, post } from '@typegoose/typegoose';
 import { Schedule } from './Schedule';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
+import { SearchIndexer } from '../../../SearchIndexer/SearchIndexer';
 
+const Indexer = SearchIndexer.getInstance();
+
+@post<Group>('save', group => {
+    Indexer.indexGroup(group);
+})
+@post<Group>('findOneAndUpdate', group => {
+    Indexer.updateGroup(group);
+})
+@post<Group>('findOneAndDelete', group => {
+    Indexer.deleteGroup(group);
+})
 export class Group extends TimeStamps {
     @prop({ type: String, required: true })
     GROUP_NAME: string;
