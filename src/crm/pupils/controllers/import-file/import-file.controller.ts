@@ -1,11 +1,8 @@
-import { AuthGuard } from 'src/auth/auth.guard';
 import {
     BadRequestException,
     Controller,
     Post,
-    Query,
     UploadedFile,
-    UseGuards,
     UseInterceptors
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -13,7 +10,6 @@ import { ImportFileService } from '../../services/import-file/import-file.servic
 import { MimeTypes } from '../../MimeTypes';
 import { path } from '../../path';
 
-// @UseGuards(AuthGuard)
 @Controller(path)
 export class ImportFileController {
     constructor(private readonly importFileService: ImportFileService) {}

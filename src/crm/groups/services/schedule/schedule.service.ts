@@ -1,4 +1,3 @@
-import moment from 'moment';
 import Pupil from 'src/crm/pupils/models/Pupil.model';
 import { Group } from '../../models/Group.model';
 import { Injectable, NotFoundException } from '@nestjs/common';

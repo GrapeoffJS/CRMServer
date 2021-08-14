@@ -64,10 +64,7 @@ export class PupilManipulationsService {
         ]);
     }
 
-    async deletePupil(
-        groupId: string,
-        pupilId: string
-    ) {
+    async deletePupil(groupId: string, pupilId: string) {
         const group = await this.GroupModel.findById(groupId);
         const pupil = await this.PupilModel.findById(pupilId);
 

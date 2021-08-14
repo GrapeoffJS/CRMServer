@@ -8,7 +8,7 @@ import {
     Post,
     Req,
     UseGuards
-    } from '@nestjs/common';
+} from '@nestjs/common';
 import { NotesService } from '../../services/notes/notes.service';
 import { path } from '../../path';
 
