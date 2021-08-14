@@ -1,12 +1,12 @@
+import moment from 'moment';
 import Pupil from '../../models/Pupil.model';
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePupilDTO } from '../../DTO/CreatePupilDTO';
 import { FilterDTO } from '../../DTO/FilterDTO';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
-import moment from 'moment';
 
 @Injectable()
 export class CrudService {

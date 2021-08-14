@@ -1,10 +1,10 @@
 import CRMUser from 'src/crmaccounts/models/CRMUser.model';
 import moment from 'moment';
 import Pupil from 'src/crm/pupils/models/Pupil.model';
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateGroupDTO } from '../../DTO/CreateGroupDTO';
 import { FilterDTO } from '../../DTO/FilterDTO';
 import { Group } from '../../models/Group.model';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';

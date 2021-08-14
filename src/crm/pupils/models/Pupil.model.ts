@@ -1,14 +1,14 @@
 import { Genders } from './Genders';
 import { Group } from '../../groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
-import { prop, post } from '@typegoose/typegoose';
 import { Note } from './Note';
 import { Payment } from './Payment';
+import { post, prop } from '@typegoose/typegoose';
 import { Schedule } from '../../groups/models/Schedule';
 import { Schema } from 'mongoose';
+import { SearchIndexer } from '../../../SearchIndexer/SearchIndexer';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { Tutor } from './Tutor';
-import { SearchIndexer } from '../../../SearchIndexer/SearchIndexer';
 
 const Indexer = SearchIndexer.getInstance();
 

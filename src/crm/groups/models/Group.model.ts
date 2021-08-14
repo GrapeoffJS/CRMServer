@@ -1,9 +1,9 @@
 import CRMUser from 'src/crmaccounts/models/CRMUser.model';
 import Pupil from '../../pupils/models/Pupil.model';
-import { prop, post } from '@typegoose/typegoose';
+import { post, prop } from '@typegoose/typegoose';
 import { Schedule } from './Schedule';
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { SearchIndexer } from '../../../SearchIndexer/SearchIndexer';
+import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
 const Indexer = SearchIndexer.getInstance();
 
