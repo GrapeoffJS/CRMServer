@@ -1,14 +1,13 @@
 import configModuleOptions from './config/configModuleOptions';
 import getMongoConnectionUri from './config/getMongoConnectionUri';
 import mongoConnectionOptions from './config/mongoConnectionOptions';
-import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CrmaccountsModule } from './crmaccounts/crmaccounts.module';
 import { CrmModule } from './crm/crm.module';
 import { Module } from '@nestjs/common';
 import { SearchModule } from './crm/search/search.module';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { AuthCheckModule } from './auth-check/auth-check.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
     imports: [
@@ -29,10 +28,9 @@ import { AuthCheckModule } from './auth-check/auth-check.module';
             }
         }),
         CrmaccountsModule,
-        AuthModule,
         CrmModule,
         SearchModule,
-        AuthCheckModule
+        AuthenticationModule
     ],
     controllers: [],
     providers: []
