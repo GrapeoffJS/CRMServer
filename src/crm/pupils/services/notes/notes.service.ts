@@ -18,7 +18,11 @@ export class NotesService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
-    async addNote(id: string, text: string, request: Request): Promise<Pupil> {
+    public async addNote(
+        id: string,
+        text: string,
+        request: Request
+    ): Promise<Pupil> {
         const pupil = await this.PupilModel.findById(id);
         const { name, surname, midname } = decode(
             request.headers.authorization.split(' ')[1]
@@ -64,7 +68,7 @@ export class NotesService {
         ]);
     }
 
-    async deleteNote(id: string, number: number): Promise<Pupil> {
+    public async deleteNote(id: string, number: number): Promise<Pupil> {
         const pupil = await this.PupilModel.findById(id);
 
         if (!pupil) {

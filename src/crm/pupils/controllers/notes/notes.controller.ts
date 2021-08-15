@@ -1,5 +1,4 @@
 import Pupil from '../../models/Pupil.model';
-import { AuthGuard } from 'src/auth/auth.guard';
 import {
     Body,
     Controller,
@@ -12,13 +11,12 @@ import {
 import { NotesService } from '../../services/notes/notes.service';
 import { path } from '../../path';
 
-@UseGuards(AuthGuard)
 @Controller(path)
 export class NotesController {
     constructor(private readonly notesService: NotesService) {}
 
     @Post(':id/Notes')
-    async addNote(
+    public async addNote(
         @Req() req,
         @Param('id') id: string,
         @Body('text') text: string
@@ -27,7 +25,7 @@ export class NotesController {
     }
 
     @Delete(':id/Notes/:note_number')
-    async deleteNote(
+    public async deleteNote(
         @Param('id') id: string,
         @Param('note_number') number: string
     ): Promise<Pupil> {

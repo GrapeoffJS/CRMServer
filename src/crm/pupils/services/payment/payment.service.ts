@@ -19,7 +19,7 @@ export class PaymentService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
-    async createPayment(
+    public async createPayment(
         id: string,
         amount: number,
         subscription: string,

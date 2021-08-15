@@ -1,10 +1,8 @@
-import { AuthGuard } from 'src/auth/auth.guard';
 import { Controller, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { Group } from '../../models/Group.model';
 import { path } from '../../path';
 import { TutorManipulationsService } from '../../services/tutor-manipulations/tutor-manipulations.service';
 
-@UseGuards(AuthGuard)
 @Controller(path)
 export class TutorManipulationsController {
     constructor(
@@ -12,7 +10,7 @@ export class TutorManipulationsController {
     ) {}
 
     @Post(':id/Teacher')
-    async addTutor(
+    public async addTutor(
         @Param('id') groupId: string,
         @Query('tutor_id') tutorId: string
     ): Promise<Group> {

@@ -14,7 +14,10 @@ export class ScheduleService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
-    async addGlobalSchedule(id: string, schedule: Schedule[]): Promise<Group> {
+    public async addGlobalSchedule(
+        id: string,
+        schedule: Schedule[]
+    ): Promise<Group> {
         const group = await this.GroupModel.findById(id);
         const pupils = await this.PupilModel.find({ _id: group.PUPILS });
 
@@ -48,7 +51,7 @@ export class ScheduleService {
         ]);
     }
 
-    async updatePupilSchedule(
+    public async updatePupilSchedule(
         groupId: string,
         pupilId: string,
         schedule: Schedule[]

@@ -12,21 +12,21 @@ export class SubscriptionsService {
         private readonly SubscriptionModel: ReturnModelType<typeof Subscription>
     ) {}
 
-    async create(
+    public async create(
         createSubscriptionDTO: CreateSubscriptionDTO
     ): Promise<Subscription> {
         return await this.SubscriptionModel.create(createSubscriptionDTO);
     }
 
-    async findAll(): Promise<Subscription[]> {
+    public async findAll(): Promise<Subscription[]> {
         return await this.SubscriptionModel.find();
     }
 
-    async findById(id: string): Promise<Subscription> {
+    public async findById(id: string): Promise<Subscription> {
         return await this.SubscriptionModel.findById(id);
     }
 
-    async edit(
+    public async edit(
         id: string,
         updateSubscriptionDTO: UpdateSubscriptionDTO
     ): Promise<Subscription> {
@@ -38,7 +38,7 @@ export class SubscriptionsService {
         return await this.SubscriptionModel.findById(id);
     }
 
-    async delete(id: string): Promise<Subscription> {
+    public async delete(id: string): Promise<Subscription> {
         return await this.SubscriptionModel.findByIdAndDelete(id);
     }
 }

@@ -19,7 +19,7 @@ export class PupilManipulationsService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
-    async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
+    public async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
         const group = await this.GroupModel.findById(id);
         const pupils = await this.PupilModel.find({ _id: pupilsToAdd });
 
@@ -64,7 +64,7 @@ export class PupilManipulationsService {
         ]);
     }
 
-    async deletePupil(groupId: string, pupilId: string) {
+    public async deletePupil(groupId: string, pupilId: string) {
         const group = await this.GroupModel.findById(groupId);
         const pupil = await this.PupilModel.findById(pupilId);
 

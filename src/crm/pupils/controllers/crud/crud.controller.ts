@@ -1,5 +1,4 @@
 import Pupil from '../../models/Pupil.model';
-import { AuthGuard } from 'src/auth/auth.guard';
 import {
     Body,
     Controller,
@@ -19,18 +18,17 @@ import { path } from '../../path';
 import { Response } from 'express';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
 
-@UseGuards(AuthGuard)
 @Controller(path)
 export class CrudController {
     constructor(private readonly crudService: CrudService) {}
 
     @Post()
-    async create(@Body() data: CreatePupilDTO): Promise<Pupil> {
+    public async create(@Body() data: CreatePupilDTO): Promise<Pupil> {
         return await this.crudService.create(data);
     }
 
     @Post('/find')
-    async findAll(
+    public async findAll(
         @Query('limit') limit,
         @Query('offset') offset,
         @Body('filters') filters: FilterDTO,
@@ -45,17 +43,17 @@ export class CrudController {
     }
 
     @Get('/:id')
-    async findById(@Param('id') id: string): Promise<Pupil> {
+    public async findById(@Param('id') id: string): Promise<Pupil> {
         return await this.crudService.findById(id);
     }
 
     @Delete('/:id')
-    async delete(@Param('id') id: string): Promise<Pupil> {
+    public async delete(@Param('id') id: string): Promise<Pupil> {
         return await this.crudService.delete(id);
     }
 
     @Patch('/:id')
-    async edit(
+    public async edit(
         @Param('id') id: string,
         @Body() updatePupilDTO: UpdatePupilDTO
     ): Promise<Pupil> {

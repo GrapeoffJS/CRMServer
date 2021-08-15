@@ -17,7 +17,7 @@ export class TutorManipulationsService {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
-    async addTutor(groupId: string, tutorId: string): Promise<Group> {
+    public async addTutor(groupId: string, tutorId: string): Promise<Group> {
         const group = await this.GroupModel.findById(groupId);
         const pupils = await this.PupilModel.find({ _id: group.PUPILS });
 

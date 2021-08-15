@@ -17,7 +17,7 @@ export class CRMAccountsService {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
-    async create(createUserDTO: CreateCRMUserDTO): Promise<CRMUser> {
+    public async create(createUserDTO: CreateCRMUserDTO): Promise<CRMUser> {
         const candidate = {
             ...createUserDTO
         };
@@ -34,7 +34,7 @@ export class CRMAccountsService {
         }
     }
 
-    async findAll(
+    public async findAll(
         limit: number,
         offset: number,
         roles: string[],
@@ -51,7 +51,7 @@ export class CRMAccountsService {
         );
     }
 
-    async findOne(id: string): Promise<CRMUser> {
+    public async findOne(id: string): Promise<CRMUser> {
         const user = await this.CRMUserModel.findById(id).populate(
             'groups',
             '_id GROUP_NAME'
@@ -64,7 +64,7 @@ export class CRMAccountsService {
         return user;
     }
 
-    async delete(login: string): Promise<CRMUser> {
+    public async delete(login: string): Promise<CRMUser> {
         const user = await this.CRMUserModel.findOneAndDelete({
             login: login
         }).populate('groups', '_id GROUP_NAME');

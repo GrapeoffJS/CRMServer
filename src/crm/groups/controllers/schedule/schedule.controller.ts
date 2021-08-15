@@ -1,16 +1,14 @@
-import { AuthGuard } from 'src/auth/auth.guard';
 import { Body, Controller, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { path } from '../../path';
 import { Schedule } from '../../models/Schedule';
 import { ScheduleService } from '../../services/schedule/schedule.service';
 
-@UseGuards(AuthGuard)
 @Controller(path)
 export class ScheduleController {
     constructor(private readonly scheduleService: ScheduleService) {}
 
     @Post(':id/Schedule')
-    async addGlobalSchedule(
+    public async addGlobalSchedule(
         @Param('id') id: string,
         @Body() schedule: Schedule[]
     ) {
@@ -18,7 +16,7 @@ export class ScheduleController {
     }
 
     @Put(':id/Pupils/:pupilId/Schedule')
-    async updatePupilSchedule(
+    public async updatePupilSchedule(
         @Param('id') groupId: string,
         @Param('pupilId') pupilId: string,
         @Body() schedule: Schedule[]

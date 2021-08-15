@@ -14,7 +14,7 @@ export class ImportFileService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
-    async uploadCSV(file: Express.Multer.File) {
+    public async uploadCSV(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];
 
         const csvString = Buffer.from(file.buffer).toString('utf-8');
@@ -49,7 +49,7 @@ export class ImportFileService {
         return;
     }
 
-    async uploadXLSX(file: Express.Multer.File) {
+    public async uploadXLSX(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];
 
         const uploaded = Buffer.from(file.buffer);

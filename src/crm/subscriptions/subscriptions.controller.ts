@@ -18,24 +18,24 @@ export class SubscriptionsController {
     constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
     @Post()
-    async create(
+    public async create(
         @Body() createSubscriptionDTO: CreateSubscriptionDTO
     ): Promise<Subscription> {
         return await this.subscriptionsService.create(createSubscriptionDTO);
     }
 
     @Get()
-    async findAll(): Promise<Subscription[]> {
+    public async findAll(): Promise<Subscription[]> {
         return await this.subscriptionsService.findAll();
     }
 
     @Get(':id')
-    async findById(@Param('id') id: string): Promise<Subscription> {
+    public async findById(@Param('id') id: string): Promise<Subscription> {
         return await this.subscriptionsService.findById(id);
     }
 
     @Patch(':id')
-    async edit(
+    public async edit(
         @Param('id') id: string,
         updateSubscriptionDTO: UpdateSubscriptionDTO
     ): Promise<Subscription> {
@@ -43,7 +43,7 @@ export class SubscriptionsController {
     }
 
     @Delete(':id')
-    async delete(@Param('id') id: string): Promise<Subscription> {
+    public async delete(@Param('id') id: string): Promise<Subscription> {
         return await this.subscriptionsService.delete(id);
     }
 }

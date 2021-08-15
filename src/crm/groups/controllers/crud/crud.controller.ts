@@ -1,4 +1,3 @@
-import { AuthGuard } from '../../../../auth/auth.guard';
 import {
     Body,
     Controller,
@@ -19,25 +18,25 @@ import { Group } from '../../models/Group.model';
 import { path } from '../../path';
 import { Response } from 'express';
 import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
-import { UseGuards } from '@nestjs/common';
 
-@UseGuards(AuthGuard)
 @Controller(path)
 export class CrudController {
     constructor(private readonly crudService: CrudService) {}
 
     @UsePipes(CreateGroupValidationPipe)
     @Post()
-    async create(@Body() createGroupDTO: CreateGroupDTO): Promise<Group> {
+    public async create(
+        @Body() createGroupDTO: CreateGroupDTO
+    ): Promise<Group> {
         return await this.crudService.create(createGroupDTO);
     }
 
     @Post('/getByIds')
-    async findByIds(@Body() ids: string[]): Promise<Group[]> {
+    public async findByIds(@Body() ids: string[]): Promise<Group[]> {
         return await this.crudService.findByIds(ids);
     }
     @Post('/find')
-    async findAll(
+    public async findAll(
         @Query('limit') limit,
         @Query('offset') offset,
         @Body('filters') filters: FilterDTO,
@@ -51,16 +50,16 @@ export class CrudController {
         );
     }
     @Get(':id')
-    async findById(@Param('id') id: string): Promise<Group> {
+    public async findById(@Param('id') id: string): Promise<Group> {
         return await this.crudService.findById(id);
     }
 
     @Delete(':id')
-    async delete(@Param('id') id: string): Promise<Group> {
+    public async delete(@Param('id') id: string): Promise<Group> {
         return await this.crudService.delete(id);
     }
     @Patch(':id')
-    async edit(
+    public async edit(
         @Param('id') id: string,
         @Body() updateGroupDTO: UpdateGroupDTO
     ): Promise<Group> {

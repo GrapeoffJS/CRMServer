@@ -21,7 +21,7 @@ export class CrudService {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
-    async create(createGroupDTO: CreateGroupDTO): Promise<Group> {
+    public async create(createGroupDTO: CreateGroupDTO): Promise<Group> {
         if (createGroupDTO.TUTOR === '') createGroupDTO.TUTOR = null;
 
         const tutor = await this.CRMUserModel.findById(createGroupDTO.TUTOR);
@@ -70,7 +70,12 @@ export class CrudService {
         ]);
     }
 
-    async findAll(limit, offset, filters: FilterDTO, response: Response) {
+    public async findAll(
+        limit,
+        offset,
+        filters: FilterDTO,
+        response: Response
+    ) {
         const result = await this.GroupModel.aggregate(
             this.createFilterPipeline(filters) || [{ $match: {} }]
         )
@@ -103,7 +108,7 @@ export class CrudService {
             );
     }
 
-    async findById(id: string): Promise<Group> {
+    public async findById(id: string): Promise<Group> {
         const group = await this.GroupModel.findById(id);
 
         if (!group) {
@@ -128,7 +133,7 @@ export class CrudService {
         ]);
     }
 
-    async findByIds(ids: string[]): Promise<Group[]> {
+    public async findByIds(ids: string[]): Promise<Group[]> {
         return await this.GroupModel.find({ _id: ids }).populate([
             {
                 path: 'PUPILS',
@@ -147,7 +152,7 @@ export class CrudService {
         ]);
     }
 
-    async delete(id: string): Promise<Group> {
+    public async delete(id: string): Promise<Group> {
         const group = await this.GroupModel.findByIdAndDelete(id);
 
         if (!group) {
@@ -172,7 +177,10 @@ export class CrudService {
         ]);
     }
 
-    async edit(id: string, updateGroupDTO: UpdateGroupDTO): Promise<Group> {
+    public async edit(
+        id: string,
+        updateGroupDTO: UpdateGroupDTO
+    ): Promise<Group> {
         await this.GroupModel.findOneAndUpdate({ _id: id }, updateGroupDTO);
 
         const group = await this.GroupModel.findById(id).populate([

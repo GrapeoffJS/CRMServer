@@ -19,7 +19,7 @@ export class CRMAccountsController {
     constructor(private readonly crmAccountsService: CRMAccountsService) {}
 
     @Get()
-    async findAll(
+    public async findAll(
         @Query('limit') limit: number,
         @Query('offset') offset: number,
         @Query('role') roles: string[],
@@ -34,17 +34,17 @@ export class CRMAccountsController {
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<CRMUser> {
+    public async findOne(@Param('id') id: string): Promise<CRMUser> {
         return await this.crmAccountsService.findOne(id);
     }
 
     @Post()
-    async create(@Body() data: CreateCRMUserDTO): Promise<CRMUser> {
+    public async create(@Body() data: CreateCRMUserDTO): Promise<CRMUser> {
         return await this.crmAccountsService.create(data);
     }
 
     @Delete(':login')
-    async delete(@Param('login') login: string): Promise<CRMUser> {
+    public async delete(@Param('login') login: string): Promise<CRMUser> {
         return await this.crmAccountsService.delete(login);
     }
 }
