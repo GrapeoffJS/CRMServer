@@ -4,6 +4,10 @@ import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SearchIndexer } from './SearchIndexer/SearchIndexer';
+import { config } from 'dotenv';
+import path from 'path';
+
+config({ path: path.join(__dirname, '../', process.env.NODE_ENV + '.env') });
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -18,16 +22,6 @@ async function bootstrap() {
     SearchIndexer.getInstance().connect({
         node: process.env.ELASTIC_SEARCH_URI
     });
-
-    // const SwaggerConfig = new DocumentBuilder()
-    //     .setTitle('DVMN CRM API')
-    //     .setDescription('DevMan CRM Server API Docs')
-    //     .setVersion('1.0.0')
-    //     .addBearerAuth()
-    //     .build();
-
-    // const APIDocsDocument = SwaggerModule.createDocument(app, SwaggerConfig);
-    // SwaggerModule.setup('/api/docs', app, APIDocsDocument);
 
     await app.listen(process.env.PORT || 4200);
 }
