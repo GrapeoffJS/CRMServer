@@ -2,7 +2,9 @@ import { Controller, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { path } from '../../path';
 import { PaymentService } from '../../services/payment/payment.service';
 import { Request } from 'express';
+import { AuthorizationGuard } from '../../../../authorization/authorization.guard';
 
+@UseGuards(AuthorizationGuard)
 @Controller(path)
 export class PaymentController {
     constructor(private readonly paymentService: PaymentService) {}

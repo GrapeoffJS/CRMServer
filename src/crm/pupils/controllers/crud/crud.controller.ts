@@ -17,7 +17,9 @@ import { FilterDTO } from '../../DTO/FilterDTO';
 import { path } from '../../path';
 import { Response } from 'express';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
+import { AuthorizationGuard } from '../../../../authorization/authorization.guard';
 
+@UseGuards(AuthorizationGuard)
 @Controller(path)
 export class CrudController {
     constructor(private readonly crudService: CrudService) {}

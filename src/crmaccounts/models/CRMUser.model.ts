@@ -1,6 +1,6 @@
 import { Group } from '../../crm/groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
-import { prop } from '@typegoose/typegoose';
+import { prop, modelOptions } from '@typegoose/typegoose';
 import { Roles } from './Roles';
 
 export default class CRMUser {

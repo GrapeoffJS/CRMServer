@@ -2,32 +2,34 @@ import CRMUser from 'src/crmaccounts/models/CRMUser.model';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { compare } from 'bcrypt';
-import { sign } from 'jsonwebtoken';
-import { TokenPayload } from './TokenPayload';
+import { compareSync } from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthenticationService {
     constructor(
         @InjectModel(CRMUser)
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>,
-        private readonly ConfigService: ConfigService
+        private readonly ConfigService: ConfigService,
+        private readonly JwtService: JwtService
     ) {}
 
     public async authenticate(login: string, password: string) {
-        const candidate = await this.CRMUserModel.findOne({ login });
+        const candidate = await this.CRMUserModel.findOne({ login }).select(
+            '+password'
+        );
 
         if (!candidate) {
             throw new BadRequestException();
         }
 
-        if (!(await compare(password, candidate.password))) {
+        if (!compareSync(password, candidate.password)) {
             throw new BadRequestException();
         }
 
         return {
-            token: this.generateAccessToken({
+            token: this.JwtService.sign({
                 id: candidate.id,
                 name: candidate.name,
                 surname: candidate.surname,
@@ -35,11 +37,5 @@ export class AuthenticationService {
                 role: candidate.role
             })
         };
-    }
-
-    private generateAccessToken(payload: TokenPayload) {
-        return sign(payload, this.ConfigService.get('JWT_SECRET'), {
-            expiresIn: this.ConfigService.get('JWT_LIFETIME')
-        });
     }
 }

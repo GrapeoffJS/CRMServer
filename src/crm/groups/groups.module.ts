@@ -1,6 +1,6 @@
 import CRMUser from 'src/crmaccounts/models/CRMUser.model';
 import Pupil from 'src/crm/pupils/models/Pupil.model';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CrudController } from './controllers/crud/crud.controller';
 import { CrudService } from './services/crud/crud.service';
 import { Group } from './models/Group.model';
@@ -12,6 +12,7 @@ import { ScheduleService } from './services/schedule/schedule.service';
 import { TutorManipulationsController } from './controllers/tutor-manipulations/tutor-manipulations.controller';
 import { TutorManipulationsService } from './services/tutor-manipulations/tutor-manipulations.service';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
     imports: [
@@ -26,9 +27,21 @@ import { TypegooseModule } from 'nestjs-typegoose';
             },
             {
                 typegooseClass: CRMUser,
-                schemaOptions: { collection: 'CRMAccounts' }
+                schemaOptions: { collection: 'CRMUsers' }
             }
         ]),
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory(configService: ConfigService) {
+                return {
+                    secret: configService.get('JWT_SECRET'),
+                    signOptions: {
+                        expiresIn: configService.get('JWT_LIFETIME')
+                    }
+                };
+            }
+        }),
         ConfigModule
     ],
     controllers: [

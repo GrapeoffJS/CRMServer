@@ -1,6 +1,6 @@
 import CRMUser from 'src/crmaccounts/models/CRMUser.model';
 import Pupil from './models/Pupil.model';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CrudController } from './controllers/crud/crud.controller';
 import { CrudService } from './services/crud/crud.service';
 import { ImportFileController } from './controllers/import-file/import-file.controller';
@@ -11,6 +11,8 @@ import { NotesService } from './services/notes/notes.service';
 import { PaymentController } from './controllers/payment/payment.controller';
 import { PaymentService } from './services/payment/payment.service';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { JwtModule } from '@nestjs/jwt';
+import { Group } from '../groups/models/Group.model';
 
 @Module({
     imports: [
@@ -20,10 +22,26 @@ import { TypegooseModule } from 'nestjs-typegoose';
                 schemaOptions: { collection: 'Pupils' }
             },
             {
+                typegooseClass: Group,
+                schemaOptions: { collection: 'Groups' }
+            },
+            {
                 typegooseClass: CRMUser,
-                schemaOptions: { collection: 'CRMAccounts' }
+                schemaOptions: { collection: 'CRMUsers' }
             }
         ]),
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory(configService: ConfigService) {
+                return {
+                    secret: configService.get('JWT_SECRET'),
+                    signOptions: {
+                        expiresIn: configService.get('JWT_LIFETIME')
+                    }
+                };
+            }
+        }),
         ConfigModule
     ],
     controllers: [

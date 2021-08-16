@@ -6,8 +6,13 @@ export class SearchService {
     constructor(private readonly ElasticService: ElasticsearchService) {}
 
     public search(query: string, tutorId?: string) {
+        const correctedQuery = query
+            .split(' ')
+            .map(item => `*${item.toString()}*`)
+            .join(' ');
+
         return this.ElasticService.search({
-            q: tutorId ? query + ' ' + tutorId : query,
+            q: tutorId ? correctedQuery + ' ' + tutorId : correctedQuery,
             default_operator: 'AND'
         });
     }

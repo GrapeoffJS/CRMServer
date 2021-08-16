@@ -43,7 +43,7 @@ export class ImportFileService {
         }
 
         pupils.forEach(async pupil => {
-            const created = await this.PupilModel.create(pupil);
+            await this.PupilModel.create(pupil);
         });
 
         return;
@@ -78,7 +78,7 @@ export class ImportFileService {
         }
 
         pupils.forEach(async pupil => {
-            const created = await this.PupilModel.create(pupil);
+            await this.PupilModel.create(pupil);
         });
 
         return 'SUCCESS';
