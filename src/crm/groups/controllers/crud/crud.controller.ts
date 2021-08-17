@@ -19,9 +19,7 @@ import { path } from '../../path';
 import { Response } from 'express';
 import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
 import { UseGuards } from '@nestjs/common';
-import { AuthorizationGuard } from '../../../../authorization/authorization.guard';
 
-UseGuards(AuthorizationGuard);
 @Controller(path)
 export class CrudController {
     constructor(private readonly crudService: CrudService) {}

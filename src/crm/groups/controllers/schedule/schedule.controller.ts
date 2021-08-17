@@ -2,9 +2,7 @@ import { Body, Controller, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { path } from '../../path';
 import { Schedule } from '../../models/Schedule';
 import { ScheduleService } from '../../services/schedule/schedule.service';
-import { AuthorizationGuard } from '../../../../authorization/authorization.guard';
 
-@UseGuards(AuthorizationGuard)
 @Controller(path)
 export class ScheduleController {
     constructor(private readonly scheduleService: ScheduleService) {}

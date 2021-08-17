@@ -10,9 +10,7 @@ import {
 } from '@nestjs/common';
 import { NotesService } from '../../services/notes/notes.service';
 import { path } from '../../path';
-import { AuthorizationGuard } from '../../../../authorization/authorization.guard';
 
-@UseGuards(AuthorizationGuard)
 @Controller(path)
 export class NotesController {
     constructor(private readonly notesService: NotesService) {}

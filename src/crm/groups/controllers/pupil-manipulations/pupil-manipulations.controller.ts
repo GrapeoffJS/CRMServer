@@ -8,9 +8,7 @@ import {
 } from '@nestjs/common';
 import { path } from '../../path';
 import { PupilManipulationsService } from '../../services/pupil-manipulations/pupil-manipulations.service';
-import { AuthorizationGuard } from '../../../../authorization/authorization.guard';
 
-@UseGuards(AuthorizationGuard)
 @Controller(path)
 export class PupilManipulationController {
     constructor(

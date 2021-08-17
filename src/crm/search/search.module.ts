@@ -1,9 +1,11 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { SearchController } from './search.controller';
 import { SearchService } from './search.service';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthorizationMiddleware } from '../../authorization/authorization.middleware';
+import { path } from './path';
 
 @Module({
     imports: [
@@ -33,4 +35,8 @@ import { JwtModule } from '@nestjs/jwt';
     controllers: [SearchController],
     providers: [SearchService]
 })
-export class SearchModule {}
+export class SearchModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(AuthorizationMiddleware).forRoutes(path);
+    }
+}
