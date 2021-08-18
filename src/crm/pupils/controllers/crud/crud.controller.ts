@@ -17,7 +17,6 @@ import { FilterDTO } from '../../DTO/FilterDTO';
 import { path } from '../../path';
 import { Response } from 'express';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
-import { PermissionsGuard } from '../../../../access/permissions.guard';
 
 @Controller(path)
 export class CrudController {
@@ -28,7 +27,6 @@ export class CrudController {
         return await this.crudService.create(data);
     }
 
-    @UseGuards(PermissionsGuard)
     @Post('/find')
     public async findAll(
         @Query('limit') limit,

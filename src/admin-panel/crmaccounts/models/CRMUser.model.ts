@@ -34,7 +34,7 @@ export default class CRMUser {
     @prop({ type: () => Array, id: false, required: false, default: [] })
     groupsHistory: GroupsHistoryItem[];
 
-    @prop({ type: () => [ActionPermissions], required: true, default: [] })
+    @prop({ type: () => Array, required: true, default: [] })
     permissions: ActionPermissions[];
 
     public deleteGroup(id: string): void {
