@@ -2,7 +2,7 @@ import configModuleOptions from './config/configModuleOptions';
 import getMongoConnectionUri from './config/getMongoConnectionUri';
 import mongoConnectionOptions from './config/mongoConnectionOptions';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CrmaccountsModule } from './crmaccounts/crmaccounts.module';
+import { CrmaccountsModule } from './admin-panel/crmaccounts/crmaccounts.module';
 import { CrmModule } from './crm/crm.module';
 import { Module } from '@nestjs/common';
 import { SearchModule } from './crm/search/search.module';

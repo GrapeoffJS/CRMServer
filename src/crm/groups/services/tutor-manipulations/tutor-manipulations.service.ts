@@ -1,10 +1,11 @@
-import CRMUser from 'src/crmaccounts/models/CRMUser.model';
+import CRMUser from 'src/admin-panel/crmaccounts/models/CRMUser.model';
 import moment from 'moment';
 import Pupil from 'src/crm/pupils/models/Pupil.model';
 import { Group } from '../../models/Group.model';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
+import { Roles } from '../../../../admin-panel/crmaccounts/models/Roles';
 
 @Injectable()
 export class TutorManipulationsService {
@@ -34,7 +35,7 @@ export class TutorManipulationsService {
 
         const tutor = await this.CRMUserModel.findOne({
             _id: tutorId,
-            role: 'teacher'
+            role: Roles.Teacher
         });
 
         if (!tutor) {

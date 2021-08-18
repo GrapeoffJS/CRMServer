@@ -4,7 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthCheckController } from './auth-check.controller';
 import { AuthorizationMiddleware } from '../authorization/authorization.middleware';
 import { TypegooseModule } from 'nestjs-typegoose';
-import CRMUser from '../crmaccounts/models/CRMUser.model';
+import CRMUser from '../admin-panel/crmaccounts/models/CRMUser.model';
 
 @Module({
     imports: [

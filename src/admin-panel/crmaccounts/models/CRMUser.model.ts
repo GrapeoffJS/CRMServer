@@ -1,7 +1,8 @@
-import { Group } from '../../crm/groups/models/Group.model';
+import { Group } from '../../../crm/groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
-import { prop, modelOptions } from '@typegoose/typegoose';
+import { prop } from '@typegoose/typegoose';
 import { Roles } from './Roles';
+import { ActionPermissions } from './Permissions';
 
 export default class CRMUser {
     @prop({ type: String, required: true })
@@ -32,6 +33,9 @@ export default class CRMUser {
 
     @prop({ type: () => Array, id: false, required: false, default: [] })
     groupsHistory: GroupsHistoryItem[];
+
+    @prop({ type: () => [ActionPermissions], required: true, default: [] })
+    permissions: ActionPermissions[];
 
     public deleteGroup(id: string): void {
         this.groups.splice(this.groups.indexOf(id), 1);

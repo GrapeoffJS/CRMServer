@@ -13,6 +13,7 @@ import { CreateCRMUserDTO } from './DTO/CreateCRMUserDTO';
 import { CRMAccountsService } from './crmaccounts.service';
 import { path } from './path';
 import { Response } from 'express';
+import { Roles } from './models/Roles';
 
 @Controller(path)
 export class CRMAccountsController {
@@ -22,7 +23,7 @@ export class CRMAccountsController {
     public async findAll(
         @Query('limit') limit: number,
         @Query('offset') offset: number,
-        @Query('role') roles: string[],
+        @Query('role') roles: Roles[],
         @Res() response: Response
     ) {
         return await this.crmAccountsService.findAll(

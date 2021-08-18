@@ -1,4 +1,4 @@
-import CRMUser from 'src/crmaccounts/models/CRMUser.model';
+import CRMUser from 'src/admin-panel/crmaccounts/models/CRMUser.model';
 import moment from 'moment';
 import Pupil from '../../models/Pupil.model';
 import {

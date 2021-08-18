@@ -25,5 +25,5 @@ export class CreateCRMUserDTO {
     @IsNotEmpty()
     @IsString()
     @IsEnum(Roles)
-    role: string;
+    role: Roles;
 }

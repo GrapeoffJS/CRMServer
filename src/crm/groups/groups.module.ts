@@ -1,4 +1,4 @@
-import CRMUser from 'src/crmaccounts/models/CRMUser.model';
+import CRMUser from 'src/admin-panel/crmaccounts/models/CRMUser.model';
 import Pupil from 'src/crm/pupils/models/Pupil.model';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CrudController } from './controllers/crud/crud.controller';
