@@ -33,8 +33,7 @@ import { AdminPanelModule } from './admin-panel/admin-panel.module';
         CrmModule,
         SearchModule,
         AuthenticationModule,
-        AuthCheckModule,
-        AdminPanelModule
+        AuthCheckModule
     ],
     controllers: [],
     providers: []

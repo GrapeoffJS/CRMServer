@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { AccountTypes } from '../models/Roles';
+import { AccountTypes } from '../models/AccountTypes';
 
 export class CreateCRMUserDTO {
     @IsNotEmpty()

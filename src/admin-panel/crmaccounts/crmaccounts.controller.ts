@@ -13,7 +13,7 @@ import { CreateCRMUserDTO } from './DTO/CreateCRMUserDTO';
 import { CRMAccountsService } from './crmaccounts.service';
 import { path } from './path';
 import { Response } from 'express';
-import { AccountTypes } from './models/Roles';
+import { AccountTypes } from './models/AccountTypes';
 
 @Controller(path)
 export class CRMAccountsController {

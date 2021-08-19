@@ -9,7 +9,7 @@ import { genSalt, hash } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { AccountTypes } from './models/Roles';
+import { AccountTypes } from './models/AccountTypes';
 
 @Injectable()
 export class CRMAccountsService {

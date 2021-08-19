@@ -26,7 +26,7 @@ export default class CRMUser {
     role: Role;
 
     @prop({
-        type: () => [Group],
+        type: () => [String],
         ref: () => Group,
         required: false,
         default: []

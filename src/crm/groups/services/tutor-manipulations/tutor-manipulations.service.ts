@@ -5,7 +5,7 @@ import { Group } from '../../models/Group.model';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { AccountTypes } from '../../../../admin-panel/crmaccounts/models/Roles';
+import { AccountTypes } from '../../../../admin-panel/crmaccounts/models/AccountTypes';
 
 @Injectable()
 export class TutorManipulationsService {
