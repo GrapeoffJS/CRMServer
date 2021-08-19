@@ -9,6 +9,7 @@ import { SearchModule } from './crm/search/search.module';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AuthCheckModule } from './auth-check/auth-check.module';
+import { AdminPanelModule } from './admin-panel/admin-panel.module';
 
 @Module({
     imports: [
@@ -28,11 +29,12 @@ import { AuthCheckModule } from './auth-check/auth-check.module';
                 };
             }
         }),
-        CrmaccountsModule,
+        AdminPanelModule,
         CrmModule,
         SearchModule,
         AuthenticationModule,
-        AuthCheckModule
+        AuthCheckModule,
+        AdminPanelModule
     ],
     controllers: [],
     providers: []

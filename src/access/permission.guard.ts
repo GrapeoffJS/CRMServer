@@ -10,7 +10,7 @@ export const PermissionGuard = (requiredPermission: ActionPermissions) => {
         ): boolean | Promise<boolean> | Observable<boolean> {
             const permissions = context
                 .switchToHttp()
-                .getRequest<ExtendedRequest>().user.permissions;
+                .getRequest<ExtendedRequest>().user.actionPermissions;
 
             if (!permissions.includes(requiredPermission)) {
                 return false;
