@@ -1,4 +1,6 @@
 import { Controller, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { ActionPermissionsGuard } from 'src/admin-panel/roles/action-permissions.guard';
+import { ActionPermissions } from 'src/admin-panel/roles/models/ActionPermissions';
 import { Group } from '../../models/Group.model';
 import { path } from '../../path';
 import { TutorManipulationsService } from '../../services/tutor-manipulations/tutor-manipulations.service';
@@ -9,6 +11,7 @@ export class TutorManipulationsController {
         private readonly tutorManipulationsService: TutorManipulationsService
     ) {}
 
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanAddTutor))
     @Post(':id/Teacher')
     public async addTutor(
         @Param('id') groupId: string,

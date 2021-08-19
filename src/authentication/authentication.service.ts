@@ -34,7 +34,7 @@ export class AuthenticationService {
                 name: candidate.name,
                 surname: candidate.surname,
                 midname: candidate.midname,
-                role: candidate.role
+                accountType: candidate.accountType
             })
         };
     }

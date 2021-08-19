@@ -17,27 +17,39 @@ const Indexer = SearchIndexer.getInstance();
     Indexer.deleteGroup(group);
 })
 export class Group extends TimeStamps {
-    @prop({ type: String, required: true })
+    @prop({ type: String, required: true, select: false })
     GROUP_NAME: string;
 
-    @prop({ type: Number, required: true })
+    @prop({ type: Number, required: true, select: false })
     PLACES: number;
 
-    @prop({ type: Number, required: true })
+    @prop({ type: Number, required: true, select: false })
     LEVEL: number;
 
     @prop({
         type: String,
         ref: () => CRMUser,
         required: false,
-        default: null
+        default: null,
+        select: false
     })
     TUTOR: string | null;
 
-    @prop({ type: Array, ref: () => Pupil, required: false, default: [] })
+    @prop({
+        type: Array,
+        ref: () => Pupil,
+        required: false,
+        default: [],
+        select: false
+    })
     PUPILS: string[];
 
-    @prop({ type: () => [Schedule], required: false, _id: false })
+    @prop({
+        type: () => [Schedule],
+        required: false,
+        _id: false,
+        select: false
+    })
     GLOBAL_SCHEDULE: Schedule[];
 
     public deletePupil(id: string): void {

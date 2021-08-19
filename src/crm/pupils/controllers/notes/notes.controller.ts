@@ -10,11 +10,14 @@ import {
 } from '@nestjs/common';
 import { NotesService } from '../../services/notes/notes.service';
 import { path } from '../../path';
+import { ActionPermissionsGuard } from 'src/admin-panel/roles/action-permissions.guard';
+import { ActionPermissions } from 'src/admin-panel/roles/models/ActionPermissions';
 
 @Controller(path)
 export class NotesController {
     constructor(private readonly notesService: NotesService) {}
 
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreateNote))
     @Post(':id/Notes')
     public async addNote(
         @Req() req,
@@ -24,6 +27,7 @@ export class NotesController {
         return await this.notesService.addNote(id, text, req);
     }
 
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteNote))
     @Delete(':id/Notes/:note_number')
     public async deleteNote(
         @Param('id') id: string,

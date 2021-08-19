@@ -6,8 +6,10 @@ import {
     Post,
     UseGuards
 } from '@nestjs/common';
+import { ActionPermissionsGuard } from 'src/admin-panel/roles/action-permissions.guard';
 import { path } from '../../path';
 import { PupilManipulationsService } from '../../services/pupil-manipulations/pupil-manipulations.service';
+import { ActionPermissions } from '../../../../admin-panel/roles/models/ActionPermissions';
 
 @Controller(path)
 export class PupilManipulationController {
@@ -15,6 +17,7 @@ export class PupilManipulationController {
         private readonly pupilManipulationsService: PupilManipulationsService
     ) {}
 
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanAddPupilsToGroup))
     @Post(':id/Pupils')
     public async addPupils(
         @Param('id') id: string,
@@ -23,6 +26,7 @@ export class PupilManipulationController {
         return await this.pupilManipulationsService.addPupils(id, pupilsToAdd);
     }
 
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteGroupPupils))
     @Delete(':id/Pupils/:pupilId')
     public async deletePupil(
         @Param('id') id: string,

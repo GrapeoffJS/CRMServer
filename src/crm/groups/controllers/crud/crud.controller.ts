@@ -19,11 +19,14 @@ import { path } from '../../path';
 import { Response } from 'express';
 import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
 import { UseGuards } from '@nestjs/common';
+import { ActionPermissionsGuard } from '../../../../admin-panel/roles/action-permissions.guard';
+import { ActionPermissions } from 'src/admin-panel/roles/models/ActionPermissions';
 
 @Controller(path)
 export class CrudController {
     constructor(private readonly crudService: CrudService) {}
 
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreateGroup))
     @UsePipes(CreateGroupValidationPipe)
     @Post()
     public async create(
@@ -32,10 +35,13 @@ export class CrudController {
         return await this.crudService.create(createGroupDTO);
     }
 
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanGetGroupsList))
     @Post('/getByIds')
     public async findByIds(@Body() ids: string[]): Promise<Group[]> {
         return await this.crudService.findByIds(ids);
     }
+
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanGetGroupsList))
     @Post('/find')
     public async findAll(
         @Query('limit') limit,
@@ -50,15 +56,20 @@ export class CrudController {
             response
         );
     }
+
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSeeGroupPage))
     @Get(':id')
     public async findById(@Param('id') id: string): Promise<Group> {
         return await this.crudService.findById(id);
     }
 
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteGroup))
     @Delete(':id')
     public async delete(@Param('id') id: string): Promise<Group> {
         return await this.crudService.delete(id);
     }
+
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanEditGroup))
     @Patch(':id')
     public async edit(
         @Param('id') id: string,

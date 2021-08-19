@@ -2,11 +2,14 @@ import { Body, Controller, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { path } from '../../path';
 import { Schedule } from '../../models/Schedule';
 import { ScheduleService } from '../../services/schedule/schedule.service';
+import { ActionPermissionsGuard } from 'src/admin-panel/roles/action-permissions.guard';
+import { ActionPermissions } from 'src/admin-panel/roles/models/ActionPermissions';
 
 @Controller(path)
 export class ScheduleController {
     constructor(private readonly scheduleService: ScheduleService) {}
 
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSetGroupSchedule))
     @Post(':id/Schedule')
     public async addGlobalSchedule(
         @Param('id') id: string,
@@ -15,6 +18,12 @@ export class ScheduleController {
         return await this.scheduleService.addGlobalSchedule(id, schedule);
     }
 
+    @UseGuards(
+        ActionPermissionsGuard(
+            ActionPermissions.CanUpdatePupilSchedule,
+            ActionPermissions.CanCreatePayment
+        )
+    )
     @Put(':id/Pupils/:pupilId/Schedule')
     public async updatePupilSchedule(
         @Param('id') groupId: string,

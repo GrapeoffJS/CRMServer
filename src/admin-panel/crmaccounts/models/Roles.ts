@@ -1,4 +1,4 @@
-export enum Roles {
+export enum AccountTypes {
     Admin = 'admin',
     Manager = 'manager',
     Teacher = 'teacher',

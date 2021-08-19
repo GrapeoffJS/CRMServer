@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { Roles } from '../models/Roles';
+import { AccountTypes } from '../models/Roles';
 
 export class CreateCRMUserDTO {
     @IsNotEmpty()
@@ -24,6 +24,8 @@ export class CreateCRMUserDTO {
 
     @IsNotEmpty()
     @IsString()
-    @IsEnum(Roles)
-    role: Roles;
+    role: string;
+
+    @IsEnum(AccountTypes)
+    accountType: AccountTypes;
 }

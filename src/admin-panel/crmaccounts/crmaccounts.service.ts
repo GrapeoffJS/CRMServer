@@ -9,6 +9,7 @@ import { genSalt, hash } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
+import { AccountTypes } from './models/Roles';
 
 @Injectable()
 export class CRMAccountsService {
@@ -28,7 +29,10 @@ export class CRMAccountsService {
         candidate.password = passwordHash;
 
         try {
-            return await this.CRMUserModel.create(candidate);
+            return await this.CRMUserModel.create({
+                ...candidate,
+                role: createUserDTO.role
+            });
         } catch (err) {
             throw new BadRequestException('USER_WITH_THIS_LOGIN_EXISTS');
         }
@@ -37,18 +41,20 @@ export class CRMAccountsService {
     public async findAll(
         limit: number,
         offset: number,
-        roles: string[],
+        accountTypes: AccountTypes[],
         response: Response
     ) {
-        await this.CRMUserModel.find({ role: { $in: roles } }).countDocuments(
-            async (err, count) => {
-                return response.header('Count', count.toString()).json(
-                    await this.CRMUserModel.find({ role: { $in: roles } })
-                        .skip(offset || 0)
-                        .limit(limit || 0)
-                );
-            }
-        );
+        await this.CRMUserModel.find({
+            accountType: { $in: accountTypes }
+        }).countDocuments(async (err, count) => {
+            return response.header('Count', count.toString()).json(
+                await this.CRMUserModel.find({
+                    accountType: { $in: accountTypes }
+                })
+                    .skip(offset || 0)
+                    .limit(limit || 0)
+            );
+        });
     }
 
     public async findOne(id: string): Promise<CRMUser> {

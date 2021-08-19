@@ -1,9 +1,14 @@
 export enum ActionPermissions {
     CanCreateGroup,
     CanEditGroup,
-    CanRemoveGroup,
+    CanDeleteGroup,
     CanGetGroupsList,
     CanSeeGroupPage,
+    CanSetGroupSchedule,
+    CanUpdatePupilSchedule,
+    CanAddPupilsToGroup,
+    CanDeleteGroupPupils,
+    CanAddTutor,
     CanCreatePupil,
     CanEditPupil,
     CanDeletePupil,
@@ -12,5 +17,6 @@ export enum ActionPermissions {
     CanImportFile,
     CanCreatePayment,
     CanCreateNote,
+    CanDeleteNote,
     CanUseSearch
 }
