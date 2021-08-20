@@ -11,6 +11,9 @@ import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { AccountTypes } from './models/AccountTypes';
 import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
+import { PopulateOptions } from 'mongoose';
+import { Role } from '../roles/models/Role.model';
+import { path } from '../roles/path';
 
 @Injectable()
 export class CRMAccountsService {
@@ -52,6 +55,7 @@ export class CRMAccountsService {
                 await this.CRMUserModel.find({
                     accountType: { $in: accountTypes }
                 })
+                    .populate('role')
                     .skip(offset || 0)
                     .limit(limit || 0)
             );
@@ -59,10 +63,16 @@ export class CRMAccountsService {
     }
 
     public async findOne(id: string): Promise<CRMUser> {
-        const user = await this.CRMUserModel.findById(id).populate(
-            'groups',
-            '_id GROUP_NAME'
-        );
+        const user = await this.CRMUserModel.findById(id).populate([
+            {
+                path: 'groups',
+                select: '_id GROUP_NAME'
+            },
+            {
+                path: 'role',
+                model: Role
+            }
+        ]);
 
         if (!user) {
             throw new NotFoundException();
@@ -95,7 +105,12 @@ export class CRMAccountsService {
         user.role = role || user.role;
         user.accountType = accountType || user.accountType;
 
-        return await user.save();
+        const savedUser = await user.save();
+
+        return await this.CRMUserModel.populate(savedUser, {
+            path: 'role',
+            model: Role
+        } as PopulateOptions);
     }
 
     public async delete(login: string): Promise<CRMUser> {
