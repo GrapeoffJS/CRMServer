@@ -21,11 +21,12 @@ export class AuthorizationMiddleware implements NestMiddleware {
         const token = req.headers.authorization.split(' ')[1];
 
         try {
-            const { id, accountType, name, surname, midname } =
+            const { id, login, accountType, name, surname, midname } =
                 await this.JwtService.verifyAsync<TokenPayload>(token);
 
             const user = await this.CRMUserModel.findOne({
                 _id: id,
+                login,
                 accountType,
                 name,
                 surname,

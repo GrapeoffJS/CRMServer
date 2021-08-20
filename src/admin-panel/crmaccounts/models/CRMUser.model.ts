@@ -2,6 +2,7 @@ import { Group } from '../../../crm/groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
 import { prop } from '@typegoose/typegoose';
 import { Role } from 'src/admin-panel/roles/models/Role.model';
+import { AccountTypes } from './AccountTypes';
 
 export default class CRMUser {
     @prop({ type: String, required: true })
@@ -19,11 +20,11 @@ export default class CRMUser {
     @prop({ type: String, select: false, required: true })
     password: string;
 
-    @prop({ type: String, required: true })
-    accountType: string;
+    @prop({ type: String, enum: AccountTypes, required: true })
+    accountType: AccountTypes;
 
     @prop({ type: Role, ref: () => Role, required: true })
-    role: Role;
+    role: string | Role;
 
     @prop({
         type: () => [String],

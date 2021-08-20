@@ -5,6 +5,7 @@ import {
     Delete,
     Get,
     Param,
+    Patch,
     Post,
     Query,
     Res
@@ -14,6 +15,8 @@ import { CRMAccountsService } from './crmaccounts.service';
 import { path } from './path';
 import { Response } from 'express';
 import { AccountTypes } from './models/AccountTypes';
+import { identity } from 'lodash';
+import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
 
 @Controller(path)
 export class CRMAccountsController {
@@ -40,8 +43,18 @@ export class CRMAccountsController {
     }
 
     @Post()
-    public async create(@Body() data: CreateCRMUserDTO): Promise<CRMUser> {
-        return await this.crmAccountsService.create(data);
+    public async create(
+        @Body() createUserDTO: CreateCRMUserDTO
+    ): Promise<CRMUser> {
+        return await this.crmAccountsService.create(createUserDTO);
+    }
+
+    @Patch(':id')
+    public async edit(
+        @Param('id') id: string,
+        @Body() updateCRMUserDTO: UpdateCRMUserDTO
+    ) {
+        return await this.crmAccountsService.edit(id, updateCRMUserDTO);
     }
 
     @Delete(':login')

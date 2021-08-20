@@ -31,6 +31,7 @@ export class AuthenticationService {
         return {
             token: this.JwtService.sign({
                 id: candidate.id,
+                login: candidate.login,
                 name: candidate.name,
                 surname: candidate.surname,
                 midname: candidate.midname,
