@@ -21,6 +21,8 @@ import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
 import { UseGuards } from '@nestjs/common';
 import { ActionPermissionsGuard } from '../../../../admin-panel/roles/action-permissions.guard';
 import { ActionPermissions } from 'src/admin-panel/roles/models/ActionPermissions';
+import { GetDataPermissions } from '../../../../admin-panel/roles/GetDataPermissions.decorator';
+import { DataPermissions } from '../../../../admin-panel/roles/models/DataPermissions';
 
 @Controller(path)
 export class CrudController {
@@ -37,8 +39,11 @@ export class CrudController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanGetGroupsList))
     @Post('/getByIds')
-    public async findByIds(@Body() ids: string[]): Promise<Group[]> {
-        return await this.crudService.findByIds(ids);
+    public async findByIds(
+        @Body() ids: string[],
+        @GetDataPermissions() dataPermissions: DataPermissions[]
+    ): Promise<Group[]> {
+        return await this.crudService.findByIds(ids, dataPermissions);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanGetGroupsList))
@@ -47,34 +52,43 @@ export class CrudController {
         @Query('limit') limit,
         @Query('offset') offset,
         @Body('filters') filters: FilterDTO,
-        @Res() response: Response
+        @Res() response: Response,
+        @GetDataPermissions() dataPermissions: DataPermissions[]
     ) {
         return await this.crudService.findAll(
             Number(limit) || 0,
             Number(offset) || 0,
             filters,
-            response
+            response,
+            dataPermissions
         );
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSeeGroupPage))
     @Get(':id')
-    public async findById(@Param('id') id: string): Promise<Group> {
-        return await this.crudService.findById(id);
+    public async findById(
+        @Param('id') id: string,
+        @GetDataPermissions() dataPermissions: DataPermissions[]
+    ): Promise<Group> {
+        return await this.crudService.findById(id, dataPermissions);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteGroup))
     @Delete(':id')
-    public async delete(@Param('id') id: string): Promise<Group> {
-        return await this.crudService.delete(id);
+    public async delete(
+        @Param('id') id: string,
+        @GetDataPermissions() dataPermissions: DataPermissions[]
+    ): Promise<Group> {
+        return await this.crudService.delete(id, dataPermissions);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanEditGroup))
     @Patch(':id')
     public async edit(
         @Param('id') id: string,
-        @Body() updateGroupDTO: UpdateGroupDTO
+        @Body() updateGroupDTO: UpdateGroupDTO,
+        @GetDataPermissions() dataPermissions: DataPermissions[]
     ): Promise<Group> {
-        return await this.crudService.edit(id, updateGroupDTO);
+        return await this.crudService.edit(id, updateGroupDTO, dataPermissions);
     }
 }

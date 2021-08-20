@@ -6,9 +6,14 @@ export enum DataPermissions {
     CanSeeDiscord = '+discord',
     CanSeePaymentHistory = '+paymentHistory',
     CanSeeNotes = '+notes',
+    CanSeeGroupsHistory = '+groupsHistory',
+    CanSeeGroupsList = '+groups',
+    CanSeeTutors = '+tutors',
     CanSeeSchedule = '+localSchedule',
     CanSeeGroupName = '+GROUP_NAME',
+    CanSeeGroupLevel = '+LEVEL',
     CanSeeGroupTutor = '+TUTOR',
     CanSeeGroupPupils = '+PUPILS',
+    CanSeeGroupPlaces = '+PLACES',
     CanSeeGroupSchedule = '+GLOBAL_SCHEDULE'
 }

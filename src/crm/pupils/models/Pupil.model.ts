@@ -73,7 +73,13 @@ export default class Pupil extends TimeStamps {
     @prop({ type: () => [Note], required: false, _id: false, select: false })
     notes: Note[];
 
-    @prop({ type: () => Array, _id: false, required: false, default: [] })
+    @prop({
+        type: () => Array,
+        _id: false,
+        required: false,
+        default: [],
+        select: false
+    })
     groupsHistory: GroupsHistoryItem[];
 
     @prop({

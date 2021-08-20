@@ -1,1 +1,1 @@
-export const path = '/CRMAccounts';
+export const path = '/AdminPanel/CRMAccounts';

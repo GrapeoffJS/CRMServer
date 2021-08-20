@@ -9,6 +9,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
+import { DataPermissions } from '../../../../admin-panel/roles/models/DataPermissions';
 
 @Injectable()
 export class CrudService {
@@ -74,10 +75,55 @@ export class CrudService {
         limit,
         offset,
         filters: FilterDTO,
-        response: Response
+        response: Response,
+        dataPermissions: DataPermissions[]
     ) {
+        const permissionsFilter = {
+            $project: {
+                GROUP_NAME:
+                    dataPermissions.findIndex(
+                        permission => permission === '+GROUP_NAME'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                LEVEL:
+                    dataPermissions.findIndex(
+                        permission => permission === '+LEVEL'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                PLACES:
+                    dataPermissions.findIndex(
+                        permission => permission === '+PLACES'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                TUTOR:
+                    dataPermissions.findIndex(
+                        permission => permission === '+TUTOR'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                PUPILS:
+                    dataPermissions.findIndex(
+                        permission => permission === '+PUPILS'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                GLOBAL_SCHEDULE:
+                    dataPermissions.findIndex(
+                        permission => permission === '+GLOBAL_SCHEDULE'
+                    ) !== -1
+                        ? 1
+                        : undefined
+            }
+        };
+
         const result = await this.GroupModel.aggregate(
-            this.createFilterPipeline(filters) || [{ $match: {} }]
+            this.createFilterPipeline(filters)?.concat(permissionsFilter) || [
+                { $match: {} },
+                permissionsFilter
+            ]
         )
             .skip(offset)
             .limit(limit);
@@ -108,8 +154,13 @@ export class CrudService {
             );
     }
 
-    public async findById(id: string): Promise<Group> {
-        const group = await this.GroupModel.findById(id);
+    public async findById(
+        id: string,
+        dataPermissions: DataPermissions[]
+    ): Promise<Group> {
+        const group = await this.GroupModel.findById(id).select(
+            dataPermissions.join(' ')
+        );
 
         if (!group) {
             throw new NotFoundException();
@@ -133,27 +184,37 @@ export class CrudService {
         ]);
     }
 
-    public async findByIds(ids: string[]): Promise<Group[]> {
-        return await this.GroupModel.find({ _id: ids }).populate([
-            {
-                path: 'PUPILS',
-                populate: {
-                    path: 'groups',
-                    select: '_id GROUP_NAME'
+    public async findByIds(
+        ids: string[],
+        dataPermissions: DataPermissions[]
+    ): Promise<Group[]> {
+        return await this.GroupModel.find({ _id: ids })
+            .select(dataPermissions.join(' '))
+            .populate([
+                {
+                    path: 'PUPILS',
+                    populate: {
+                        path: 'groups',
+                        select: '_id GROUP_NAME'
+                    }
+                },
+                {
+                    path: 'TUTOR',
+                    populate: {
+                        path: 'groups',
+                        select: '_id GROUP_NAME'
+                    }
                 }
-            },
-            {
-                path: 'TUTOR',
-                populate: {
-                    path: 'groups',
-                    select: '_id GROUP_NAME'
-                }
-            }
-        ]);
+            ]);
     }
 
-    public async delete(id: string): Promise<Group> {
-        const group = await this.GroupModel.findByIdAndDelete(id);
+    public async delete(
+        id: string,
+        dataPermissions: DataPermissions[]
+    ): Promise<Group> {
+        const group = await this.GroupModel.findByIdAndDelete(id).select(
+            dataPermissions.join(' ')
+        );
 
         if (!group) {
             throw new NotFoundException();
@@ -179,26 +240,29 @@ export class CrudService {
 
     public async edit(
         id: string,
-        updateGroupDTO: UpdateGroupDTO
+        updateGroupDTO: UpdateGroupDTO,
+        dataPermissions: DataPermissions[]
     ): Promise<Group> {
         await this.GroupModel.findOneAndUpdate({ _id: id }, updateGroupDTO);
 
-        const group = await this.GroupModel.findById(id).populate([
-            {
-                path: 'PUPILS',
-                populate: {
-                    path: 'groups',
-                    select: '_id GROUP_NAME'
+        const group = await this.GroupModel.findById(id)
+            .select(dataPermissions.join(' '))
+            .populate([
+                {
+                    path: 'PUPILS',
+                    populate: {
+                        path: 'groups',
+                        select: '_id GROUP_NAME'
+                    }
+                },
+                {
+                    path: 'TUTOR',
+                    populate: {
+                        path: 'groups',
+                        select: '_id GROUP_NAME'
+                    }
                 }
-            },
-            {
-                path: 'TUTOR',
-                populate: {
-                    path: 'groups',
-                    select: '_id GROUP_NAME'
-                }
-            }
-        ]);
+            ]);
 
         return group;
     }

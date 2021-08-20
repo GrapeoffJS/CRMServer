@@ -1,10 +1,4 @@
-import {
-    IsOptional,
-    IsNotEmpty,
-    IsString,
-    IsEnum,
-    IsArray
-} from 'class-validator';
+import { IsOptional, IsNotEmpty, IsString, IsEnum } from 'class-validator';
 import { ActionPermissions } from '../models/ActionPermissions';
 import { DataPermissions } from '../models/DataPermissions';
 
@@ -12,13 +6,13 @@ export class UpdateRoleDTO {
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    name: string;
+    name?: string;
 
-    @IsArray()
+    @IsOptional()
     @IsEnum(ActionPermissions, { each: true })
-    actionPermissions: ActionPermissions[];
+    actionPermissions?: ActionPermissions[];
 
-    @IsArray()
-    @IsEnum(DataPermissions)
-    dataPermissions: DataPermissions[];
+    @IsOptional()
+    @IsEnum(DataPermissions, { each: true })
+    dataPermissions?: DataPermissions[];
 }

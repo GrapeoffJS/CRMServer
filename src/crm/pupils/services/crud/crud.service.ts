@@ -7,6 +7,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
+import { DataPermissions } from 'src/admin-panel/roles/models/DataPermissions';
 
 @Injectable()
 export class CrudService {
@@ -24,10 +25,88 @@ export class CrudService {
         limit: number,
         offset: number,
         filters: FilterDTO,
-        response: Response
+        response: Response,
+        dataPermissions: DataPermissions[]
     ) {
+        const permissionsFilter = {
+            $project: {
+                name: 1,
+                surname: 1,
+                midname: 1,
+                phone:
+                    dataPermissions.findIndex(
+                        permission => permission === '+phone'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                parentPhone:
+                    dataPermissions.findIndex(
+                        permission => permission === '+parentPhone'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                parentNSM:
+                    dataPermissions.findIndex(
+                        permission => permission === '+parentNSM'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                balance:
+                    dataPermissions.findIndex(
+                        permission => permission === '+balance'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                discord:
+                    dataPermissions.findIndex(
+                        permission => permission === '+discord'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                paymentHistory:
+                    dataPermissions.findIndex(
+                        permission => permission === '+paymentHistory'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                notes:
+                    dataPermissions.findIndex(
+                        permission => permission === '+notes'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                groups:
+                    dataPermissions.findIndex(
+                        permission => permission === '+groups'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                groupsHistory:
+                    dataPermissions.findIndex(
+                        permission => permission === '+groupsHistory'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                tutors:
+                    dataPermissions.findIndex(
+                        permission => permission === '+tutors'
+                    ) !== -1
+                        ? 1
+                        : undefined,
+                localSchedule:
+                    dataPermissions.findIndex(
+                        permission => permission === '+localSchedule'
+                    ) !== -1
+                        ? 1
+                        : undefined
+            }
+        };
+
         const result = await this.PupilModel.aggregate(
-            this.createFilterPipeline(filters) || [{ $match: {} }]
+            this.createFilterPipeline(filters)?.concat(permissionsFilter) || [
+                { $match: {} },
+                permissionsFilter
+            ]
         )
             .skip(offset)
             .limit(limit);
@@ -49,29 +128,34 @@ export class CrudService {
             .json(populated);
     }
 
-    public async findById(id: string): Promise<Pupil> {
-        const pupil = await this.PupilModel.findById(id).populate([
-            {
-                path: 'groups',
-                select: '_id GROUP_NAME TUTOR',
-                populate: {
-                    path: 'TUTOR'
-                }
-            },
-            {
-                path: 'tutors',
-                populate: [
-                    {
-                        path: 'tutor',
-                        select: '_id name surname midname'
-                    },
-                    {
-                        path: 'group',
-                        select: '_id GROUP_NAME'
+    public async findById(
+        id: string,
+        dataPermissions: DataPermissions[]
+    ): Promise<Pupil> {
+        const pupil = await this.PupilModel.findById(id)
+            .select(dataPermissions.join(' '))
+            .populate([
+                {
+                    path: 'groups',
+                    select: '_id GROUP_NAME TUTOR',
+                    populate: {
+                        path: 'TUTOR'
                     }
-                ]
-            }
-        ]);
+                },
+                {
+                    path: 'tutors',
+                    populate: [
+                        {
+                            path: 'tutor',
+                            select: '_id name surname midname'
+                        },
+                        {
+                            path: 'group',
+                            select: '_id GROUP_NAME'
+                        }
+                    ]
+                }
+            ]);
 
         if (!pupil) {
             throw new NotFoundException();
@@ -80,11 +164,16 @@ export class CrudService {
         return pupil;
     }
 
-    public async delete(id: string): Promise<Pupil> {
-        const pupil = await this.PupilModel.findByIdAndDelete(id).populate({
-            path: 'groups',
-            select: '_id GROUP_NAME'
-        });
+    public async delete(
+        id: string,
+        dataPermissions: DataPermissions[]
+    ): Promise<Pupil> {
+        const pupil = await this.PupilModel.findByIdAndDelete(id)
+            .select(dataPermissions.join(' '))
+            .populate({
+                path: 'groups',
+                select: '_id GROUP_NAME'
+            });
 
         if (!pupil) {
             throw new NotFoundException();
@@ -95,32 +184,35 @@ export class CrudService {
 
     public async edit(
         id: string,
-        updatePupilDTO: UpdatePupilDTO
+        updatePupilDTO: UpdatePupilDTO,
+        dataPermissions: DataPermissions[]
     ): Promise<Pupil> {
         await this.PupilModel.findOneAndUpdate({ _id: id }, updatePupilDTO);
 
-        const pupil = await this.PupilModel.findById(id).populate([
-            {
-                path: 'groups',
-                select: '_id GROUP_NAME TUTOR',
-                populate: {
-                    path: 'TUTOR'
-                }
-            },
-            {
-                path: 'tutors',
-                populate: [
-                    {
-                        path: 'tutor',
-                        select: '_id name surname midname'
-                    },
-                    {
-                        path: 'group',
-                        select: '_id GROUP_NAME'
+        const pupil = await this.PupilModel.findById(id)
+            .select(dataPermissions.join(' '))
+            .populate([
+                {
+                    path: 'groups',
+                    select: '_id GROUP_NAME TUTOR',
+                    populate: {
+                        path: 'TUTOR'
                     }
-                ]
-            }
-        ]);
+                },
+                {
+                    path: 'tutors',
+                    populate: [
+                        {
+                            path: 'tutor',
+                            select: '_id name surname midname'
+                        },
+                        {
+                            path: 'group',
+                            select: '_id GROUP_NAME'
+                        }
+                    ]
+                }
+            ]);
 
         return pupil;
     }

@@ -38,7 +38,7 @@ export class AuthorizationMiddleware implements NestMiddleware {
             if (!user) return res.sendStatus(401);
 
             req.user = user;
-            
+
             next();
         } catch (err) {
             return res.sendStatus(401);

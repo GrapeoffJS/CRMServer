@@ -34,20 +34,17 @@ export class RolesService {
         if (!role) {
             throw new NotFoundException();
         }
+
+        return await this.RoleModel.findById(id);
     }
 
-    public async edit(
-        id: string,
-        { name, actionPermissions, dataPermissions }: UpdateRoleDTO
-    ) {
-        const role = await this.RoleModel.findByIdAndUpdate(id, {
-            name,
-            actionPermissions,
-            dataPermissions
-        });
+    public async edit(id: string, updateRoleDTO: UpdateRoleDTO) {
+        const role = await this.RoleModel.findByIdAndUpdate(id, updateRoleDTO);
 
         if (!role) {
             throw new NotFoundException();
         }
+
+        return await this.RoleModel.findById(id);
     }
 }
