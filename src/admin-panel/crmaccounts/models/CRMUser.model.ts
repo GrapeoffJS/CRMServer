@@ -24,7 +24,7 @@ export default class CRMUser {
     accountType: AccountTypes;
 
     @prop({ type: Role, ref: () => Role, required: true })
-    role: string | Role;
+    role: Role | string;
 
     @prop({
         type: () => [String],
