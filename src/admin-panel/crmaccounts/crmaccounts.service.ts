@@ -13,6 +13,7 @@ import { AccountTypes } from './models/AccountTypes';
 import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
 import { PopulateOptions } from 'mongoose';
 import { Role } from '../roles/models/Role.model';
+import useRealTimers = jest.useRealTimers;
 
 @Injectable()
 export class CRMAccountsService {
@@ -88,8 +89,6 @@ export class CRMAccountsService {
             surname,
             midname,
             role,
-            login,
-            password,
             accountType,
             localActionPermissions,
             localDataPermissions
@@ -104,12 +103,17 @@ export class CRMAccountsService {
         user.name = name || user.name;
         user.surname = surname || user.surname;
         user.midname = midname || user.surname;
-        user.login = login || user.login;
-        user.password = password
-            ? hashSync(password, genSaltSync())
-            : user.password;
-        user.role = role || user.role;
         user.accountType = accountType || user.accountType;
+
+        if (localDataPermissions && localActionPermissions) {
+            user.localActionPermissions = localActionPermissions;
+            user.localDataPermissions = localDataPermissions;
+            user.role = null;
+        } else if (role) {
+            user.role = role;
+            user.localActionPermissions = null;
+            user.localDataPermissions = null;
+        }
 
         const savedUser = await user.save();
 

@@ -25,7 +25,7 @@ export default class CRMUser {
     @prop({ type: String, enum: AccountTypes, required: true })
     accountType: AccountTypes;
 
-    @prop({ type: Role, ref: () => Role, required: true })
+    @prop({ type: Role, ref: () => Role, required: false, default: null })
     role: Role | string | null;
 
     @prop({ type: Array, required: false, default: null })
