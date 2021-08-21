@@ -3,6 +3,8 @@ import { GroupsHistoryItem } from './GroupsHistoryItem';
 import { prop } from '@typegoose/typegoose';
 import { Role } from 'src/admin-panel/roles/models/Role.model';
 import { AccountTypes } from './AccountTypes';
+import { ActionPermissions } from '../../roles/models/ActionPermissions';
+import { DataPermissions } from '../../roles/models/DataPermissions';
 
 export default class CRMUser {
     @prop({ type: String, required: true })
@@ -24,7 +26,13 @@ export default class CRMUser {
     accountType: AccountTypes;
 
     @prop({ type: Role, ref: () => Role, required: true })
-    role: Role | string;
+    role: Role | string | null;
+
+    @prop({ type: Array, required: false, default: null })
+    localActionPermissions: ActionPermissions[];
+
+    @prop({ type: Array, required: false, default: null })
+    localDataPermissions: DataPermissions[];
 
     @prop({
         type: () => [String],

@@ -11,10 +11,13 @@ export const ActionPermissionsGuard = (
         canActivate(
             context: ExecutionContext
         ): boolean | Promise<boolean> | Observable<boolean> {
-            const role = context.switchToHttp().getRequest<ExtendedRequest>()
-                .user.role as Role;
+            const user = context
+                .switchToHttp()
+                .getRequest<ExtendedRequest>().user;
 
-            const actionPermissions = role.actionPermissions;
+            const actionPermissions =
+                (user.role as Role).actionPermissions ||
+                user.localActionPermissions;
 
             for (let i = 0; i < requiredActionPermissions.length; i++) {
                 if (!actionPermissions.includes(requiredActionPermissions[i]))

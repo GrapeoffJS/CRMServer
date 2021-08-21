@@ -4,9 +4,8 @@ import { Role } from './models/Role.model';
 
 export const GetDataPermissions = createParamDecorator(
     (data: any, context: ExecutionContext) => {
-        const role = context.switchToHttp().getRequest<ExtendedRequest>().user
-            .role as Role;
+        const user = context.switchToHttp().getRequest<ExtendedRequest>().user;
 
-        return role.dataPermissions;
+        return (user.role as Role).dataPermissions || user.localDataPermissions;
     }
 );

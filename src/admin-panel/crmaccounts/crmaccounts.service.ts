@@ -13,7 +13,6 @@ import { AccountTypes } from './models/AccountTypes';
 import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
 import { PopulateOptions } from 'mongoose';
 import { Role } from '../roles/models/Role.model';
-import { path } from '../roles/path';
 
 @Injectable()
 export class CRMAccountsService {
@@ -23,20 +22,21 @@ export class CRMAccountsService {
     ) {}
 
     public async create(createUserDTO: CreateCRMUserDTO): Promise<CRMUser> {
-        const candidate = {
-            ...createUserDTO
-        };
+        if (
+            createUserDTO.role &&
+            (createUserDTO.localActionPermissions ||
+                createUserDTO.localDataPermissions)
+        ) {
+            throw new BadRequestException();
+        }
 
         const salt = await genSalt();
-        const passwordHash = await hash(candidate.password, salt);
+        const passwordHash = await hash(createUserDTO.password, salt);
 
-        candidate.password = passwordHash;
+        createUserDTO.password = passwordHash;
 
         try {
-            return await this.CRMUserModel.create({
-                ...candidate,
-                role: createUserDTO.role
-            });
+            return await this.CRMUserModel.create(createUserDTO);
         } catch (err) {
             throw new BadRequestException('USER_WITH_THIS_LOGIN_EXISTS');
         }
@@ -90,9 +90,15 @@ export class CRMAccountsService {
             role,
             login,
             password,
-            accountType
+            accountType,
+            localActionPermissions,
+            localDataPermissions
         }: UpdateCRMUserDTO
     ) {
+        if (role && (localActionPermissions || localDataPermissions)) {
+            throw new BadRequestException();
+        }
+
         const user = await this.CRMUserModel.findById(id);
 
         user.name = name || user.name;
