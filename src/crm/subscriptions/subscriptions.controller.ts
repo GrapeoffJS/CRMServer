@@ -18,9 +18,7 @@ export class SubscriptionsController {
     constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
     @Post()
-    public async create(
-        @Body() createSubscriptionDTO: CreateSubscriptionDTO
-    ): Promise<Subscription> {
+    public async create(@Body() createSubscriptionDTO): Promise<Subscription> {
         return await this.subscriptionsService.create(createSubscriptionDTO);
     }
 
