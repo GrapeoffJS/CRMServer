@@ -54,11 +54,4 @@ import { path } from './path';
     ],
     providers: [ImportFileService, CrudService, NotesService, PaymentService]
 })
-export class PupilsModule implements NestModule {
-    configure(consumer: MiddlewareConsumer) {
-        consumer
-            .apply(AuthorizationMiddleware)
-            .exclude(`${path}/uploadFile`)
-            .forRoutes('/CRM/Pupils/*');
-    }
-}
+export class PupilsModule {}

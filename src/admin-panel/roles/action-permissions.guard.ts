@@ -16,7 +16,7 @@ export const ActionPermissionsGuard = (
                 .getRequest<ExtendedRequest>().user;
 
             const actionPermissions =
-                (user.role as Role).actionPermissions ||
+                (user.role as Role)?.actionPermissions ||
                 user.localActionPermissions;
 
             for (let i = 0; i < requiredActionPermissions.length; i++) {

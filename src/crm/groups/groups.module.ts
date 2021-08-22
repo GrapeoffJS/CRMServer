@@ -59,8 +59,4 @@ import { path } from './path';
         TutorManipulationsService
     ]
 })
-export class GroupsModule implements NestModule {
-    configure(consumer: MiddlewareConsumer) {
-        consumer.apply(AuthorizationMiddleware).forRoutes(`${path}/*`);
-    }
-}
+export class GroupsModule {}
