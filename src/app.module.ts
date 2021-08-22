@@ -73,7 +73,11 @@ export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer): any {
         consumer
             .apply(AuthorizationMiddleware)
-            .exclude('/CRM/Subscriptions', '/AdminPanel/*')
+            .exclude(
+                '/CRM/Subscriptions',
+                '/AdminPanel/*',
+                '/CRM/Pupils/uploadFile'
+            )
             .forRoutes('/CRM/Pupils/*', '/CRM/Groups/*');
     }
 }

@@ -13,6 +13,8 @@ import { SubscriptionsService } from './subscriptions.service';
 import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
 import { path } from './path';
 
+// FIXME fix validation errors
+
 @Controller(path)
 export class SubscriptionsController {
     constructor(private readonly subscriptionsService: SubscriptionsService) {}
