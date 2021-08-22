@@ -13,7 +13,6 @@ import { AccountTypes } from './models/AccountTypes';
 import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
 import { PopulateOptions } from 'mongoose';
 import { Role } from '../roles/models/Role.model';
-import useRealTimers = jest.useRealTimers;
 
 @Injectable()
 export class CRMAccountsService {
