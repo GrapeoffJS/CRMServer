@@ -74,6 +74,6 @@ export class AppModule implements NestModule {
         consumer
             .apply(AuthorizationMiddleware)
             .exclude('/CRM/Subscriptions', '/AdminPanel/*')
-            .forRoutes('/CRM/*');
+            .forRoutes('/CRM/Pupils/*', '/CRM/Groups/*');
     }
 }
