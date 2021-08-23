@@ -23,6 +23,6 @@ async function bootstrap() {
         node: process.env.ELASTIC_SEARCH_URI
     });
 
-    await app.listen(process.env.CRM_PORT || 4200);
+    await app.listen(process.env.PORT || 4200);
 }
 bootstrap();
