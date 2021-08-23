@@ -13,5 +13,6 @@ RUN yarn build
 RUN rm -rf ./src
 
 EXPOSE 4200
+EXPOSE 4201
 
 CMD [ "pm2-runtime", "ecosystem.config.js"]

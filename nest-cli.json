@@ -1,4 +1,30 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "apps/crmserver/src",
+  "monorepo": true,
+  "root": "apps/crmserver",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/crmserver/tsconfig.app.json"
+  },
+  "projects": {
+    "crmserver": {
+      "type": "application",
+      "root": "apps/crmserver",
+      "entryFile": "main",
+      "sourceRoot": "apps/crmserver/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/crmserver/tsconfig.app.json"
+      }
+    },
+    "admin-panel": {
+      "type": "application",
+      "root": "apps/admin-panel",
+      "entryFile": "main",
+      "sourceRoot": "apps/admin-panel/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/admin-panel/tsconfig.app.json"
+      }
+    }
+  }
 }
