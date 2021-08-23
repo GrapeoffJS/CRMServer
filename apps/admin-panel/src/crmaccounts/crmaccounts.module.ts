@@ -16,6 +16,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
         ])
     ],
     controllers: [CRMAccountsController],
-    providers: [CRMAccountsService]
+    providers: [CRMAccountsService],
+    exports: [CRMAccountsService]
 })
 export class CrmaccountsModule {}

@@ -8,6 +8,7 @@ import {
     Post,
     Query,
     Res,
+    UseGuards,
     UsePipes
 } from '@nestjs/common';
 import { CreateGroupDTO } from '../../DTO/CreateGroupDTO';
@@ -18,7 +19,6 @@ import { Group } from '../../models/Group.model';
 import { path } from '../../path';
 import { Response } from 'express';
 import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
-import { UseGuards } from '@nestjs/common';
 import { ActionPermissionsGuard } from '../../../../../../admin-panel/src/roles/action-permissions.guard';
 import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
 import { GetDataPermissions } from '../../../../../../admin-panel/src/roles/GetDataPermissions.decorator';

@@ -10,6 +10,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configModuleOptions from '../config/configModuleOptions';
 import { SearchModule } from './search/search.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { TutorsModule } from './tutors/tutors.module';
 
 @Module({
     imports: [
@@ -42,7 +44,9 @@ import { SearchModule } from './search/search.module';
                 };
             }
         }),
-        ConfigModule.forRoot(configModuleOptions)
+        ConfigModule.forRoot(configModuleOptions),
+        SubscriptionsModule,
+        TutorsModule
     ]
 })
 export class CrmModule implements NestModule {

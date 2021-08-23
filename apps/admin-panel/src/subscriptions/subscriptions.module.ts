@@ -14,6 +14,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
         ])
     ],
     controllers: [SubscriptionsController],
-    providers: [SubscriptionsService]
+    providers: [SubscriptionsService],
+    exports: [SubscriptionsService]
 })
 export class SubscriptionsModule {}

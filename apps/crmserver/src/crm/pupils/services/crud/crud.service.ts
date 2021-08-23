@@ -2,7 +2,7 @@ import moment from 'moment';
 import Pupil from '../../models/Pupil.model';
 import { CreatePupilDTO } from '../../DTO/CreatePupilDTO';
 import { FilterDTO } from '../../DTO/FilterDTO';
-import { Injectable, NotFoundException, UseGuards } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';

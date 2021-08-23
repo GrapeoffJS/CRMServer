@@ -4,6 +4,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Subscription } from './models/Subscription.model';
 import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
+import { AccountTypes } from '../crmaccounts/models/AccountTypes';
 
 @Injectable()
 export class SubscriptionsService {
@@ -22,8 +23,12 @@ export class SubscriptionsService {
         return this.SubscriptionModel.find();
     }
 
-    public async findById(id: string): Promise<Subscription> {
-        return this.SubscriptionModel.findById(id);
+    public async findById(
+        id: string,
+        accountType?: AccountTypes
+    ): Promise<Subscription> {
+        if (!accountType) return this.SubscriptionModel.findById(id);
+        return this.SubscriptionModel.findOne({ _id: id, accountType });
     }
 
     public async edit(

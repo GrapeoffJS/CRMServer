@@ -19,7 +19,7 @@ import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
 
 @Controller(path)
 export class CRMAccountsController {
-    constructor(private readonly crmAccountsService: CRMAccountsService) {}
+    constructor(private readonly CRMAccountsService: CRMAccountsService) {}
 
     @Get()
     public async findAll(
@@ -28,7 +28,7 @@ export class CRMAccountsController {
         @Query('accountType') accountTypes: AccountTypes[],
         @Res() response: Response
     ) {
-        return await this.crmAccountsService.findAll(
+        return await this.CRMAccountsService.find(
             Number(limit),
             Number(offset),
             accountTypes,
@@ -38,14 +38,14 @@ export class CRMAccountsController {
 
     @Get(':id')
     public async findOne(@Param('id') id: string): Promise<CRMUser> {
-        return await this.crmAccountsService.findOne(id);
+        return await this.CRMAccountsService.findById(id);
     }
 
     @Post()
     public async create(
         @Body() createUserDTO: CreateCRMUserDTO
     ): Promise<CRMUser> {
-        return await this.crmAccountsService.create(createUserDTO);
+        return await this.CRMAccountsService.create(createUserDTO);
     }
 
     @Patch(':id')
@@ -53,11 +53,11 @@ export class CRMAccountsController {
         @Param('id') id: string,
         @Body() updateCRMUserDTO: UpdateCRMUserDTO
     ) {
-        return await this.crmAccountsService.edit(id, updateCRMUserDTO);
+        return await this.CRMAccountsService.edit(id, updateCRMUserDTO);
     }
 
     @Delete(':login')
     public async delete(@Param('login') login: string): Promise<CRMUser> {
-        return await this.crmAccountsService.delete(login);
+        return await this.CRMAccountsService.delete(login);
     }
 }

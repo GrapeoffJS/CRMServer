@@ -42,7 +42,7 @@ export class CRMAccountsService {
         }
     }
 
-    public async findAll(
+    public async find(
         limit: number,
         offset: number,
         accountTypes: AccountTypes[],
@@ -62,7 +62,7 @@ export class CRMAccountsService {
         });
     }
 
-    public async findOne(id: string): Promise<CRMUser> {
+    public async findById(id: string): Promise<CRMUser> {
         const user = await this.CRMUserModel.findById(id).populate([
             {
                 path: 'groups',
