@@ -20,7 +20,9 @@ export class PupilManipulationsService {
     ) {}
 
     public async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
-        const group = await this.GroupModel.findById(id).select('+PUPILS');
+        const group = await this.GroupModel.findById(id).select(
+            '+PUPILS +TUTOR +GLOBAL_SCHEDULE +GROUP_NAME'
+        );
         const pupils = await this.PupilModel.find({ _id: pupilsToAdd });
 
         if (!group) {
@@ -65,7 +67,9 @@ export class PupilManipulationsService {
     }
 
     public async deletePupil(groupId: string, pupilId: string) {
-        const group = await this.GroupModel.findById(groupId);
+        const group = await this.GroupModel.findById(groupId).select(
+            '+PUPILS +TUTOR +GLOBAL_SCHEDULE +GROUP_NAME'
+        );
         const pupil = await this.PupilModel.findById(pupilId);
 
         if (!group || !pupil) {
