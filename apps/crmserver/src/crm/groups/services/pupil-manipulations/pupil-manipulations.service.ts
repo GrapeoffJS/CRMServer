@@ -21,12 +21,18 @@ export class PupilManipulationsService {
 
     public async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
         const group = await this.GroupModel.findById(id).select(
-            '+PUPILS +TUTOR +GLOBAL_SCHEDULE +GROUP_NAME'
+            '+GROUP_NAME +PUPILS +GLOBAL_SCHEDULE +TUTOR +PLACES +LEVEL'
         );
-        const pupils = await this.PupilModel.find({ _id: pupilsToAdd });
+        const pupils = await this.PupilModel.find({ _id: pupilsToAdd }).select(
+            '+localSchedule +tutors +groupsHistory +groups'
+        );
 
         if (!group) {
             throw new NotFoundException();
+        }
+
+        if (!group.PUPILS) {
+            group.PUPILS = [];
         }
 
         if (group.PUPILS.length + pupilsToAdd.length > group.PLACES) {
@@ -68,9 +74,11 @@ export class PupilManipulationsService {
 
     public async deletePupil(groupId: string, pupilId: string) {
         const group = await this.GroupModel.findById(groupId).select(
-            '+PUPILS +TUTOR +GLOBAL_SCHEDULE +GROUP_NAME'
+            '+GROUP_NAME +PUPILS +GLOBAL_SCHEDULE +TUTOR +PLACES +LEVEL'
         );
-        const pupil = await this.PupilModel.findById(pupilId);
+        const pupil = await this.PupilModel.findById(pupilId).select(
+            '+localSchedule +tutors +groupsHistory +groups'
+        );
 
         if (!group || !pupil) {
             throw new NotFoundException();
