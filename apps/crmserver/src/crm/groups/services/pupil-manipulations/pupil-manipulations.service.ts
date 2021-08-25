@@ -20,7 +20,7 @@ export class PupilManipulationsService {
     ) {}
 
     public async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
-        const group = await this.GroupModel.findById(id);
+        const group = await this.GroupModel.findById(id).select('+PUPILS');
         const pupils = await this.PupilModel.find({ _id: pupilsToAdd });
 
         if (!group) {
@@ -33,17 +33,17 @@ export class PupilManipulationsService {
 
         group?.addPupils(pupilsToAdd);
 
-        pupils.forEach(async pupil => {
+        for (const pupil of pupils) {
             pupil.addGroupToHistory(
                 group.GROUP_NAME,
                 moment().locale('ru').format('L')
             );
-            pupil.addTutor(group.TUTOR, group.id);
+            await pupil.addTutor(group.TUTOR, group.id);
             pupil.setGroupSchedule(group.id, group.GLOBAL_SCHEDULE);
             pupil.updateGroupsList(group.id);
 
             await pupil.save();
-        });
+        }
 
         const saved = await group.save();
         return await this.GroupModel.populate(saved, [

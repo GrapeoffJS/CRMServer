@@ -37,7 +37,7 @@ export class CrudService {
             moment().locale('ru').format('L')
         );
 
-        pupils.forEach(async pupil => {
+        for (const pupil of pupils) {
             pupil.addGroupToHistory(
                 group.GROUP_NAME,
                 moment().locale('ru').format('L')
@@ -49,7 +49,7 @@ export class CrudService {
             pupil.updateGroupsList(group.id);
 
             await pupil.save();
-        });
+        }
 
         await tutor?.save();
 
