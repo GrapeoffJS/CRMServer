@@ -2,6 +2,7 @@ import {
     IsEnum,
     IsMongoId,
     IsNotEmpty,
+    IsObject,
     IsOptional,
     IsString
 } from 'class-validator';
@@ -40,8 +41,8 @@ export class CreateCRMUserDTO {
     localActionPermissions: ActionPermissions[];
 
     @IsOptional()
-    @IsEnum(DataPermissions, { each: true })
-    localDataPermissions: DataPermissions[];
+    @IsObject()
+    localDataPermissions: DataPermissions;
 
     @IsEnum(AccountTypes)
     accountType: AccountTypes;

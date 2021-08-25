@@ -20,19 +20,23 @@ export class PupilManipulationsService {
     ) {}
 
     public async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
-        const group = await this.GroupModel.findById(id).select(
-            '+GROUP_NAME +PUPILS +GLOBAL_SCHEDULE +TUTOR +PLACES +LEVEL'
-        );
-        const pupils = await this.PupilModel.find({ _id: pupilsToAdd }).select(
-            '+localSchedule +tutors +groupsHistory +groups'
-        );
+        const group = await this.GroupModel.findById(id).select({
+            GROUP_NAME: 1,
+            PUPILS: 1,
+            GLOBAL_SCHEDULE: 1,
+            TUTOR: 1,
+            PLACES: 1,
+            LEVEL: 1
+        });
+        const pupils = await this.PupilModel.find({ _id: pupilsToAdd }).select({
+            localSchedule: 1,
+            tutors: 1,
+            groupsHistory: 1,
+            groups: 1
+        });
 
         if (!group) {
             throw new NotFoundException();
-        }
-
-        if (!group.PUPILS) {
-            group.PUPILS = [];
         }
 
         if (group.PUPILS.length + pupilsToAdd.length > group.PLACES) {
@@ -73,12 +77,20 @@ export class PupilManipulationsService {
     }
 
     public async deletePupil(groupId: string, pupilId: string) {
-        const group = await this.GroupModel.findById(groupId).select(
-            '+GROUP_NAME +PUPILS +GLOBAL_SCHEDULE +TUTOR +PLACES +LEVEL'
-        );
-        const pupil = await this.PupilModel.findById(pupilId).select(
-            '+localSchedule +tutors +groupsHistory +groups'
-        );
+        const group = await this.GroupModel.findById(groupId).select({
+            GROUP_NAME: 1,
+            PUPILS: 1,
+            GLOBAL_SCHEDULE: 1,
+            TUTOR: 1,
+            PLACES: 1,
+            LEVEL: 1
+        });
+        const pupil = await this.PupilModel.findById(pupilId).select({
+            localSchedule: 1,
+            tutors: 1,
+            groupsHistory: 1,
+            groups: 1
+        });
 
         if (!group || !pupil) {
             throw new NotFoundException();

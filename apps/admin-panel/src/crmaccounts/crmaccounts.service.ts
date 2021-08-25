@@ -99,6 +99,8 @@ export class CRMAccountsService {
 
         const user = await this.CRMUserModel.findById(id);
 
+        if (!user) throw new NotFoundException();
+
         user.name = name || user.name;
         user.surname = surname || user.surname;
         user.midname = midname || user.surname;

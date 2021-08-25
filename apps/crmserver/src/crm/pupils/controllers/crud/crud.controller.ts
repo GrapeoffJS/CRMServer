@@ -39,7 +39,7 @@ export class CrudController {
         @Query('offset') offset,
         @Body('filters') filters: FilterDTO,
         @Res() response: Response,
-        @GetDataPermissions() dataPermissions: DataPermissions[]
+        @GetDataPermissions() dataPermissions: DataPermissions
     ) {
         return await this.crudService.findAll(
             Number(limit),
@@ -54,7 +54,7 @@ export class CrudController {
     @Get('/:id')
     public async findById(
         @Param('id') id: string,
-        @GetDataPermissions() dataPermissions: DataPermissions[]
+        @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Pupil> {
         return await this.crudService.findById(id, dataPermissions);
     }
@@ -63,7 +63,7 @@ export class CrudController {
     @Delete('/:id')
     public async delete(
         @Param('id') id: string,
-        @GetDataPermissions() dataPermissions: DataPermissions[]
+        @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Pupil> {
         return await this.crudService.delete(id, dataPermissions);
     }
@@ -73,7 +73,7 @@ export class CrudController {
     public async edit(
         @Param('id') id: string,
         @Body() updatePupilDTO: UpdatePupilDTO,
-        @GetDataPermissions() dataPermissions: DataPermissions[]
+        @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Pupil> {
         return await this.crudService.edit(id, updatePupilDTO, dataPermissions);
     }

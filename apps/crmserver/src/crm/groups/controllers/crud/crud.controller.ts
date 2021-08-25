@@ -41,7 +41,7 @@ export class CrudController {
     @Post('/getByIds')
     public async findByIds(
         @Body() ids: string[],
-        @GetDataPermissions() dataPermissions: DataPermissions[]
+        @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group[]> {
         return await this.crudService.findByIds(ids, dataPermissions);
     }
@@ -53,7 +53,7 @@ export class CrudController {
         @Query('offset') offset,
         @Body('filters') filters: FilterDTO,
         @Res() response: Response,
-        @GetDataPermissions() dataPermissions: DataPermissions[]
+        @GetDataPermissions() dataPermissions: DataPermissions
     ) {
         return await this.crudService.findAll(
             Number(limit) || 0,
@@ -68,7 +68,7 @@ export class CrudController {
     @Get(':id')
     public async findById(
         @Param('id') id: string,
-        @GetDataPermissions() dataPermissions: DataPermissions[]
+        @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group> {
         return await this.crudService.findById(id, dataPermissions);
     }
@@ -77,7 +77,7 @@ export class CrudController {
     @Delete(':id')
     public async delete(
         @Param('id') id: string,
-        @GetDataPermissions() dataPermissions: DataPermissions[]
+        @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group> {
         return await this.crudService.delete(id, dataPermissions);
     }
@@ -87,7 +87,7 @@ export class CrudController {
     public async edit(
         @Param('id') id: string,
         @Body() updateGroupDTO: UpdateGroupDTO,
-        @GetDataPermissions() dataPermissions: DataPermissions[]
+        @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group> {
         return await this.crudService.edit(id, updateGroupDTO, dataPermissions);
     }

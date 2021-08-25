@@ -32,7 +32,7 @@ export default class CRMUser {
     localActionPermissions: ActionPermissions[];
 
     @prop({ type: Array, required: false, default: null })
-    localDataPermissions: DataPermissions[];
+    localDataPermissions: DataPermissions;
 
     @prop({
         type: () => [String],

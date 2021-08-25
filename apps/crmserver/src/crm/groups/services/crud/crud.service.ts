@@ -43,7 +43,7 @@ export class CrudService {
                 moment().locale('ru').format('L')
             );
 
-            if (group.TUTOR) pupil.addTutor(tutor.id, group.id);
+            if (group.TUTOR) await pupil.addTutor(tutor.id, group.id);
 
             pupil.setGroupSchedule(group.id, group.GLOBAL_SCHEDULE);
             pupil.updateGroupsList(group.id);
@@ -76,54 +76,12 @@ export class CrudService {
         offset,
         filters: FilterDTO,
         response: Response,
-        dataPermissions: DataPermissions[]
+        dataPermissions: DataPermissions
     ) {
-        const permissionsFilter = {
-            $project: {
-                GROUP_NAME:
-                    dataPermissions.findIndex(
-                        permission => permission === '+GROUP_NAME'
-                    ) !== -1
-                        ? 1
-                        : undefined,
-                LEVEL:
-                    dataPermissions.findIndex(
-                        permission => permission === '+LEVEL'
-                    ) !== -1
-                        ? 1
-                        : undefined,
-                PLACES:
-                    dataPermissions.findIndex(
-                        permission => permission === '+PLACES'
-                    ) !== -1
-                        ? 1
-                        : undefined,
-                TUTOR:
-                    dataPermissions.findIndex(
-                        permission => permission === '+TUTOR'
-                    ) !== -1
-                        ? 1
-                        : undefined,
-                PUPILS:
-                    dataPermissions.findIndex(
-                        permission => permission === '+PUPILS'
-                    ) !== -1
-                        ? 1
-                        : undefined,
-                GLOBAL_SCHEDULE:
-                    dataPermissions.findIndex(
-                        permission => permission === '+GLOBAL_SCHEDULE'
-                    ) !== -1
-                        ? 1
-                        : undefined
-            }
-        };
-
         const result = await this.GroupModel.aggregate(
-            this.createFilterPipeline(filters)?.concat(permissionsFilter) || [
-                { $match: {} },
-                permissionsFilter
-            ]
+            this.createFilterPipeline(filters)?.concat({
+                $project: dataPermissions.forGroup
+            }) || [{ $match: {} }, { $project: dataPermissions.forGroup }]
         )
             .skip(offset)
             .limit(limit);
@@ -156,10 +114,10 @@ export class CrudService {
 
     public async findById(
         id: string,
-        dataPermissions: DataPermissions[]
+        dataPermissions: DataPermissions
     ): Promise<Group> {
         const group = await this.GroupModel.findById(id).select(
-            dataPermissions.join(' ')
+            dataPermissions.forGroup
         );
 
         if (!group) {
@@ -169,6 +127,7 @@ export class CrudService {
         return await this.GroupModel.populate(group, [
             {
                 path: 'PUPILS',
+                select: '+localSchedule',
                 populate: {
                     path: 'groups',
                     select: '_id GROUP_NAME'
@@ -186,13 +145,14 @@ export class CrudService {
 
     public async findByIds(
         ids: string[],
-        dataPermissions: DataPermissions[]
+        dataPermissions: DataPermissions
     ): Promise<Group[]> {
-        return await this.GroupModel.find({ _id: ids })
-            .select(dataPermissions.join(' '))
+        return this.GroupModel.find({ _id: ids })
+            .select(dataPermissions.forGroup)
             .populate([
                 {
                     path: 'PUPILS',
+                    select: '+localSchedule',
                     populate: {
                         path: 'groups',
                         select: '_id GROUP_NAME'
@@ -210,10 +170,10 @@ export class CrudService {
 
     public async delete(
         id: string,
-        dataPermissions: DataPermissions[]
+        dataPermissions: DataPermissions
     ): Promise<Group> {
         const group = await this.GroupModel.findByIdAndDelete(id).select(
-            dataPermissions.join(' ')
+            dataPermissions.forGroup
         );
 
         if (!group) {
@@ -241,12 +201,12 @@ export class CrudService {
     public async edit(
         id: string,
         updateGroupDTO: UpdateGroupDTO,
-        dataPermissions: DataPermissions[]
+        dataPermissions: DataPermissions
     ): Promise<Group> {
         await this.GroupModel.findOneAndUpdate({ _id: id }, updateGroupDTO);
 
         const group = await this.GroupModel.findById(id)
-            .select(dataPermissions.join(' '))
+            .select(dataPermissions.forGroup)
             .populate([
                 {
                     path: 'PUPILS',

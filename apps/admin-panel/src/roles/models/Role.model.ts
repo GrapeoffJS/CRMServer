@@ -14,9 +14,8 @@ export class Role {
     actionPermissions: ActionPermissions[];
 
     @prop({
-        type: [String],
-        enum: DataPermissions,
+        type: Object,
         required: true
     })
-    dataPermissions: DataPermissions[];
+    dataPermissions: DataPermissions;
 }

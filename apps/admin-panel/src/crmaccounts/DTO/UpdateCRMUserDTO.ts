@@ -3,7 +3,8 @@ import {
     IsNotEmpty,
     IsString,
     IsMongoId,
-    IsOptional
+    IsOptional,
+    IsObject
 } from 'class-validator';
 import { AccountTypes } from '../models/AccountTypes';
 import { ActionPermissions } from '../../roles/models/ActionPermissions';
@@ -45,8 +46,8 @@ export class UpdateCRMUserDTO {
     localActionPermissions: ActionPermissions[];
 
     @IsOptional()
-    @IsEnum(DataPermissions, { each: true })
-    localDataPermissions: DataPermissions[];
+    @IsObject()
+    localDataPermissions: DataPermissions;
 
     @IsOptional()
     @IsEnum(AccountTypes)
