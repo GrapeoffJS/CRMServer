@@ -37,19 +37,19 @@ export default class Pupil extends TimeStamps {
     @prop({ type: Date, required: false })
     age: string;
 
-    @prop({ type: String, required: false, select: false })
+    @prop({ type: String, required: false })
     phone: string;
 
-    @prop({ type: String, required: false, select: false })
+    @prop({ type: String, required: false })
     parentPhone: string;
 
-    @prop({ type: String, required: false, select: false })
+    @prop({ type: String, required: false })
     parentNSM: string;
 
-    @prop({ type: Number, required: false, default: 0, select: false })
+    @prop({ type: Number, required: false, default: 0 })
     balance: number;
 
-    @prop({ type: String, required: false, select: false })
+    @prop({ type: String, required: false })
     discord: string;
 
     @prop({
@@ -62,23 +62,21 @@ export default class Pupil extends TimeStamps {
     @prop({
         type: Schema.Types.Mixed,
         required: false,
-        default: new Map(),
-        select: false
+        default: new Map()
     })
     localSchedule: Map<string, Schedule[]>;
 
-    @prop({ type: () => [Payment], required: false, _id: false, select: false })
+    @prop({ type: () => [Payment], required: false, _id: false })
     paymentHistory: Payment[];
 
-    @prop({ type: () => [Note], required: false, _id: false, select: false })
+    @prop({ type: () => [Note], required: false, _id: false })
     notes: Note[];
 
     @prop({
         type: () => Array,
         _id: false,
         required: false,
-        default: [],
-        select: false
+        default: []
     })
     groupsHistory: GroupsHistoryItem[];
 
@@ -86,8 +84,7 @@ export default class Pupil extends TimeStamps {
         type: [Tutor],
         required: false,
         default: [],
-        _id: false,
-        select: false
+        _id: false
     })
     tutors: Tutor[];
 
