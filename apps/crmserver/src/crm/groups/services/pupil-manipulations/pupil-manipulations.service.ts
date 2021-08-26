@@ -40,7 +40,9 @@ export class PupilManipulationsService {
                 group.GROUP_NAME,
                 moment().locale('ru').format('L')
             );
-            pupil.addTutor(group.TUTOR, group.id);
+
+            if (group.TUTOR) pupil.addTutor(group.id, group.TUTOR);
+
             pupil.setGroupSchedule(group.id, group.GLOBAL_SCHEDULE);
             pupil.updateGroupsList(group.id);
 
