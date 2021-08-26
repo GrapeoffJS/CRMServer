@@ -20,19 +20,9 @@ export class PupilManipulationsService {
     ) {}
 
     public async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
-        const group = await this.GroupModel.findById(id).select({
-            GROUP_NAME: 1,
-            PUPILS: 1,
-            GLOBAL_SCHEDULE: 1,
-            TUTOR: 1,
-            PLACES: 1,
-            LEVEL: 1
-        });
-        const pupils = await this.PupilModel.find({ _id: pupilsToAdd }).select({
-            localSchedule: 1,
-            tutors: 1,
-            groupsHistory: 1,
-            groups: 1
+        const group = await this.GroupModel.findById(id);
+        const pupils = await this.PupilModel.find({
+            _id: pupilsToAdd
         });
 
         if (!group) {
@@ -50,7 +40,7 @@ export class PupilManipulationsService {
                 group.GROUP_NAME,
                 moment().locale('ru').format('L')
             );
-            await pupil.addTutor(group.TUTOR, group.id);
+            pupil.addTutor(group.TUTOR, group.id);
             pupil.setGroupSchedule(group.id, group.GLOBAL_SCHEDULE);
             pupil.updateGroupsList(group.id);
 

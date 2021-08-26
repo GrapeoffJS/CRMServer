@@ -3,6 +3,7 @@ import { CanActivate, ExecutionContext, mixin } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { ExtendedRequest } from '../../../crmserver/src/authorization/ExtendedRequest';
 import { Role } from './models/Role.model';
+import { Response } from 'express';
 
 export const ActionPermissionsGuard = (
     ...requiredActionPermissions: ActionPermissions[]
@@ -18,6 +19,10 @@ export const ActionPermissionsGuard = (
             const actionPermissions =
                 (user.role as Role)?.actionPermissions ||
                 user.localActionPermissions;
+
+            if (actionPermissions === null) {
+                return false;
+            }
 
             for (let i = 0; i < requiredActionPermissions.length; i++) {
                 if (!actionPermissions.includes(requiredActionPermissions[i]))
