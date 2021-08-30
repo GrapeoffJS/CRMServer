@@ -29,7 +29,10 @@ export class ImportFileService {
 
             Object.keys(pupil).forEach(i => (pupil[i] = pupil[i].trim()));
 
-            pupil.age = moment(pupil.age, 'DD.MM.YYYY').toISOString();
+            pupil.dateOfBirth = moment(
+                pupil.dateOfBirth,
+                'DD.MM.YYYY'
+            ).toISOString();
 
             try {
                 await this.PupilModel.validate(pupil);
@@ -64,7 +67,10 @@ export class ImportFileService {
 
             Object.keys(pupil).forEach(i => (pupil[i] = pupil[i].trim()));
 
-            pupil.age = moment(pupil.age, 'DD.MM.YYYY').toISOString();
+            pupil.dateOfBirth = moment(
+                pupil.dateOfBirth,
+                'DD.MM.YYYY'
+            ).toISOString();
 
             try {
                 await this.PupilModel.validate(pupil);

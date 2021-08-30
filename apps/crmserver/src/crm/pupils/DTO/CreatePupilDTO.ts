@@ -29,7 +29,7 @@ export class CreatePupilDTO {
     @IsNotEmpty()
     @IsString()
     @IsISO8601({ strict: true })
-    age: string;
+    dateOfBirth: string;
 
     @IsOptional()
     @IsString()
@@ -39,7 +39,6 @@ export class CreatePupilDTO {
     @IsNotEmpty()
     parentPhone: string;
 
-    @IsOptional()
     @IsString()
     @IsNotEmpty()
     parentNSM: string;

@@ -34,9 +34,8 @@ export class UpdatePupilDTO {
     @IsNotEmpty()
     @IsString()
     @IsISO8601({ strict: true })
-    age: string;
+    dateOfBirth: string;
 
-    @IsOptional()
     @IsOptional()
     @IsString()
     phone?: string;

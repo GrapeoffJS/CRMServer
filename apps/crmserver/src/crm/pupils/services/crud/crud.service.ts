@@ -259,12 +259,12 @@ export class CrudService {
             };
 
             if (filters.emptyAge === true) {
-                agesFilter.$match.$or.push({ age: null });
+                agesFilter.$match.$or.push({ dateOfBirth: null });
             }
 
             filters?.ages?.forEach(age => {
                 agesFilter.$match.$or.push({
-                    age: {
+                    dateOfBirth: {
                         $gte: new Date(
                             moment()
                                 .subtract(age + 1, 'years')
@@ -280,7 +280,7 @@ export class CrudService {
 
             pipeline.push(agesFilter);
         } else if (!filters.ages && filters.emptyAge === true) {
-            pipeline.push({ $match: { age: null } });
+            pipeline.push({ $match: { dateOfBirth: null } });
         }
 
         if (filters.tutors) {

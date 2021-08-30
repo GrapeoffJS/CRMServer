@@ -35,7 +35,7 @@ export default class Pupil extends TimeStamps {
     gender: string;
 
     @prop({ type: Date, required: false })
-    age: string;
+    dateOfBirth: string;
 
     @prop({ type: String, required: false })
     phone: string;

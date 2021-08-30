@@ -45,21 +45,25 @@ export class CRMAccountsService {
     public async find(
         limit: number,
         offset: number,
-        accountTypes: AccountTypes[],
-        response: Response
+        accountTypes: AccountTypes[]
     ) {
+        let count: number;
+
         await this.CRMUserModel.find({
             accountType: { $in: accountTypes }
-        }).countDocuments(async (err, count) => {
-            return response.header('Count', count.toString()).json(
-                await this.CRMUserModel.find({
-                    accountType: { $in: accountTypes }
-                })
-                    .populate('role')
-                    .skip(offset || 0)
-                    .limit(limit || 0)
-            );
+        }).countDocuments(async (err, docsCount) => {
+            count = docsCount;
         });
+
+        return {
+            accounts: await this.CRMUserModel.find({
+                accountType: { $in: accountTypes }
+            })
+                .populate('role')
+                .skip(offset || 0)
+                .limit(limit || 0),
+            count: count.toString()
+        };
     }
 
     public async findById(id: string): Promise<CRMUser> {

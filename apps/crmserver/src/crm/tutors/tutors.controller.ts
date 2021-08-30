@@ -14,12 +14,13 @@ export class TutorsController {
         @Query('offset') offset: number,
         @Res() response: Response
     ) {
-        return await this.CRMAccountsService.find(
+        const { accounts, count } = await this.CRMAccountsService.find(
             Number(limit),
             Number(offset),
-            [AccountTypes.Teacher],
-            response
+            [AccountTypes.Teacher]
         );
+
+        return response.header('Count', count).json(accounts);
     }
 
     public async findById(@Param('id') id: string) {
