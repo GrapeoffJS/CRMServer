@@ -3,29 +3,32 @@ import {
     IsNotEmpty,
     IsNumber,
     IsOptional,
+    IsPositive,
     IsString
 } from 'class-validator';
 
 export class CreateGroupDTO {
     @IsString()
     @IsNotEmpty()
-    GROUP_NAME: string;
+    group_name: string;
 
+    @IsPositive()
     @IsNumber()
     @IsNotEmpty()
-    LEVEL: number;
+    level: number;
 
+    @IsPositive()
     @IsNumber()
     @IsNotEmpty()
-    PLACES: number;
+    places: number;
 
     @IsOptional()
     @IsString({ each: true })
     @IsMongoId({ each: true })
-    PUPILS?: string[];
+    pupils?: string[];
 
     @IsOptional()
     @IsString()
-    // @IsMongoId()
-    TUTOR?: string | null;
+    @IsMongoId()
+    tutor?: string | null;
 }

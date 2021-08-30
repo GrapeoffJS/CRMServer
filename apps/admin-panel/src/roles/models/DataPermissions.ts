@@ -12,11 +12,11 @@ export type DataPermissions = {
         localSchedule?: 1 | undefined;
     };
     forGroup: {
-        GROUP_NAME?: 1 | undefined;
-        TUTOR?: 1 | undefined;
-        LEVEL?: 1 | undefined;
-        PUPILS?: 1 | undefined;
-        PLACES?: 1 | undefined;
-        GLOBAL_SCHEDULE?: 1 | undefined;
+        group_name?: 1 | undefined;
+        tutor?: 1 | undefined;
+        level?: 1 | undefined;
+        pupils?: 1 | undefined;
+        places?: 1 | undefined;
+        global_schedule?: 1 | undefined;
     };
 };

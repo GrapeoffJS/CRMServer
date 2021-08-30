@@ -55,13 +55,14 @@ export class CrudController {
         @Res() response: Response,
         @GetDataPermissions() dataPermissions: DataPermissions
     ) {
-        return await this.crudService.findAll(
+        const { count, groups } = await this.crudService.findAll(
             Number(limit) || 0,
             Number(offset) || 0,
             filters,
-            response,
             dataPermissions
         );
+
+        return response.header('Count', count?.toString() || '0').json(groups);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSeeGroupPage))

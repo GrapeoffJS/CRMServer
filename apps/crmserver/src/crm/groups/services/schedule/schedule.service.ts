@@ -19,13 +19,18 @@ export class ScheduleService {
         schedule: Schedule[]
     ): Promise<Group> {
         const group = await this.GroupModel.findById(id);
-        const pupils = await this.PupilModel.find({ _id: group.PUPILS });
 
         if (!group) {
             throw new NotFoundException();
         }
 
-        group.GLOBAL_SCHEDULE = schedule;
+        const pupils = await this.PupilModel.find({ _id: group.pupils });
+
+        if (!pupils) {
+            throw new NotFoundException();
+        }
+
+        group.global_schedule = schedule;
 
         for (const pupil of pupils) {
             pupil.setGroupSchedule(group.id, schedule);
@@ -35,17 +40,17 @@ export class ScheduleService {
         const saved = await group.save();
         return await this.GroupModel.populate(saved, [
             {
-                path: 'PUPILS',
+                path: 'pupils',
                 populate: {
                     path: 'groups',
-                    select: '_id GROUP_NAME'
+                    select: '_id group_name'
                 }
             },
             {
-                path: 'TUTOR',
+                path: 'tutor',
                 populate: {
                     path: 'groups',
-                    select: '_id GROUP_NAME'
+                    select: '_id group_name'
                 }
             }
         ]);
@@ -73,9 +78,9 @@ export class ScheduleService {
         return await saved.populate([
             {
                 path: 'groups',
-                select: '_id GROUP_NAME TUTOR',
+                select: '_id group_name tutor',
                 populate: {
-                    path: 'TUTOR'
+                    path: 'tutor'
                 }
             },
             {
@@ -87,7 +92,7 @@ export class ScheduleService {
                     },
                     {
                         path: 'group',
-                        select: '_id GROUP_NAME'
+                        select: '_id group_name'
                     }
                 ]
             }

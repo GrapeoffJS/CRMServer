@@ -12,10 +12,10 @@ export class CreateGroupValidationPipe implements PipeTransform {
         value: CreateGroupDTO,
         metadata: ArgumentMetadata
     ): CreateGroupDTO {
-        if (value?.PUPILS?.length > value.PLACES)
+        if (value?.pupils?.length > value.places)
             throw new BadRequestException();
 
-        if (!value.TUTOR) value.TUTOR = null;
+        if (!value.tutor) value.tutor = null;
 
         return value;
     }

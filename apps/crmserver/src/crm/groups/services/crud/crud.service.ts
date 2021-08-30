@@ -6,7 +6,6 @@ import { FilterDTO } from '../../DTO/FilterDTO';
 import { Group } from '../../models/Group.model';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
 import { DataPermissions } from '../../../../../../admin-panel/src/roles/models/DataPermissions';
@@ -23,29 +22,29 @@ export class CrudService {
     ) {}
 
     public async create(createGroupDTO: CreateGroupDTO): Promise<Group> {
-        if (createGroupDTO.TUTOR === '') createGroupDTO.TUTOR = null;
+        if (createGroupDTO.tutor === '') createGroupDTO.tutor = null;
 
-        const tutor = await this.CRMUserModel.findById(createGroupDTO.TUTOR);
+        const tutor = await this.CRMUserModel.findById(createGroupDTO.tutor);
         const group = await this.GroupModel.create(createGroupDTO);
         const pupils = await this.PupilModel.find({
-            _id: createGroupDTO.PUPILS
+            _id: createGroupDTO.pupils
         });
 
         tutor?.updateGroupsList(group.id);
         tutor?.addGroupToHistory(
-            group.GROUP_NAME,
+            group.group_name,
             moment().locale('ru').format('L')
         );
 
         for (const pupil of pupils) {
             pupil.addGroupToHistory(
-                group.GROUP_NAME,
+                group.group_name,
                 moment().locale('ru').format('L')
             );
 
-            if (group.TUTOR) await pupil.addTutor(tutor.id, group.id);
+            if (group.tutor) await pupil.addTutor(tutor.id, group.id);
 
-            pupil.setGroupSchedule(group.id, group.GLOBAL_SCHEDULE);
+            pupil.setGroupSchedule(group.id, group.global_schedule);
             pupil.updateGroupsList(group.id);
 
             await pupil.save();
@@ -55,17 +54,17 @@ export class CrudService {
 
         return await this.GroupModel.populate(group, [
             {
-                path: 'PUPILS',
+                path: 'pupils',
                 populate: {
                     path: 'groups',
-                    select: '_id GROUP_NAME'
+                    select: '_id group_name'
                 }
             },
             {
-                path: 'TUTOR',
+                path: 'tutor',
                 populate: {
                     path: 'groups',
-                    select: '_id GROUP_NAME'
+                    select: '_id group_name'
                 }
             }
         ]);
@@ -75,7 +74,6 @@ export class CrudService {
         limit,
         offset,
         filters: FilterDTO,
-        response: Response,
         dataPermissions: DataPermissions
     ) {
         const result = await this.GroupModel.aggregate(
@@ -90,26 +88,25 @@ export class CrudService {
             this.createFilterPipeline(filters) || [{ $match: {} }]
         ).count('count');
 
-        return response
-            .header('Count', count[0]?.count?.toString() || '0')
-            .json(
-                await this.GroupModel.populate(result, [
-                    {
-                        path: 'PUPILS',
-                        populate: {
-                            path: 'groups',
-                            select: '_id GROUP_NAME'
-                        }
-                    },
-                    {
-                        path: 'TUTOR',
-                        populate: {
-                            path: 'groups',
-                            select: '_id GROUP_NAME'
-                        }
+        return {
+            groups: await this.GroupModel.populate(result, [
+                {
+                    path: 'pupils',
+                    populate: {
+                        path: 'groups',
+                        select: '_id group_name'
                     }
-                ])
-            );
+                },
+                {
+                    path: 'tutor',
+                    populate: {
+                        path: 'groups',
+                        select: '_id group_name'
+                    }
+                }
+            ]),
+            count: count[0]?.count
+        };
     }
 
     public async findById(
@@ -126,18 +123,18 @@ export class CrudService {
 
         return await this.GroupModel.populate(group, [
             {
-                path: 'PUPILS',
+                path: 'pupils',
                 select: '+localSchedule',
                 populate: {
                     path: 'groups',
-                    select: '_id GROUP_NAME'
+                    select: '_id group_name'
                 }
             },
             {
-                path: 'TUTOR',
+                path: 'tutor',
                 populate: {
                     path: 'groups',
-                    select: '_id GROUP_NAME'
+                    select: '_id group_name'
                 }
             }
         ]);
@@ -151,18 +148,18 @@ export class CrudService {
             .select(dataPermissions.forGroup)
             .populate([
                 {
-                    path: 'PUPILS',
+                    path: 'pupils',
                     select: '+localSchedule',
                     populate: {
                         path: 'groups',
-                        select: '_id GROUP_NAME'
+                        select: '_id group_name'
                     }
                 },
                 {
-                    path: 'TUTOR',
+                    path: 'tutor',
                     populate: {
                         path: 'groups',
-                        select: '_id GROUP_NAME'
+                        select: '_id group_name'
                     }
                 }
             ]);
@@ -182,17 +179,17 @@ export class CrudService {
 
         return await this.GroupModel.populate(group, [
             {
-                path: 'PUPILS',
+                path: 'pupils',
                 populate: {
                     path: 'groups',
-                    select: '_id GROUP_NAME'
+                    select: '_id group_name'
                 }
             },
             {
-                path: 'TUTOR',
+                path: 'tutor',
                 populate: {
                     path: 'groups',
-                    select: '_id GROUP_NAME'
+                    select: '_id group_name'
                 }
             }
         ]);
@@ -209,17 +206,17 @@ export class CrudService {
             .select(dataPermissions.forGroup)
             .populate([
                 {
-                    path: 'PUPILS',
+                    path: 'pupils',
                     populate: {
                         path: 'groups',
-                        select: '_id GROUP_NAME'
+                        select: '_id group_name'
                     }
                 },
                 {
-                    path: 'TUTOR',
+                    path: 'tutor',
                     populate: {
                         path: 'groups',
-                        select: '_id GROUP_NAME'
+                        select: '_id group_name'
                     }
                 }
             ]);
@@ -234,13 +231,13 @@ export class CrudService {
             {
                 $addFields: {
                     occupiedPlaces: {
-                        $size: '$PUPILS'
+                        $size: '$pupils'
                     }
                 }
             }
         ];
 
-        if (filters.GROUP_NAMES) {
+        if (filters.group_names) {
             const escapeRegExp = (string: string) => {
                 return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             };
@@ -251,10 +248,10 @@ export class CrudService {
                 }
             };
 
-            filters.GROUP_NAMES.forEach(GROUP_NAME => {
+            filters.group_names.forEach(group_name => {
                 groupNameFilter.$match.$or.push({
-                    GROUP_NAME: {
-                        $regex: new RegExp(`${escapeRegExp(GROUP_NAME)}`, 'i')
+                    group_name: {
+                        $regex: new RegExp(`${escapeRegExp(group_name)}`, 'i')
                     }
                 });
             });
@@ -262,41 +259,41 @@ export class CrudService {
             pipeline.push(groupNameFilter);
         }
 
-        if (filters.LEVELS) {
+        if (filters.levels) {
             pipeline.push({
                 $match: {
-                    LEVEL: {
-                        $in: filters.LEVELS
+                    level: {
+                        $in: filters.levels
                     }
                 }
             });
         }
 
-        if (filters.TUTORS) {
+        if (filters.tutors) {
             pipeline.push({
                 $match: {
-                    TUTOR: {
-                        $in: filters.TUTORS
+                    tutor: {
+                        $in: filters.tutors
                     }
                 }
             });
         }
 
-        if (filters.OCCUPIED === true) {
+        if (filters.occupied === true) {
             pipeline.push({
                 $match: {
                     $expr: {
-                        $eq: ['$occupiedPlaces', '$PLACES']
+                        $eq: ['$occupiedPlaces', '$places']
                     }
                 }
             });
         }
 
-        if (filters.OCCUPIED === false) {
+        if (filters.occupied === false) {
             pipeline.push({
                 $match: {
                     $expr: {
-                        $lt: ['$occupiedPlaces', '$PLACES']
+                        $lt: ['$occupiedPlaces', '$places']
                     }
                 }
             });

@@ -18,13 +18,13 @@ const Indexer = SearchIndexer.getInstance();
 })
 export class Group extends TimeStamps {
     @prop({ type: String, required: true })
-    GROUP_NAME: string;
+    group_name: string;
 
     @prop({ type: Number, required: true })
-    PLACES: number;
+    places: number;
 
     @prop({ type: Number, required: true })
-    LEVEL: number;
+    level: number;
 
     @prop({
         type: String,
@@ -32,7 +32,7 @@ export class Group extends TimeStamps {
         required: false,
         default: null
     })
-    TUTOR: string | null;
+    tutor: string | null;
 
     @prop({
         type: Array,
@@ -40,20 +40,20 @@ export class Group extends TimeStamps {
         required: false,
         default: []
     })
-    PUPILS: string[];
+    pupils: string[];
 
     @prop({
         type: () => [Schedule],
         required: false,
         _id: false
     })
-    GLOBAL_SCHEDULE: Schedule[];
+    global_schedule: Schedule[];
 
     public deletePupil(id: string): void {
-        this.PUPILS.splice(this.PUPILS.indexOf(id), 1);
+        this.pupils.splice(this.pupils.indexOf(id), 1);
     }
 
     public addPupils(ids: string[]): void {
-        this.PUPILS = [...new Set<string>(this.PUPILS.concat(ids))];
+        this.pupils = [...new Set<string>(this.pupils.concat(ids))];
     }
 }

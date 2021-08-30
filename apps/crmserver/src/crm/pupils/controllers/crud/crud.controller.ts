@@ -41,13 +41,16 @@ export class CrudController {
         @Res() response: Response,
         @GetDataPermissions() dataPermissions: DataPermissions
     ) {
-        return await this.crudService.findAll(
+        const { count, pupils } = await this.crudService.findAll(
             Number(limit),
             Number(offset),
             filters,
-            response,
             dataPermissions
         );
+
+        return response
+            .header('Count', count[0]?.count?.toString() || '0')
+            .json(pupils);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSeePupilPage))

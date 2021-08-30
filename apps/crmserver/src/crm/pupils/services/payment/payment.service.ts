@@ -23,17 +23,13 @@ export class PaymentService {
         id: string,
         amount: number,
         subscription: string,
-        request: Request
+        { name, surname, midname }: CRMUser
     ): Promise<Pupil> {
         const pupil = await this.PupilModel.findById(id);
 
         if (!pupil) {
             throw new NotFoundException();
         }
-
-        const { name, surname, midname }: CRMUser = decode(
-            request.headers.authorization.split(' ')[1]
-        ) as CRMUser;
 
         pupil.balance += amount;
         pupil.paymentHistory.push({

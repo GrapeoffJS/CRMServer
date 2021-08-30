@@ -2,7 +2,7 @@ import { prop } from '@typegoose/typegoose';
 
 export class GroupsHistoryItem {
     @prop({ type: String, required: true })
-    GROUP_NAME: string;
+    group_name: string;
 
     @prop({ type: String, required: true })
     additionDate: string;

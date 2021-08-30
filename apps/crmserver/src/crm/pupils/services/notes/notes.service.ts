@@ -6,9 +6,7 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { decode } from 'jsonwebtoken';
 import { InjectModel } from 'nestjs-typegoose';
-import { Request } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 
 @Injectable()
@@ -21,12 +19,9 @@ export class NotesService {
     public async addNote(
         id: string,
         text: string,
-        request: Request
+        { name, surname, midname }: CRMUser
     ): Promise<Pupil> {
         const pupil = await this.PupilModel.findById(id);
-        const { name, surname, midname } = decode(
-            request.headers.authorization.split(' ')[1]
-        ) as CRMUser;
 
         if (!pupil) {
             throw new NotFoundException();
@@ -44,7 +39,7 @@ export class NotesService {
 
         await pupil.save();
 
-        return await this.PupilModel.findById(id).populate([
+        return this.PupilModel.findById(id).populate([
             {
                 path: 'groups',
                 select: '_id GROUP_NAME TUTOR',
@@ -79,7 +74,7 @@ export class NotesService {
 
         await pupil.save();
 
-        return await this.PupilModel.findById(id).populate([
+        return this.PupilModel.findById(id).populate([
             {
                 path: 'groups',
                 select: '_id GROUP_NAME TUTOR',

@@ -25,7 +25,6 @@ export class CrudService {
         limit: number,
         offset: number,
         filters: FilterDTO,
-        response: Response,
         dataPermissions: DataPermissions
     ) {
         const result = await this.PupilModel.aggregate(
@@ -40,17 +39,16 @@ export class CrudService {
             this.createFilterPipeline(filters) || [{ $match: {} }]
         ).count('count');
 
-        const populated = await this.PupilModel.populate(result, {
-            path: 'groups',
-            select: '_id GROUP_NAME TUTOR',
-            populate: {
-                path: 'TUTOR'
-            }
-        });
-
-        return response
-            .header('Count', count[0]?.count?.toString() || '0')
-            .json(populated);
+        return {
+            count: count[0]?.count,
+            pupils: await this.PupilModel.populate(result, {
+                path: 'groups',
+                select: '_id GROUP_NAME TUTOR',
+                populate: {
+                    path: 'TUTOR'
+                }
+            })
+        };
     }
 
     public async findById(

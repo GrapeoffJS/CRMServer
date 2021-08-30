@@ -8,13 +8,13 @@ import {
 } from '@nestjs/common';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
 import { path } from '../../path';
-import { PupilManipulationsService } from '../../services/pupil-manipulations/pupil-manipulations.service';
+import { GroupCompositionService } from '../../services/group-composition/group-composition.service';
 import { ActionPermissions } from '../../../../../../admin-panel/src/roles/models/ActionPermissions';
 
 @Controller(path)
 export class GroupCompositionController {
     constructor(
-        private readonly pupilManipulationsService: PupilManipulationsService
+        private readonly pupilManipulationsService: GroupCompositionService
     ) {}
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanAddPupilsToGroup))

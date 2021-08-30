@@ -12,6 +12,8 @@ import { NotesService } from '../../services/notes/notes.service';
 import { path } from '../../path';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
 import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
+import { decode } from 'jsonwebtoken';
+import CRMUser from '../../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
 
 @Controller(path)
 export class NotesController {
@@ -24,7 +26,9 @@ export class NotesController {
         @Param('id') id: string,
         @Body('text') text: string
     ): Promise<Pupil> {
-        return await this.notesService.addNote(id, text, req);
+        const user = decode(req.headers.authorization.split(' ')[1]) as CRMUser;
+
+        return await this.notesService.addNote(id, text, user);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteNote))

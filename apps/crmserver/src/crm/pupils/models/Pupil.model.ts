@@ -94,7 +94,7 @@ export default class Pupil extends TimeStamps {
 
     public addGroupToHistory(groupName: string, date: string) {
         this.groupsHistory.push({
-            GROUP_NAME: groupName,
+            group_name: groupName,
             additionDate: date
         });
     }

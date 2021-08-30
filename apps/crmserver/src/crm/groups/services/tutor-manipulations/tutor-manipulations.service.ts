@@ -20,14 +20,19 @@ export class TutorManipulationsService {
 
     public async addTutor(groupId: string, tutorId: string): Promise<Group> {
         const group = await this.GroupModel.findById(groupId);
-        const pupils = await this.PupilModel.find({ _id: group.PUPILS });
 
         if (!group) {
             throw new NotFoundException();
         }
 
-        if (group.TUTOR) {
-            const oldTutor = await this.CRMUserModel.findById(group.TUTOR);
+        const pupils = await this.PupilModel.find({ _id: group.pupils });
+
+        if (!pupils) {
+            throw new NotFoundException();
+        }
+
+        if (group.tutor) {
+            const oldTutor = await this.CRMUserModel.findById(group.tutor);
             oldTutor.deleteGroup(group.id);
 
             await oldTutor.save();
@@ -49,11 +54,11 @@ export class TutorManipulationsService {
             await pupil.save();
         });
 
-        group.TUTOR = tutorId;
+        group.tutor = tutorId;
 
         tutor.updateGroupsList(String(group.id));
         tutor.addGroupToHistory(
-            group.GROUP_NAME,
+            group.group_name,
             moment().locale('ru').format('L')
         );
 
@@ -62,17 +67,17 @@ export class TutorManipulationsService {
         const saved = await group.save();
         return await this.GroupModel.populate(saved, [
             {
-                path: 'PUPILS',
+                path: 'pupils',
                 populate: {
                     path: 'groups',
-                    select: '_id GROUP_NAME'
+                    select: '_id group_name'
                 }
             },
             {
-                path: 'TUTOR',
+                path: 'tutor',
                 populate: {
                     path: 'groups',
-                    select: '_id GROUP_NAME'
+                    select: '_id group_name'
                 }
             }
         ]);

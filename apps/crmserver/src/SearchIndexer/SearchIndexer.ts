@@ -71,8 +71,8 @@ export class SearchIndexer {
             body: {
                 type: 'group',
                 id: group.id,
-                GROUP_NAME: group.GROUP_NAME,
-                tutor: group.TUTOR
+                group_name: group.group_name,
+                tutor: group.tutor
             }
         });
     }
@@ -85,8 +85,8 @@ export class SearchIndexer {
                 doc: {
                     type: 'group',
                     id: group.id,
-                    GROUP_NAME: group.GROUP_NAME,
-                    tutor: group.TUTOR
+                    group_name: group.group_name,
+                    tutor: group.tutor
                 }
             }
         });

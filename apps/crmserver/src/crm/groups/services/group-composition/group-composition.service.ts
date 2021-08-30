@@ -11,7 +11,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 
 @Injectable()
-export class PupilManipulationsService {
+export class GroupCompositionService {
     constructor(
         @InjectModel(Group)
         private readonly GroupModel: ReturnModelType<typeof Group>,

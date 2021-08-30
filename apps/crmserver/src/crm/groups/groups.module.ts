@@ -5,8 +5,8 @@ import { CrudController } from './controllers/crud/crud.controller';
 import { CrudService } from './services/crud/crud.service';
 import { Group } from './models/Group.model';
 import { Module } from '@nestjs/common';
-import { PupilManipulationController } from './controllers/pupil-manipulations/pupil-manipulations.controller';
-import { PupilManipulationsService } from './services/pupil-manipulations/pupil-manipulations.service';
+import { GroupCompositionController } from './controllers/group-composition/group-composition.controller';
+import { GroupCompositionService } from './services/group-composition/group-composition.service';
 import { ScheduleController } from './controllers/schedule/schedule.controller';
 import { ScheduleService } from './services/schedule/schedule.service';
 import { TutorManipulationsController } from './controllers/tutor-manipulations/tutor-manipulations.controller';
@@ -46,13 +46,13 @@ import { JwtModule } from '@nestjs/jwt';
     ],
     controllers: [
         CrudController,
-        PupilManipulationController,
+        GroupCompositionController,
         ScheduleController,
         TutorManipulationsController
     ],
     providers: [
         CrudService,
-        PupilManipulationsService,
+        GroupCompositionService,
         ScheduleService,
         TutorManipulationsService
     ]

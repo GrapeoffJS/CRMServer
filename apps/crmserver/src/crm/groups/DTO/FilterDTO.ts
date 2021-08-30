@@ -3,17 +3,17 @@ import { IsArray, IsBoolean, IsOptional, IsString } from 'class-validator';
 export class FilterDTO {
     @IsOptional()
     @IsString({ each: true })
-    GROUP_NAMES?: string[];
+    group_names?: string[];
 
     @IsOptional()
     @IsArray()
-    LEVELS?: number[];
+    levels?: number[];
 
     @IsOptional()
     @IsString({ each: true })
-    TUTORS?: string[];
+    tutors?: string[];
 
     @IsOptional()
     @IsBoolean()
-    OCCUPIED?: boolean;
+    occupied?: boolean;
 }

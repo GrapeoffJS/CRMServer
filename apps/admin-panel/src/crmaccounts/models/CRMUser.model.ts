@@ -54,6 +54,6 @@ export default class CRMUser {
     }
 
     public addGroupToHistory(groupName: string, date: string) {
-        this.groupsHistory.push({ GROUP_NAME: groupName, additionDate: date });
+        this.groupsHistory.push({ group_name: groupName, additionDate: date });
     }
 }

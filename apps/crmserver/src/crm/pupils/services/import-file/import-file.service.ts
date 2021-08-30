@@ -27,7 +27,7 @@ export class ImportFileService {
         for (let i = 0; i < pupils.length; i++) {
             const pupil: CreatePupilDTO = pupils[i];
 
-            Object.keys(pupil).map(i => (pupil[i] = pupil[i].trim()));
+            Object.keys(pupil).forEach(i => (pupil[i] = pupil[i].trim()));
 
             pupil.age = moment(pupil.age, 'DD.MM.YYYY').toISOString();
 
@@ -62,7 +62,7 @@ export class ImportFileService {
         for (let i = 0; i < pupils.length; i++) {
             const pupil = pupils[i];
 
-            Object.keys(pupil).map(i => (pupil[i] = pupil[i].trim()));
+            Object.keys(pupil).forEach(i => (pupil[i] = pupil[i].trim()));
 
             pupil.age = moment(pupil.age, 'DD.MM.YYYY').toISOString();
 
