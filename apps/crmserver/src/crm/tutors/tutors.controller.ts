@@ -12,12 +12,13 @@ export class TutorsController {
     public async findAll(
         @Query('limit') limit: number,
         @Query('offset') offset: number,
+        @Query('accountType') accountTypes: AccountTypes[],
         @Res() response: Response
     ) {
         const { accounts, count } = await this.CRMAccountsService.find(
             Number(limit),
             Number(offset),
-            [AccountTypes.Teacher]
+            accountTypes
         );
 
         return response.header('Count', count).json(accounts);

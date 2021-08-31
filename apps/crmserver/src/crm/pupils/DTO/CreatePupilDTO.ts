@@ -41,7 +41,7 @@ export class CreatePupilDTO {
 
     @IsString()
     @IsNotEmpty()
-    parentNSM: string;
+    parentFullname: string;
 
     @IsOptional()
     @IsNumber()

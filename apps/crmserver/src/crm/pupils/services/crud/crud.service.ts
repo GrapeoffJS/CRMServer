@@ -4,7 +4,6 @@ import { CreatePupilDTO } from '../../DTO/CreatePupilDTO';
 import { FilterDTO } from '../../DTO/FilterDTO';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
 import { DataPermissions } from 'apps/admin-panel/src/roles/models/DataPermissions';
@@ -43,9 +42,9 @@ export class CrudService {
             count: count[0]?.count,
             pupils: await this.PupilModel.populate(result, {
                 path: 'groups',
-                select: '_id GROUP_NAME TUTOR',
+                select: '_id group_name tutor',
                 populate: {
-                    path: 'TUTOR'
+                    path: 'tutor'
                 }
             })
         };
@@ -60,9 +59,9 @@ export class CrudService {
             .populate([
                 {
                     path: 'groups',
-                    select: '_id GROUP_NAME TUTOR',
+                    select: '_id group_name tutor',
                     populate: {
-                        path: 'TUTOR'
+                        path: 'tutor'
                     }
                 },
                 {
@@ -74,7 +73,7 @@ export class CrudService {
                         },
                         {
                             path: 'group',
-                            select: '_id GROUP_NAME'
+                            select: '_id group_name'
                         }
                     ]
                 }
@@ -95,7 +94,7 @@ export class CrudService {
             .select(dataPermissions.forPupil)
             .populate({
                 path: 'groups',
-                select: '_id GROUP_NAME'
+                select: '_id group_name'
             });
 
         if (!pupil) {
@@ -117,9 +116,9 @@ export class CrudService {
             .populate([
                 {
                     path: 'groups',
-                    select: '_id GROUP_NAME TUTOR',
+                    select: '_id group_name tutor',
                     populate: {
-                        path: 'TUTOR'
+                        path: 'tutor'
                     }
                 },
                 {
@@ -131,7 +130,7 @@ export class CrudService {
                         },
                         {
                             path: 'group',
-                            select: '_id GROUP_NAME'
+                            select: '_id group_name'
                         }
                     ]
                 }

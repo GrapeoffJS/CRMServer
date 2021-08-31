@@ -1,7 +1,7 @@
 import { Genders } from './Genders';
 import { Group } from '../../groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
-import { Note } from './Note';
+import { Note } from './Note.model';
 import { Payment } from './Payment';
 import { post, prop } from '@typegoose/typegoose';
 import { Schedule } from '../../groups/models/Schedule';
@@ -44,7 +44,7 @@ export default class Pupil extends TimeStamps {
     parentPhone: string;
 
     @prop({ type: String, required: false })
-    parentNSM: string;
+    parentFullname: string;
 
     @prop({ type: Number, required: false, default: 0 })
     balance: number;

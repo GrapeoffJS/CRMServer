@@ -48,7 +48,7 @@ export class UpdatePupilDTO {
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    parentNSM: string;
+    parentFullname: string;
 
     @IsOptional()
     @IsNumber()

@@ -6,10 +6,8 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { decode } from 'jsonwebtoken';
 import { InjectModel } from 'nestjs-typegoose';
 import { PaymentTypes } from '../../models/PaymentTypes';
-import { Request } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 
 @Injectable()
@@ -41,32 +39,28 @@ export class PaymentService {
                 amount >= 0 ? PaymentTypes.Replenishment : PaymentTypes.Withdraw
         });
 
-        try {
-            const saved = await pupil.save();
-            return await this.PupilModel.populate(saved, [
-                {
-                    path: 'groups',
-                    select: '_id GROUP_NAME TUTOR',
-                    populate: {
-                        path: 'TUTOR'
-                    }
-                },
-                {
-                    path: 'tutors',
-                    populate: [
-                        {
-                            path: 'tutor',
-                            select: '_id name surname midname'
-                        },
-                        {
-                            path: 'group',
-                            select: '_id GROUP_NAME'
-                        }
-                    ]
+        const saved = await pupil.save();
+        return await this.PupilModel.populate(saved, [
+            {
+                path: 'groups',
+                select: '_id group_name tutor',
+                populate: {
+                    path: 'tutor'
                 }
-            ]);
-        } catch (err) {
-            throw new BadRequestException();
-        }
+            },
+            {
+                path: 'tutors',
+                populate: [
+                    {
+                        path: 'tutor',
+                        select: '_id name surname midname'
+                    },
+                    {
+                        path: 'group',
+                        select: '_id group_name'
+                    }
+                ]
+            }
+        ]);
     }
 }

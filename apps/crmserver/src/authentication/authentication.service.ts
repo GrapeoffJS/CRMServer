@@ -1,5 +1,5 @@
 import CRMUser from 'apps/admin-panel/src/crmaccounts/models/CRMUser.model';
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { compareSync } from 'bcrypt';

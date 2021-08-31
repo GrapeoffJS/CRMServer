@@ -1,5 +1,4 @@
 import CRMUser from 'apps/admin-panel/src/crmaccounts/models/CRMUser.model';
-import moment from 'moment';
 import Pupil from '../../models/Pupil.model';
 import {
     BadRequestException,
@@ -8,20 +7,23 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
+import { Note } from '../../models/Note.model';
+import { CreateNoteDTO } from '../../DTO/CreateNoteDTO';
 
 @Injectable()
 export class NotesService {
     constructor(
         @InjectModel(Pupil)
-        private readonly PupilModel: ReturnModelType<typeof Pupil>
+        private readonly PupilModel: ReturnModelType<typeof Pupil>,
+        @InjectModel(Note)
+        private readonly NoteModel: ReturnModelType<typeof Note>
     ) {}
 
     public async addNote(
-        id: string,
-        text: string,
+        { owner_id, text }: CreateNoteDTO,
         { name, surname, midname }: CRMUser
     ): Promise<Pupil> {
-        const pupil = await this.PupilModel.findById(id);
+        const pupil = await this.PupilModel.findById(owner_id);
 
         if (!pupil) {
             throw new NotFoundException();
@@ -31,20 +33,19 @@ export class NotesService {
             throw new BadRequestException();
         }
 
-        pupil.notes.push({
-            author: `${surname} ${name} ${midname}`,
-            date: moment().locale('ru').format('LLLL'),
-            text
+        this.NoteModel.create({
+            owner_id,
+            text,
+            date: new Date(),
+            author: `${surname} ${name} ${midname}`
         });
 
-        await pupil.save();
-
-        return this.PupilModel.findById(id).populate([
+        return this.PupilModel.findById(owner_id).populate([
             {
                 path: 'groups',
-                select: '_id GROUP_NAME TUTOR',
+                select: '_id group_name tutor',
                 populate: {
-                    path: 'TUTOR'
+                    path: 'tutor'
                 }
             },
             {
@@ -56,30 +57,28 @@ export class NotesService {
                     },
                     {
                         path: 'group',
-                        select: '_id GROUP_NAME'
+                        select: '_id group_name'
                     }
                 ]
             }
         ]);
     }
 
-    public async deleteNote(id: string, number: number): Promise<Pupil> {
-        const pupil = await this.PupilModel.findById(id);
+    public async deleteNote(id: string): Promise<Pupil> {
+        const note = await this.NoteModel.findById(id);
 
-        if (!pupil) {
+        if (!note) {
             throw new NotFoundException();
         }
 
-        pupil.notes.splice(number, 1);
+        await this.NoteModel.deleteOne({ _id: id });
 
-        await pupil.save();
-
-        return this.PupilModel.findById(id).populate([
+        return this.PupilModel.findById(note.owner_id).populate([
             {
                 path: 'groups',
-                select: '_id GROUP_NAME TUTOR',
+                select: '_id group_name tutor',
                 populate: {
-                    path: 'TUTOR'
+                    path: 'tutor'
                 }
             },
             {
@@ -91,7 +90,7 @@ export class NotesService {
                     },
                     {
                         path: 'group',
-                        select: '_id GROUP_NAME'
+                        select: '_id group_name'
                     }
                 ]
             }

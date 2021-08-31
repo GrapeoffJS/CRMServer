@@ -31,8 +31,7 @@ export class CRMAccountsController {
         return await this.CRMAccountsService.find(
             Number(limit),
             Number(offset),
-            accountTypes,
-            response
+            accountTypes
         );
     }
 

@@ -14,6 +14,8 @@ import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permis
 import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
 import { decode } from 'jsonwebtoken';
 import CRMUser from '../../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CreateNoteDTO } from '../../DTO/CreateNoteDTO';
+import { MongoID } from '../../../../DTO/MongoID';
 
 @Controller(path)
 export class NotesController {
@@ -23,20 +25,17 @@ export class NotesController {
     @Post(':id/Notes')
     public async addNote(
         @Req() req,
-        @Param('id') id: string,
+        @Body() createNoteDTO: CreateNoteDTO,
         @Body('text') text: string
     ): Promise<Pupil> {
         const user = decode(req.headers.authorization.split(' ')[1]) as CRMUser;
 
-        return await this.notesService.addNote(id, text, user);
+        return await this.notesService.addNote(createNoteDTO, user);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteNote))
     @Delete(':id/Notes/:note_number')
-    public async deleteNote(
-        @Param('id') id: string,
-        @Param('note_number') number: string
-    ): Promise<Pupil> {
-        return await this.notesService.deleteNote(id, Number(number));
+    public async deleteNote(@Param() { id }: MongoID): Promise<Pupil> {
+        return await this.notesService.deleteNote(id);
     }
 }

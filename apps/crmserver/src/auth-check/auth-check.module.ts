@@ -1,8 +1,7 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthCheckController } from './auth-check.controller';
-import { AuthorizationMiddleware } from '../authorization/authorization.middleware';
 import { TypegooseModule } from 'nestjs-typegoose';
 import CRMUser from '../../../admin-panel/src/crmaccounts/models/CRMUser.model';
 

@@ -13,6 +13,7 @@ import { PaymentService } from './services/payment/payment.service';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { JwtModule } from '@nestjs/jwt';
 import { Group } from '../groups/models/Group.model';
+import { Note } from './models/Note.model';
 
 @Module({
     imports: [
@@ -28,6 +29,10 @@ import { Group } from '../groups/models/Group.model';
             {
                 typegooseClass: CRMUser,
                 schemaOptions: { collection: 'CRMUsers' }
+            },
+            {
+                typegooseClass: Note,
+                schemaOptions: { collection: 'Notes' }
             }
         ]),
         JwtModule.registerAsync({

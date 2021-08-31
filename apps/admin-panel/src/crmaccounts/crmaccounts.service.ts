@@ -51,7 +51,7 @@ export class CRMAccountsService {
 
         await this.CRMUserModel.find({
             accountType: { $in: accountTypes }
-        }).countDocuments(async (err, docsCount) => {
+        }).countDocuments((err, docsCount) => {
             count = docsCount;
         });
 

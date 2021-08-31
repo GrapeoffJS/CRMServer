@@ -32,7 +32,7 @@ export class SearchIndexer {
                 name: pupil.name,
                 surname: pupil.surname,
                 midname: pupil.midname,
-                parentNSM: pupil.parentNSM,
+                parentFullname: pupil.parentFullname,
                 phone: pupil.phone,
                 parentPhone: pupil.parentPhone,
                 tutors: pupil.tutors
@@ -51,7 +51,7 @@ export class SearchIndexer {
                     name: pupil.name,
                     surname: pupil.surname,
                     midname: pupil.midname,
-                    parentNSM: pupil.parentNSM,
+                    parentFullname: pupil.parentFullname,
                     phone: pupil.phone,
                     parentPhone: pupil.parentPhone,
                     tutors: pupil.tutors
