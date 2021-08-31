@@ -47,12 +47,12 @@ export class CRMAccountsService {
         offset: number,
         accountTypes: AccountTypes[]
     ) {
-        let count: number;
+        let accountsCount: number;
 
         await this.CRMUserModel.find({
             accountType: { $in: accountTypes }
         }).countDocuments((err, docsCount) => {
-            count = docsCount;
+            accountsCount = docsCount;
         });
 
         return {
@@ -62,7 +62,7 @@ export class CRMAccountsService {
                 .populate('role')
                 .skip(offset || 0)
                 .limit(limit || 0),
-            count: count.toString()
+            count: accountsCount.toString()
         };
     }
 

@@ -6,17 +6,20 @@ import {
     IsPositive,
     IsString
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateGroupDTO {
     @IsString()
     @IsNotEmpty()
     group_name: string;
 
+    @Type(() => Number)
     @IsPositive()
     @IsNumber()
     @IsNotEmpty()
     level: number;
 
+    @Type(() => Number)
     @IsPositive()
     @IsNumber()
     @IsNotEmpty()

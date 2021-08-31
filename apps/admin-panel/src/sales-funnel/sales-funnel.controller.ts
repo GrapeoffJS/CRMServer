@@ -11,6 +11,7 @@ import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
 import { SalesFunnelService } from './sales-funnel.service';
 import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
 import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
+import { MongoID } from '../../../DTO/MongoID';
 
 @Controller('/AdminPanel/SalesFunnel')
 export class SalesFunnelController {
@@ -28,14 +29,14 @@ export class SalesFunnelController {
 
     @Patch(':id')
     public async edit(
-        @Param('id') id: string,
+        @Param() { id }: MongoID,
         updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
     ) {
-        return await this.edit(id, updateSalesFunnelStepDTO);
+        return await this.SalesFunnelService.edit(id, updateSalesFunnelStepDTO);
     }
 
     @Delete(':id')
-    public async delete(@Param('id') id: string) {
+    public async delete(@Param() { id }: MongoID) {
         return await this.SalesFunnelService.delete(id);
     }
 

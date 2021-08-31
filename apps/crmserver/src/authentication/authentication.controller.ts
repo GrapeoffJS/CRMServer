@@ -9,10 +9,7 @@ export class AuthenticationController {
     ) {}
 
     @Post()
-    public async authenticate(@Body() authDTO: AuthenticationDTO) {
-        return await this.AuthenticationService.authenticate(
-            authDTO.login,
-            authDTO.password
-        );
+    public async authenticate(@Body() { login, password }: AuthenticationDTO) {
+        return await this.AuthenticationService.authenticate(login, password);
     }
 }

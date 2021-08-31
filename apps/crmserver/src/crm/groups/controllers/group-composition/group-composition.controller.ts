@@ -10,6 +10,10 @@ import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permis
 import { path } from '../../path';
 import { GroupCompositionService } from '../../services/group-composition/group-composition.service';
 import { ActionPermissions } from '../../../../../../admin-panel/src/roles/models/ActionPermissions';
+import { MongoID } from '../../../../../../DTO/MongoID';
+import { MongoIDs } from '../../../../../../DTO/MongoIDs';
+import { GroupID } from '../../../../../../DTO/GroupID';
+import { PupilID } from '../../../../../../DTO/PupilID';
 
 @Controller(path)
 export class GroupCompositionController {
@@ -20,18 +24,18 @@ export class GroupCompositionController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanAddPupilsToGroup))
     @Post(':id/Pupils')
     public async addPupils(
-        @Param('id') id: string,
-        @Body() pupilsToAdd: string[]
+        @Param() { id }: MongoID, // Group ID
+        @Body() { ids }: MongoIDs // Pupil IDs
     ) {
-        return await this.pupilManipulationsService.addPupils(id, pupilsToAdd);
+        return await this.pupilManipulationsService.addPupils(id, ids);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteGroupPupils))
-    @Delete(':id/Pupils/:pupilId')
+    @Delete(':id/Pupils/:pupilID')
     public async deletePupil(
-        @Param('id') id: string,
-        @Param('pupilId') pupilId: string
+        @Param() { id }: GroupID,
+        @Param() { pupilID }: PupilID
     ) {
-        return await this.pupilManipulationsService.deletePupil(id, pupilId);
+        return await this.pupilManipulationsService.deletePupil(id, pupilID);
     }
 }

@@ -3,6 +3,8 @@ import {
     Controller,
     Delete,
     Get,
+    HttpCode,
+    HttpStatus,
     Param,
     Patch,
     Post,
@@ -23,6 +25,9 @@ import { ActionPermissionsGuard } from '../../../../../../admin-panel/src/roles/
 import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
 import { GetDataPermissions } from '../../../../../../admin-panel/src/roles/GetDataPermissions.decorator';
 import { DataPermissions } from '../../../../../../admin-panel/src/roles/models/DataPermissions';
+import { MongoID } from '../../../../../../DTO/MongoID';
+import { PaginationDTO } from '../../../../../../DTO/PaginationDTO';
+import { MongoIDs } from '../../../../../../DTO/MongoIDs';
 
 @Controller(path)
 export class CrudController {
@@ -38,26 +43,27 @@ export class CrudController {
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanGetGroupsList))
+    @HttpCode(HttpStatus.OK)
     @Post('/getByIds')
     public async findByIds(
-        @Body() ids: string[],
+        @Body() { ids }: MongoIDs,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group[]> {
         return await this.crudService.findByIds(ids, dataPermissions);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanGetGroupsList))
+    @HttpCode(HttpStatus.OK)
     @Post('/find')
     public async findAll(
-        @Query('limit') limit,
-        @Query('offset') offset,
+        @Query() { limit, offset }: PaginationDTO,
         @Body('filters') filters: FilterDTO,
-        @Res() response: Response,
-        @GetDataPermissions() dataPermissions: DataPermissions
+        @GetDataPermissions() dataPermissions: DataPermissions,
+        @Res() response: Response
     ) {
         const { count, groups } = await this.crudService.findAll(
-            Number(limit) || 0,
-            Number(offset) || 0,
+            limit || 0,
+            offset || 0,
             filters,
             dataPermissions
         );
@@ -68,7 +74,7 @@ export class CrudController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSeeGroupPage))
     @Get(':id')
     public async findById(
-        @Param('id') id: string,
+        @Param() { id }: MongoID,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group> {
         return await this.crudService.findById(id, dataPermissions);
@@ -77,7 +83,7 @@ export class CrudController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteGroup))
     @Delete(':id')
     public async delete(
-        @Param('id') id: string,
+        @Param() { id }: MongoID,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group> {
         return await this.crudService.delete(id, dataPermissions);
@@ -86,7 +92,7 @@ export class CrudController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanEditGroup))
     @Patch(':id')
     public async edit(
-        @Param('id') id: string,
+        @Param() { id }: MongoID,
         @Body() updateGroupDTO: UpdateGroupDTO,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group> {

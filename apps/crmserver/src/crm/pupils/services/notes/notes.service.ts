@@ -20,7 +20,8 @@ export class NotesService {
     ) {}
 
     public async addNote(
-        { owner_id, text }: CreateNoteDTO,
+        owner_id: string,
+        { text }: CreateNoteDTO,
         { name, surname, midname }: CRMUser
     ): Promise<Pupil> {
         const pupil = await this.PupilModel.findById(owner_id);

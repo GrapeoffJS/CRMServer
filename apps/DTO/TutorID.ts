@@ -1,7 +1,8 @@
 import { IsMongoId, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateNoteDTO {
+export class TutorID {
     @IsNotEmpty()
     @IsString()
-    text: string;
+    @IsMongoId()
+    tutorID: string;
 }

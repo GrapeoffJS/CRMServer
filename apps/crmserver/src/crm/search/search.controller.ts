@@ -3,6 +3,7 @@ import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permis
 import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
 import { path } from './path';
 import { SearchService } from './search.service';
+import { TutorID } from '../../../../DTO/TutorID';
 
 @Controller(path)
 export class SearchController {
@@ -12,8 +13,8 @@ export class SearchController {
     @Get('/autocompletion')
     public async search(
         @Query('query') searchQuery: string,
-        @Query('tutorid') tutorId: string
+        @Query() { tutorID }: TutorID
     ) {
-        return this.SearchService.search(searchQuery, tutorId);
+        return this.SearchService.search(searchQuery, tutorID);
     }
 }

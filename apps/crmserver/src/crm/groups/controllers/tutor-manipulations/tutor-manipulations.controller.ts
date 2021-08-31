@@ -4,6 +4,8 @@ import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermi
 import { Group } from '../../models/Group.model';
 import { path } from '../../path';
 import { TutorManipulationsService } from '../../services/tutor-manipulations/tutor-manipulations.service';
+import { GroupID } from '../../../../../../DTO/GroupID';
+import { TutorID } from '../../../../../../DTO/TutorID';
 
 @Controller(path)
 export class TutorManipulationsController {
@@ -14,9 +16,9 @@ export class TutorManipulationsController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanAddTutor))
     @Post(':id/Teacher')
     public async addTutor(
-        @Param('id') groupId: string,
-        @Query('tutor_id') tutorId: string
+        @Param() { id }: GroupID,
+        @Query() { tutorID }: TutorID
     ): Promise<Group> {
-        return await this.tutorManipulationsService.addTutor(groupId, tutorId);
+        return await this.tutorManipulationsService.addTutor(id, tutorID);
     }
 }

@@ -36,14 +36,14 @@ export class SalesFunnelService {
     }
 
     public async changeOrders(changeOrderDTO: ChangeOrderDTO[]) {
-        for (const item of changeOrderDTO) {
+        for (const step of changeOrderDTO) {
             await this.SalesFunnelStepModel.updateOne(
-                { _id: item.id },
-                { order: item.newOrder }
+                { _id: step.id },
+                { order: step.newOrder }
             );
         }
 
-        return;
+        return this.SalesFunnelStepModel.find().select({ pupils: 0 });
     }
 
     public async delete(id: string) {

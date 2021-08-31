@@ -4,6 +4,8 @@ import {
     Controller,
     Delete,
     Get,
+    HttpCode,
+    HttpStatus,
     Param,
     Patch,
     Post,
@@ -21,6 +23,8 @@ import { ActionPermissions } from '../../../../../../admin-panel/src/roles/model
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
 import { GetDataPermissions } from 'apps/admin-panel/src/roles/GetDataPermissions.decorator';
 import { DataPermissions } from '../../../../../../admin-panel/src/roles/models/DataPermissions';
+import { PaginationDTO } from '../../../../../../DTO/PaginationDTO';
+import { MongoID } from '../../../../../../DTO/MongoID';
 
 @Controller(path)
 export class CrudController {
@@ -33,17 +37,17 @@ export class CrudController {
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanGetPupilsList))
+    @HttpCode(HttpStatus.OK)
     @Post('/find')
     public async findAll(
-        @Query('limit') limit,
-        @Query('offset') offset,
+        @Query() { limit, offset }: PaginationDTO,
         @Body('filters') filters: FilterDTO,
-        @Res() response: Response,
-        @GetDataPermissions() dataPermissions: DataPermissions
+        @GetDataPermissions() dataPermissions: DataPermissions,
+        @Res() response: Response
     ) {
         const { count, pupils } = await this.crudService.findAll(
-            Number(limit),
-            Number(offset),
+            limit,
+            offset,
             filters,
             dataPermissions
         );
@@ -56,7 +60,7 @@ export class CrudController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSeePupilPage))
     @Get('/:id')
     public async findById(
-        @Param('id') id: string,
+        @Param() { id }: MongoID,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Pupil> {
         return await this.crudService.findById(id, dataPermissions);
@@ -65,7 +69,7 @@ export class CrudController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeletePupil))
     @Delete('/:id')
     public async delete(
-        @Param('id') id: string,
+        @Param() { id }: MongoID,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Pupil> {
         return await this.crudService.delete(id, dataPermissions);
@@ -74,7 +78,7 @@ export class CrudController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanEditPupil))
     @Patch('/:id')
     public async edit(
-        @Param('id') id: string,
+        @Param() { id }: MongoID,
         @Body() updatePupilDTO: UpdatePupilDTO,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Pupil> {

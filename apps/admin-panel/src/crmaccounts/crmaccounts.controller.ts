@@ -16,6 +16,8 @@ import { path } from './path';
 import { Response } from 'express';
 import { AccountTypes } from './models/AccountTypes';
 import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
+import { MongoID } from '../../../DTO/MongoID';
+import { PaginationDTO } from '../../../DTO/PaginationDTO';
 
 @Controller(path)
 export class CRMAccountsController {
@@ -23,20 +25,21 @@ export class CRMAccountsController {
 
     @Get()
     public async findAll(
-        @Query('limit') limit: number,
-        @Query('offset') offset: number,
+        @Query() { limit, offset }: PaginationDTO,
         @Query('accountType') accountTypes: AccountTypes[],
         @Res() response: Response
     ) {
-        return await this.CRMAccountsService.find(
+        const { accounts, count } = await this.CRMAccountsService.find(
             Number(limit),
             Number(offset),
             accountTypes
         );
+
+        return response.header('Count', count).json(accounts);
     }
 
     @Get(':id')
-    public async findOne(@Param('id') id: string): Promise<CRMUser> {
+    public async findOne(@Param() { id }: MongoID): Promise<CRMUser> {
         return await this.CRMAccountsService.findById(id);
     }
 
@@ -49,7 +52,7 @@ export class CRMAccountsController {
 
     @Patch(':id')
     public async edit(
-        @Param('id') id: string,
+        @Param() { id }: MongoID,
         @Body() updateCRMUserDTO: UpdateCRMUserDTO
     ) {
         return await this.CRMAccountsService.edit(id, updateCRMUserDTO);

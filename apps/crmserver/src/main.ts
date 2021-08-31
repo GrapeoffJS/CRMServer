@@ -17,7 +17,11 @@ async function bootstrap() {
     });
     app.use(helmet());
     app.use(compression());
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(
+        new ValidationPipe({
+            transform: true
+        })
+    );
 
     SearchIndexer.getInstance().connect({
         node: process.env.ELASTIC_SEARCH_URI

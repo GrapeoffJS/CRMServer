@@ -1,21 +1,23 @@
 import {
-    IsMongoId,
     IsNotEmpty,
     IsNumber,
-    IsString,
+    IsNumberString,
+    Max,
     Min
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class ChangeOrderDTO {
+export class PaginationDTO {
+    @Type(() => Number)
     @IsNotEmpty()
-    @IsString()
-    @IsMongoId()
-    id: string;
+    @IsNumber()
+    @Min(0)
+    @Max(150)
+    limit: number;
 
     @Type(() => Number)
     @IsNotEmpty()
     @IsNumber()
     @Min(0)
-    newOrder: number;
+    offset: number;
 }

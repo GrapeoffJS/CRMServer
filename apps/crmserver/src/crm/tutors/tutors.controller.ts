@@ -3,6 +3,8 @@ import { path } from './path';
 import { CRMAccountsService } from '../../../../admin-panel/src/crmaccounts/crmaccounts.service';
 import { Response } from 'express';
 import { AccountTypes } from '../../../../admin-panel/src/crmaccounts/models/AccountTypes';
+import { PaginationDTO } from '../../../../DTO/PaginationDTO';
+import { MongoID } from '../../../../DTO/MongoID';
 
 @Controller(path)
 export class TutorsController {
@@ -10,21 +12,20 @@ export class TutorsController {
 
     @Get()
     public async findAll(
-        @Query('limit') limit: number,
-        @Query('offset') offset: number,
+        @Query() { limit, offset }: PaginationDTO,
         @Query('accountType') accountTypes: AccountTypes[],
         @Res() response: Response
     ) {
         const { accounts, count } = await this.CRMAccountsService.find(
-            Number(limit),
-            Number(offset),
+            limit,
+            offset,
             accountTypes
         );
 
         return response.header('Count', count).json(accounts);
     }
 
-    public async findById(@Param('id') id: string) {
+    public async findById(@Param() { id }: MongoID) {
         return await this.CRMAccountsService.findById(id);
     }
 }

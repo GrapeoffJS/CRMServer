@@ -6,6 +6,7 @@ import {
     IsPositive,
     IsString
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class UpdateGroupDTO {
     @IsOptional()
@@ -13,12 +14,14 @@ export class UpdateGroupDTO {
     @IsNotEmpty()
     group_name: string;
 
+    @Type(() => Number)
     @IsOptional()
     @IsPositive()
     @IsNumber()
     @IsNotEmpty()
     level: number;
 
+    @Type(() => Number)
     @IsOptional()
     @IsPositive()
     @IsNumber()

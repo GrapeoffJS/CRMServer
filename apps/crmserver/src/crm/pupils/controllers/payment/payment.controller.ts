@@ -6,6 +6,7 @@ import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permis
 import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
 import CRMUser from '../../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
 import { decode } from 'jsonwebtoken';
+import { MongoID } from '../../../../../../DTO/MongoID';
 
 @Controller(path)
 export class PaymentController {
@@ -14,7 +15,7 @@ export class PaymentController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreatePayment))
     @Post(':id/Payment')
     public async createPayment(
-        @Param('id') id: string,
+        @Param('id') { id }: MongoID,
         @Query('amount') amount: string,
         @Query('subscription') sub: string,
         @Req() req: Request

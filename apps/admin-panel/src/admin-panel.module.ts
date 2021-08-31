@@ -5,7 +5,12 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { SalesFunnelModule } from './sales-funnel/sales-funnel.module';
 
 @Module({
-    imports: [RolesModule, CrmaccountsModule, SubscriptionsModule, SalesFunnelModule],
+    imports: [
+        RolesModule,
+        CrmaccountsModule,
+        SubscriptionsModule,
+        SalesFunnelModule
+    ],
     controllers: [],
     providers: []
 })

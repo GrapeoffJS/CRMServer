@@ -5,6 +5,7 @@ import {
     IsOptional,
     IsPositive
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class UpdateSubscriptionDTO {
     @IsOptional()
@@ -12,12 +13,14 @@ export class UpdateSubscriptionDTO {
     @IsString()
     name: string;
 
+    @Type(() => Number)
     @IsOptional()
     @IsPositive()
     @IsNotEmpty()
     @IsNumber()
     price: number;
 
+    @Type(() => Number)
     @IsOptional()
     @IsPositive()
     @IsNotEmpty()
