@@ -21,13 +21,14 @@ export class GroupCompositionService {
 
     public async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
         const group = await this.GroupModel.findById(id);
-        const pupils = await this.PupilModel.find({
-            _id: pupilsToAdd
-        });
 
         if (!group) {
             throw new NotFoundException();
         }
+
+        const pupils = await this.PupilModel.find({
+            _id: pupilsToAdd
+        });
 
         if (group.pupils.length + pupilsToAdd.length > group.places) {
             throw new BadRequestException(ADD_PUPILS_ERRORS.PLACES_OVERFLOW);

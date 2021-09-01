@@ -3,7 +3,7 @@ import { Group } from '../../groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
 import { Note } from './Note.model';
 import { Payment } from './Payment';
-import { post, prop } from '@typegoose/typegoose';
+import { modelOptions, post, prop } from '@typegoose/typegoose';
 import { Schedule } from '../../groups/models/Schedule';
 import { Schema } from 'mongoose';
 import { SearchIndexer } from '../../../SearchIndexer/SearchIndexer';
@@ -20,6 +20,12 @@ const Indexer = SearchIndexer.getInstance();
 })
 @post<Pupil>('findOneAndDelete', pupil => {
     Indexer.deletePupil(pupil);
+})
+@modelOptions({
+    schemaOptions: {
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true }
+    }
 })
 export default class Pupil extends TimeStamps {
     @prop({ type: String, required: true })
@@ -69,7 +75,11 @@ export default class Pupil extends TimeStamps {
     @prop({ type: () => [Payment], required: false, _id: false })
     paymentHistory: Payment[];
 
-    @prop({ type: () => [Note], required: false, _id: false })
+    @prop({
+        ref: Note,
+        localField: '_id',
+        foreignField: 'owner_id'
+    })
     notes: Note[];
 
     @prop({

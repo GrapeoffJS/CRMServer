@@ -16,8 +16,7 @@ export class CrudService {
     ) {}
 
     public async create(createPupilDTO: CreatePupilDTO): Promise<Pupil> {
-        const pupil = await this.PupilModel.create(createPupilDTO);
-        return pupil;
+        return this.PupilModel.create(createPupilDTO);
     }
 
     public async findAll(
@@ -39,7 +38,7 @@ export class CrudService {
         ).count('count');
 
         return {
-            count: count[0]?.count,
+            count: count[0]?.count?.toString(),
             pupils: await this.PupilModel.populate(result, {
                 path: 'groups',
                 select: '_id group_name tutor',
@@ -77,7 +76,8 @@ export class CrudService {
                         }
                     ]
                 }
-            ]);
+            ])
+            .populate('notes');
 
         if (!pupil) {
             throw new NotFoundException();
@@ -111,7 +111,7 @@ export class CrudService {
     ): Promise<Pupil> {
         await this.PupilModel.findOneAndUpdate({ _id: id }, updatePupilDTO);
 
-        const pupil = await this.PupilModel.findById(id)
+        return this.PupilModel.findById(id)
             .select(dataPermissions.forPupil)
             .populate([
                 {
@@ -135,8 +135,6 @@ export class CrudService {
                     ]
                 }
             ]);
-
-        return pupil;
     }
 
     private createFilterPipeline(filters: FilterDTO): any[] {

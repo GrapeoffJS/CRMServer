@@ -52,9 +52,7 @@ export class CrudController {
             dataPermissions
         );
 
-        return response
-            .header('Count', count[0]?.count?.toString() || '0')
-            .json(pupils);
+        return response.header('Count', count || '0').json(pupils);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSeePupilPage))

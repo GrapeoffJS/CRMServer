@@ -7,7 +7,6 @@ import {
 import { CreateCRMUserDTO } from './DTO/CreateCRMUserDTO';
 import { genSalt, hash } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
-import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { AccountTypes } from './models/AccountTypes';
 import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
@@ -28,12 +27,19 @@ export class CRMAccountsService {
                 createUserDTO.localDataPermissions)
         ) {
             throw new BadRequestException();
+        } else if (
+            !createUserDTO.role &&
+            !(
+                createUserDTO.localActionPermissions ||
+                createUserDTO.localDataPermissions
+            )
+        ) {
+            throw new BadRequestException();
         }
 
         const salt = await genSalt();
-        const passwordHash = await hash(createUserDTO.password, salt);
 
-        createUserDTO.password = passwordHash;
+        createUserDTO.password = await hash(createUserDTO.password, salt);
 
         try {
             return await this.CRMUserModel.create(createUserDTO);
@@ -62,7 +68,7 @@ export class CRMAccountsService {
                 .populate('role')
                 .skip(offset || 0)
                 .limit(limit || 0),
-            count: accountsCount.toString()
+            count: accountsCount?.toString()
         };
     }
 

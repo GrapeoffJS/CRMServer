@@ -26,8 +26,7 @@ export class NotesController {
     public async addNote(
         @Req() req,
         @Param() { id }: MongoID,
-        @Body() createNoteDTO: CreateNoteDTO,
-        @Body('text') text: string
+        @Body() createNoteDTO: CreateNoteDTO
     ): Promise<Pupil> {
         const user = decode(req.headers.authorization.split(' ')[1]) as CRMUser;
 

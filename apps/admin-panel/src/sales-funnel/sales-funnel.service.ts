@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
 import { InjectModel } from 'nestjs-typegoose';
 import { SalesFunnelStep } from './models/SalesFunnelStep.model';
@@ -16,7 +16,7 @@ export class SalesFunnelService {
     ) {}
 
     public create(createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
-        return this.create(createSalesFunnelStepDTO);
+        return this.SalesFunnelStepModel.create(createSalesFunnelStepDTO);
     }
 
     public async get() {
@@ -50,6 +50,10 @@ export class SalesFunnelService {
         const deletedStep = await this.SalesFunnelStepModel.findByIdAndDelete(
             id
         );
+
+        if (!deletedStep) {
+            throw new NotFoundException();
+        }
 
         await this.SalesFunnelStepModel.update(
             { order: { $gt: deletedStep.order } },
