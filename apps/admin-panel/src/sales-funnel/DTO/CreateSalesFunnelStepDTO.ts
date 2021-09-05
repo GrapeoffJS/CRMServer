@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
+import {
+    IsHexColor,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsString,
+    Min
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateSalesFunnelStepDTO {
@@ -11,4 +18,15 @@ export class CreateSalesFunnelStepDTO {
     @IsNumber()
     @Min(0)
     order: number;
+
+    @IsNotEmpty()
+    @IsString()
+    @IsHexColor()
+    background: string;
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsString()
+    @IsHexColor()
+    color: string;
 }

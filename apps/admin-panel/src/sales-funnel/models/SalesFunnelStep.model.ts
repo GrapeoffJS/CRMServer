@@ -10,4 +10,10 @@ export class SalesFunnelStep {
 
     @prop({ type: [Pupil], required: false, default: [] })
     pupils: Pupil[];
+
+    @prop({ type: String, required: true, maxlength: 7 })
+    background: string;
+
+    @prop({ type: String, required: false, default: '#FFFFFF', maxlength: 7 })
+    color: string;
 }
