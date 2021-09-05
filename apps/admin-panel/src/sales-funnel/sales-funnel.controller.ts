@@ -3,6 +3,7 @@ import {
     Delete,
     Get,
     Param,
+    ParseIntPipe,
     Patch,
     Post,
     Put
@@ -12,8 +13,9 @@ import { SalesFunnelService } from './sales-funnel.service';
 import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
 import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
 import { MongoID } from '../../../DTO/MongoID';
+import { path } from './path';
 
-@Controller('/AdminPanel/SalesFunnel')
+@Controller(path)
 export class SalesFunnelController {
     constructor(private readonly SalesFunnelService: SalesFunnelService) {}
 
@@ -24,7 +26,12 @@ export class SalesFunnelController {
 
     @Get()
     public async get() {
-        return await this.SalesFunnelService.get();
+        return await this.SalesFunnelService.find();
+    }
+
+    @Get(':order')
+    public async getByOrder(@Param('order', ParseIntPipe) order: number) {
+        return await this.SalesFunnelService.findByOrder(order);
     }
 
     @Patch(':id')
