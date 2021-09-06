@@ -18,7 +18,7 @@ export class SalesFunnelStep {
         type: [Pupil],
         required: false,
         default: [],
-        ref: Pupil,
+        ref: () => Pupil,
         localField: '_id',
         foreignField: 'salesFunnelStep'
     })
