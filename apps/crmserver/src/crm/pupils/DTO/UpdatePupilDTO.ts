@@ -58,3 +58,5 @@ export class UpdatePupilDTO {
     @IsString()
     discord?: string;
 }
+
+// TODO: add salesFunnelStep validation
