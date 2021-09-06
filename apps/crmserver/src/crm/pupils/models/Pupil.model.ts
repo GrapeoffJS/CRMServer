@@ -9,6 +9,7 @@ import { Schema } from 'mongoose';
 import { SearchIndexer } from '../../../SearchIndexer/SearchIndexer';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { Tutor } from './Tutor';
+import { SalesFunnelStep } from '../../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
 
 const Indexer = SearchIndexer.getInstance();
 
@@ -97,6 +98,9 @@ export default class Pupil extends TimeStamps {
         _id: false
     })
     tutors: Tutor[];
+
+    @prop({ type: SalesFunnelStep, required: true, _id: false })
+    salesFunnelStep: SalesFunnelStep;
 
     public deleteGroup(id: string): void {
         this.groups.splice(this.groups.indexOf(id), 1);

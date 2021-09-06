@@ -19,8 +19,10 @@ export class SalesFunnelService {
         return this.SalesFunnelStepModel.create(createSalesFunnelStepDTO);
     }
 
-    public async find() {
-        return this.SalesFunnelStepModel.find().select({ pupils: 0 });
+    public async findAll() {
+        return this.SalesFunnelStepModel.find()
+            .select({ pupils: 0 })
+            .sort({ order: 1 });
     }
 
     public async edit(

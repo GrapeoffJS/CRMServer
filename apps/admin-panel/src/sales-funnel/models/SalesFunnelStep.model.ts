@@ -1,6 +1,12 @@
 import Pupil from '../../../../crmserver/src/crm/pupils/models/Pupil.model';
-import { prop } from '@typegoose/typegoose';
+import { modelOptions, prop } from '@typegoose/typegoose';
 
+@modelOptions({
+    schemaOptions: {
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true }
+    }
+})
 export class SalesFunnelStep {
     @prop({ type: String, required: true })
     name: string;
@@ -8,7 +14,14 @@ export class SalesFunnelStep {
     @prop({ type: Number, required: true, unique: true })
     order: number;
 
-    @prop({ type: [Pupil], required: false, default: [] })
+    @prop({
+        type: [Pupil],
+        required: false,
+        default: [],
+        ref: Pupil,
+        localField: '_id',
+        foreignField: 'salesFunnelStep'
+    })
     pupils: Pupil[];
 
     @prop({ type: String, required: true, maxlength: 7 })

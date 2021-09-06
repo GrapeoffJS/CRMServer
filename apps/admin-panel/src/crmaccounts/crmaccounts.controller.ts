@@ -29,7 +29,7 @@ export class CRMAccountsController {
         @Query('accountType') accountTypes: AccountTypes[],
         @Res() response: Response
     ) {
-        const { accounts, count } = await this.CRMAccountsService.find(
+        const { accounts, count } = await this.CRMAccountsService.findAll(
             Number(limit),
             Number(offset),
             accountTypes

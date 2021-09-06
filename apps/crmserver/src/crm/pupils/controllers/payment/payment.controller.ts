@@ -15,7 +15,7 @@ export class PaymentController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreatePayment))
     @Post(':id/Payment')
     public async createPayment(
-        @Param('id') { id }: MongoID,
+        @Param() { id }: MongoID,
         @Query('amount') amount: string,
         @Query('subscription') sub: string,
         @Req() req: Request

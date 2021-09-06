@@ -9,7 +9,7 @@ export class SubscriptionsController {
     constructor(private readonly SubscriptionsService: SubscriptionsService) {}
 
     @Get()
-    public async find() {
+    public async findAll() {
         return await this.SubscriptionsService.findAll();
     }
 

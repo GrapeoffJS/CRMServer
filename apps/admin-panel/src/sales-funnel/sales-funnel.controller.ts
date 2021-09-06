@@ -26,7 +26,7 @@ export class SalesFunnelController {
 
     @Get()
     public async get() {
-        return await this.SalesFunnelService.find();
+        return await this.SalesFunnelService.findAll();
     }
 
     @Get(':order')

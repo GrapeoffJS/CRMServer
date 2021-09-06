@@ -48,7 +48,7 @@ export class CRMAccountsService {
         }
     }
 
-    public async find(
+    public async findAll(
         limit: number,
         offset: number,
         accountTypes: AccountTypes[]
