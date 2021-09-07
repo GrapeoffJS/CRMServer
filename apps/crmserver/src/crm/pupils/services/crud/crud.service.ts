@@ -75,6 +75,12 @@ export class CrudService {
                             select: '_id group_name'
                         }
                     ]
+                },
+                {
+                    path: 'paymentHistory',
+                    populate: {
+                        path: 'subscription'
+                    }
                 }
             ])
             .populate('notes');

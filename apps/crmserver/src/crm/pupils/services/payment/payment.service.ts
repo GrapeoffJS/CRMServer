@@ -38,8 +38,9 @@ export class PaymentService {
             amount
         });
 
-        const result = await pupil.save();
-        return result.populate([
+        await pupil.save();
+
+        return this.PupilModel.findById(id).populate([
             {
                 path: 'groups',
                 select: '_id group_name tutor',
@@ -97,8 +98,7 @@ export class PaymentService {
             issuer
         });
 
-        const result = await pupil.save();
-        return result.populate([
+        return this.PupilModel.findById(id).populate([
             {
                 path: 'groups',
                 select: '_id group_name tutor',

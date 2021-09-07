@@ -1,4 +1,4 @@
-import { Controller, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { path } from '../../path';
 import { PaymentService } from '../../services/payment/payment.service';
 import { Request } from 'express';
@@ -17,7 +17,7 @@ export class PaymentController {
     @Post(':id/Payment')
     public async Payment(
         @Param() { id }: MongoID,
-        @Param() { amount, subscription }: PaymentDTO,
+        @Query() { amount, subscription }: PaymentDTO,
         @Req() req: Request
     ) {
         const { name, surname, midname }: CRMUser = decode(
