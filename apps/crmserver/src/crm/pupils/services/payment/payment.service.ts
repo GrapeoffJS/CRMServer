@@ -1,11 +1,6 @@
-import CRMUser from 'apps/admin-panel/src/crmaccounts/models/CRMUser.model';
 import moment from 'moment';
 import Pupil from '../../models/Pupil.model';
-import {
-    BadRequestException,
-    Injectable,
-    NotFoundException
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { PaymentTypes } from '../../models/PaymentTypes';
 import { ReturnModelType } from '@typegoose/typegoose';

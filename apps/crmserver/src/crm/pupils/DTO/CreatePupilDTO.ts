@@ -2,6 +2,7 @@ import { Genders } from '../models/Genders';
 import {
     IsEnum,
     IsISO8601,
+    IsMongoId,
     IsNotEmpty,
     IsNumber,
     IsOptional,
@@ -50,6 +51,9 @@ export class CreatePupilDTO {
     @IsOptional()
     @IsString()
     discord?: string;
-}
 
-// TODO: add salesFunnelStep validation
+    @IsNotEmpty()
+    @IsString()
+    @IsMongoId()
+    salesFunnelStep: string;
+}
