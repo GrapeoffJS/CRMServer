@@ -99,7 +99,12 @@ export default class Pupil extends TimeStamps {
     })
     tutors: Tutor[];
 
-    @prop({ type: SalesFunnelStep, required: true, ref: () => SalesFunnelStep })
+    @prop({
+        type: SalesFunnelStep,
+        required: true,
+        ref: () => SalesFunnelStep,
+        select: true
+    })
     salesFunnelStep: SalesFunnelStep;
 
     public deleteGroup(id: string): void {
