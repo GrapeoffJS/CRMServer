@@ -102,8 +102,7 @@ export default class Pupil extends TimeStamps {
     @prop({
         type: SalesFunnelStep,
         required: true,
-        ref: () => SalesFunnelStep,
-        select: true
+        ref: () => SalesFunnelStep
     })
     salesFunnelStep: SalesFunnelStep;
 
