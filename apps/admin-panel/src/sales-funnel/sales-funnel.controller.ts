@@ -40,7 +40,7 @@ export class SalesFunnelController {
     @Patch(':id')
     public async edit(
         @Param() { id }: MongoID,
-        updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
+        @Body() updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
     ) {
         return await this.SalesFunnelService.edit(id, updateSalesFunnelStepDTO);
     }
