@@ -1,4 +1,5 @@
 import {
+    Body,
     Controller,
     Delete,
     Get,
@@ -20,7 +21,9 @@ export class SalesFunnelController {
     constructor(private readonly SalesFunnelService: SalesFunnelService) {}
 
     @Post()
-    public async create(createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
+    public async create(
+        @Body() createSalesFunnelStepDTO: CreateSalesFunnelStepDTO
+    ) {
         return await this.SalesFunnelService.create(createSalesFunnelStepDTO);
     }
 
@@ -48,7 +51,7 @@ export class SalesFunnelController {
     }
 
     @Put()
-    public async changeOrders(changeOrderDTO: ChangeOrderDTO[]) {
+    public async changeOrders(@Body() changeOrderDTO: ChangeOrderDTO[]) {
         return await this.SalesFunnelService.changeOrders(changeOrderDTO);
     }
 }

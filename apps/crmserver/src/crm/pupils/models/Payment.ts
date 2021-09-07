@@ -1,5 +1,6 @@
 import { PaymentTypes } from './PaymentTypes';
 import { prop } from '@typegoose/typegoose';
+import { Subscription } from '../../../../../admin-panel/src/subscriptions/models/Subscription.model';
 
 export class Payment {
     @prop({ required: true })
@@ -14,6 +15,11 @@ export class Payment {
     @prop({ type: String, required: true })
     issuer: string;
 
-    @prop({ type: String, required: false, default: '' })
+    @prop({
+        type: Subscription,
+        required: false,
+        ref: () => Subscription,
+        default: null
+    })
     subscription?: string;
 }

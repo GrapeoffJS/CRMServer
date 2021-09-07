@@ -9,20 +9,18 @@ import {
 import { InjectModel } from 'nestjs-typegoose';
 import { PaymentTypes } from '../../models/PaymentTypes';
 import { ReturnModelType } from '@typegoose/typegoose';
+import { Subscription } from '../../../../../../admin-panel/src/subscriptions/models/Subscription.model';
 
 @Injectable()
 export class PaymentService {
     constructor(
         @InjectModel(Pupil)
-        private readonly PupilModel: ReturnModelType<typeof Pupil>
+        private readonly PupilModel: ReturnModelType<typeof Pupil>,
+        @InjectModel(Subscription)
+        private readonly SubscriptionModel: ReturnModelType<typeof Subscription>
     ) {}
 
-    public async createPayment(
-        id: string,
-        amount: number,
-        subscription: string,
-        { name, surname, midname }: CRMUser
-    ): Promise<Pupil> {
+    public async addBalance(id: string, amount: number, issuer: string) {
         const pupil = await this.PupilModel.findById(id);
 
         if (!pupil) {
@@ -31,16 +29,17 @@ export class PaymentService {
 
         pupil.balance += amount;
         pupil.paymentHistory.push({
-            amount,
-            subscription,
-            date: moment().locale('ru').format('LL'),
-            issuer: `${surname} ${name} ${midname}`,
             type:
-                amount >= 0 ? PaymentTypes.Replenishment : PaymentTypes.Withdraw
+                amount >= 0
+                    ? PaymentTypes.Replenishment
+                    : PaymentTypes.Withdraw,
+            date: moment().locale('ru').format('LLL'),
+            issuer,
+            amount
         });
 
-        const saved = await pupil.save();
-        return await this.PupilModel.populate(saved, [
+        const result = await pupil.save();
+        return result.populate([
             {
                 path: 'groups',
                 select: '_id group_name tutor',
@@ -60,6 +59,71 @@ export class PaymentService {
                         select: '_id group_name'
                     }
                 ]
+            },
+            {
+                path: 'paymentHistory',
+                populate: {
+                    path: 'subscription'
+                }
+            }
+        ]);
+    }
+
+    public async createPayment(
+        id: string,
+        subscriptionID: string,
+        issuer: string
+    ) {
+        const pupil = await this.PupilModel.findById(id);
+
+        if (!pupil) {
+            throw new NotFoundException();
+        }
+
+        const subscription = await this.SubscriptionModel.findById(
+            subscriptionID
+        );
+
+        if (!subscription) {
+            throw new NotFoundException();
+        }
+
+        pupil.balance -= subscription.price;
+        pupil.paymentHistory.push({
+            subscription: subscriptionID,
+            type: PaymentTypes.Withdraw,
+            date: moment().locale('ru').format('LLL'),
+            amount: subscription.price,
+            issuer
+        });
+
+        const result = await pupil.save();
+        return result.populate([
+            {
+                path: 'groups',
+                select: '_id group_name tutor',
+                populate: {
+                    path: 'tutor'
+                }
+            },
+            {
+                path: 'tutors',
+                populate: [
+                    {
+                        path: 'tutor',
+                        select: '_id name surname midname'
+                    },
+                    {
+                        path: 'group',
+                        select: '_id group_name'
+                    }
+                ]
+            },
+            {
+                path: 'paymentHistory',
+                populate: {
+                    path: 'subscription'
+                }
             }
         ]);
     }

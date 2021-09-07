@@ -136,6 +136,12 @@ export class CrudService {
                     path: 'groups',
                     select: '_id group_name'
                 }
+            },
+            {
+                path: 'paymentHistory',
+                populate: {
+                    path: 'subscription'
+                }
             }
         ]);
     }

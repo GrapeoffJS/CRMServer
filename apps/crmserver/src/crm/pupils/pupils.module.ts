@@ -14,6 +14,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { JwtModule } from '@nestjs/jwt';
 import { Group } from '../groups/models/Group.model';
 import { Note } from './models/Note.model';
+import { Subscription } from '../../../../admin-panel/src/subscriptions/models/Subscription.model';
 
 @Module({
     imports: [
@@ -33,6 +34,10 @@ import { Note } from './models/Note.model';
             {
                 typegooseClass: Note,
                 schemaOptions: { collection: 'Notes' }
+            },
+            {
+                typegooseClass: Subscription,
+                schemaOptions: { collection: 'Subscriptions' }
             }
         ]),
         JwtModule.registerAsync({
