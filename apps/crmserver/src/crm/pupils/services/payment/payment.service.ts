@@ -93,6 +93,8 @@ export class PaymentService {
             issuer
         });
 
+        await pupil.save();
+
         return this.PupilModel.findById(id).populate([
             {
                 path: 'groups',

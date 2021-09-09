@@ -26,17 +26,44 @@ export class SalesFunnelService {
             {
                 $lookup: {
                     from: 'Pupils',
-                    localField: '_id',
-                    foreignField: 'salesFunnelStep',
-                    as: 'pupils'
+                    as: 'pupils',
+                    let: {
+                        funnelStepId: '$_id'
+                    },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: ['$salesFunnelStep', '$$funnelStepId']
+                                }
+                            }
+                        },
+                        {
+                            $limit: limit
+                        },
+                        {
+                            $lookup: {
+                                from: 'Subscriptions',
+                                as: 'subscriptionPayments',
+                                foreignField: '_id',
+                                localField: 'paymentHistory.subscription'
+                            }
+                        },
+                        {
+                            $addFields: {
+                                minPaidSubscription: {
+                                    $min: '$subscriptionPayments.price'
+                                }
+                            }
+                        }
+                    ]
                 }
             },
             {
                 $addFields: {
-                    pupils: {
-                        $slice: ['$pupils', 0, limit]
-                    },
-                    pupilsCount: { $size: '$pupils' }
+                    minPaidSubscriptionsAmount: {
+                        $sum: '$pupils.minPaidSubscription'
+                    }
                 }
             }
         ]);
@@ -52,17 +79,47 @@ export class SalesFunnelService {
             {
                 $lookup: {
                     from: 'Pupils',
-                    localField: '_id',
-                    foreignField: 'salesFunnelStep',
-                    as: 'pupils'
+                    as: 'pupils',
+                    let: {
+                        funnelStepId: '$_id'
+                    },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: ['$salesFunnelStep', '$$funnelStepId']
+                                }
+                            }
+                        },
+                        {
+                            $limit: limit
+                        },
+                        {
+                            $skip: offset
+                        },
+                        {
+                            $lookup: {
+                                from: 'Subscriptions',
+                                as: 'subscriptionPayments',
+                                foreignField: '_id',
+                                localField: 'paymentHistory.subscription'
+                            }
+                        },
+                        {
+                            $addFields: {
+                                minPaidSubscription: {
+                                    $min: '$subscriptionPayments.price'
+                                }
+                            }
+                        }
+                    ]
                 }
             },
             {
                 $addFields: {
-                    pupils: {
-                        $slice: ['$pupils', offset, limit]
-                    },
-                    pupilsCount: { $size: '$pupils' }
+                    minPaidSubscriptionsAmount: {
+                        $sum: '$pupils.minPaidSubscription'
+                    }
                 }
             }
         ]);
