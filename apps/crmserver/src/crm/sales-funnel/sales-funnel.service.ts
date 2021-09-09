@@ -26,6 +26,21 @@ export class SalesFunnelService {
             {
                 $lookup: {
                     from: 'Pupils',
+                    localField: '_id',
+                    foreignField: 'salesFunnelStep',
+                    as: 'pupils'
+                }
+            },
+            {
+                $addFields: {
+                    pupilsCount: {
+                        $size: '$pupils'
+                    }
+                }
+            },
+            {
+                $lookup: {
+                    from: 'Pupils',
                     as: 'pupils',
                     let: {
                         funnelStepId: '$_id'
@@ -74,6 +89,21 @@ export class SalesFunnelService {
             {
                 $match: {
                     $expr: { $eq: ['$_id', Types.ObjectId(id)] }
+                }
+            },
+            {
+                $lookup: {
+                    from: 'Pupils',
+                    localField: '_id',
+                    foreignField: 'salesFunnelStep',
+                    as: 'pupils'
+                }
+            },
+            {
+                $addFields: {
+                    pupilsCount: {
+                        $size: '$pupils'
+                    }
                 }
             },
             {
