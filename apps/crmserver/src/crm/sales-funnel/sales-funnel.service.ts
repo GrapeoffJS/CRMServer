@@ -122,10 +122,10 @@ export class SalesFunnelService {
                             }
                         },
                         {
-                            $limit: limit
+                            $skip: offset
                         },
                         {
-                            $skip: offset
+                            $limit: limit
                         },
                         {
                             $lookup: {
