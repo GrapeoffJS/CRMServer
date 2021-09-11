@@ -11,7 +11,7 @@ export class SalesFunnelStep {
     @prop({ type: String, required: true })
     name: string;
 
-    @prop({ type: Number, required: true, unique: true })
+    @prop({ type: Number, required: true, unique: false })
     order: number;
 
     @prop({

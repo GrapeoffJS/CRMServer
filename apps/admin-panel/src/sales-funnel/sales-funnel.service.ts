@@ -57,7 +57,7 @@ export class SalesFunnelService {
             throw new NotFoundException();
         }
 
-        await this.SalesFunnelStepModel.update(
+        await this.SalesFunnelStepModel.updateMany(
             { order: { $gt: deletedStep.order } },
             { $inc: { order: -1 } }
         );
