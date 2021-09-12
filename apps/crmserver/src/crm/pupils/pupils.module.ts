@@ -15,6 +15,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { Group } from '../groups/models/Group.model';
 import { Note } from './models/Note.model';
 import { Subscription } from '../../../../admin-panel/src/subscriptions/models/Subscription.model';
+import { SalesFunnelStep } from '../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
 
 @Module({
     imports: [
@@ -38,6 +39,10 @@ import { Subscription } from '../../../../admin-panel/src/subscriptions/models/S
             {
                 typegooseClass: Subscription,
                 schemaOptions: { collection: 'Subscriptions' }
+            },
+            {
+                typegooseClass: SalesFunnelStep,
+                schemaOptions: { collection: 'SalesFunnelSteps' }
             }
         ]),
         JwtModule.registerAsync({

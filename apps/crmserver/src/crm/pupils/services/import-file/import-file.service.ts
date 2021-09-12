@@ -6,16 +6,24 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePupilDTO } from '../../DTO/CreatePupilDTO';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
+import { SalesFunnelStep } from '../../../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
 
 @Injectable()
 export class ImportFileService {
     constructor(
         @InjectModel(Pupil)
-        private readonly PupilModel: ReturnModelType<typeof Pupil>
+        private readonly PupilModel: ReturnModelType<typeof Pupil>,
+        @InjectModel(SalesFunnelStep)
+        private readonly SalesFunnelStepModel: ReturnModelType<
+            typeof SalesFunnelStep
+        >
     ) {}
-
+    // todo
     public async uploadCSV(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];
+        const salesFunnelStep = await this.SalesFunnelStepModel.findOne({
+            order: 1
+        });
 
         const csvString = Buffer.from(file.buffer).toString('utf-8');
         const pupils = await csvtojson({
@@ -33,6 +41,8 @@ export class ImportFileService {
                 pupil.dateOfBirth,
                 'DD.MM.YYYY'
             ).toISOString();
+
+            pupil.salesFunnelStep = salesFunnelStep.id;
 
             try {
                 await this.PupilModel.validate(pupil);
@@ -54,6 +64,9 @@ export class ImportFileService {
 
     public async uploadXLSX(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];
+        const salesFunnelStep = await this.SalesFunnelStepModel.findOne({
+            order: 1
+        });
 
         const uploaded = Buffer.from(file.buffer);
         const sheet = xlsx.read(uploaded);
@@ -71,6 +84,8 @@ export class ImportFileService {
                 pupil.dateOfBirth,
                 'DD.MM.YYYY'
             ).toISOString();
+
+            pupil.salesFunnelStep = salesFunnelStep.id;
 
             try {
                 await this.PupilModel.validate(pupil);
