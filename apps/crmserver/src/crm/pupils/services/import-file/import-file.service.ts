@@ -18,7 +18,7 @@ export class ImportFileService {
             typeof SalesFunnelStep
         >
     ) {}
-    // todo
+
     public async uploadCSV(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];
         const salesFunnelStep = await this.SalesFunnelStepModel.findOne({
