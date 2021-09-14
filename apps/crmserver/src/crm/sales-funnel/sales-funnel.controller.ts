@@ -11,13 +11,13 @@ import { ActionPermissions } from '../../../../admin-panel/src/roles/models/Acti
 export class SalesFunnelController {
     constructor(private readonly salesFunnelService: SalesFunnelService) {}
 
-    // @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSalesFunnel))
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSalesFunnel))
     @Get()
     public async findAll(@Query() { limit }: LimitDTO) {
         return await this.salesFunnelService.findAll(limit);
     }
 
-    // @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSalesFunnel))
+    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSalesFunnel))
     @Get(':id')
     public async findById(
         @Param() { id }: MongoID,
