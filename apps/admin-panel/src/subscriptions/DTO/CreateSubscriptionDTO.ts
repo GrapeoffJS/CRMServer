@@ -4,7 +4,7 @@ import { Type } from 'class-transformer';
 export class CreateSubscriptionDTO {
     @IsNotEmpty()
     @IsString()
-    text: string;
+    name: string;
 
     @Type(() => Number)
     @IsNotEmpty()
