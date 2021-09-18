@@ -27,6 +27,6 @@ export class SalesFunnelStep {
     @prop({ type: String, required: true, maxlength: 7 })
     background: string;
 
-    @prop({ type: String, required: false, default: '#FFFFFF', maxlength: 7 })
+    @prop({ type: String, required: false, default: '#000000', maxlength: 7 })
     color: string;
 }
