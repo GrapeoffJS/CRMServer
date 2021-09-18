@@ -1,10 +1,10 @@
 import {
     IsEnum,
-    IsNotEmpty,
-    IsString,
     IsMongoId,
+    IsNotEmpty,
+    IsObject,
     IsOptional,
-    IsObject
+    IsString
 } from 'class-validator';
 import { AccountTypes } from '../models/AccountTypes';
 import { ActionPermissions } from '../../roles/models/ActionPermissions';

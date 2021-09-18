@@ -1,9 +1,9 @@
 import {
-    IsOptional,
-    IsNotEmpty,
-    IsString,
     IsEnum,
-    IsObject
+    IsNotEmpty,
+    IsObject,
+    IsOptional,
+    IsString
 } from 'class-validator';
 import { ActionPermissions } from '../models/ActionPermissions';
 import { DataPermissions } from '../models/DataPermissions';

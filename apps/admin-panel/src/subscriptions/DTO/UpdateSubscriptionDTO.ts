@@ -1,9 +1,9 @@
 import {
-    IsString,
-    IsNumber,
     IsNotEmpty,
+    IsNumber,
     IsOptional,
-    IsPositive
+    IsPositive,
+    IsString
 } from 'class-validator';
 import { Type } from 'class-transformer';
 

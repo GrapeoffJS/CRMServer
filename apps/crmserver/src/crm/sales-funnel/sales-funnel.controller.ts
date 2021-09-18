@@ -1,11 +1,11 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { path } from './path';
 import { SalesFunnelService } from './sales-funnel.service';
-import { LimitDTO } from '../../../../DTO/LimitDTO';
-import { PaginationDTO } from '../../../../DTO/PaginationDTO';
+import { SalesFunnelLimitDTO } from './DTO/SalesFunnelLimitDTO';
 import { MongoID } from '../../../../DTO/MongoID';
 import { ActionPermissionsGuard } from '../../../../admin-panel/src/roles/action-permissions.guard';
 import { ActionPermissions } from '../../../../admin-panel/src/roles/models/ActionPermissions';
+import { SalesFunnelPaginationDTO } from './DTO/SalesFunnelPaginationDTO';
 
 @Controller(path)
 export class SalesFunnelController {
@@ -13,7 +13,7 @@ export class SalesFunnelController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSalesFunnel))
     @Get()
-    public async findAll(@Query() { limit }: LimitDTO) {
+    public async findAll(@Query() { limit }: SalesFunnelLimitDTO) {
         return await this.salesFunnelService.findAll(limit);
     }
 
@@ -21,7 +21,7 @@ export class SalesFunnelController {
     @Get(':id')
     public async findById(
         @Param() { id }: MongoID,
-        @Query() { limit, offset }: PaginationDTO
+        @Query() { limit, offset }: SalesFunnelPaginationDTO
     ) {
         return await this.salesFunnelService.findById(id, limit, offset);
     }
