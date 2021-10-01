@@ -13,6 +13,7 @@ import { SearchModule } from './search/search.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { TutorsModule } from './tutors/tutors.module';
 import { SalesFunnelModule } from './sales-funnel/sales-funnel.module';
+import { StatusesModule } from './statuses/statuses.module';
 
 @Module({
     imports: [
@@ -48,7 +49,8 @@ import { SalesFunnelModule } from './sales-funnel/sales-funnel.module';
         ConfigModule.forRoot(configModuleOptions),
         SubscriptionsModule,
         TutorsModule,
-        SalesFunnelModule
+        SalesFunnelModule,
+        StatusesModule
     ]
 })
 export class CrmModule implements NestModule {
