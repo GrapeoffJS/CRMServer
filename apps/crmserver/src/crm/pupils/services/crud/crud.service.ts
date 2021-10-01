@@ -39,13 +39,18 @@ export class CrudService {
 
         return {
             count: count[0]?.count?.toString(),
-            pupils: await this.PupilModel.populate(result, {
-                path: 'groups',
-                select: '_id group_name tutor',
-                populate: {
-                    path: 'tutor'
+            pupils: await this.PupilModel.populate(result, [
+                {
+                    path: 'groups',
+                    select: '_id group_name tutor',
+                    populate: {
+                        path: 'tutor'
+                    }
+                },
+                {
+                    path: 'statuses'
                 }
-            })
+            ])
         };
     }
 
@@ -81,6 +86,9 @@ export class CrudService {
                     populate: {
                         path: 'subscription'
                     }
+                },
+                {
+                    path: 'statuses'
                 }
             ])
             .populate('notes');
@@ -139,6 +147,9 @@ export class CrudService {
                             select: '_id group_name'
                         }
                     ]
+                },
+                {
+                    path: 'statuses'
                 }
             ]);
     }

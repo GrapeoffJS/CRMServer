@@ -9,6 +9,7 @@ import {
     IsString
 } from 'class-validator';
 import { SalesFunnelStep } from '../../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
+import Status from '../../statuses/models/Status.model';
 
 export class UpdatePupilDTO {
     @IsOptional()
@@ -65,4 +66,9 @@ export class UpdatePupilDTO {
     @IsString()
     @IsMongoId()
     salesFunnelStep: SalesFunnelStep;
+
+    @IsOptional()
+    @IsString({ each: true })
+    @IsMongoId({ each: true })
+    statuses: Status[];
 }

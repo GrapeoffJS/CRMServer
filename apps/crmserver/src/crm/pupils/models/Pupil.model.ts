@@ -10,6 +10,7 @@ import { SearchIndexer } from '../../../SearchIndexer/SearchIndexer';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { Tutor } from './Tutor';
 import { SalesFunnelStep } from '../../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
+import Status from '../../statuses/models/Status.model';
 
 const Indexer = SearchIndexer.getInstance();
 
@@ -105,6 +106,9 @@ export default class Pupil extends TimeStamps {
         ref: () => SalesFunnelStep
     })
     salesFunnelStep: SalesFunnelStep;
+
+    @prop({ type: [Status], required: false, ref: () => Status })
+    statuses: Status[];
 
     public deleteGroup(id: string): void {
         this.groups.splice(this.groups.indexOf(id), 1);
