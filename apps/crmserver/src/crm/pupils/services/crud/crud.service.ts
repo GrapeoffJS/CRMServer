@@ -7,6 +7,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
 import { DataPermissions } from 'apps/admin-panel/src/roles/models/DataPermissions';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class CrudService {
@@ -303,6 +304,20 @@ export class CrudService {
                     'tutors.tutor': { $in: filters.tutors }
                 }
             });
+        }
+
+        if (filters.statuses) {
+            pipeline.push({
+                $match: {
+                    statuses: {
+                        $all: filters.statuses.map(status =>
+                            Types.ObjectId(status)
+                        )
+                    }
+                }
+            });
+
+            console.log(pipeline);
         }
 
         return pipeline;

@@ -1,6 +1,7 @@
 import {
     IsArray,
     IsBoolean,
+    IsMongoId,
     IsObject,
     IsOptional,
     IsString
@@ -42,4 +43,9 @@ export class FilterDTO {
     @IsOptional()
     @IsBoolean()
     emptyAge?: boolean;
+
+    @IsOptional()
+    @IsString({ each: true })
+    @IsMongoId({ each: true })
+    statuses?: string[];
 }

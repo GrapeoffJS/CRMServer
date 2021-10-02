@@ -11,7 +11,8 @@ export type DataPermissions = {
         groups?: 1 | undefined;
         tutors?: 1 | undefined;
         localSchedule?: 1 | undefined;
-        salesFunnelStep: 1 | undefined;
+        salesFunnelStep?: 1 | undefined;
+        statuses?: 1 | undefined;
     };
     forGroup: {
         group_name?: 1 | undefined;
