@@ -316,8 +316,6 @@ export class CrudService {
                     }
                 }
             });
-
-            console.log(pipeline);
         }
 
         return pipeline;
