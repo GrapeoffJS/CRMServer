@@ -42,7 +42,7 @@ export class ImportFileService {
                 'DD.MM.YYYY'
             ).toISOString();
 
-            pupil.salesFunnelStep = salesFunnelStep.id;
+            pupil.salesFunnelStep = salesFunnelStep?.id;
 
             try {
                 await this.PupilModel.validate(pupil);
