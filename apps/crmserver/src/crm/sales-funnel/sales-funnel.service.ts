@@ -17,7 +17,7 @@ export class SalesFunnelService {
     ) {}
 
     public async findAll(limit: number) {
-        return this.SalesFunnelStepModel.aggregate([
+        const salesFunnelSteps = this.SalesFunnelStepModel.aggregate([
             {
                 $sort: {
                     order: 1
@@ -82,10 +82,16 @@ export class SalesFunnelService {
                 }
             }
         ]);
+
+        const populated = await this.PupilModel.populate(salesFunnelSteps, {
+            path: 'statuses'
+        });
+
+        return populated;
     }
 
     public async findById(id: string, limit: number, offset: number) {
-        return this.SalesFunnelStepModel.aggregate([
+        const salesFunnelSteps = this.SalesFunnelStepModel.aggregate([
             {
                 $match: {
                     $expr: { $eq: ['$_id', Types.ObjectId(id)] }
@@ -153,5 +159,11 @@ export class SalesFunnelService {
                 }
             }
         ]);
+
+        const populated = await this.PupilModel.populate(salesFunnelSteps, {
+            path: 'statuses'
+        });
+
+        return populated;
     }
 }
