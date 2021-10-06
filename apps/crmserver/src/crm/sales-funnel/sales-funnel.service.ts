@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { SalesFunnelStep } from '../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { Types } from 'mongoose';
 import Pupil from '../pupils/models/Pupil.model';
+import { getFindAllAggregation } from './aggregations/getFindAllAggregation';
+import { getFindByIdAggregation } from './aggregations/getFindByIdAggregation';
 
 @Injectable()
 export class SalesFunnelService {
@@ -17,153 +18,14 @@ export class SalesFunnelService {
     ) {}
 
     public async findAll(limit: number) {
-        const salesFunnelSteps = this.SalesFunnelStepModel.aggregate([
-            {
-                $sort: {
-                    order: 1
-                }
-            },
-            {
-                $lookup: {
-                    from: 'Pupils',
-                    localField: '_id',
-                    foreignField: 'salesFunnelStep',
-                    as: 'pupils'
-                }
-            },
-            {
-                $addFields: {
-                    pupilsCount: {
-                        $size: '$pupils'
-                    }
-                }
-            },
-            {
-                $lookup: {
-                    from: 'Pupils',
-                    as: 'pupils',
-                    let: {
-                        funnelStepId: '$_id'
-                    },
-                    pipeline: [
-                        {
-                            $match: {
-                                $expr: {
-                                    $eq: ['$salesFunnelStep', '$$funnelStepId']
-                                }
-                            }
-                        },
-                        {
-                            $limit: limit
-                        },
-                        {
-                            $lookup: {
-                                from: 'Subscriptions',
-                                as: 'subscriptionPayments',
-                                foreignField: '_id',
-                                localField: 'paymentHistory.subscription'
-                            }
-                        },
-                        {
-                            $addFields: {
-                                minPaidSubscription: {
-                                    $min: '$subscriptionPayments.price'
-                                }
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                $addFields: {
-                    minPaidSubscriptionsAmount: {
-                        $sum: '$pupils.minPaidSubscription'
-                    }
-                }
-            }
-        ]);
-
-        const populated = await this.PupilModel.populate(salesFunnelSteps, {
-            path: 'statuses'
-        });
-
-        return populated;
+        return this.SalesFunnelStepModel.aggregate(
+            getFindAllAggregation(limit)
+        );
     }
 
     public async findById(id: string, limit: number, offset: number) {
-        const salesFunnelSteps = this.SalesFunnelStepModel.aggregate([
-            {
-                $match: {
-                    $expr: { $eq: ['$_id', Types.ObjectId(id)] }
-                }
-            },
-            {
-                $lookup: {
-                    from: 'Pupils',
-                    localField: '_id',
-                    foreignField: 'salesFunnelStep',
-                    as: 'pupils'
-                }
-            },
-            {
-                $addFields: {
-                    pupilsCount: {
-                        $size: '$pupils'
-                    }
-                }
-            },
-            {
-                $lookup: {
-                    from: 'Pupils',
-                    as: 'pupils',
-                    let: {
-                        funnelStepId: '$_id'
-                    },
-                    pipeline: [
-                        {
-                            $match: {
-                                $expr: {
-                                    $eq: ['$salesFunnelStep', '$$funnelStepId']
-                                }
-                            }
-                        },
-                        {
-                            $skip: offset
-                        },
-                        {
-                            $limit: limit
-                        },
-                        {
-                            $lookup: {
-                                from: 'Subscriptions',
-                                as: 'subscriptionPayments',
-                                foreignField: '_id',
-                                localField: 'paymentHistory.subscription'
-                            }
-                        },
-                        {
-                            $addFields: {
-                                minPaidSubscription: {
-                                    $min: '$subscriptionPayments.price'
-                                }
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                $addFields: {
-                    minPaidSubscriptionsAmount: {
-                        $sum: '$pupils.minPaidSubscription'
-                    }
-                }
-            }
-        ]);
-
-        const populated = await this.PupilModel.populate(salesFunnelSteps, {
-            path: 'statuses'
-        });
-
-        return populated;
+        return this.SalesFunnelStepModel.aggregate(
+            getFindByIdAggregation(id, offset, limit)
+        );
     }
 }
