@@ -16,4 +16,7 @@ export class SearchService {
             default_operator: 'AND'
         });
     }
+
+    // TODO: Search CRM Users
+    public searchInCRMUsers() {}
 }

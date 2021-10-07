@@ -1,31 +1,28 @@
 import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { path } from './path';
-import { CRMAccountsService } from '../../../../admin-panel/src/crmaccounts/crmaccounts.service';
 import { Response } from 'express';
-import { AccountTypes } from '../../../../admin-panel/src/crmaccounts/models/AccountTypes';
 import { PaginationDTO } from '../../../../DTO/PaginationDTO';
 import { MongoID } from '../../../../DTO/MongoID';
+import { TutorsService } from './tutors.service';
 
 @Controller(path)
 export class TutorsController {
-    constructor(private readonly CRMAccountsService: CRMAccountsService) {}
+    constructor(private readonly TutorsService: TutorsService) {}
 
     @Get()
     public async findAll(
         @Query() { limit, offset }: PaginationDTO,
-        @Query('accountType') accountTypes: AccountTypes[],
         @Res() response: Response
     ) {
-        const { accounts, count } = await this.CRMAccountsService.findAll(
+        const { accounts, count } = await this.TutorsService.findAll(
             limit,
-            offset,
-            accountTypes
+            offset
         );
 
         return response.header('Count', count).json(accounts);
     }
 
     public async findById(@Param() { id }: MongoID) {
-        return await this.CRMAccountsService.findById(id);
+        return await this.TutorsService.findById(id);
     }
 }

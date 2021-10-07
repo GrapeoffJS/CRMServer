@@ -59,46 +59,104 @@ export class CrudService {
         id: string,
         dataPermissions: DataPermissions
     ): Promise<Pupil> {
-        const pupil = await this.PupilModel.findById(id)
-            .select(dataPermissions.forPupil)
-            .populate([
-                {
-                    path: 'groups',
-                    select: '_id group_name tutor',
-                    populate: {
-                        path: 'tutor'
-                    }
-                },
-                {
-                    path: 'tutors',
-                    populate: [
+        const pupil = await this.PupilModel.aggregate([
+            {
+                $project: dataPermissions.forPupil
+            },
+            {
+                $match: {
+                    _id: Types.ObjectId(id)
+                }
+            },
+            {
+                $lookup: {
+                    from: 'Tasks',
+                    as: 'tasks',
+                    let: {
+                        pupilId: '$_id'
+                    },
+                    pipeline: [
                         {
-                            path: 'tutor',
-                            select: '_id name surname midname'
+                            $match: {
+                                $expr: {
+                                    $eq: ['$for', '$$pupilId']
+                                }
+                            }
                         },
                         {
-                            path: 'group',
-                            select: '_id group_name'
+                            $project: {
+                                for: 0
+                            }
+                        },
+                        {
+                            $lookup: {
+                                from: 'CRMUsers',
+                                as: 'responsible',
+                                let: {
+                                    responsible: '$responsible'
+                                },
+                                pipeline: [
+                                    {
+                                        $match: {
+                                            $expr: {
+                                                $eq: ['$_id', '$$responsible']
+                                            }
+                                        }
+                                    },
+                                    {
+                                        $project: {
+                                            name: 1,
+                                            surname: 1,
+                                            midname: 1,
+                                            accountType: 1,
+                                            _id: 1
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ]
-                },
-                {
-                    path: 'paymentHistory',
-                    populate: {
-                        path: 'subscription'
-                    }
-                },
-                {
-                    path: 'statuses'
                 }
-            ])
-            .populate('notes');
+            }
+        ]);
 
         if (!pupil) {
             throw new NotFoundException();
         }
 
-        return pupil;
+        const populated = await this.PupilModel.populate(pupil, [
+            {
+                path: 'groups',
+                select: '_id group_name tutor',
+                populate: {
+                    path: 'tutor'
+                }
+            },
+            {
+                path: 'tutors',
+                populate: [
+                    {
+                        path: 'tutor',
+                        select: '_id name surname midname'
+                    },
+                    {
+                        path: 'group',
+                        select: '_id group_name'
+                    }
+                ]
+            },
+            {
+                path: 'paymentHistory',
+                populate: {
+                    path: 'subscription'
+                }
+            },
+            {
+                path: 'statuses'
+            }
+        ]);
+
+        return populated[0];
     }
 
     public async delete(

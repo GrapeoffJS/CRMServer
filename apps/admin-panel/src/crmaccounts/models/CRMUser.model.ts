@@ -1,6 +1,6 @@
 import { Group } from '../../../../crmserver/src/crm/groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
-import { prop } from '@typegoose/typegoose';
+import { index, prop } from '@typegoose/typegoose';
 import { Role } from 'apps/admin-panel/src/roles/models/Role.model';
 import { AccountTypes } from './AccountTypes';
 import { ActionPermissions } from '../../roles/models/ActionPermissions';

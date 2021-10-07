@@ -54,6 +54,63 @@ export const getFindAllAggregation = (limit: number) => [
                     }
                 },
                 {
+                    $lookup: {
+                        from: 'Tasks',
+                        as: 'closestTask',
+                        let: {
+                            pupilId: '$_id'
+                        },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $eq: ['$for', '$$pupilId']
+                                    },
+                                    done: false
+                                }
+                            },
+                            {
+                                $sort: {
+                                    deadline: 1
+                                }
+                            },
+                            {
+                                $limit: 1
+                            },
+                            {
+                                $lookup: {
+                                    from: 'CRMUsers',
+                                    as: 'responsible',
+                                    let: {
+                                        responsible: '$responsible'
+                                    },
+                                    pipeline: [
+                                        {
+                                            $match: {
+                                                $expr: {
+                                                    $eq: [
+                                                        '$_id',
+                                                        '$$responsible'
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        {
+                                            $project: {
+                                                name: 1,
+                                                surname: 1,
+                                                midname: 1,
+                                                accountType: 1,
+                                                _id: 1
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     $addFields: {
                         minPaidSubscription: {
                             $min: '$subscriptionPayments.price'
