@@ -5,16 +5,21 @@ import { path } from './path';
 import { SearchService } from './search.service';
 import { TutorID } from '../../../../DTO/TutorID';
 
+@UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSearch))
 @Controller(path)
 export class SearchController {
     constructor(private readonly SearchService: SearchService) {}
 
-    @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSearch))
     @Get('/autocompletion')
     public async search(
         @Query('query') searchQuery: string,
         @Query() { tutorID }: TutorID
     ) {
         return this.SearchService.search(searchQuery, tutorID);
+    }
+
+    @Get('/CRMUsers')
+    public async searchCRMUsers(@Query('query') searchQuery: string) {
+        return this.SearchService.searchCRMUsers(searchQuery);
     }
 }

@@ -1,11 +1,23 @@
 import { Group } from '../../../../crmserver/src/crm/groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
-import { index, prop } from '@typegoose/typegoose';
+import { post, prop } from '@typegoose/typegoose';
 import { Role } from 'apps/admin-panel/src/roles/models/Role.model';
 import { AccountTypes } from './AccountTypes';
 import { ActionPermissions } from '../../roles/models/ActionPermissions';
 import { DataPermissions } from '../../roles/models/DataPermissions';
+import { SearchIndexer } from '../../../../crmserver/src/SearchIndexer/SearchIndexer';
 
+const Indexer = SearchIndexer.getInstance();
+
+@post<CRMUser>('save', user => {
+    Indexer.indexCRMUser(user);
+})
+@post<CRMUser>('findOneAndDelete', user => {
+    Indexer.deleteCRMUser(user);
+})
+@post<CRMUser>('findOneAndUpdate', user => {
+    Indexer.updateCRMUser(user);
+})
 export default class CRMUser {
     @prop({ type: String, required: true })
     name: string;

@@ -91,47 +91,26 @@ export class CRMAccountsService {
         return user;
     }
 
-    public async edit(
-        id: string,
-        {
-            name,
-            surname,
-            midname,
-            role,
-            accountType,
-            localActionPermissions,
-            localDataPermissions
-        }: UpdateCRMUserDTO
-    ) {
-        if (role && (localActionPermissions || localDataPermissions)) {
+    public async edit(id: string, updateCRMUserDTO: UpdateCRMUserDTO) {
+        if (
+            updateCRMUserDTO.role &&
+            (updateCRMUserDTO.localActionPermissions ||
+                updateCRMUserDTO.localDataPermissions)
+        ) {
             throw new BadRequestException();
         }
 
-        const user = await this.CRMUserModel.findById(id);
+        const user = await this.CRMUserModel.findOneAndUpdate(
+            { _id: id },
+            updateCRMUserDTO
+        );
 
         if (!user) throw new NotFoundException();
 
-        user.name = name || user.name;
-        user.surname = surname || user.surname;
-        user.midname = midname || user.surname;
-        user.accountType = accountType || user.accountType;
-
-        if (localDataPermissions && localActionPermissions) {
-            user.localActionPermissions = localActionPermissions;
-            user.localDataPermissions = localDataPermissions;
-            user.role = null;
-        } else if (role) {
-            user.role = role;
-            user.localActionPermissions = null;
-            user.localDataPermissions = null;
-        }
-
-        const savedUser = await user.save();
-
-        return await this.CRMUserModel.populate(savedUser, {
+        return this.CRMUserModel.findById(id).populate({
             path: 'role',
             model: Role
-        } as PopulateOptions);
+        });
     }
 
     public async delete(login: string): Promise<CRMUser> {

@@ -15,7 +15,6 @@ import { TutorsModule } from './tutors/tutors.module';
 import { SalesFunnelModule } from './sales-funnel/sales-funnel.module';
 import { StatusesModule } from './statuses/statuses.module';
 import { TasksModule } from './tasks/tasks.module';
-import { SearchCrmusersModule } from './search-crmusers/search-crmusers.module';
 
 @Module({
     imports: [
@@ -53,8 +52,7 @@ import { SearchCrmusersModule } from './search-crmusers/search-crmusers.module';
         TutorsModule,
         SalesFunnelModule,
         StatusesModule,
-        TasksModule,
-        SearchCrmusersModule
+        TasksModule
     ]
 })
 export class CrmModule implements NestModule {

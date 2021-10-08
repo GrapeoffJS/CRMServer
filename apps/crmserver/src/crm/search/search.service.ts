@@ -6,17 +6,29 @@ export class SearchService {
     constructor(private readonly ElasticService: ElasticsearchService) {}
 
     public search(query: string, tutorId?: string) {
-        const correctedQuery = query
-            .split(' ')
-            .map(item => `*${item.toString()}*`)
-            .join(' ');
+        const correctedQuery = this.getCorrectedQuery(query);
 
         return this.ElasticService.search({
+            index: ['pupils', 'groups'],
             q: tutorId ? correctedQuery + ' ' + tutorId : correctedQuery,
             default_operator: 'AND'
         });
     }
 
-    // TODO: Search CRM Users
-    public searchInCRMUsers() {}
+    public searchCRMUsers(query: string) {
+        const correctedQuery = this.getCorrectedQuery(query);
+
+        return this.ElasticService.search({
+            index: 'crmusers',
+            q: correctedQuery,
+            default_operator: 'AND'
+        });
+    }
+
+    private getCorrectedQuery(query: string) {
+        return query
+            .split(' ')
+            .map(item => `*${item.toString()}*`)
+            .join(' ');
+    }
 }
