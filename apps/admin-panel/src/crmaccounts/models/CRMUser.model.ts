@@ -1,7 +1,7 @@
 import { Group } from '../../../../crmserver/src/crm/groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
 import { post, prop } from '@typegoose/typegoose';
-import { Role } from 'apps/admin-panel/src/roles/models/Role.model';
+import { Role } from '../../roles/models/Role.model';
 import { AccountTypes } from './AccountTypes';
 import { ActionPermissions } from '../../roles/models/ActionPermissions';
 import { DataPermissions } from '../../roles/models/DataPermissions';

@@ -1,5 +1,4 @@
 import {
-    IsDate,
     IsEnum,
     IsISO8601,
     IsMongoId,
@@ -8,7 +7,7 @@ import {
     IsString
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { TaskTypes } from './TaskTypes';
+import { TaskTypes } from '../models/TaskTypes';
 
 export class CreateTaskDTO {
     @IsNotEmpty()
@@ -20,9 +19,9 @@ export class CreateTaskDTO {
     responsible: string;
 
     @IsNotEmpty()
-    @IsDate()
-    @Type(() => Date)
-    deadline: Date;
+    @IsString()
+    @IsISO8601({ strict: true })
+    deadline: string;
 
     @IsNotEmpty()
     @IsMongoId()

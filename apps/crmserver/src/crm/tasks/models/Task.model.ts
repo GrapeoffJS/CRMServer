@@ -1,4 +1,4 @@
-import { TaskTypes } from '../DTO/TaskTypes';
+import { TaskTypes } from './TaskTypes';
 import { prop } from '@typegoose/typegoose';
 import CRMUser from '../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
 import Pupil from '../../pupils/models/Pupil.model';
