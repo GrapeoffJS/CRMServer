@@ -1,4 +1,5 @@
 export enum TaskTypes {
     Contact,
-    Call
+    Call,
+    Other
 }
