@@ -14,7 +14,7 @@ export class TasksService {
     ) {}
 
     public async create(createTaskDTO: CreateTaskDTO) {
-        const task = this.TaskModel.create(createTaskDTO);
+        const task = await this.TaskModel.create(createTaskDTO);
 
         return this.TaskModel.findById(task.id).populate([
             {
