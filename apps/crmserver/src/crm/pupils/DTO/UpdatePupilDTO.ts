@@ -15,29 +15,29 @@ export class UpdatePupilDTO {
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    name: string;
+    name?: string;
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    surname: string;
+    surname?: string;
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    midname: string;
+    midname?: string;
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
     @IsEnum(Genders)
-    gender: string;
+    gender?: string;
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
     @IsISO8601({ strict: true })
-    dateOfBirth: string;
+    dateOfBirth?: string;
 
     @IsOptional()
     @IsString()
@@ -46,12 +46,12 @@ export class UpdatePupilDTO {
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    parentPhone: string;
+    parentPhone?: string;
 
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    parentFullname: string;
+    parentFullname?: string;
 
     @IsOptional()
     @IsNumber()
@@ -65,10 +65,10 @@ export class UpdatePupilDTO {
     @IsNotEmpty()
     @IsString()
     @IsMongoId()
-    salesFunnelStep: SalesFunnelStep;
+    salesFunnelStep?: string;
 
     @IsOptional()
     @IsString({ each: true })
     @IsMongoId({ each: true })
-    statuses: Status[];
+    statuses?: Status[];
 }

@@ -23,12 +23,8 @@ export class SubscriptionsService {
         return this.SubscriptionModel.find();
     }
 
-    public async findById(
-        id: string,
-        accountType?: AccountTypes
-    ): Promise<Subscription> {
-        if (!accountType) return this.SubscriptionModel.findById(id);
-        return this.SubscriptionModel.findOne({ _id: id, accountType });
+    public async findById(id: string): Promise<Subscription> {
+        return this.SubscriptionModel.findById(id);
     }
 
     public async edit(

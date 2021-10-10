@@ -11,6 +11,7 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { AccountTypes } from './models/AccountTypes';
 import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
 import { Role } from '../roles/models/Role.model';
+import { Group } from '../../../crmserver/src/crm/groups/models/Group.model';
 
 @Injectable()
 export class CRMAccountsService {
@@ -19,7 +20,7 @@ export class CRMAccountsService {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
-    public async create(createUserDTO: CreateCRMUserDTO): Promise<CRMUser> {
+    public async create(createUserDTO: CreateCRMUserDTO) {
         if (
             createUserDTO.role &&
             (createUserDTO.localActionPermissions ||
@@ -71,11 +72,12 @@ export class CRMAccountsService {
         };
     }
 
-    public async findById(id: string): Promise<CRMUser> {
+    public async findById(id: string) {
         const user = await this.CRMUserModel.findById(id).populate([
             {
                 path: 'groups',
-                select: '_id GROUP_NAME'
+                select: '_id GROUP_NAME',
+                model: Group
             },
             {
                 path: 'role',
@@ -112,10 +114,10 @@ export class CRMAccountsService {
         });
     }
 
-    public async delete(login: string): Promise<CRMUser> {
+    public async delete(login: string) {
         const user = await this.CRMUserModel.findOneAndDelete({
             login: login
-        }).populate('groups', '_id GROUP_NAME');
+        });
 
         if (!user) {
             throw new NotFoundException();

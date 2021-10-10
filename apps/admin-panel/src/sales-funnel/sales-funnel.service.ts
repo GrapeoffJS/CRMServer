@@ -1,10 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
 import { InjectModel } from 'nestjs-typegoose';
 import { SalesFunnelStep } from './models/SalesFunnelStep.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
 import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
+import Pupil from '../../../crmserver/src/crm/pupils/models/Pupil.model';
 
 @Injectable()
 export class SalesFunnelService {
@@ -12,7 +17,9 @@ export class SalesFunnelService {
         @InjectModel(SalesFunnelStep)
         private readonly SalesFunnelStepModel: ReturnModelType<
             typeof SalesFunnelStep
-        >
+        >,
+        @InjectModel(Pupil)
+        private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
     public create(createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
@@ -49,12 +56,19 @@ export class SalesFunnelService {
     }
 
     public async delete(id: string) {
-        const deletedStep = await this.SalesFunnelStepModel.findByIdAndDelete(
-            id
-        );
+        const deletedStep = await this.SalesFunnelStepModel.findById(id);
 
         if (!deletedStep) {
             throw new NotFoundException();
+        }
+
+        // If there is at least one pupil in this step
+        const pupilInCurrentStep = await this.PupilModel.findOne({
+            salesFunnelStep: id
+        });
+
+        if (pupilInCurrentStep) {
+            throw new BadRequestException();
         }
 
         await this.SalesFunnelStepModel.updateMany(

@@ -98,7 +98,6 @@ export class SearchIndexer {
     }
 
     public indexCRMUser(user: DocumentType<CRMUser>) {
-        console.log(user);
         this._client.index({
             id: user.id,
             index: 'crmusers',

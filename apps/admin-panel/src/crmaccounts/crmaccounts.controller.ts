@@ -39,14 +39,12 @@ export class CRMAccountsController {
     }
 
     @Get(':id')
-    public async findOne(@Param() { id }: MongoID): Promise<CRMUser> {
+    public async findById(@Param() { id }: MongoID) {
         return await this.CRMAccountsService.findById(id);
     }
 
     @Post()
-    public async create(
-        @Body() createUserDTO: CreateCRMUserDTO
-    ): Promise<CRMUser> {
+    public async create(@Body() createUserDTO: CreateCRMUserDTO) {
         return await this.CRMAccountsService.create(createUserDTO);
     }
 
@@ -59,7 +57,7 @@ export class CRMAccountsController {
     }
 
     @Delete(':login')
-    public async delete(@Param('login') login: string): Promise<CRMUser> {
+    public async delete(@Param('login') login: string) {
         return await this.CRMAccountsService.delete(login);
     }
 }

@@ -14,42 +14,37 @@ export class UpdateCRMUserDTO {
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    name: string;
+    name?: string;
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    surname: string;
+    surname?: string;
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    midname: string;
+    midname?: string;
 
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    login: string;
-
-    @IsOptional()
-    @IsNotEmpty()
-    @IsString()
-    password: string;
+    login?: string;
 
     @IsOptional()
     @IsNotEmpty()
     @IsMongoId()
-    role: string;
+    role?: string;
 
     @IsOptional()
     @IsEnum(ActionPermissions, { each: true })
-    localActionPermissions: ActionPermissions[];
+    localActionPermissions?: ActionPermissions[];
 
     @IsOptional()
     @IsObject()
-    localDataPermissions: DataPermissions;
+    localDataPermissions?: DataPermissions;
 
     @IsOptional()
     @IsEnum(AccountTypes)
-    accountType: AccountTypes;
+    accountType?: AccountTypes;
 }

@@ -38,11 +38,11 @@ export class CreateCRMUserDTO {
 
     @IsOptional()
     @IsEnum(ActionPermissions, { each: true })
-    localActionPermissions: ActionPermissions[];
+    localActionPermissions?: ActionPermissions[];
 
     @IsOptional()
     @IsObject()
-    localDataPermissions: DataPermissions;
+    localDataPermissions?: DataPermissions;
 
     @IsEnum(AccountTypes)
     accountType: AccountTypes;

@@ -47,7 +47,7 @@ export default class CRMUser {
     localDataPermissions: DataPermissions;
 
     @prop({
-        type: () => [String],
+        type: () => [Group],
         ref: () => Group,
         required: false,
         default: []

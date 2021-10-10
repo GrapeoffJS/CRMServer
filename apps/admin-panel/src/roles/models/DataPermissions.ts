@@ -1,7 +1,7 @@
 export type DataPermissions = {
     forPupil: {
         phone?: 1 | undefined;
-        dateOfBirth: 1 | undefined;
+        dateOfBirth?: 1 | undefined;
         parentPhone?: 1 | undefined;
         parentFullname?: 1 | undefined;
         balance?: 1 | undefined;

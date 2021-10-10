@@ -2,8 +2,9 @@ import { TaskTypes } from './TaskTypes';
 import { prop } from '@typegoose/typegoose';
 import CRMUser from '../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
 import Pupil from '../../pupils/models/Pupil.model';
+import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
-export class Task {
+export class Task extends TimeStamps {
     @prop({ type: String, required: true })
     name: string;
 
