@@ -4,6 +4,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { Task } from './models/Task.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdateTaskDTO } from './DTO/UpdateTaskDTO';
+import CRMUser from '../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
 
 @Injectable()
 export class TasksService {
@@ -13,7 +14,14 @@ export class TasksService {
     ) {}
 
     public async create(createTaskDTO: CreateTaskDTO) {
-        return this.TaskModel.create(createTaskDTO);
+        const task = this.TaskModel.create(createTaskDTO);
+
+        return this.TaskModel.findById(task.id).populate([
+            {
+                path: 'responsible',
+                model: CRMUser
+            }
+        ]);
     }
 
     public async delete(id: string) {
