@@ -78,7 +78,7 @@ export default class Pupil extends TimeStamps {
     paymentHistory: Payment[];
 
     @prop({
-        ref: Note,
+        ref: () => Note,
         localField: '_id',
         foreignField: 'owner_id'
     })

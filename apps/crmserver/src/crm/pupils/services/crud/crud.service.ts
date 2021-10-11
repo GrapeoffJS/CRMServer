@@ -50,6 +50,9 @@ export class CrudService {
                 },
                 {
                     path: 'statuses'
+                },
+                {
+                    path: 'notes'
                 }
             ])
         };
@@ -153,6 +156,9 @@ export class CrudService {
             },
             {
                 path: 'statuses'
+            },
+            {
+                path: 'notes'
             }
         ]);
 
@@ -209,6 +215,9 @@ export class CrudService {
                 },
                 {
                     path: 'statuses'
+                },
+                {
+                    path: 'notes'
                 }
             ]);
     }
