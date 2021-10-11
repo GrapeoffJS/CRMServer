@@ -67,7 +67,7 @@ export class SearchIndexer {
 
     public indexGroup(group: DocumentType<Group>): void {
         this._client.index({
-            index: 'pupils',
+            index: 'groups',
             id: group.id,
             body: {
                 type: 'group',
@@ -81,7 +81,7 @@ export class SearchIndexer {
     public updateGroup(group: DocumentType<Group>): void {
         this._client.update({
             id: group.id,
-            index: 'pupils',
+            index: 'groups',
             body: {
                 doc: {
                     type: 'group',
