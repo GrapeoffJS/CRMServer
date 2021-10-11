@@ -101,7 +101,7 @@ export default class Pupil extends TimeStamps {
     tutors: Tutor[];
 
     @prop({
-        type: SalesFunnelStep,
+        type: Schema.Types.ObjectId,
         required: true,
         ref: () => SalesFunnelStep
     })

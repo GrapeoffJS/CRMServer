@@ -1,5 +1,5 @@
-import Pupil from '../../../../crmserver/src/crm/pupils/models/Pupil.model';
 import { modelOptions, prop } from '@typegoose/typegoose';
+import Pupil from '../../../../crmserver/src/crm/pupils/models/Pupil.model';
 
 @modelOptions({
     schemaOptions: {
@@ -11,7 +11,7 @@ export class SalesFunnelStep {
     @prop({ type: String, required: true })
     name: string;
 
-    @prop({ type: Number, required: true, unique: false })
+    @prop({ type: Number, required: true })
     order: number;
 
     @prop({
