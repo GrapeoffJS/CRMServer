@@ -33,9 +33,9 @@ export class TutorManipulationsService {
 
         if (group.tutor) {
             const oldTutor = await this.CRMUserModel.findById(group.tutor);
-            oldTutor.deleteGroup(group.id);
+            oldTutor?.deleteGroup(group.id);
 
-            await oldTutor.save();
+            await oldTutor?.save();
         }
 
         const tutor = await this.CRMUserModel.findOne({

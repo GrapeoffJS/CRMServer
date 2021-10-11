@@ -84,6 +84,8 @@ export class CrudService {
             .skip(offset)
             .limit(limit);
 
+        console.log(result);
+
         const count = await this.GroupModel.aggregate(
             this.createFilterPipeline(filters) || [{ $match: {} }]
         ).count('count');

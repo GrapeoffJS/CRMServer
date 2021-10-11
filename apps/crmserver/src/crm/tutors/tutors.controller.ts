@@ -22,6 +22,7 @@ export class TutorsController {
         return response.header('Count', count).json(accounts);
     }
 
+    @Get(':id')
     public async findById(@Param() { id }: MongoID) {
         return await this.TutorsService.findById(id);
     }
