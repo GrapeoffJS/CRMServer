@@ -56,9 +56,9 @@ export class SalesFunnelService {
     }
 
     public async delete(id: string) {
-        const deletedStep = await this.SalesFunnelStepModel.findById(id);
+        const stepToDelete = await this.SalesFunnelStepModel.findById(id);
 
-        if (!deletedStep) {
+        if (!stepToDelete) {
             throw new NotFoundException();
         }
 
@@ -71,12 +71,14 @@ export class SalesFunnelService {
             throw new BadRequestException();
         }
 
+        await this.SalesFunnelStepModel.findByIdAndDelete(id);
+
         await this.SalesFunnelStepModel.updateMany(
-            { order: { $gt: deletedStep.order } },
+            { order: { $gt: stepToDelete.order } },
             { $inc: { order: -1 } }
         );
 
-        return deletedStep;
+        return stepToDelete;
     }
 
     public async findByOrder(order: number) {
