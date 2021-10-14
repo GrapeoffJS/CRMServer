@@ -6,7 +6,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { SearchIndexer } from './SearchIndexer/SearchIndexer';
 import { config } from 'dotenv';
 import path from 'path';
-import getESConnectionUri from './config/getESConnectionUri';
 
 config({ path: path.join(__dirname, '../../', process.env.NODE_ENV + '.env') });
 
@@ -25,7 +24,7 @@ async function bootstrap() {
     );
 
     SearchIndexer.getInstance().connect({
-        node: getESConnectionUri()
+        node: process.env.ELASTIC_SEARCH_URI
     });
 
     await app.listen(process.env.PORT || 4200);
