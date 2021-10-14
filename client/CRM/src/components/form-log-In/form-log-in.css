@@ -1,0 +1,35 @@
+.password-control {
+	position: relative;
+	width: 100%;
+}
+.LogIn {
+	padding: 100px 0;
+    background-size: 65%;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.password-control i {
+	position: absolute;
+	top: -41px;
+    margin-right: 10px;
+}
+input {
+	border: none;
+}
+/*input:focus {
+	outline: 0;
+}*/
+/*.LogIn button:hover {
+	transition: 0.3s;
+	transform: rotate(0deg),;
+	backgroundColor: #f7d99f;
+}*/
+
+@media(max-width: 767px) {
+	.LogIn {
+		background-size: 147%;
+		background-position: right;
+		margin-left: 0px;
+	}
+}

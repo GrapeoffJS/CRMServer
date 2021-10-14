@@ -1,0 +1,17 @@
+body {
+    background: #EFF5F7;
+}
+
+.displayNone {
+    display: none;
+}
+
+@font-face {
+    font-family: "MontLight";
+    src: url("./../fonts/Mont/Mont-Light.ttf");
+}
+
+@font-face {
+    font-family: "MontBold";
+    src: url("./../fonts/Mont/Mont-Bold.ttf");
+}

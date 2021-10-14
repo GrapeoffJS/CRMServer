@@ -1,6 +1,9 @@
 # compiled output
-/dist
-/node_modules
+/server/dist
+
+server/node_modules
+client/AdminPanel/node_modules
+client/CRM/node_modules
 
 # Logs
 logs
