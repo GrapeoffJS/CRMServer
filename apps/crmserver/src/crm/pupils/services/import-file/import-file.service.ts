@@ -19,7 +19,7 @@ export class ImportFileService {
         >
     ) {}
 
-    public async uploadCSV(file: any) {
+    public async uploadCSV(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];
         const salesFunnelStep = await this.SalesFunnelStepModel.findOne({
             order: 1

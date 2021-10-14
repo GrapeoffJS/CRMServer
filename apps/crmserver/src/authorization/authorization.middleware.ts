@@ -17,7 +17,7 @@ export class AuthorizationMiddleware implements NestMiddleware {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
-    async use(req: any, res: Response, next: () => void) {
+    async use(req: ExtendedRequest, res: Response, next: () => void) {
         const token = req.headers?.authorization?.split(' ')[1];
 
         if (!token) return res.sendStatus(401);
