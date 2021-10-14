@@ -35,4 +35,5 @@ import { AdminPanelModule } from '../../admin-panel/src/admin-panel.module';
     controllers: [],
     providers: []
 })
-export class AppModule {}
+export class AppModule {
+}

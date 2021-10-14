@@ -14,7 +14,8 @@ export class CrudService {
     constructor(
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>
-    ) {}
+    ) {
+    }
 
     public async create(createPupilDTO: CreatePupilDTO): Promise<Pupil> {
         return this.PupilModel.create(createPupilDTO);

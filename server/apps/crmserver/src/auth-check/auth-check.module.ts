@@ -28,4 +28,5 @@ import CRMUser from '../../../admin-panel/src/crmaccounts/models/CRMUser.model';
     ],
     controllers: [AuthCheckController]
 })
-export class AuthCheckModule {}
+export class AuthCheckModule {
+}

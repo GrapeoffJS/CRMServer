@@ -67,4 +67,5 @@ import { SalesFunnelStep } from '../../../../admin-panel/src/sales-funnel/models
     ],
     providers: [ImportFileService, CrudService, NotesService, PaymentService]
 })
-export class PupilsModule {}
+export class PupilsModule {
+}

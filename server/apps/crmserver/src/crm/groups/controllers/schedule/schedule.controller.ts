@@ -10,7 +10,8 @@ import { PupilID } from '../../../../../../DTO/PupilID';
 
 @Controller(path)
 export class ScheduleController {
-    constructor(private readonly scheduleService: ScheduleService) {}
+    constructor(private readonly scheduleService: ScheduleService) {
+    }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSetGroupSchedule))
     @Post(':id/Schedule')

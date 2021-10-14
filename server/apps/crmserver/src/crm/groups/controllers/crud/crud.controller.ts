@@ -31,7 +31,8 @@ import { MongoIDs } from '../../../../../../DTO/MongoIDs';
 
 @Controller(path)
 export class CrudController {
-    constructor(private readonly crudService: CrudService) {}
+    constructor(private readonly crudService: CrudService) {
+    }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreateGroup))
     @UsePipes(CreateGroupValidationPipe)

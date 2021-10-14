@@ -10,12 +10,11 @@ import { getFindByIdAggregation } from './aggregations/getFindByIdAggregation';
 export class SalesFunnelService {
     constructor(
         @InjectModel(SalesFunnelStep)
-        private readonly SalesFunnelStepModel: ReturnModelType<
-            typeof SalesFunnelStep
-        >,
+        private readonly SalesFunnelStepModel: ReturnModelType<typeof SalesFunnelStep>,
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>
-    ) {}
+    ) {
+    }
 
     public async findAll(limit: number) {
         return this.SalesFunnelStepModel.aggregate(

@@ -3,7 +3,8 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class SearchService {
-    constructor(private readonly ElasticService: ElasticsearchService) {}
+    constructor(private readonly ElasticService: ElasticsearchService) {
+    }
 
     public search(query: string, tutorId?: string) {
         const correctedQuery = this.getCorrectedQuery(query);

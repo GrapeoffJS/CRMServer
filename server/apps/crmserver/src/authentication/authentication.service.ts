@@ -13,7 +13,8 @@ export class AuthenticationService {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>,
         private readonly ConfigService: ConfigService,
         private readonly JwtService: JwtService
-    ) {}
+    ) {
+    }
 
     public async authenticate(login: string, password: string) {
         const candidate = await this.CRMUserModel.findOne({ login }).select(

@@ -1,12 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Patch,
-    Post
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateSubscriptionDTO } from './DTO/CreateSubscriptionDTO';
 import { Subscription } from './models/Subscription.model';
 import { SubscriptionsService } from './subscriptions.service';
@@ -16,7 +8,8 @@ import { MongoID } from '../../../DTO/MongoID';
 
 @Controller(path)
 export class SubscriptionsController {
-    constructor(private readonly subscriptionsService: SubscriptionsService) {}
+    constructor(private readonly subscriptionsService: SubscriptionsService) {
+    }
 
     @Post()
     public async create(

@@ -41,4 +41,5 @@ import { TypegooseModule } from 'nestjs-typegoose';
     controllers: [SearchController],
     providers: [SearchService]
 })
-export class SearchModule {}
+export class SearchModule {
+}

@@ -13,7 +13,8 @@ export class PaymentService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>,
         @InjectModel(Subscription)
         private readonly SubscriptionModel: ReturnModelType<typeof Subscription>
-    ) {}
+    ) {
+    }
 
     public async addBalance(id: string, amount: number, issuer: string) {
         const pupil = await this.PupilModel.findById(id);

@@ -14,10 +14,9 @@ export class ImportFileService {
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>,
         @InjectModel(SalesFunnelStep)
-        private readonly SalesFunnelStepModel: ReturnModelType<
-            typeof SalesFunnelStep
-        >
-    ) {}
+        private readonly SalesFunnelStepModel: ReturnModelType<typeof SalesFunnelStep>
+    ) {
+    }
 
     public async uploadCSV(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];

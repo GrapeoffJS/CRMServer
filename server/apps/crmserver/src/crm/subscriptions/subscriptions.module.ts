@@ -16,4 +16,5 @@ import { Subscription } from '../../../../admin-panel/src/subscriptions/models/S
     controllers: [SubscriptionsController],
     providers: [SubscriptionsService]
 })
-export class SubscriptionsModule {}
+export class SubscriptionsModule {
+}

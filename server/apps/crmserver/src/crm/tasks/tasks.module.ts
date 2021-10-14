@@ -31,4 +31,5 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     controllers: [TasksController],
     providers: [TasksService]
 })
-export class TasksModule {}
+export class TasksModule {
+}

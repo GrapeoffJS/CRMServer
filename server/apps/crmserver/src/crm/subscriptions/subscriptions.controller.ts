@@ -5,7 +5,8 @@ import { SubscriptionsService } from './subscriptions.service';
 
 @Controller(path)
 export class SubscriptionsController {
-    constructor(private readonly SubscriptionsService: SubscriptionsService) {}
+    constructor(private readonly SubscriptionsService: SubscriptionsService) {
+    }
 
     @Get()
     public async findAll() {

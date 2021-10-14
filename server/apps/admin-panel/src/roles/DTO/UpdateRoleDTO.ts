@@ -1,10 +1,4 @@
-import {
-    IsEnum,
-    IsNotEmpty,
-    IsObject,
-    IsOptional,
-    IsString
-} from 'class-validator';
+import { IsEnum, IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
 import { ActionPermissions } from '../models/ActionPermissions';
 import { DataPermissions } from '../models/DataPermissions';
 

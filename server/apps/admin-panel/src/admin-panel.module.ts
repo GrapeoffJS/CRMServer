@@ -14,4 +14,5 @@ import { SalesFunnelModule } from './sales-funnel/sales-funnel.module';
     controllers: [],
     providers: []
 })
-export class AdminPanelModule {}
+export class AdminPanelModule {
+}

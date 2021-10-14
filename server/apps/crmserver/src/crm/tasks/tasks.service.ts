@@ -11,7 +11,8 @@ export class TasksService {
     constructor(
         @InjectModel(Task)
         private readonly TaskModel: ReturnModelType<typeof Task>
-    ) {}
+    ) {
+    }
 
     public async create(createTaskDTO: CreateTaskDTO) {
         const task = await this.TaskModel.create(createTaskDTO);

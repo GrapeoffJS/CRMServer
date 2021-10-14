@@ -1,9 +1,4 @@
-import {
-    ArgumentMetadata,
-    BadRequestException,
-    Injectable,
-    PipeTransform
-} from '@nestjs/common';
+import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 import { CreateGroupDTO } from '../DTO/CreateGroupDTO';
 
 @Injectable()

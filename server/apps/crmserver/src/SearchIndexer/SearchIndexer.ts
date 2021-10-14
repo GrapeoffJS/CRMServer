@@ -8,7 +8,8 @@ export class SearchIndexer {
     private static _instance: SearchIndexer;
     private _client: Client;
 
-    private constructor() {}
+    private constructor() {
+    }
 
     public static getInstance(): SearchIndexer {
         if (!SearchIndexer._instance) {

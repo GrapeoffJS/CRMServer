@@ -10,7 +10,8 @@ export class TutorsService {
     constructor(
         @InjectModel(CRMUser)
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
-    ) {}
+    ) {
+    }
 
     public async findAll(limit: number, offset: number) {
         let accountsCount: number;

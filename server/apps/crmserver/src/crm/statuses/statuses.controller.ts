@@ -1,12 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Patch,
-    Post
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { path } from './path';
 import { StatusesService } from './statuses.service';
 import { CreateStatusDTO } from './DTO/CreateStatusDTO';
@@ -15,7 +7,8 @@ import { MongoID } from '../../../../DTO/MongoID';
 
 @Controller(path)
 export class StatusesController {
-    constructor(private readonly StatusesService: StatusesService) {}
+    constructor(private readonly StatusesService: StatusesService) {
+    }
 
     @Get()
     public async findAll() {

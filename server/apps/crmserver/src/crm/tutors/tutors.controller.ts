@@ -7,7 +7,8 @@ import { TutorsService } from './tutors.service';
 
 @Controller(path)
 export class TutorsController {
-    constructor(private readonly TutorsService: TutorsService) {}
+    constructor(private readonly TutorsService: TutorsService) {
+    }
 
     @Get()
     public async findAll(

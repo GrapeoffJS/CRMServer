@@ -1,13 +1,5 @@
 import { Genders } from '../models/Genders';
-import {
-    IsEnum,
-    IsISO8601,
-    IsMongoId,
-    IsNotEmpty,
-    IsNumber,
-    IsOptional,
-    IsString
-} from 'class-validator';
+import { IsEnum, IsISO8601, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { SalesFunnelStep } from '../../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
 
 export class CreatePupilDTO {

@@ -1,14 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post,
-    Put
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put } from '@nestjs/common';
 import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
 import { SalesFunnelService } from './sales-funnel.service';
 import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
@@ -18,7 +8,8 @@ import { path } from './path';
 
 @Controller(path)
 export class SalesFunnelController {
-    constructor(private readonly SalesFunnelService: SalesFunnelService) {}
+    constructor(private readonly SalesFunnelService: SalesFunnelService) {
+    }
 
     @Post()
     public async create(

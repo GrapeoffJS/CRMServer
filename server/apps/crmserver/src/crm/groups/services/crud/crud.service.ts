@@ -19,7 +19,8 @@ export class CrudService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>,
         @InjectModel(CRMUser)
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
-    ) {}
+    ) {
+    }
 
     public async create(createGroupDTO: CreateGroupDTO): Promise<Group> {
         if (createGroupDTO.tutor === '') createGroupDTO.tutor = null;

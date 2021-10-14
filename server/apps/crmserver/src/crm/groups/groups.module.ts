@@ -57,4 +57,5 @@ import { JwtModule } from '@nestjs/jwt';
         TutorManipulationsService
     ]
 })
-export class GroupsModule {}
+export class GroupsModule {
+}

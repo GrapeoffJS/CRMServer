@@ -4,14 +4,14 @@ import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Subscription } from './models/Subscription.model';
 import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
-import { AccountTypes } from '../crmaccounts/models/AccountTypes';
 
 @Injectable()
 export class SubscriptionsService {
     constructor(
         @InjectModel(Subscription)
         private readonly SubscriptionModel: ReturnModelType<typeof Subscription>
-    ) {}
+    ) {
+    }
 
     public async create(
         createSubscriptionDTO: CreateSubscriptionDTO

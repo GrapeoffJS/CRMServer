@@ -1,9 +1,5 @@
 import CRMUser from './models/CRMUser.model';
-import {
-    BadRequestException,
-    Injectable,
-    NotFoundException
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCRMUserDTO } from './DTO/CreateCRMUserDTO';
 import { genSalt, hash } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
@@ -18,7 +14,8 @@ export class CRMAccountsService {
     constructor(
         @InjectModel(CRMUser)
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
-    ) {}
+    ) {
+    }
 
     public async create(createUserDTO: CreateCRMUserDTO) {
         if (

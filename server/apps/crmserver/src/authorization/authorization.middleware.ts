@@ -15,7 +15,8 @@ export class AuthorizationMiddleware implements NestMiddleware {
         private readonly JwtService: JwtService,
         @InjectModel(CRMUser)
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
-    ) {}
+    ) {
+    }
 
     async use(req: ExtendedRequest, res: Response, next: () => void) {
         const token = req.headers?.authorization?.split(' ')[1];

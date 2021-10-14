@@ -12,7 +12,8 @@ export class ScheduleService {
         private readonly GroupModel: ReturnModelType<typeof Group>,
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>
-    ) {}
+    ) {
+    }
 
     public async addGlobalSchedule(
         id: string,

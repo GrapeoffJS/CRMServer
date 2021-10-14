@@ -11,7 +11,8 @@ import { PaymentDTO } from '../../DTO/PaymentDTO';
 
 @Controller(path)
 export class PaymentController {
-    constructor(private readonly paymentService: PaymentService) {}
+    constructor(private readonly paymentService: PaymentService) {
+    }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreatePayment))
     @Post(':id/Payment')

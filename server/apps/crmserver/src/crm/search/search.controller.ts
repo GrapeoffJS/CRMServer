@@ -8,7 +8,8 @@ import { TutorID } from '../../../../DTO/TutorID';
 @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSearch))
 @Controller(path)
 export class SearchController {
-    constructor(private readonly SearchService: SearchService) {}
+    constructor(private readonly SearchService: SearchService) {
+    }
 
     @Get('/autocompletion')
     public async search(

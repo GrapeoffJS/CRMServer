@@ -1,13 +1,5 @@
 import Pupil from '../../models/Pupil.model';
-import {
-    Body,
-    Controller,
-    Delete,
-    Param,
-    Post,
-    Req,
-    UseGuards
-} from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { NotesService } from '../../services/notes/notes.service';
 import { path } from '../../path';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
@@ -19,7 +11,8 @@ import { MongoID } from '../../../../../../DTO/MongoID';
 
 @Controller(path)
 export class NotesController {
-    constructor(private readonly notesService: NotesService) {}
+    constructor(private readonly notesService: NotesService) {
+    }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreateNote))
     @Post(':id/Notes')
