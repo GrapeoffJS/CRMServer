@@ -1,2 +1,1 @@
-web: cd ./server/
-web: yarn start:prod
+web: cd ./server/ && yarn start:prod
