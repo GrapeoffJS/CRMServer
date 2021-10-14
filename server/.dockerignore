@@ -3,7 +3,7 @@ development.env
 ../.gitignore
 ../.prettierignore
 ../.prettierrc
-Procfile
+../Procfile
 README.md
 yarn-error.log
 dist
