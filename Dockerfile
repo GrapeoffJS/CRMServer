@@ -11,6 +11,8 @@ WORKDIR /CRMServer
 
 RUN yarn
 RUN yarn add ts-loader -D
+RUN yarn add @types/express -D
+RUN yarn add @types/node -D
 RUN yarn build
 RUN rm -rf ./src
 

@@ -31,7 +31,7 @@ export class ImportFileController {
             }
         })
     )
-    public async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    public async uploadFile(@UploadedFile() file: any) {
         if (file?.mimetype === MimeTypes.CSV) {
             return this.importFileService.uploadCSV(file);
         }
