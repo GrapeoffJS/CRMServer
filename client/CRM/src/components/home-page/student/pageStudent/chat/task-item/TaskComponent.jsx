@@ -47,7 +47,7 @@ export const TaskComponent = ({task, index, setRelTasks}) => {
           <OpacityParagraph>{task.name}</OpacityParagraph>
           <OpacityParagraph>Срок до: {moment(task.deadline).format("DD/MM/YYYY | HH:mm")}</OpacityParagraph>
           <OpacityParagraph>
-            Ответственнен: {resFIO("midname")} {resFIO("name")} {resFIO("surname")}
+            Ответственнен: {resFIO("surname")} {resFIO("name")} {resFIO("midname")}
           </OpacityParagraph>
           <DeleteButton onClick={() => onClickDeleteTask(task._id)}><CloseOutlined /></DeleteButton>
         </div>
