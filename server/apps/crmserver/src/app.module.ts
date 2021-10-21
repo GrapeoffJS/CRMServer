@@ -6,7 +6,6 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { AuthCheckModule } from './auth-check/auth-check.module';
 import { TypegooseModule } from 'nestjs-typegoose';
 import getMongoConnectionUri from './config/getMongoConnectionUri';
-import mongoConnectionOptions from './config/mongoConnectionOptions';
 import { AdminPanelModule } from '../../admin-panel/src/admin-panel.module';
 
 @Module({
@@ -20,12 +19,19 @@ import { AdminPanelModule } from '../../admin-panel/src/admin-panel.module';
                         configService.get('MONGO_CONNECTION_PROTOCOL'),
                         configService.get('MONGO_HOST'),
                         configService.get('MONGO_PORT'),
-                        configService.get('MONGO_INITDB_ROOT_USERNAME'),
-                        configService.get('MONGO_INITDB_ROOT_PASSWORD'),
                         configService.get('MONGO_DEFAULTDB'),
                         configService.get('MONGO_CONNECTION_PARAMS')
                     ),
-                    ...mongoConnectionOptions
+                    useCreateIndex: true,
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true,
+                    useFindAndModify: false,
+                    auth: {
+                        user: configService.get('MONGO_INITDB_ROOT_USERNAME'),
+                        password: configService.get(
+                            'MONGO_INITDB_ROOT_PASSWORD'
+                        )
+                    }
                 };
             }
         }),
