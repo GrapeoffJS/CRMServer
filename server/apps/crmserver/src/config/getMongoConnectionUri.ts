@@ -5,7 +5,7 @@ export default (
     username: string,
     password: string,
     defaultdb: string,
-    connectionParams: string
+    connectionParams = ''
 ) => {
     return `${protocol}://${username}:${password}@${host}${port}/${defaultdb}${connectionParams}`;
 };
