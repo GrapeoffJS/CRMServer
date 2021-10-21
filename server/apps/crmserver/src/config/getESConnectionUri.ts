@@ -1,9 +1,3 @@
-export default (
-    protocol: string,
-    username: string,
-    password: string,
-    host: string,
-    port: string
-) => {
-    return `${protocol}://${username}:${password}@${host}:${port}`;
+export default (protocol: string, host: string, port: string) => {
+    return `${protocol}://${host}:${port}`;
 };
