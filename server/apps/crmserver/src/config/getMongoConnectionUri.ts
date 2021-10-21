@@ -1,15 +1,11 @@
-import path from 'path';
-import { config } from 'dotenv';
-
-config({ path: path.join(__dirname, '../../', process.env.NODE_ENV + '.env') });
-
 export default (
-    host: string = process.env.MONGO_HOST,
-    port: string = process.env.MONGO_PORT,
-    defaultdb: string = process.env.MONGO_DEFAULTDB
+    protocol: string,
+    host: string,
+    port = '',
+    username: string,
+    password: string,
+    defaultdb: string,
+    connectionParams: string
 ) => {
-    if (!host || !port || !defaultdb) return null;
-    if (process.env.NODE_ENV !== 'development') {
-        return 'mongodb://' + host + ':' + port + '/' + defaultdb;
-    }
+    return `${protocol}://${username}:${password}@${host}${port}/${defaultdb}${connectionParams}`;
 };

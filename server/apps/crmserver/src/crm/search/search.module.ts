@@ -6,6 +6,7 @@ import { Module } from '@nestjs/common';
 import { SearchController } from './search.controller';
 import { SearchService } from './search.service';
 import { TypegooseModule } from 'nestjs-typegoose';
+import getESConnectionUri from '../../config/getESConnectionUri';
 
 @Module({
     imports: [
@@ -20,7 +21,15 @@ import { TypegooseModule } from 'nestjs-typegoose';
             inject: [ConfigService],
             useFactory(configService: ConfigService) {
                 return {
-                    node: configService.get('ELASTIC_SEARCH_URI')
+                    node: getESConnectionUri(
+                        configService.get('ELASTIC_SEARCH_PROTOCOL'),
+                        configService.get('ELASTIC_SEARCH_HOST'),
+                        configService.get('ELASTIC_SEARCH_PORT')
+                    ),
+                    auth: {
+                        username: configService.get('ELASTIC_SEARCH_USERNAME'),
+                        password: configService.get('ELASTIC_SEARCH_PASSWORD')
+                    }
                 };
             }
         }),
@@ -41,5 +50,4 @@ import { TypegooseModule } from 'nestjs-typegoose';
     controllers: [SearchController],
     providers: [SearchService]
 })
-export class SearchModule {
-}
+export class SearchModule {}

@@ -16,12 +16,15 @@ import { AdminPanelModule } from '../../admin-panel/src/admin-panel.module';
             inject: [ConfigService],
             async useFactory(configService: ConfigService) {
                 return {
-                    uri:
-                        getMongoConnectionUri(
-                            configService.get('MONGO_HOST'),
-                            configService.get('MONGO_PORT'),
-                            configService.get('MONGO_DEFAULTDB')
-                        ) || configService.get('DB_CONNECTION_URI'),
+                    uri: getMongoConnectionUri(
+                        configService.get('MONGO_CONNECTION_PROTOCOL'),
+                        configService.get('MONGO_HOST'),
+                        configService.get('MONGO_PORT'),
+                        configService.get('MONGO_INITDB_ROOT_USERNAME'),
+                        configService.get('MONGO_INITDB_ROOT_PASSWORD'),
+                        configService.get('MONGO_DEFAULTDB'),
+                        configService.get('MONGO_CONNECTION_PARAMS')
+                    ),
                     ...mongoConnectionOptions
                 };
             }
@@ -35,5 +38,4 @@ import { AdminPanelModule } from '../../admin-panel/src/admin-panel.module';
     controllers: [],
     providers: []
 })
-export class AppModule {
-}
+export class AppModule {}
