@@ -39,6 +39,7 @@ services:
             - ELASTIC_USERNAME=$ELASTIC_USERNAME
             - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
             - xpack.security.enabled=true
+        env_file: elastic.env
         ports:
             - "9200:9200"
         volumes:
