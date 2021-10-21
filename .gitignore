@@ -2,6 +2,7 @@
 /server/dist
 
 server/node_modules
+server/.env
 client/AdminPanel/node_modules
 client/CRM/node_modules
 
