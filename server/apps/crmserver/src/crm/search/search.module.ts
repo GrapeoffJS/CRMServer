@@ -23,13 +23,11 @@ import getESConnectionUri from '../../config/getESConnectionUri';
                 return {
                     node: getESConnectionUri(
                         configService.get('ELASTIC_SEARCH_PROTOCOL'),
+                        configService.get('ELASTIC_SEARCH_USERNAME'),
+                        configService.get('ELASTIC_SEARCH_PASSWORD'),
                         configService.get('ELASTIC_SEARCH_HOST'),
                         configService.get('ELASTIC_SEARCH_PORT')
-                    ),
-                    auth: {
-                        username: configService.get('ELASTIC_SEARCH_USERNAME'),
-                        password: configService.get('ELASTIC_SEARCH_PASSWORD')
-                    }
+                    )
                 };
             }
         }),

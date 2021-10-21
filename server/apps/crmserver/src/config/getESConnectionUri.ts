@@ -1,7 +1,9 @@
 export default (
-    protocol: string = process.env.ELASTIC_SEARCH_PROTOCOL,
-    host: string = process.env.ELASTIC_SEARCH_HOST,
-    port: string = process.env.ELASTIC_SEARCH_PORT
+    protocol: string,
+    username: string,
+    password: string,
+    host: string,
+    port: string
 ) => {
-    return `${protocol}://${host}:${port}`;
+    return `${protocol}://${username}:${password}@${host}:${port}`;
 };
