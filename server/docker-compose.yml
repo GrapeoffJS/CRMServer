@@ -24,7 +24,7 @@ services:
             - MONGO_INITDB_ROOT_USERNAME=$MONGODB_ROOT_USER
             - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_ROOT_PASSWORD
         ports:
-            - "27017:27017"
+            - "27017"
         env_file: mongodb.env
 
     elastic:
@@ -40,7 +40,7 @@ services:
             - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
         env_file: elastic.env
         ports:
-            - "9200:9200"
+            - "9200"
         volumes:
             - elastic:/usr/share/elasticsearch/data
 volumes:
