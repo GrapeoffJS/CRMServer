@@ -40,7 +40,7 @@ services:
             - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
         env_file: elastic.env
         ports:
-            - "9200"
+            - "9200:9200"
         volumes:
             - elastic:/usr/share/elasticsearch/data
 volumes:
