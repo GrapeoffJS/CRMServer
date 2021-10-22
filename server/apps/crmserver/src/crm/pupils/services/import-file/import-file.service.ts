@@ -14,9 +14,10 @@ export class ImportFileService {
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>,
         @InjectModel(SalesFunnelStep)
-        private readonly SalesFunnelStepModel: ReturnModelType<typeof SalesFunnelStep>
-    ) {
-    }
+        private readonly SalesFunnelStepModel: ReturnModelType<
+            typeof SalesFunnelStep
+        >
+    ) {}
 
     public async uploadCSV(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];
@@ -33,8 +34,6 @@ export class ImportFileService {
 
         for (let i = 0; i < pupils.length; i++) {
             const pupil: CreatePupilDTO = pupils[i];
-
-            Object.keys(pupil).forEach(i => (pupil[i] = pupil[i].trim()));
 
             pupil.dateOfBirth = moment(
                 pupil.dateOfBirth,
@@ -76,8 +75,6 @@ export class ImportFileService {
 
         for (let i = 0; i < pupils.length; i++) {
             const pupil = pupils[i];
-
-            Object.keys(pupil).forEach(i => (pupil[i] = pupil[i].trim()));
 
             pupil.dateOfBirth = moment(
                 pupil.dateOfBirth,
