@@ -129,8 +129,6 @@ const PageStudent = () => {
     const [salesFunnelSteps, setSalesFunnelSteps] = useState([])
 
     const {notes, groups, name, balance, localSchedule, paymentHistory, tasks, salesFunnelStep} = dataStudent;
-    console.log(dataStudent)
-    console.log(salesFunnelSteps)
 
     const axios = require('axios'); // AJAX
 
