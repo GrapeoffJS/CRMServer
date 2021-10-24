@@ -45,7 +45,6 @@ export const SalesFunnelStudents = ({Url, card, pupils, pageSize}) => {
                                  {...provided.dragHandleProps} ref={provided.innerRef}>
                 <div className="funnelStepStudent__first--info">
                   <div>
-                    {console.log(stud)}
                     <NavLink to={`/student/${stud._id}`}>
                       {tooltipCheckerOfTrioString(`${stud.surname} ${stud.name} ${stud.midname}`.length, stud, "", 25, "230px", "ФИО:")}
                     </NavLink>

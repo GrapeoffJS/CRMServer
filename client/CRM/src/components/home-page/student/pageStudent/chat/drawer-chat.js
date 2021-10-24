@@ -55,9 +55,9 @@ const DrawerChat = ({notes, update, _id, fio, tasks}) => {
 
   return (
     <React.Fragment>
-      <Button className='Button-Drawer' type="primary" onClick={showDrawer}>
-        Открыть коментарии
-      </Button>
+        <Button type="primary" onClick={showDrawer}>
+          Открыть коментарии
+        </Button>
       <Drawer
         style={{padding: "0 24px 0 24px"}}
         width={'400px'}

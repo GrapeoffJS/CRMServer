@@ -32,7 +32,6 @@ export const SalesFunnelModal = ({
   const {setLoaded} = loader
   const {setPupilsList} = pupils
   const validateDiscordNickname = new RegExp(/\w+#[0-9]{4}/)
-  //const validateChildPhoneAndParent = new RegExp(/^((\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/)
   const dateFormat = "DD-MM-YYYY"
   // data
 

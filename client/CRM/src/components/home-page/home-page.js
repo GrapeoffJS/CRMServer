@@ -25,9 +25,12 @@ import UploadPupils from './upload-pupils/upload-pupils'
 import Create_Columns_Rows_Groups from './#more-functions/сreate-columns-and-rows/сreate-columns-rows-groups.js'
 import Create_Columns_Rows_Pupils from './#more-functions/сreate-columns-and-rows/сreate-columns-rows-pupils.js'
 
+import {suspenseComponent} from "../../hocs/SuspenseComponent"
+
 import styled from '@emotion/styled'
 
 const SalesFunnel = React.lazy(() => import("./sales-funnel/sales-funnel"))
+const SuspenseSalesFunnel = suspenseComponent(SalesFunnel, <div>Loading...</div>)
 
 const {Sider} = Layout;
 const {SubMenu} = Menu;
@@ -142,7 +145,7 @@ const HomePage = ({logOut}) => {
 
                                 <Route exact path='/group' component={() => <Group/>}/>
                                 <Route path={`/group/:id`} children={() => <GroupPage/>}/>
-                                <Route path={'/sales-funnel'} component={() => <React.Suspense fallback={<div>Loading...</div>}><SalesFunnel /></React.Suspense>}/>
+                                <Route path={'/sales-funnel'} component={() => <SuspenseSalesFunnel />}/>
                                 {/*Сводные таблицы*/}
                                 <Route exact path='/table-groups' component={() => <Create_Columns_Rows_Groups/>}/>
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 
 import Url from './../../../../url/url.js';
@@ -17,6 +17,11 @@ import Balance from './balance/balance.js';
 import styled from '@emotion/styled';
 import StudentStatuses from "../student-statuses/student-statuses";
 import ListStatuses from "../student-statuses/list-statuses";
+import {Select} from "antd"
+import {FlexDiv} from "../pageStudent.styled";
+import {axiosGetFunnelSteps, axiosUpdateStudent} from "../../sales-funnel/helpers/axios-requests";
+
+const {Option} = Select
 
 const breakpoints = [767],
     mq = breakpoints.map(
@@ -121,8 +126,11 @@ const PageStudent = () => {
         notes: [],
         statuses: []
     });
+    const [salesFunnelSteps, setSalesFunnelSteps] = useState([])
 
-    const {notes, groups, name, balance, localSchedule, paymentHistory, tasks} = dataStudent;
+    const {notes, groups, name, balance, localSchedule, paymentHistory, tasks, salesFunnelStep} = dataStudent;
+    console.log(dataStudent)
+    console.log(salesFunnelSteps)
 
     const axios = require('axios'); // AJAX
 
@@ -160,9 +168,15 @@ const PageStudent = () => {
             })
     }
 
+    const requestsAsync = useCallback(async () => {
+        await getStudent_Id()
+        const salesFunnelStepsServ = await axiosGetFunnelSteps(Url, 1)
+        setSalesFunnelSteps(prev => prev = salesFunnelStepsServ)
+    }, [])
+
     useEffect(() => {
-        getStudent_Id();
-    }, [useParams().id]);
+        requestsAsync()
+    }, [requestsAsync]);
 
     let arrIdSch = [];
     for (let key in localSchedule) {
@@ -181,21 +195,34 @@ const PageStudent = () => {
             return <PupilsSandTime key={id} pageInfo={'group'} itemG={dataStudent} dataGroup={id}
                                    getGroup_Id={getStudent_Id} setData={setDataS} name={groups_id[i]} type='pupil'/>
         }
-
     });
+
+    const id = useParams().id
+
+    const onChangeSelect = async (salesFunnelId) => {
+        await axiosUpdateStudent(Url, id, {salesFunnelStep: salesFunnelId})
+    }
 
     return (
         <StudentPage className="container row col-12">
             <div className="col-12 col-md-6 pad">
                 <div className="infoLog align-self-start col-md-12 col-12">
-                    <div className="group-name col-12 col-lg-12">
+                    <FlexDiv first={true}>
                         <h3>{name}</h3>
-                        <DrawerChat tasks={tasks} notes={notes} fio={{
-                            name: dataStudent.name,
-                            midname: dataStudent.midname,
-                            surname: dataStudent.surname
-                        }} update={getStudent_Id} _id={pageStudent_id}/>
-                    </div>
+                        <FlexDiv>
+                            <Select defaultValue="current" style={{ width: 120 }} onChange={onChangeSelect}>
+                                <Option value="current" style={{display: "none"}}>{salesFunnelStep?.name}</Option>
+                                {salesFunnelSteps?.map(step => (
+                                  <Option key={step._id} value={step._id}>{step.name}</Option>
+                                ))}
+                            </Select>
+                            <DrawerChat tasks={tasks} notes={notes} fio={{
+                                name: dataStudent.name,
+                                midname: dataStudent.midname,
+                                surname: dataStudent.surname
+                            }} update={getStudent_Id} _id={pageStudent_id}/>
+                        </FlexDiv>
+                    </FlexDiv>
                     <div style={{display: 'flex', height: '47px'}}>
                         <Balance
                             balance_item={balance}
