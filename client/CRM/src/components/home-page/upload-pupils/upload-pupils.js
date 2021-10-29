@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Upload, Button} from 'antd';
+import {Button, Upload} from 'antd';
 
 import 'antd/dist/antd.css';
 

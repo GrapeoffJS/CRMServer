@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Input} from "antd";
-import {setStudent, removeStudent, sortingSearchResponses} from './group-logic'
+import {removeStudent, setStudent, sortingSearchResponses} from './group-logic'
 import {serverRequest} from "../../search/server-request";
 
 const AddingStudentsToGroup = ({addStudent, addedStudents}) => {

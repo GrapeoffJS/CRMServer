@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 
 import Schedule from './../../#schedule/schedule.js';
@@ -8,7 +8,7 @@ import AddStydentGroup from './../../#more-functions/add-student_group/add-Stude
 import InfoTable from './Info-table/InfoTable.js';
 
 import Url from './../../../../url/url.js';
-// Style 
+// Style
 import './group-page.css';
 import styled from '@emotion/styled';
 import errorHandler from "../../../error-handler/error-handler";

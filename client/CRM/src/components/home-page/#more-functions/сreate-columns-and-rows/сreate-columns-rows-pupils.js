@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import {Button, Input, Space, Checkbox, Menu, Tag} from 'antd';
+import React, {useEffect, useState} from 'react'
+import {Button, Checkbox, Input, Menu, Space, Tag} from 'antd';
 
 import Table_Pupils from './../../../table-pupils/table.js'
 import {getColumn} from './../change-column/change-column.js'
 import getLimit from './../../#more-functions/getLimit/getLimit.js'
 
-import {SearchOutlined, CloseCircleOutlined, FilterFilled} from '@ant-design/icons';
+import {CloseCircleOutlined, FilterFilled, SearchOutlined} from '@ant-design/icons';
 
 // Style
-import {TableL, BoxButtom} from './style-filter'
+import {BoxButtom, TableL} from './style-filter'
 
 import Url from './../../../../url/url.js'
 import Pagination from './../../#more-functions/pagination/pagination.js'

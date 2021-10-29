@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {Dropdown} from "antd";
+import {Dropdown, Skeleton} from "antd";
 import CreatingStatuses from "./creating-statuses";
-import {
-    DownOutlined
-} from "@ant-design/icons";
+import {DownOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
-import {Skeleton} from 'antd'
 import {updateStatuses} from "./logic-statuses";
 
 const StudentStatuses = ({studentStatusesGlobal, updateStudent}) => {

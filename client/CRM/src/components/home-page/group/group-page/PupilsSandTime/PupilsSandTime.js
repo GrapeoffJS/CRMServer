@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Menu, Dropdown, Popover} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Dropdown, Menu, Popover} from 'antd';
 
 import Url from './../../../../../url/url.js';
 import localStorage_change from './../../../../../#localStorage_change.js';
@@ -10,7 +10,7 @@ import Change_Balance from './../../../change-balance/changeBalance.js';
 
 import moment from 'moment';
 import {Link} from "react-router-dom";
-// Style 
+// Style
 import styled from '@emotion/styled';
 
 const PupilsSandTime = ({itemG, dataGroup, getGroup_Id, setData, surname, name, pageInfo, type}) => {

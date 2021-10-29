@@ -1,11 +1,11 @@
- import React from 'react';
+import React from 'react';
 
 import moment from 'moment';
 
-// Style 
+// Style
 import styled from '@emotion/styled';
 
- const SchedulE = styled.div({
+const SchedulE = styled.div({
 	 padding: '0',
 	 marginBottom: '15px',
 	 '.boxS': {

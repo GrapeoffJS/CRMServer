@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react'
-import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom"
+import React, {useEffect, useState} from 'react'
+import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom"
 
 import {Layout, Menu} from 'antd'
 import {
-    LogoutOutlined,
-    TeamOutlined,
-    UserOutlined,
-    SearchOutlined,
-    DatabaseOutlined,
-    UploadOutlined,
-    FunnelPlotOutlined
+  DatabaseOutlined,
+  FunnelPlotOutlined,
+  LogoutOutlined,
+  SearchOutlined,
+  TeamOutlined,
+  UploadOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 
 import SearchAll from './../search/search.js'

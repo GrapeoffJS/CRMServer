@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
-// Style 
+// Style
 import styled from '@emotion/styled';
 
 const PayHistory = ({pay_History}) => {

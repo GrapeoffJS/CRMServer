@@ -1,9 +1,7 @@
 import React, {useState} from "react";
 import {Button, Checkbox, Input, Menu, Space} from "antd";
-import {
-    DeleteOutlined
-} from '@ant-design/icons'
-import {createStatus, onDelete, attachStatus} from './logic-statuses'
+import {DeleteOutlined} from '@ant-design/icons'
+import {attachStatus, createStatus, onDelete} from './logic-statuses'
 import {useParams} from "react-router-dom";
 
 const CreatingStatuses = ({studentStatuses, updateStudent, globalStatuses}) => {

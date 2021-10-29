@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Table, Tag} from 'antd'
 
 import Url from '../../../url/url.js'
 import ReturnAge from './../return-age/returnAge.js' // Определяет возраст
 import Pagination from './../#more-functions/pagination/pagination.js' // Pagination
 import {SalesFunnelModal} from './../sales-funnel/sales-funnel-modal'
-import {getFunnel, update, trashUser} from "./service-student/service-student";
+import {getFunnel, trashUser, update} from "./service-student/service-student";
 
 // Библиотеки
 import './student.css'

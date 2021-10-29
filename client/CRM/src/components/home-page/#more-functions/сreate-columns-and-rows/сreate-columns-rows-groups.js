@@ -1,15 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom"
-import {Table, Button, Tag, Input, Space, Checkbox, Menu} from 'antd';
-import {SearchOutlined, CloseCircleOutlined, FilterFilled, MenuFoldOutlined} from '@ant-design/icons';
+import {Button, Checkbox, Input, Menu, Space} from 'antd';
+import {CloseCircleOutlined, SearchOutlined} from '@ant-design/icons';
 
 import TableGroups from './../../../table-groups/table-groups.js'
 import {getColumn} from './../change-column/change-column.js'
 import Pagination from './../pagination/pagination.js'
 import getLimit from './../../#more-functions/getLimit/getLimit.js'
-import RestrictionMessage from '../../../restriction-message/restriction-message.js'
-
-import localStorage_change from './../../../../#localStorage_change.js'
 // Style
 import styled from '@emotion/styled';
 

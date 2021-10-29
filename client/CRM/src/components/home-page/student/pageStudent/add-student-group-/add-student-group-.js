@@ -1,9 +1,7 @@
 import React, {useState} from "react";
 import {Input, Modal} from 'antd'
-import {showModal, handleOk, handleCancel} from './add-student-group-logic'
-import {
-    AppstoreAddOutlined
-} from '@ant-design/icons'
+import {handleCancel, handleOk, showModal} from './add-student-group-logic'
+import {AppstoreAddOutlined} from '@ant-design/icons'
 import {serverRequest} from "../../../../search/server-request";
 import {sortingSearchResponses} from "../../../group/group-logic";
 import {requestAddStudentGroup} from "./request-add-student-group";
