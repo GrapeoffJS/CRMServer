@@ -5,7 +5,11 @@ export const FlexDiv = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: ${props => props.first ? "1px solid #0DCAF0" : "none"};
-  > .ant-select {
+  > select {
     margin: 0 10px 0 0;
+    border: 1px solid lightgray;
+    appearance: revert;
+    padding: 3px 5px 3px 2px;
+    width: 120px;
   }
 `

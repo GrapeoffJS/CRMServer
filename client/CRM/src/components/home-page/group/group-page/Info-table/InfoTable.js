@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Dropdown, Menu} from 'antd';
+import React, {useState, useEffect} from 'react';
+import { Menu, Dropdown } from 'antd';
 
 import Url from './../../../../../url/url.js';
 import localStorage_change from './../../../../../#localStorage_change.js';
 import RestrictionMessage from '../../../../restriction-message/restriction-message.js'
 
-import {loading, Swalclose, Toast} from './../../../../../alert/alert.js';
+import {Toast, loading, Swalclose} from './../../../../../alert/alert.js';
 
 // Style
 import styled from '@emotion/styled';

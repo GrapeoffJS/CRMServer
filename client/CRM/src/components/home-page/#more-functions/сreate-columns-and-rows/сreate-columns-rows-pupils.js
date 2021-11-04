@@ -1,20 +1,21 @@
-import React, {useEffect, useState} from 'react'
-import {Button, Checkbox, Input, Menu, Space, Tag} from 'antd';
+import React, {useState, useEffect} from 'react'
+import {Button, Input, Space, Checkbox, Menu, Tag} from 'antd';
 
 import Table_Pupils from './../../../table-pupils/table.js'
-import {getColumn} from './../change-column/change-column.js'
+import {getColumn} from '../change-column/change-column'
 import getLimit from './../../#more-functions/getLimit/getLimit.js'
 
-import {CloseCircleOutlined, FilterFilled, SearchOutlined} from '@ant-design/icons';
+import {SearchOutlined, CloseCircleOutlined, FilterFilled} from '@ant-design/icons';
 
 // Style
-import {BoxButtom, TableL} from './style-filter'
+import {TableL, BoxButtom} from './style-filter'
 
 import Url from './../../../../url/url.js'
 import Pagination from './../../#more-functions/pagination/pagination.js'
 import errorHandler from "../../../error-handler/error-handler";
-import {filterStatuses} from "./logics/logics-pupils";
-import {updateStatuses} from './../../student/student-statuses/logic-statuses'
+import {filterStatuses} from "./filter-dropdown/logics-pupils";
+import {updateStatuses} from '../../student/student-statuses/logic-statuses'
+import FilterByTeachers from "./filter-dropdown/filter-by-teachers";
 
 const axios = require('axios'); // AJAX
 
@@ -114,6 +115,10 @@ const Create_Columns_Rows_Pupils = () => {
     const [st, setSt] = useState([
         <span style={{paddingLeft: "7px"}}>Статусы</span>,
         "statuses",
+    ])
+    const [t, setT] = useState([
+        <span style={{paddingLeft: "7px"}}>Учителя</span>,
+        "tutors",
     ])
 
     let CheckboxValue = {
@@ -625,6 +630,10 @@ const Create_Columns_Rows_Pupils = () => {
                 loadingButtomFilrer,
                 paramFilrers,
                 setFilterAxios)
+        },
+        {
+            ...getColumn(t, setT, 'Учителя', 'tutors'),
+            ...<FilterByTeachers/>
         },
         {
             ...getColumn(PhoneTitle, setPhoneTitle, 'Номер телефона', 'phoneNumber')

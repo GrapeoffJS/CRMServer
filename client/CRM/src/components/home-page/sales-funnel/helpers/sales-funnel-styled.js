@@ -154,6 +154,7 @@ export const StatusesBlock = styled.div`
   }
 `
 export const HoverTask = styled.p`
+  width: fit-content;
   cursor: pointer;
   margin: 0 0 2.5px 0;
   color: #18AEFF;

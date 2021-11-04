@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './form-log-in.css';
 import Url from '../../url/url.js';
 
-import {swallErr, Toast} from './../../alert/alert.js';
+import {swallErr, Toast} from '../../alert/alert';
 import RestrictionMessage from '../restriction-message/restriction-message.js'
 
 import styled from '@emotion/styled';
@@ -54,9 +54,6 @@ const FormlogIn = ({setUser}) => {
 
     const [disabled, setDisabled] = useState('submit');
 
-    // Message
-    const [message, setMessage] = useState('Логин');
-
     // Style state
     const [inputBorder_L, set_I_Border_L] = useState(''),
         [inputBorder_P, set_I_Border_P] = useState('');
@@ -66,6 +63,7 @@ const FormlogIn = ({setUser}) => {
         valueChangeP = valuePassword;
 
     const showPassword = () => {
+
         setValuePassword(valueChangeP);
         setValueLogin(valueChangeL);
 
@@ -89,7 +87,7 @@ const FormlogIn = ({setUser}) => {
             title: 'Вы успешно вошли в систему'
         });
     }
-    // \alet
+    // \alert
 
     let opacityBtn = '1';
 
@@ -119,7 +117,6 @@ const FormlogIn = ({setUser}) => {
 
         setValuePassword(valueChangeP);
         setValueLogin(valueChangeL);
-        setMessage('Логин');
 
         e.preventDefault();
 
@@ -134,7 +131,7 @@ const FormlogIn = ({setUser}) => {
             set_I_Border_P('');
         }
 
-        if (regLogin.test(valueChangeL) & regPassword.test(valueChangeP)) {
+        if (regLogin.test(valueChangeL) && regPassword.test(valueChangeP)) {
             setDisabled('button');
 
             axios({
@@ -182,7 +179,7 @@ const FormlogIn = ({setUser}) => {
                 key={'form1'} className="col-md-8 col-12">
                 <fieldset>
                     <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">{message}</label>
+                        <label htmlFor="exampleInputEmail1" className="form-label">{`Логин`}</label>
                         <InputBorder_L_Style
                             required
                             onChange={(e) => {

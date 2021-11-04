@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Modal} from 'antd';
+import {Modal, Button} from 'antd';
 
 import Url from './../../../../url/url.js';
 

@@ -14,7 +14,6 @@ const App = () => {
 	let jwt = require('jsonwebtoken')
 
 	const [User, setUser] = useState('');
-		//localStorage.getItem('tokenID')
 	let form = <FormlogIn setUser={setUser}/>;
 	let page = localStorage.getItem('tokenID')? <HomePage logOut={setUser}/> : form;
 

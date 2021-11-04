@@ -1,5 +1,4 @@
-import React, {useState} from 'react'
-import {Button, Drawer} from 'antd'
+import React, {useEffect, useState} from 'react'
 import styled from '@emotion/styled'
 
 import ChatItem from './chat-item/chat.js'
@@ -7,77 +6,68 @@ import {CommentList} from "./chat-item/CommentList"
 import {DivDrawerStyles} from "./styled";
 import {Tasks} from "./task-item/Tasks";
 
-const DrawerChat = ({notes, update, _id, fio, tasks}) => {
+const DrawerChat = React.memo(({notes, update, _id, fio, tasks}) => {
 
-  // data
-  let notesLocal = notes ? notes : []
-  let notesGlobal = []
-  // data
+    // data
+    const [comments, setComments] = useState([])
+    let notesLocal = notes ? notes : []
+    let notesGlobal = []
 
-  // useState
-  const [visible, setVisible] = useState(false);
-  const [comments, setComments] = useState(notesGlobal)
-  // useState
+    useEffect(() => {
+        let block = document.querySelector('.ant-list-items')
+        if (block) {
+            block.scrollTop = block.scrollHeight
+        }
+    })
 
+    notesLocal.forEach((item, i) => {
 
-  // methods
-  const showDrawer = () => {
-    setVisible(true);
-  };
-  const onClose = () => {
-    if (visible) {
-      update()
-    }
-    setVisible(false);
-  };
-  const COMEN = styled.div({
-    '.ant-comment-content-detail': {
-      borderBottom: '1px solid #f0f0f0'
-    }
-  })
-  // methods
+        let {author, date, text} = item
 
-  // util
-  notesLocal.forEach(item => {
-
-    let {author, date, text} = item
-
-    notesGlobal.push(
-      {
-        author: author,
-        content: <p>{text}</p>,
-        datetime: date,
-      }
-    )
-  })
-  // util
+        if (comments[0]) {
+            if (author + text !== comments[0].author + comments[0].content.props.children) {
+                notesGlobal.push(
+                    {
+                        author: author,
+                        content: <p>{text}</p>,
+                        datetime: date,
+                    }
+                )
+            }
+        } else {
+            notesGlobal.push(
+                {
+                    author: author,
+                    content: <p>{text}</p>,
+                    datetime: date,
+                }
+            )
+        }
+    })
 
 
-  return (
-    <React.Fragment>
-        <Button type="primary" onClick={showDrawer}>
-          Открыть коментарии
-        </Button>
-      <Drawer
-        style={{padding: "0 24px 0 24px"}}
-        width={'400px'}
-        placement="right"
-        closable={false}
-        onClose={onClose}
-        visible={visible}
-      >
+    const COMEN = styled.div({
+        position: 'relative',
+        '.ant-comment-content-detail': {
+            borderBottom: '1px solid #f0f0f0'
+        }
+    })
+
+    return (
         <DivDrawerStyles>
-          <div>
-            {comments.length > 0 && <CommentList comments={comments}/>}
-            <ChatItem commentsObj={{comments, setComments}} notesGlobal={notesGlobal} update={update} _id={_id}/>
-          </div>
-          <COMEN>
-            <Tasks tasks={tasks} _id={_id} fio={fio}/>
-          </COMEN>
+            <div
+                style={{padding: 0}}
+            >
+                {<CommentList
+                        comments={[...notesGlobal, ...comments]}
+                    />}
+                <ChatItem commentsObj={{comments, setComments}} notesGlobal={notesGlobal} update={update} _id={_id}/>
+            </div>
+            <COMEN>
+                <Tasks tasks={tasks} _id={_id} fio={fio}/>
+            </COMEN>
         </DivDrawerStyles>
-      </Drawer>
-    </React.Fragment>
-  );
-};
+    );
+})
 
 export default DrawerChat

@@ -9,10 +9,11 @@ export const DivDrawerStyles = styled.div`
   
   .ant-list-items {
     overflow: hidden auto;
-    max-height: 250px;
+    max-height: 220px;
   }
   .specialList .ant-list-items {
-    max-height: 400px;
+    max-height: 220px;
+    margin: 0 0 10px 0;
   }
   .tasks {
     font-family: "MontLight";

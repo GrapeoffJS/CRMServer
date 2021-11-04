@@ -16,7 +16,7 @@ export const TaskComponent = ({task, index, setRelTasks}) => {
 
   // methods
   const resFIO = (key) => {
-    if (task.responsible ?? true) return "Не найден"
+    if (!task.responsible || task.responsible.length === 0) return "Не найден"
     if (Array.isArray(task.responsible)) {
       return task.responsible[0][key]
     }

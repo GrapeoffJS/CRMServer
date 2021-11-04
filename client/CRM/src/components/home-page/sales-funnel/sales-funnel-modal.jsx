@@ -16,10 +16,23 @@ import {swallErr, swallGood} from "../../../alert/alert"
 import RestrictionMessage from "../../restriction-message/restriction-message"
 import localStorage_change from "../../../#localStorage_change"
 
-export const SalesFunnelModal = React.memo(({funnel, Url, setPupilsList, status, setLoaded, bigIcon = false, update = () => {}, defaultValueOptionFunnel = ''}) => {
+export const SalesFunnelModal = ({
+                                   funnel,
+                                   Url,
+                                   pupils,
+                                   status,
+                                   loader,
+                                   bigIcon = false,
+                                   update = () => {
+                                   },
+                                   defaultValueOptionFunnel = ''
+                                 }) => {
 
   // data
+  const {setLoaded} = loader
+  const {setPupilsList} = pupils
   const validateDiscordNickname = new RegExp(/\w+#[0-9]{4}/)
+  //const validateChildPhoneAndParent = new RegExp(/^((\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/)
   const dateFormat = "DD-MM-YYYY"
   // data
 
@@ -124,9 +137,11 @@ export const SalesFunnelModal = React.memo(({funnel, Url, setPupilsList, status,
       const student = await axiosCreateNewStudent(Url, newStudent)
       swallGood("Успешно!", "Пользователь создан!")
       update()
+      // if (pupilsList.filter(stud => stud.salesFunnelStep === newStudent.salesFunnelStep).length >= pageSize) {
       await setPupilsList(prev => [...prev, {...student, closestTask: []}])
       setLoaded((prev => prev = true))
       setLoaded((prev => prev = false))
+      // }
       setVisible(false)
       setConfirmLoading(false)
       deletingDataFromForm()
@@ -267,4 +282,4 @@ export const SalesFunnelModal = React.memo(({funnel, Url, setPupilsList, status,
       </Modal>
     </>
   )
-})
+}

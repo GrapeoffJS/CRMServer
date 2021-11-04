@@ -1,6 +1,6 @@
 import React from "react"
 
-import {Pagination} from "antd"
+import { Pagination } from "antd"
 import "antd/dist/antd.css"
 import getLimit from "./../../#more-functions/getLimit/getLimit.js"
 

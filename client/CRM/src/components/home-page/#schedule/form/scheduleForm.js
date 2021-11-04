@@ -1,14 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Url from './../../../../url/url.js';
 import {swallGood} from './../../../../alert/alert.js';
 
 import moment from 'moment';
-import {Button, Modal} from 'antd';
+import { Modal, Button } from 'antd';
 
 // Style
 import styled from '@emotion/styled';
 import errorHandler from "../../../error-handler/error-handler";
-
 const axios = require('axios'); // AJAX
 
 const ScheduleForm = ({updateGroup, groupID}) => {

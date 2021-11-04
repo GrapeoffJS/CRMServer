@@ -2,12 +2,14 @@ import React, {useCallback, useEffect, useState} from "react"
 import {DoubleLeftOutlined} from "@ant-design/icons"
 import {DatePicker} from "antd"
 import moment from "moment"
+import jwt from "jsonwebtoken"
 
 import {AccountTypeSpan, CreateTask, SelectResponsible, SubmitButton, WrapperTasks} from "./task.styled"
 import {getResponsibles} from "./requests/getResponsibles"
 import Url from "../../../../../../url/url"
 import {swallErr} from "../../../../../../alert/alert"
 import {createTask} from "./requests/createTask"
+import {selectResponsibleCur} from "./helpers/selectResponsible";
 
 export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
 
@@ -18,7 +20,7 @@ export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
 
   // useState
   const [responsibles, setResponsibles] = useState([])
-  const [selectedResponsible, setSelectedResponsible] = useState("")
+  const [selectedResponsible, setSelectedResponsible] = useState(jwt.decode(localStorage.getItem("tokenID")))
   const [search, setSearch] = useState("")
   const [opened, setOpened] = useState(false)
   const [title, setTitle] = useState("")
@@ -51,7 +53,7 @@ export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
     setType(prev => prev = 0)
     setSearch(prev => prev = "")
     setDeadline(prev => prev = moment().get())
-    setSelectedResponsible(prev => prev = "")
+    setSelectedResponsible(prev => prev = jwt.decode(localStorage.getItem("tokenID")))
   }
   const onChangeTitle = (ev) => {
     setTitle(prev => prev = ev.target.value)
@@ -80,8 +82,8 @@ export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
       name: taskName,
       text,
       deadline: deadline.toISOString(),
-      responsible: selectedResponsible._id,
-      type, //delete
+      responsible: selectedResponsible._id ?? selectedResponsible.id,
+      type,
       for: _id
     }
     if (taskName.replaceAll(" ", "").length === 0) {
@@ -142,10 +144,12 @@ export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
             </div>
             <p>Выбран:</p>
             <div>
-              {selectedResponsible ? <p
-                  onClick={() => onClickDeleteResponsible(selectedResponsible)}>{selectedResponsible._source.surname} {selectedResponsible._source.name} {selectedResponsible._source.midname}
-                  <AccountTypeSpan>{selectedResponsible._source.accountType}</AccountTypeSpan></p> :
-                <span className="black">Не выбран</span>}
+              {selectedResponsible ? <p onClick={() => onClickDeleteResponsible(selectedResponsible)}>
+                {selectResponsibleCur(selectedResponsible).surname} {selectResponsibleCur(selectedResponsible).name} {selectResponsibleCur(selectedResponsible).midname}
+                <AccountTypeSpan>
+                  {selectResponsibleCur(selectedResponsible).accountType}
+                </AccountTypeSpan>
+              </p> : <span className="black">Не выбрано</span>}
             </div>
           </SelectResponsible>
           <SubmitButton>

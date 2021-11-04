@@ -95,8 +95,26 @@ const trashUser = async (item, update, offsetG, setUsers, setCount) => {
     })
 }
 
+const getStudent_Id = (pageStudent_id, setDataS) => {
+    axios({
+        method: 'get',
+        url: `${Url}/CRM/Pupils/${pageStudent_id}`,
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Authorization': `Bearer ${localStorage.getItem('tokenID')}`
+        }
+    })
+        .then((res) => {
+            setDataS(res.data);
+        })
+        .catch((error) => {
+            errorHandler(getStudent_Id, error)
+        })
+}
+
 export {
     getFunnel,
     update,
-    trashUser
+    trashUser,
+    getStudent_Id
 }

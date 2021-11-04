@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom"
+import React, {useState, useEffect} from 'react'
+import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom"
 
 import {Layout, Menu} from 'antd'
 import {
-  DatabaseOutlined,
-  FunnelPlotOutlined,
-  LogoutOutlined,
-  SearchOutlined,
-  TeamOutlined,
-  UploadOutlined,
-  UserOutlined
+    LogoutOutlined,
+    TeamOutlined,
+    UserOutlined,
+    SearchOutlined,
+    DatabaseOutlined,
+    UploadOutlined,
+    FunnelPlotOutlined,
+    CarryOutOutlined
 } from '@ant-design/icons'
 
 import SearchAll from './../search/search.js'
@@ -25,12 +26,14 @@ import UploadPupils from './upload-pupils/upload-pupils'
 import Create_Columns_Rows_Groups from './#more-functions/сreate-columns-and-rows/сreate-columns-rows-groups.js'
 import Create_Columns_Rows_Pupils from './#more-functions/сreate-columns-and-rows/сreate-columns-rows-pupils.js'
 
-import {suspenseComponent} from "../../hocs/SuspenseComponent"
-
 import styled from '@emotion/styled'
+import {SuspenseComponent} from "../../hocs/SuspenseComponent";
 
 const SalesFunnel = React.lazy(() => import("./sales-funnel/sales-funnel"))
-const SuspenseSalesFunnel = suspenseComponent(SalesFunnel, <div>Loading...</div>)
+const SuspenseSalesFunnel = SuspenseComponent(<div>Loading SalesFunnel...</div>, SalesFunnel)
+
+const TasksPage = React.lazy(() => import("./tasks-page/Tasks"))
+const SuspenseTasksPage = SuspenseComponent(<div>Loading SalesFunnel...</div>, TasksPage)
 
 const {Sider} = Layout;
 const {SubMenu} = Menu;
@@ -105,6 +108,11 @@ const HomePage = ({logOut}) => {
                                         Группы
                                     </Link>
                                 </Menu.Item>
+                                <Menu.Item key="5" icon={<CarryOutOutlined />}>
+                                    <Link to='/tasks'>
+                                        Задачи
+                                    </Link>
+                                </Menu.Item>
                                 <Menu.Item key="4" icon={<FunnelPlotOutlined/>}>
                                     <Link to='/sales-funnel'>
                                         Воронка продаж
@@ -146,6 +154,7 @@ const HomePage = ({logOut}) => {
                                 <Route exact path='/group' component={() => <Group/>}/>
                                 <Route path={`/group/:id`} children={() => <GroupPage/>}/>
                                 <Route path={'/sales-funnel'} component={() => <SuspenseSalesFunnel />}/>
+                                <Route path="/tasks" render={() => <SuspenseTasksPage />} />
                                 {/*Сводные таблицы*/}
                                 <Route exact path='/table-groups' component={() => <Create_Columns_Rows_Groups/>}/>
 

@@ -13,8 +13,6 @@ const Chat = ({notesGlobal, update, _id, commentsObj}) => {
 
     useEffect(() => {
         document.querySelector('.ant-input').value = ''
-        let block = document.querySelector('.ant-drawer-body')
-        block.scrollTop = block.scrollHeight
     })
 
     // ===========================================================================================================================

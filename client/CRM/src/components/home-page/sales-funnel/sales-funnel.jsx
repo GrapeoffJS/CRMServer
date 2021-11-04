@@ -1,5 +1,5 @@
 // imports from plugins
-import React, {useEffect, useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import {DragDropContext, Droppable} from "react-beautiful-dnd"
 
 // imports from files of project
@@ -22,6 +22,7 @@ const SalesFunnel = () => {
   // data
   const status = 1
   const Url = status ? UrlProd : "https://dvmncrm.herokuapp.com"
+  //const pageSize = 8
   // data
 
   // useState
@@ -29,6 +30,21 @@ const SalesFunnel = () => {
   const [salesFunnelList, setSalesFunnelList] = useState([])
   const [pupilsList, setPupilsList] = useState([])
   // useState
+
+  // useCallback
+  const salesFunnelFromServer = useCallback(async () => {
+    const salesFunnelSteps = await axiosGetFunnelSteps(Url)
+    setSalesFunnelList(prev => prev = salesFunnelSteps)
+    setPupilsList(prev => prev = salesFunnelSteps.map(step => step.pupils).flat(2))
+    setLoaded(prev => prev = false)
+  }, [Url])
+  // useCallback
+
+  // useEffect
+  useEffect(() => {
+    salesFunnelFromServer()
+  }, [Url, salesFunnelFromServer])
+  // useEffect
 
   // Methods
   const onDragEndHandler = async (result) => {
@@ -59,18 +75,6 @@ const SalesFunnel = () => {
   }
   // Methods
 
-  // useEffect
-  useEffect(() => {
-    const salesFunnelFromServer = async () => {
-      const salesFunnelSteps = await axiosGetFunnelSteps(Url)
-      setSalesFunnelList(prev => prev = salesFunnelSteps)
-      setPupilsList(prev => prev = salesFunnelSteps.map(step => step.pupils).flat(2))
-      setLoaded(prev => prev = false)
-    }
-    salesFunnelFromServer()
-  }, [Url])
-  // useEffect
-
   return (
     <Wrapper>
       {loaded ? <Loader/> : <FunnelSection jstctn={salesFunnelList.length < 6 ? true : false}>
@@ -79,9 +83,10 @@ const SalesFunnel = () => {
             <FunnelStep key={card._id} style={card.name === "Занимаются" || card.name === "Занимается" ? {display: "none"} : {display: "block"}} className={"card"}>
               <FunnelStepHeader background={card.background}>
                 {tooltipNeedsCheckerOfSingleString(card.name.length, card.name, "", 30, "220px")}
-                {card.order === 1 ? <SalesFunnelModal setLoaded={setLoaded} status={status}
-                                                      funnel={salesFunnelList} Url={Url}
-                                                      setPupilsList={setPupilsList}/> : ""}
+                {card.order === 1 ?
+                  <SalesFunnelModal loader={{loaded, setLoaded}} status={status}
+                                    funnel={salesFunnelList} Url={Url}
+                                    pupils={{pupilsList, setPupilsList}}/> : ""}
               </FunnelStepHeader>
               <FunnelStepAbonementSum background={card.background}>
                 {card.minPaidSubscriptionsAmount || 0}руб.

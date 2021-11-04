@@ -27,7 +27,6 @@ const StudentStatuses = ({studentStatusesGlobal, updateStudent}) => {
                                        studentStatuses={studentStatusesGlobal}
                                        globalStatuses={globalStatuses}/>}
             trigger={['click']}
-            // visible={true}
         >
             <Link
                 to={'#'}
@@ -35,7 +34,8 @@ const StudentStatuses = ({studentStatusesGlobal, updateStudent}) => {
                     paddingLeft: '5px',
                     lineHeight: '47px',
                     overflow: 'hidden',
-                    width: '127px'
+                    width: '198px',
+                    paddingRight: 0
                 }}
             >
                 Добавить статус <DownOutlined/>

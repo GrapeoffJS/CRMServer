@@ -4,10 +4,11 @@ import {CreateTaskComponent} from "./CreateTask"
 import {List} from "antd";
 import {TaskComponent} from "./TaskComponent";
 
-export const Tasks = ({_id, fio, tasks}) => {
+export const Tasks = React.memo(({_id, fio, tasks}) => {
 
   // useState
   const [relTasks, setRelTasks] = useState(tasks)
+  console.log(relTasks)
   // useState
 
   return (
@@ -19,4 +20,4 @@ export const Tasks = ({_id, fio, tasks}) => {
       )}/>
     </>
   )
-}
+})

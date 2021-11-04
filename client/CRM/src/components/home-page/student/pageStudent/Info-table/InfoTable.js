@@ -13,6 +13,24 @@ import {loading, Swalclose, Toast} from '../../../../../alert/alert';
 import styled from '@emotion/styled';
 import AddStudentGroup from "../add-student-group-/add-student-group-";
 
+const Info_Table = styled.ul({
+    marginLeft: '10px',
+    '.ant-picker': {
+        span: {
+            margin: '0'
+        }
+    },
+    '.ant-picker-input': {
+        input: {
+            width: '127px'
+        }
+    }
+})
+
+const Li = styled.li`
+  padding: 0.5rem 1.25rem;
+`
+
 const InfoTable = ({dataStudent, updetePage}) => {
 
     let newInfo = {};
@@ -61,19 +79,6 @@ const InfoTable = ({dataStudent, updetePage}) => {
                 }
             })
     }
-
-    const InfoTable = styled.ul({
-        '.ant-picker': {
-            span: {
-                margin: '0'
-            }
-        },
-        '.ant-picker-input': {
-            input: {
-                width: '127px'
-            }
-        }
-    })
 
     const menuSurname = (
         <Menu>
@@ -211,8 +216,9 @@ const InfoTable = ({dataStudent, updetePage}) => {
     )
 
     return (
-        <InfoTable className="list-group list-group-flush">
-            <li className="list-group-item">Фамилия: <span className="badge bg-warning text-dark">{surname}</span>
+        <Info_Table className="list-group list-group-flush">
+            <Li className="list-group-item">Фамилия:
+                <span className="badge bg-warning text-dark">{surname}</span>
                 <div className={`btn-group`}>
                     <Dropdown overlay={menuSurname} visible={() => {
                         if (visible === 'Surname') {
@@ -233,8 +239,8 @@ const InfoTable = ({dataStudent, updetePage}) => {
                         ></i>
                     </Dropdown>
                 </div>
-            </li>
-            <li className="list-group-item">Имя: <span className="badge bg-warning text-dark">{name}</span>
+            </Li>
+            <Li className="list-group-item">Имя: <span className="badge bg-warning text-dark">{name}</span>
                 <div className={`btn-group`}>
                     <Dropdown overlay={menuName} visible={() => {
                         if (visible === 'Name') {
@@ -254,8 +260,8 @@ const InfoTable = ({dataStudent, updetePage}) => {
                            style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}></i>
                     </Dropdown>
                 </div>
-            </li>
-            <li className="list-group-item">Отчество: <span className="badge bg-warning text-dark">{midname}</span>
+            </Li>
+            <Li className="list-group-item">Отчество: <span className="badge bg-warning text-dark">{midname}</span>
                 <div className={`btn-group`}>
                     <Dropdown overlay={menuMidname} visible={() => {
                         if (visible === 'Midname') {
@@ -275,8 +281,8 @@ const InfoTable = ({dataStudent, updetePage}) => {
                            style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}></i>
                     </Dropdown>
                 </div>
-            </li>
-            <li className="list-group-item">
+            </Li>
+            <Li className="list-group-item">
                 Возраст:
                 <span className="badge bg-success text-light">{ReturnAge(dateOfBirth)}</span>
                 <DatePicker
@@ -286,16 +292,16 @@ const InfoTable = ({dataStudent, updetePage}) => {
                     }}
                     placeholder='Изменить возраст'
                 />
-            </li>
-            <li className="list-group-item">
+            </Li>
+            <Li className="list-group-item">
                 Пол:
                 <span className="badge bg-success text-light">{gender}</span>
-            </li>
-            <li className="list-group-item">
+            </Li>
+            <Li className="list-group-item">
                 ФИО Родителя:
                 <span className="badge bg-success text-light">{parentFullname}</span>
-            </li>
-            <li className="list-group-item">Номер родителя: <span
+            </Li>
+            <Li className="list-group-item">Номер родителя: <span
                 className="badge bg-info text-light">{parentPhone}</span>
                 <div className={`btn-group`}>
                     <Dropdown
@@ -318,8 +324,8 @@ const InfoTable = ({dataStudent, updetePage}) => {
                            style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}></i>
                     </Dropdown>
                 </div>
-            </li>
-            <li className="list-group-item">Номер ученика: <span className="badge bg-warning text-dark">{phone}</span>
+            </Li>
+            <Li className="list-group-item">Номер ученика: <span className="badge bg-warning text-dark">{phone}</span>
                 <div className={`btn-group`}>
                     <Dropdown
                         overlay={menuPhone}
@@ -341,8 +347,8 @@ const InfoTable = ({dataStudent, updetePage}) => {
                            style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}></i>
                     </Dropdown>
                 </div>
-            </li>
-            <li className="list-group-item">Discord: <span className="badge bg-light text-dark">{discord}</span>
+            </Li>
+            <Li className="list-group-item">Discord: <span className="badge bg-light text-dark">{discord}</span>
                 <div className={`btn-group`}>
                     <Dropdown
                         className='Discord'
@@ -363,12 +369,12 @@ const InfoTable = ({dataStudent, updetePage}) => {
                         ></i>
                     </Dropdown>
                 </div>
-            </li>
-            <li
+            </Li>
+            <Li
                 className="list-group-item">
                 Группы: <AddStudentGroup data={dataStudent} updatePage={updetePage}/>
-            </li>
-        </InfoTable>
+            </Li>
+        </Info_Table>
     );
 }
 

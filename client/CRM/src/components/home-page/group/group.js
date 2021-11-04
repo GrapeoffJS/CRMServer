@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Url from './../../../url/url.js';
-import {swallErr, swallGood} from '../../../alert/alert';
+import {swallGood, swallErr} from '../../../alert/alert';
 import Pagination from './../#more-functions/pagination/pagination.js'
 import RestrictionMessage from '../../restriction-message/restriction-message.js'
 import AddingStudentsToGroup from './adding-students-to-group'
 
 import {Link} from "react-router-dom";
-import {Button, Modal} from 'antd';
+import {Modal, Button} from 'antd';
 
 // Style
 import './group.css';
-import {Form, Table} from './group-style'
+import {Table, Form} from './group-style'
 import errorHandler from "../../error-handler/error-handler";
 
 const axios = require('axios'); // AJAX

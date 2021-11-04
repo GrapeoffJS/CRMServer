@@ -5,6 +5,19 @@ import Change_Balance from './../../../change-balance/changeBalance.js';
 // Style
 import styled from '@emotion/styled';
 
+const Span = styled.span({
+    borderRadius: '6px',
+    fontWeight: '500',
+    cursor: 'pointer',
+    fontSize: '14px'
+});
+const Div = styled.div`
+  padding: 0;
+  h6 {
+    font-size: 1.25rem;
+  }
+`
+
 const Balance = ({balance_item, pageStudent_id, updeteStudent}) => {
 
     const [visible, setVisible] = useState(false)
@@ -22,13 +35,6 @@ const Balance = ({balance_item, pageStudent_id, updeteStudent}) => {
 
         Change_Balance(incBalance, pageStudent_id, updeteStudent, undefined, undefined, undefined, returnBalance);
     }
-
-    const Span = styled.span({
-        borderRadius: '6px',
-        fontWeight: '500',
-        cursor: 'pointer',
-        fontSize: '14px'
-    });
 
     const menu = (
         <Menu>
@@ -55,7 +61,7 @@ const Balance = ({balance_item, pageStudent_id, updeteStudent}) => {
     );
 
     return (
-        <div className="balance">
+        <Div className="balance">
             <h6 className="calendar badge bg-success text-light">
                 {balance}
                 <span>₽</span>
@@ -69,7 +75,7 @@ const Balance = ({balance_item, pageStudent_id, updeteStudent}) => {
                    style={{fontSize: "30px", color: '#17a2b8', cursor: 'pointer'}}
                 />
             </Dropdown>
-        </div>
+        </Div>
     );
 }
 
