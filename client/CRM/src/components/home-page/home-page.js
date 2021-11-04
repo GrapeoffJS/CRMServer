@@ -33,7 +33,7 @@ const SalesFunnel = React.lazy(() => import("./sales-funnel/sales-funnel"))
 const SuspenseSalesFunnel = SuspenseComponent(<div>Loading SalesFunnel...</div>, SalesFunnel)
 
 const TasksPage = React.lazy(() => import("./tasks-page/Tasks"))
-const SuspenseTasksPage = SuspenseComponent(<div>Loading SalesFunnel...</div>, TasksPage)
+const SuspenseTasksPage = SuspenseComponent(<div>Loading TasksPage...</div>, TasksPage)
 
 const {Sider} = Layout;
 const {SubMenu} = Menu;
@@ -108,12 +108,12 @@ const HomePage = ({logOut}) => {
                                         Группы
                                     </Link>
                                 </Menu.Item>
-                                <Menu.Item key="5" icon={<CarryOutOutlined />}>
+                                <Menu.Item key="4" icon={<CarryOutOutlined />}>
                                     <Link to='/tasks'>
                                         Задачи
                                     </Link>
                                 </Menu.Item>
-                                <Menu.Item key="4" icon={<FunnelPlotOutlined/>}>
+                                <Menu.Item key="5" icon={<FunnelPlotOutlined/>}>
                                     <Link to='/sales-funnel'>
                                         Воронка продаж
                                     </Link>

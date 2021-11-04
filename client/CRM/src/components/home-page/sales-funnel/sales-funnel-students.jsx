@@ -37,40 +37,38 @@ export const SalesFunnelStudents = ({Url, card, pupils, pageSize}) => {
   return (
     <>
       {loaded ? <Loader
-        precentage={true}/> : pupilsList.filter(stud => stud.salesFunnelStep === card._id).map((stud, index) => {
-        if (card._id === stud.salesFunnelStep) return (
-          <Draggable key={stud._id} draggableId={`${stud._id}`} index={index}>
-            {provided => (
-              <FunnelStepStudent background={card.background} {...provided.draggableProps}
-                                 {...provided.dragHandleProps} ref={provided.innerRef}>
-                <div className="funnelStepStudent__first--info">
-                  <div>
-                    <NavLink to={`/student/${stud._id}`}>
-                      {tooltipCheckerOfTrioString(`${stud.surname} ${stud.name} ${stud.midname}`.length, stud, "", 25, "230px", "ФИО:")}
-                    </NavLink>
-                  </div>
-                  <div>
-                    <VisibilitySpan>Тел.Родителя:</VisibilitySpan> {stud.parentPhone}
-                  </div>
-                  <div>
-                    <VisibilitySpan>Мин.Абонемент:</VisibilitySpan> {stud.minPaidSubscription || 0}₽
-                  </div>
-                  <StatusesBlock contains={stud.statuses.length}>
-                    {stud.statuses.map(stat => (
-                      <Tag key={stat._id} color={stat.color}>{stat.name}</Tag>
-                    ))}
-                  </StatusesBlock>
-                  {stud.closestTask.length ? <Dropdown overlay={<ClosestTask closestTask={stud.closestTask[0]} />}>
-                    <HoverTask>
-                      Ближайшая задача
-                    </HoverTask>
-                  </Dropdown> : ""}
+        precentage={true}/> : pupilsList.filter(stud => stud.salesFunnelStep === card._id).map((stud, index) => (
+        <Draggable key={stud._id} draggableId={`${stud._id}`} index={index}>
+          {provided => (
+            <FunnelStepStudent background={card.background} {...provided.draggableProps}
+                               {...provided.dragHandleProps} ref={provided.innerRef}>
+              <div className="funnelStepStudent__first--info">
+                <div>
+                  <NavLink to={`/student/${stud._id}`}>
+                    {tooltipCheckerOfTrioString(`${stud.surname} ${stud.name} ${stud.midname}`.length, stud, "", 25, "230px", "ФИО:")}
+                  </NavLink>
                 </div>
-              </FunnelStepStudent>
-            )}
-          </Draggable>
-        )
-      })}
+                <div>
+                  <VisibilitySpan>Тел.Родителя:</VisibilitySpan> {stud.parentPhone}
+                </div>
+                <div>
+                  <VisibilitySpan>Мин.Абонемент:</VisibilitySpan> {stud.minPaidSubscription || 0}₽
+                </div>
+                <StatusesBlock contains={stud.statuses.length}>
+                  {stud.statuses.map(stat => (
+                    <Tag key={stat._id} color={stat.color}>{stat.name}</Tag>
+                  ))}
+                </StatusesBlock>
+                {stud.closestTask.length ? <Dropdown overlay={<ClosestTask closestTask={stud.closestTask[0]}/>}>
+                  <HoverTask>
+                    Ближайшая задача
+                  </HoverTask>
+                </Dropdown> : ""}
+              </div>
+            </FunnelStepStudent>
+          )}
+        </Draggable>
+      ))}
     </>
 
   )
