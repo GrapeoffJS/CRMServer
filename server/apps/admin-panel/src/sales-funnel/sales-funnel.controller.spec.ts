@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { dbUri } from '../../../../test-utils/dbUri';
-import mongoConnectionOptions from '../../../crmserver/src/config/mongoConnectionOptions';
 import { SalesFunnelService } from './sales-funnel.service';
 import { SalesFunnelController } from './sales-funnel.controller';
 import { SalesFunnelStep } from './models/SalesFunnelStep.model';
@@ -17,7 +16,7 @@ describe('SalesFunnel', () => {
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             imports: [
-                TypegooseModule.forRoot(dbUri, mongoConnectionOptions),
+                TypegooseModule.forRoot(),
                 TypegooseModule.forFeature([
                     {
                         typegooseClass: SalesFunnelStep,
