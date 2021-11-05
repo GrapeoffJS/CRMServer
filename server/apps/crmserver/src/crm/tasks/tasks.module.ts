@@ -5,6 +5,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { Task } from './models/Task.model';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CurrentUserTasksModule } from './current-user-tasks/current-user-tasks.module';
 
 @Module({
     imports: [
@@ -26,7 +27,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
                 };
             }
         }),
-        ConfigModule
+        ConfigModule,
+        CurrentUserTasksModule
     ],
     controllers: [TasksController],
     providers: [TasksService]
