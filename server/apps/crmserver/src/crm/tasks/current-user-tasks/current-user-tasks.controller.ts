@@ -1,4 +1,4 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Controller, Get, Query, Req } from '@nestjs/common';
 import { CurrentUserTasksService } from './current-user-tasks.service';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
@@ -14,11 +14,15 @@ export class CurrentUserTasksController {
     ) {}
 
     @Get()
-    public async findAll(@Req() request: Request) {
+    public async findAll(@Query('tag') tags, @Req() request: Request) {
         const { id } = this.JWTService.decode(
             request.headers.authorization.split(' ')[1]
         ) as DocumentType<CRMUser>;
 
-        return await this.CurrentUserTasksService.findAll(id);
+        if (typeof tags === 'string') {
+            tags = Array(tags);
+        }
+
+        return await this.CurrentUserTasksService.findAll(tags, id);
     }
 }

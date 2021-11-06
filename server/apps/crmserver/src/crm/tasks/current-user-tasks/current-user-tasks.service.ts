@@ -12,13 +12,23 @@ export class CurrentUserTasksService {
         private readonly TaskModel: ReturnModelType<typeof Task>
     ) {}
 
-    public async findAll(id: string) {
+    public async findAll(tags: string[] | undefined, id: string) {
+        const tagsFilter =
+            typeof tags === 'object'
+                ? {
+                      $match: {
+                          tags: { $all: tags.map(tag => Types.ObjectId(tag)) }
+                      }
+                  }
+                : { $match: {} };
+
         return this.TaskModel.aggregate([
             {
                 $match: {
                     responsible: Types.ObjectId(id)
                 }
             },
+            tagsFilter,
             {
                 $match: {
                     deadline: {
@@ -31,6 +41,19 @@ export class CurrentUserTasksService {
                                 .toISOString()
                         )
                     }
+                }
+            },
+            {
+                $sort: {
+                    deadline: 1
+                }
+            },
+            {
+                $lookup: {
+                    from: 'TaskTags',
+                    localField: 'tags',
+                    foreignField: '_id',
+                    as: 'tags'
                 }
             }
         ]);
