@@ -30,7 +30,6 @@ export class CreateTaskDTO {
     @IsString()
     text: string;
 
-    @IsOptional()
     @IsEnum(TaskTypes)
     type: TaskTypes;
 
