@@ -28,5 +28,5 @@ export class Task extends TimeStamps {
     done: boolean;
 
     @prop({ type: () => [TaskTag], ref: () => TaskTag, required: false })
-    tags: string;
+    tags: string[];
 }
