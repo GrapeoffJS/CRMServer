@@ -1,6 +1,15 @@
+/* body */
 body {
     background: #EFF5F7;
 }
+
+body .nonePaddingModal .ant-modal-body {
+    padding: 0;
+}
+body .nonePaddingModal .ant-modal-close {
+    display: none;
+}
+/* body */
 
 .displayNone {
     display: none;

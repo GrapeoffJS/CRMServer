@@ -1,12 +1,12 @@
 import styled from "@emotion/styled"
 
 export const WrapperTasks = styled.div`
-  position: absolute;
+  position: ${props => props.portable ? "absolute" : "static"};
   transition: all .5s ease;
   z-index: 10;
   bottom: ${props => props.opened ? "0": props.type === 2 ? "-475px" : "-455px"};
   width: 100%;
-  border-radius: 10px 10px 0 0;
+  border-radius: ${props => props.portable ? "10px 10px 0 0" : "0"};
   background: #1890FF;
   border: 1px solid #1890FF;
   padding: 0 10px;

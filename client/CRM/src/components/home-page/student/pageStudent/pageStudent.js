@@ -48,8 +48,7 @@ const PageStudent = () => {
     });
     const [salesFunnelSteps, setSalesFunnelSteps] = useState([])
 
-    const {notes, groups, name, balance, localSchedule, paymentHistory, tasks, salesFunnelStep} = dataStudent;
-    console.log("pageStudent: ", tasks)
+    const {notes, groups, name, balance, localSchedule, paymentHistory, tasks, salesFunnelStep} = dataStudent
 
     useEffect(() => {
         const requestsAsync = async () => {
@@ -123,7 +122,6 @@ const PageStudent = () => {
                     notes={notes}
                     fio={{
                         name: dataStudent.name,
-                        midname: dataStudent.midname,
                         surname: dataStudent.surname
                     }}
                     update={() => {

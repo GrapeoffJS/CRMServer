@@ -22,7 +22,6 @@ const SalesFunnel = () => {
   // data
   const status = 1
   const Url = status ? UrlProd : "https://dvmncrm.herokuapp.com"
-  //const pageSize = 8
   // data
 
   // useState
@@ -40,6 +39,10 @@ const SalesFunnel = () => {
       setLoaded(prev => prev = false)
     }
     salesFunnelFromServer()
+    return () => {
+      setSalesFunnelList(prev => prev = [])
+      setPupilsList(prev => prev = [])
+    }
   }, [Url])
   // useEffect
 

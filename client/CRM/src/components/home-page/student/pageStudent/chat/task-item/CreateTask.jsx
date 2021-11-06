@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import {DoubleLeftOutlined} from "@ant-design/icons"
 import {DatePicker} from "antd"
 import moment from "moment"
@@ -9,9 +9,9 @@ import {getResponsibles} from "./requests/getResponsibles"
 import Url from "../../../../../../url/url"
 import {swallErr} from "../../../../../../alert/alert"
 import {createTask} from "./requests/createTask"
-import {selectResponsibleCur} from "./helpers/selectResponsible";
+import {selectResponsible} from "./helpers/selectResponsible";
 
-export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
+export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio = {name: "", surname: ""}, _id = "", filterTasks = () => {}}) => {
 
   // data
   const {name, surname} = fio
@@ -29,17 +29,15 @@ export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
   const [type, setType] = useState(0)
   // useState
 
-  // useCallback
-  const getResponsiblesCallback = useCallback(async () => {
-    const responsiblesFromReq = await getResponsibles(Url, search)
-    setResponsibles(prev => prev = responsiblesFromReq.body.hits.hits)
-  }, [search])
-  // useCallback
-
   // useEffect
   useEffect(() => {
+    const getResponsiblesCallback = async () => {
+      const responsiblesFromReq = await getResponsibles(Url, search)
+      setResponsibles(prev => prev = responsiblesFromReq.body.hits.hits)
+    }
     getResponsiblesCallback()
-  }, [getResponsiblesCallback])
+    return onCreateTaskClearForm
+  }, [search])
   // useEffect
 
   // methods
@@ -77,14 +75,14 @@ export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
     setSelectedResponsible(prev => prev = "")
   }
   const onClickSubmit = async () => {
-    const taskName = type !== 2 ? `${selectType(type)} с ${name} ${surname}` : title
+    const taskName = portable ? (type !== 2 ? `${selectType(type)} с ${name} ${surname}` : title) : title
     const newTask = {
       name: taskName,
       text,
       deadline: deadline.toISOString(),
       responsible: selectedResponsible._id ?? selectedResponsible.id,
       type,
-      for: _id
+      for: portable ? _id : undefined
     }
     if (taskName.replaceAll(" ", "").length === 0) {
       return swallErr("Ошибка!", "Название пустое")
@@ -96,9 +94,10 @@ export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
       return swallErr("Ошибка!", "Ответсвенный не выбран")
     }
     const createdTask = await createTask(Url, newTask)
-    setRelTasks(prev => prev = [...prev, createdTask])
+    setRelTasks(prev => prev = portable ? [...prev, createdTask] : filterTasks([...prev, createdTask]))
     onCreateTaskClearForm()
     setOpened(prev => prev = false)
+    setOpenedModal(prev => prev = false)
   }
   const onClickOpenCreateTaskMenu = () => {
     setOpened(prev => prev = !prev)
@@ -107,13 +106,13 @@ export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
 
   return (
     <>
-      <WrapperTasks opened={opened} type={type}>
-        <div className="buttonUp">
+      <WrapperTasks opened={portable ? opened : portable} portable={portable} type={type}>
+        {portable ? <div className="buttonUp">
           <button onClick={onClickOpenCreateTaskMenu}>
             <DoubleLeftOutlined/>
             Создать
           </button>
-        </div>
+        </div> : ""}
         <CreateTask>
           <div className="type__select data">
             <select value={type} onChange={onChangeType}>
@@ -122,7 +121,7 @@ export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
               <option value="2">Другое</option>
             </select>
           </div>
-          {type === 2 ? <div className="input__title data">
+          {type === 2 || !portable ? <div className="input__title data">
             <input placeholder="Название" type="text" name="title" value={title} onChange={onChangeTitle}/>
           </div> : <p></p>}
           <div className="textarea__text data">
@@ -138,16 +137,16 @@ export const CreateTaskComponent = ({_id, fio, setRelTasks}) => {
             <div>
               {responsibles.length > 0 ? responsibles.map(el => (
                 <p key={el._id}
-                   onClick={() => onClickSelectResponsible(el)}>{el._source.surname} {el._source.name} {el._source.midname}
-                  <AccountTypeSpan>{el._source.accountType}</AccountTypeSpan></p>
+                   onClick={() => onClickSelectResponsible(el)}>{selectResponsible(el).surname} {selectResponsible(el).name} {selectResponsible(el).midname}
+                  <AccountTypeSpan>{selectResponsible(el).accountType}</AccountTypeSpan></p>
               )) : <span className="black">Ничего не найдено</span>}
             </div>
             <p>Выбран:</p>
             <div>
               {selectedResponsible ? <p onClick={() => onClickDeleteResponsible(selectedResponsible)}>
-                {selectResponsibleCur(selectedResponsible).surname} {selectResponsibleCur(selectedResponsible).name} {selectResponsibleCur(selectedResponsible).midname}
+                {selectResponsible(selectedResponsible).surname} {selectResponsible(selectedResponsible).name} {selectResponsible(selectedResponsible).midname}
                 <AccountTypeSpan>
-                  {selectResponsibleCur(selectedResponsible).accountType}
+                  {selectResponsible(selectedResponsible).accountType}
                 </AccountTypeSpan>
               </p> : <span className="black">Не выбрано</span>}
             </div>

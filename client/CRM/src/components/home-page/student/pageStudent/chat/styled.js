@@ -13,7 +13,7 @@ export const DivDrawerStyles = styled.div`
   }
   .specialList .ant-list-items {
     max-height: 220px;
-    margin: 0 0 10px 0;
+    margin: 0 0 20px 0;
   }
   .tasks {
     font-family: "MontLight";
