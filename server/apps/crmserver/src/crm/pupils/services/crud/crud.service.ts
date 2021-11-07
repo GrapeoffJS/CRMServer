@@ -29,7 +29,10 @@ export class CrudService {
         const result = await this.PupilModel.aggregate(
             this.createFilterPipeline(filters)?.concat({
                 $project: dataPermissions.forPupil
-            }) || [{ $match: {} }, { $project: dataPermissions.forPupil }]
+            }) || [
+                { $match: {} },
+                { $project: { ...dataPermissions.forPupil, createdAt: 1 } }
+            ]
         )
             .skip(offset)
             .limit(limit);
@@ -64,7 +67,7 @@ export class CrudService {
     ): Promise<Pupil> {
         const pupil = await this.PupilModel.aggregate([
             {
-                $project: dataPermissions.forPupil
+                $project: { ...dataPermissions.forPupil, createdAt: 1 }
             },
             {
                 $match: {
