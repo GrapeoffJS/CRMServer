@@ -5,14 +5,14 @@ import { Task } from './models/Task.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdateTaskDTO } from './DTO/UpdateTaskDTO';
 import CRMUser from '../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { TaskTag } from '../task-tags/models/TaskTag.model';
 
 @Injectable()
 export class TasksService {
     constructor(
         @InjectModel(Task)
         private readonly TaskModel: ReturnModelType<typeof Task>
-    ) {
-    }
+    ) {}
 
     public async create(createTaskDTO: CreateTaskDTO) {
         const task = await this.TaskModel.create(createTaskDTO);
@@ -21,6 +21,10 @@ export class TasksService {
             {
                 path: 'responsible',
                 model: CRMUser
+            },
+            {
+                path: 'tags',
+                model: TaskTag
             }
         ]);
     }

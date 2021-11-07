@@ -120,6 +120,14 @@ export class CrudService {
                                     }
                                 ]
                             }
+                        },
+                        {
+                            $lookup: {
+                                from: 'TaskTags',
+                                as: 'tags',
+                                foreignField: '_id',
+                                localField: 'tags'
+                            }
                         }
                     ]
                 }
@@ -165,6 +173,9 @@ export class CrudService {
             },
             {
                 path: 'salesFunnelStep'
+            },
+            {
+                path: 'tasks'
             }
         ]);
 
