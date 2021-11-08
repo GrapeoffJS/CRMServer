@@ -28,7 +28,7 @@ export class CrudService {
     ) {
         const result = await this.PupilModel.aggregate(
             this.createFilterPipeline(filters)?.concat({
-                $project: dataPermissions.forPupil
+                $project: { ...dataPermissions.forPupil, createdAt: 1 }
             }) || [
                 { $match: {} },
                 { $project: { ...dataPermissions.forPupil, createdAt: 1 } }
@@ -125,8 +125,8 @@ export class CrudService {
                             $lookup: {
                                 from: 'TaskTags',
                                 as: 'tags',
-                                foreignField: '_id',
-                                localField: 'tags'
+                                localField: 'tags',
+                                foreignField: '_id'
                             }
                         }
                     ]
@@ -173,9 +173,6 @@ export class CrudService {
             },
             {
                 path: 'salesFunnelStep'
-            },
-            {
-                path: 'tasks'
             }
         ]);
 
