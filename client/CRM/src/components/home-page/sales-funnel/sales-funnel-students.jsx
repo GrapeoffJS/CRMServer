@@ -54,7 +54,7 @@ export const SalesFunnelStudents = ({Url, card, pupils, pageSize}) => {
                 <div>
                   <VisibilitySpan>Мин.Абонемент:</VisibilitySpan> {stud.minPaidSubscription || 0}₽
                 </div>
-                <StatusesBlock contains={stud.statuses.length}>
+                <StatusesBlock portable={true} contains={stud.statuses.length}>
                   {stud.statuses.map(stat => (
                     <Tag key={stat._id} color={stat.color}>{stat.name}</Tag>
                   ))}

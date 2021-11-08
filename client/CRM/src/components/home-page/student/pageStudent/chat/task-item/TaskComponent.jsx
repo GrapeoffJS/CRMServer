@@ -1,12 +1,13 @@
 import React, {useState} from "react"
-import {Checkbox, List} from "antd"
+import {Checkbox, List, Tag} from "antd"
 import moment from "moment"
 import {CloseOutlined} from "@ant-design/icons"
 
-import {CheckboxContainer, DeleteButton, OpacityParagraph, WrapperTaskComponent} from "./task.styled"
+import {CheckboxContainer, DeleteButton, OpacityContainer, OpacityParagraph, WrapperTaskComponent} from "./task.styled"
 import {deleteTask} from "./requests/deleteTask"
 import Url from "../../../../../../url/url"
 import {editDoneTask} from "./requests/editDoneTask"
+import {StatusesBlock} from "../../../../sales-funnel/helpers/sales-funnel-styled";
 
 export const TaskComponent = ({task, index, setRelTasks}) => {
 
@@ -44,7 +45,14 @@ export const TaskComponent = ({task, index, setRelTasks}) => {
     <List.Item>
       <WrapperTaskComponent done={done}>
         <div>
-          <OpacityParagraph>{task.name}</OpacityParagraph>
+          <OpacityContainer>
+            {task.name}
+            <StatusesBlock portable={false} contains={task.tags.length}>
+              {task.tags.map(tag => {
+                return <Tag key={tag._id} color={tag.color}>{tag.name}</Tag>
+              })}
+            </StatusesBlock>
+          </OpacityContainer>
           <OpacityParagraph>Срок до: {moment(task.deadline).format("DD/MM/YYYY | HH:mm")}</OpacityParagraph>
           <OpacityParagraph>
             Ответственнен: {resFIO("surname")} {resFIO("name")} {resFIO("midname")}

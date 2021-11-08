@@ -1,6 +1,9 @@
 import styled from "@emotion/styled"
 import {changeColor} from "./changeColor";
 
+export const TahomaWrapper = styled.div`
+  font-family: Tahoma, sans-serief;
+`
 export const TasksSortedStyled = styled.div`
   display: flex;
   color: black;
@@ -14,7 +17,7 @@ export const HeaderBlock = styled.div`
   text-align: center;
   padding: 5px 0;
   font-size: 20px;
-  fonr-weight: 600;
+  font-weight: 600;
   border-bottom: 4px solid ${props => changeColor(props.type)};
   &::before {
     position: absolute;
@@ -31,14 +34,34 @@ export const HeaderBlock = styled.div`
 export const ContentBlock = styled.div`
   padding: 0 5px 0 5px;
 `
-export const UpperPanel = styled.div`
+export const ProgressComponentStyled = styled.div`
   display: flex;
-  .ant-input-affix-wrapper {
-    flex: 0 1 300px;
-    margin: 0 10px 0 0;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  padding: 5px;
+  background: #F6CD52;
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  p {margin: 0;}
+`
+export const UpperPanelFirstLayer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  > div:first-of-type {
+    flex: 0 0 90%;
   }
 `
-export const TaskComponent = styled.div`
+export const UpperPanelSecondLayer = styled.div`
+  display: flex;
+  > .ant-select {
+    flex: 0 1 300px;
+  }
+  > button {
+    margin: 0 10px;
+  }
+`
+export const TaskComponentStyled = styled.div`
   background: white;
   margin: 10px 0;
   padding: 5px;
@@ -49,7 +72,9 @@ export const TaskComponent = styled.div`
     margin: 0;
   }
 `
-export const BoldParagraph = styled.p`
+export const BoldContainer = styled.div`
+  display: flex;
+  align-items: center;
   font-weight: 600;
 `
 export const OpacityParagraph = styled.p`

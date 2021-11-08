@@ -1,42 +1,53 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import moment from "moment";
 
-import {Column} from "./Column";
-import {TasksSortedStyled, UpperPanel} from "./helpers/Tasks.styled";
-import {Filter} from "./Filter";
-import {CreateTask} from "./CreateTask";
+import {ColumnTab} from "./helpers/components/ColumnTab";
+import {TahomaWrapper, TasksSortedStyled, UpperPanelFirstLayer, UpperPanelSecondLayer} from "./helpers/Tasks.styled";
+import {Filter} from "./helpers/components/Filter";
+import {CreateTask} from "./helpers/components/CreateTask";
 import Url from "../../../url/url";
 import {getTasks} from "./requests/getTasks";
+import {Progress} from "./helpers/components/Progress";
+import {createTagQueryString} from "./helpers/createTagQueryString";
+import {TabsBlock} from "./helpers/components/TabsBlock";
+import {TableTab} from "./helpers/components/TableTab";
 
 const Tasks = () => {
 
   // useState
+  const [filter, setFilter] = useState([])
   const [allTasks, setAllTasks] = useState([])
   const [expiredTasks, setExpiredTasks] = useState([])
   const [todayTasks, setTodayTasks] = useState([])
+  const [completedTodayTasks, setCompletedTodayTasks] = useState([])
+  const [reservTasks, setReservTasks] = useState([])
   const [tomorrowTasks, setTomorrowTasks] = useState([])
   // useState
 
   // useEffect
   useEffect(() => {
+    const tagQuery = createTagQueryString(filter)
     const getTasksFromServer = async () => {
-      const tasks = await getTasks(Url)
+      const tasks = await getTasks(Url, tagQuery)
       const filteredExpiredTasks = tasks.filter(task => moment(task.deadline).isBefore(moment().get()))
       const filteredTodayTasks = tasks.filter(task => (moment(task.deadline).isBefore(moment().endOf("day")) && moment(task.deadline).isAfter(moment().get())))
       const filteredTomorrowTasks = tasks.filter(task => moment(task.deadline).isAfter(moment().endOf("day")))
-      setExpiredTasks(prev => prev = filteredExpiredTasks)
-      setTodayTasks(prev => prev = filteredTodayTasks)
-      setTomorrowTasks(prev => prev = filteredTomorrowTasks)
+      setCompletedTodayTasks(prev => prev = [...filteredTodayTasks.filter(task => task.done), ...filteredExpiredTasks.filter(task => task.done), ...filteredTomorrowTasks.filter(task => task.done)])
+      setReservTasks(prev => prev = [...filteredTodayTasks, ...filteredExpiredTasks.filter(task => task.done), ...filteredTomorrowTasks.filter(task => task.done)])
+      setExpiredTasks(prev => prev = filteredExpiredTasks.filter(task => task.done !== true))
+      setTodayTasks(prev => prev = filteredTodayTasks.filter(task => task.done !== true))
+      setTomorrowTasks(prev => prev = filteredTomorrowTasks.filter(task => task.done !== true))
       setAllTasks(prev => prev = tasks)
-      console.log(tasks)
     }
     getTasksFromServer()
     return () => {
       setExpiredTasks(prev => prev = [])
       setTodayTasks(prev => prev = [])
       setTomorrowTasks(prev => prev = [])
+      setAllTasks(prev => prev = [])
+      setCompletedTodayTasks(prev => prev = [])
     }
-  }, [])
+  }, [filter])
   // useEffect
 
   // methods
@@ -44,25 +55,45 @@ const Tasks = () => {
     const filteredExpiredTasks = tasks.filter(task => moment(task.deadline).isBefore(moment().get()))
     const filteredTodayTasks = tasks.filter(task => (moment(task.deadline).isBefore(moment().endOf("day")) && moment(task.deadline).isAfter(moment().get())))
     const filteredTomorrowTasks = tasks.filter(task => moment(task.deadline).isAfter(moment().endOf("day")))
-    setExpiredTasks(prev => prev = filteredExpiredTasks)
-    setTodayTasks(prev => prev = filteredTodayTasks)
-    setTomorrowTasks(prev => prev = filteredTomorrowTasks)
+    setReservTasks(prev => prev = [...filteredTodayTasks, ...filteredExpiredTasks.filter(task => task.done), ...filteredTomorrowTasks.filter(task => task.done)])
+    setExpiredTasks(prev => prev = filteredExpiredTasks.filter(task => task.done !== true))
+    setTodayTasks(prev => prev = filteredTodayTasks.filter(task => task.done !== true))
+    setTomorrowTasks(prev => prev = filteredTomorrowTasks.filter(task => task.done !== true))
     return tasks
   }
   // methods
 
-  return (
+  // data
+  const viewbagFunnel = (
+    <TasksSortedStyled>
+      <ColumnTab tasks={expiredTasks} type="Expired" setCompletedTasks={setCompletedTodayTasks}
+                 setTasks={setExpiredTasks} setReservTasks={setReservTasks}>Просроченные задачи</ColumnTab>
+      <ColumnTab tasks={todayTasks} type="Today" setCompletedTasks={setCompletedTodayTasks} setTasks={setTodayTasks}>
+        Задачи на сегодня</ColumnTab>
+      <ColumnTab tasks={tomorrowTasks} type="Tomorrow" setCompletedTasks={setCompletedTodayTasks}
+                 setTasks={setTomorrowTasks} setReservTasks={setReservTasks}>Задачи на завтра</ColumnTab>
+    </TasksSortedStyled>
+  )
+  const viewbagTable = (
     <React.Fragment>
-      <UpperPanel>
-        <Filter />
-        <CreateTask url={Url} filterTasks={filterTasks} setAllTasks={setAllTasks} />
-      </UpperPanel>
-      <TasksSortedStyled>
-        <Column tasks={expiredTasks} type="Expired">Просроченные задачи</Column>
-        <Column tasks={todayTasks} type="Today">Задачи на сегодня</Column>
-        <Column tasks={tomorrowTasks} type="Tomorrow">Задачи на завтра</Column>
-      </TasksSortedStyled>
+      <TableTab tasks={allTasks} setReservTasks={setReservTasks} setCompletedTasks={setCompletedTodayTasks}
+                setTodayTasks={setTodayTasks} setExpiredTasks={setExpiredTasks} setTomorrowTasks={setTomorrowTasks}>
+        Задачи на сегодня</TableTab>
     </React.Fragment>
+  )
+  // data
+
+  return (
+    <TahomaWrapper>
+      <UpperPanelFirstLayer>
+        <Progress reservTasks={reservTasks} completedTasks={completedTodayTasks}/>
+      </UpperPanelFirstLayer>
+      <UpperPanelSecondLayer>
+        <Filter filterObj={{filter, setFilter}}/>
+        <CreateTask url={Url} filterTasks={filterTasks} setAllTasks={setAllTasks}/>
+      </UpperPanelSecondLayer>
+      <TabsBlock viewbagFunnel={viewbagFunnel} viewbagTable={viewbagTable}/>
+    </TahomaWrapper>
   )
 }
 

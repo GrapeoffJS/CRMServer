@@ -1,9 +1,9 @@
 import axios from "axios"
 
-export const getTasks = async (url) => {
+export const getTasks = async (url, tagsQuery = "") => {
   let result
 
-  await axios.get(`${url}/CRM/Tasks/CurrentUserTasks`, {
+  await axios.get(`${url}/CRM/Tasks/CurrentUserTasks${tagsQuery}`, {
     headers: {
       authorization: `Bearer ${localStorage.getItem("tokenID")}`
     }

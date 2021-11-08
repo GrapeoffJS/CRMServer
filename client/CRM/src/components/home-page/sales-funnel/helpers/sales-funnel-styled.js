@@ -138,9 +138,9 @@ export const FunnelStepStudent = styled.div`
   }
 `
 export const StatusesBlock = styled.div`
-  margin: 2.5px 0 0 0;
+  margin: ${props => props.portable ? "2.5px 0": "2.5px 0 0 5px"};
   display: flex;
-  max-width: 250px;
+  max-width: ${props => props.portable ? 250 : "100%"}px;
   overflow: auto hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;

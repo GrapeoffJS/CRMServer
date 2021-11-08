@@ -12,7 +12,7 @@ export const DivDrawerStyles = styled.div`
     max-height: 220px;
   }
   .specialList .ant-list-items {
-    max-height: 220px;
+    max-height: 350px;
     margin: 0 0 20px 0;
   }
   .tasks {

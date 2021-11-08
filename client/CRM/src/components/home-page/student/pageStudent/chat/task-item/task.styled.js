@@ -4,11 +4,11 @@ export const WrapperTasks = styled.div`
   position: ${props => props.portable ? "absolute" : "static"};
   transition: all .5s ease;
   z-index: 10;
-  bottom: ${props => props.opened ? "0": props.type === 2 ? "-475px" : "-455px"};
+  bottom: ${props => props.opened ? "0": props.type === 2 ? "-600px" : "-580px"};
   width: 100%;
   border-radius: ${props => props.portable ? "10px 10px 0 0" : "0"};
-  background: #1890FF;
-  border: 1px solid #1890FF;
+  background: ${props => props.portable ? "#1890FF" : "white"};
+  border: 1px solid ${props => props.portable ? "#1890FF" : "white"};
   padding: 0 10px;
   
   > .buttonUp {
@@ -56,10 +56,10 @@ export const CreateTask = styled.div`
   }
   .data {
     padding: 5px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid ${props => props.portable ? "rgba(255, 255, 255, 0.9)" : "rgba(211, 211, 211, 0.9)"};
   }
   input {
-    color: white;
+    color: ${props => props.portable ? "white" : "black"};
     background: transparent;
     border: none;
     &:focus {
@@ -67,12 +67,12 @@ export const CreateTask = styled.div`
     }
   }
   input::-webkit-input-placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: ${props => props.portable ? "rgba(255, 255, 255, 0.7)" : "rgba(211, 211, 211, 0.8)"};
   }
   textarea {
     resize: none;
     width: 100%;
-    color: white;
+    color: ${props => props.portable ? "white" : "black"};
     background: transparent;
     border: none;
     &:focus {
@@ -80,16 +80,16 @@ export const CreateTask = styled.div`
     }
   }
   textarea::-webkit-input-placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: ${props => props.portable ? "rgba(255, 255, 255, 0.7)" : "rgba(211, 211, 211, 0.8)"};
   }
   .type__select {
-    color: white;
+    color: ${props => props.portable ? "white" : "black"};
     justify-content: space-between;
     > select:first-of-type {
       cursor: pointer;
       width: 100%;
       border: none;
-      color: white;
+      color: ${props => props.portable ? "white" : "black"};
       background: transparent;
       > option {
         color: black;
@@ -100,15 +100,54 @@ export const CreateTask = styled.div`
     }
   }
 `
+export const TagBlock = styled.div`
+  margin: 5px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  > div {
+    flex: 0 0 calc(100% / 3);
+    color: ${props => props.portable ? "white" : "black"};
+    > div:last-of-type {
+      color: black;
+      border-bottom: 1px solid ${props => props.portable ? "#1890FF" : "lightgray"};
+      background: ${props => props.portable ? "white" : "transparent"};
+      height: 100px;
+      max-height: 100px;
+      overflow: hidden auto;
+      > span {
+        display: block;
+        margin: 2px;
+        cursor: pointer;
+        transition: all .2s ease;
+        &:hover {
+          filter: brightness(0.9);
+        }
+      }
+    }
+  }
+  
+`
+export const CreateTagBlock = styled.section`
+  display: flex;
+  flex-direction: column;
+  > input {
+    width: 100%;
+    color: ${props => props.portable ? "white" : "black"};
+    border-bottom: 1px solid ${props => props.portable ? "white" : "lightgray"};
+    &::-webkit-input-placeholder {
+      color: ${props => props.portable ? "rgba(255, 255, 255, 0.7)" : "rgba(211, 211, 211, 0.8)"};
+    }
+  }
+`
 export const SelectResponsible = styled.div`
   display: flex;
   flex-direction: column;
-  color: white;
+  color: ${props => props.portable ? "white" : "black"};
   .black {
     color: black;
   }
   input {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid ${props => props.portable ? "white" : "lightgray"};
     margin: 0 0 5px 0;
   }
   p {
@@ -118,28 +157,34 @@ export const SelectResponsible = styled.div`
     height: 85px;
   }
   div {
+    border-bottom: 1px solid lightgray;
     overflow: hidden auto;
     padding: 0;
     margin: 0;
     background: white;
     > p {
+      color: ${props => props.portable ? "white" : "#1890FF"};
+      font-weight: 600;
       position: relative;
       cursor: pointer;
-      background: #1890FF;
+      background: ${props => props.portable ? "#1890FF" : "white"};
       margin: 2.5px;
       padding: 0 30px 0 5px;
       font-size: 13px;
-      border: 1px solid #1890FF;
-      border-radius: 4px;
+      ${props => props.portable ? "border: 1px solid #1890FF" : "border-bottom: 1px solid lightgray"};
+      border-radius: ${props => props.portable ? "4px" : "0"};
       transition: all .2s ease;
       &:hover {
-        background: transparent;
+        background: ${props => props.portable ? "transparent" : "lightgray"};
         color: #1890FF;
       }
     }
   }
   > div:last-of-type {
     margin: 5px 0 0 0;
+    > p {
+      border: none
+    }
   }
 `
 export const AccountTypeSpan = styled.span`
@@ -155,18 +200,27 @@ export const SubmitButton = styled.div`
   display: flex;
   justify-content: center;
   > button {
-    color: #1890FF;
+    border-radius: 4px;
+    color: ${props => props.portable ? "#1890FF" : "white"};
     border: none;
     padding: 2.5px 15px;
-    background: white;
+    background: ${props => props.portable ? "white" : "#1890FF"};
     margin: 10px 0 5px 0;
     transition: all .2s ease;
     &:hover {
-      background: lightgray;
+      background: ${props => props.portable ? "lightgray" : "#1F75FF"};
     }
   }
 `
 export const OpacityParagraph = styled.p`
+  opacity: 0.8;
+  width: 95%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`
+export const OpacityContainer = styled.div`
+  display: flex;
   opacity: 0.8;
   width: 95%;
   overflow: hidden;

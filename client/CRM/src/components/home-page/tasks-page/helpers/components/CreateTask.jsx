@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {Button, Modal} from "antd"
-import {CreateTaskComponent} from "../student/pageStudent/chat/task-item/CreateTask";
+import {CreateTaskComponent} from "../../../student/pageStudent/chat/task-item/CreateTask";
 
 export const CreateTask = ({ url, setAllTasks, filterTasks}) => {
 
@@ -20,7 +20,7 @@ export const CreateTask = ({ url, setAllTasks, filterTasks}) => {
   return (
     <React.Fragment>
       <Button type="primary" onClick={onClickOpenModal}>Создать задачу</Button>
-      <Modal className="nonePaddingModal" visible={opened} onOk={onOkOrCancel} onCancel={onOkOrCancel} footer={""}>
+      <Modal width={800} className="nonePaddingModal" visible={opened} onOk={onOkOrCancel} onCancel={onOkOrCancel} footer={""}>
         <CreateTaskComponent setOpenedModal={setOpened} setRelTasks={setAllTasks} portable={false} filterTasks={filterTasks} />
       </Modal>
     </React.Fragment>
