@@ -21,7 +21,7 @@ export const TaskComponent = ({task, type, setCompletedTasks, setTasks, setReser
     task.done = true
     setCompletedTasks(prev => prev = [...prev, task].filter(complTask => complTask.done))
     if (type !== "Today") setReservTasks(prev => prev = [...prev, task])
-    setTasks(prev => prev = prev.filter(uncompleTask => uncompleTask.done !== true))
+    setTasks(prev => prev = prev.filter(uncompleTask => !uncompleTask.done))
   }
   // methods
 

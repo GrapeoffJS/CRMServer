@@ -1,5 +1,6 @@
 import styled from "@emotion/styled"
 import {changeColor} from "./changeColor";
+import {statusTasksColor} from "./statusTasksColor";
 
 export const TahomaWrapper = styled.div`
   font-family: Tahoma, sans-serief;
@@ -40,7 +41,7 @@ export const ProgressComponentStyled = styled.div`
   justify-content: space-between;
   border-radius: 8px;
   padding: 5px;
-  background: #F6CD52;
+  background: ${props => statusTasksColor(props.status)};
   margin: 0 0 10px 0;
   font-size: 20px;
   p {margin: 0;}

@@ -18,9 +18,9 @@ export const TableTab = ({tasks, children, setReservTasks, setCompletedTasks, se
     })
     const condition = moment(task.deadline).isBefore(moment().endOf("day")) && moment(task.deadline).isAfter(moment().get())
     if (!condition) setReservTasks(prev => prev = [...prev, task])
-    setExpiredTasks(prev => prev = prev.filter(uncompleTask => uncompleTask.done !== true))
-    setTodayTasks(prev => prev = prev.filter(uncompleTask => uncompleTask.done !== true))
-    setTomorrowTasks(prev => prev = prev.filter(uncompleTask => uncompleTask.done !== true))
+    setExpiredTasks(prev => prev = prev.filter(uncompleTask => !uncompleTask.done))
+    setTodayTasks(prev => prev = prev.filter(uncompleTask => !uncompleTask.done))
+    setTomorrowTasks(prev => prev = prev.filter(uncompleTask => !uncompleTask.done))
   }
   // methods
 
@@ -33,7 +33,7 @@ export const TableTab = ({tasks, children, setReservTasks, setCompletedTasks, se
   })
   const columns = [
     {
-      title: "Выполнение",
+      title: "",
       dataIndex: "complete",
       key: "complete",
       render: task => <DeleteOutlined style={{fontSize: "20px", color: "crimson"}}

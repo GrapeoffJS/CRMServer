@@ -19,9 +19,10 @@ const Tasks = () => {
   const [allTasks, setAllTasks] = useState([])
   const [expiredTasks, setExpiredTasks] = useState([])
   const [todayTasks, setTodayTasks] = useState([])
-  const [completedTodayTasks, setCompletedTodayTasks] = useState([])
+  const [completedTasks, setCompletedTasks] = useState([])
   const [reservTasks, setReservTasks] = useState([])
   const [tomorrowTasks, setTomorrowTasks] = useState([])
+  const [statusTasks, setStatusTasks] = useState(0)
   // useState
 
   // useEffect
@@ -32,7 +33,7 @@ const Tasks = () => {
       const filteredExpiredTasks = tasks.filter(task => moment(task.deadline).isBefore(moment().get()))
       const filteredTodayTasks = tasks.filter(task => (moment(task.deadline).isBefore(moment().endOf("day")) && moment(task.deadline).isAfter(moment().get())))
       const filteredTomorrowTasks = tasks.filter(task => moment(task.deadline).isAfter(moment().endOf("day")))
-      setCompletedTodayTasks(prev => prev = [...filteredTodayTasks.filter(task => task.done), ...filteredExpiredTasks.filter(task => task.done), ...filteredTomorrowTasks.filter(task => task.done)])
+      setCompletedTasks(prev => prev = [...filteredTodayTasks.filter(task => task.done), ...filteredExpiredTasks.filter(task => task.done), ...filteredTomorrowTasks.filter(task => task.done)])
       setReservTasks(prev => prev = [...filteredTodayTasks, ...filteredExpiredTasks.filter(task => task.done), ...filteredTomorrowTasks.filter(task => task.done)])
       setExpiredTasks(prev => prev = filteredExpiredTasks.filter(task => task.done !== true))
       setTodayTasks(prev => prev = filteredTodayTasks.filter(task => task.done !== true))
@@ -45,9 +46,12 @@ const Tasks = () => {
       setTodayTasks(prev => prev = [])
       setTomorrowTasks(prev => prev = [])
       setAllTasks(prev => prev = [])
-      setCompletedTodayTasks(prev => prev = [])
+      setCompletedTasks(prev => prev = [])
     }
   }, [filter])
+  useEffect(() => {
+    setStatusTasks(prev => prev = Math.ceil(completedTasks.length / reservTasks.length) * 100)
+  }, [completedTasks, reservTasks])
   // useEffect
 
   // methods
@@ -56,9 +60,9 @@ const Tasks = () => {
     const filteredTodayTasks = tasks.filter(task => (moment(task.deadline).isBefore(moment().endOf("day")) && moment(task.deadline).isAfter(moment().get())))
     const filteredTomorrowTasks = tasks.filter(task => moment(task.deadline).isAfter(moment().endOf("day")))
     setReservTasks(prev => prev = [...filteredTodayTasks, ...filteredExpiredTasks.filter(task => task.done), ...filteredTomorrowTasks.filter(task => task.done)])
-    setExpiredTasks(prev => prev = filteredExpiredTasks.filter(task => task.done !== true))
-    setTodayTasks(prev => prev = filteredTodayTasks.filter(task => task.done !== true))
-    setTomorrowTasks(prev => prev = filteredTomorrowTasks.filter(task => task.done !== true))
+    setExpiredTasks(prev => prev = filteredExpiredTasks.filter(task => !task.done))
+    setTodayTasks(prev => prev = filteredTodayTasks.filter(task => !task.done))
+    setTomorrowTasks(prev => prev = filteredTomorrowTasks.filter(task => !task.done))
     return tasks
   }
   // methods
@@ -66,17 +70,17 @@ const Tasks = () => {
   // data
   const viewbagFunnel = (
     <TasksSortedStyled>
-      <ColumnTab tasks={expiredTasks} type="Expired" setCompletedTasks={setCompletedTodayTasks}
+      <ColumnTab tasks={expiredTasks} type="Expired" setCompletedTasks={setCompletedTasks}
                  setTasks={setExpiredTasks} setReservTasks={setReservTasks}>Просроченные задачи</ColumnTab>
-      <ColumnTab tasks={todayTasks} type="Today" setCompletedTasks={setCompletedTodayTasks} setTasks={setTodayTasks}>
+      <ColumnTab tasks={todayTasks} type="Today" setCompletedTasks={setCompletedTasks} setTasks={setTodayTasks}>
         Задачи на сегодня</ColumnTab>
-      <ColumnTab tasks={tomorrowTasks} type="Tomorrow" setCompletedTasks={setCompletedTodayTasks}
+      <ColumnTab tasks={tomorrowTasks} type="Tomorrow" setCompletedTasks={setCompletedTasks}
                  setTasks={setTomorrowTasks} setReservTasks={setReservTasks}>Задачи на завтра</ColumnTab>
     </TasksSortedStyled>
   )
   const viewbagTable = (
     <React.Fragment>
-      <TableTab tasks={allTasks} setReservTasks={setReservTasks} setCompletedTasks={setCompletedTodayTasks}
+      <TableTab tasks={allTasks} setReservTasks={setReservTasks} setCompletedTasks={setCompletedTasks}
                 setTodayTasks={setTodayTasks} setExpiredTasks={setExpiredTasks} setTomorrowTasks={setTomorrowTasks}>
         Задачи на сегодня</TableTab>
     </React.Fragment>
@@ -86,7 +90,7 @@ const Tasks = () => {
   return (
     <TahomaWrapper>
       <UpperPanelFirstLayer>
-        <Progress reservTasks={reservTasks} completedTasks={completedTodayTasks}/>
+        <Progress reservTasks={reservTasks} completedTasks={completedTasks} statusTasks={statusTasks} />
       </UpperPanelFirstLayer>
       <UpperPanelSecondLayer>
         <Filter filterObj={{filter, setFilter}}/>
