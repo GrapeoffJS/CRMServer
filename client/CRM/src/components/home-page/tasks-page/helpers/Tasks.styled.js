@@ -71,6 +71,7 @@ export const TaskComponentStyled = styled.div`
   border-top: 4px solid ${props => changeColor(props.type)};
   > p {
     margin: 0;
+    word-break: break-word;
   }
 `
 export const BoldContainer = styled.div`
@@ -80,4 +81,7 @@ export const BoldContainer = styled.div`
 `
 export const OpacityParagraph = styled.p`
   opacity: 0.8;
+`
+export const BreakWordParagraph = styled.p`
+  word-break: break-word;
 `

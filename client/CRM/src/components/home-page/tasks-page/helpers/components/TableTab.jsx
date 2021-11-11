@@ -5,6 +5,7 @@ import {DeleteOutlined} from "@ant-design/icons"
 import {editDoneTask} from "../../../student/pageStudent/chat/task-item/requests/editDoneTask";
 import Url from "../../../../../url/url";
 import {StatusesBlock} from "../../../sales-funnel/helpers/sales-funnel-styled";
+import {BreakWordParagraph} from "../Tasks.styled";
 
 export const TableTab = ({tasks, children, setReservTasks, setCompletedTasks, setTodayTasks, setExpiredTasks, setTomorrowTasks}) => {
 
@@ -40,14 +41,22 @@ export const TableTab = ({tasks, children, setReservTasks, setCompletedTasks, se
                                       onClick={() => onClickChangeActive(task)}/>
     },
     {
+      title: "Конечный срок",
+      dataIndex: "deadline",
+      key: "deadline",
+    },
+    {
       title: "Название",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Конечный срок",
-      dataIndex: "deadline",
-      key: "deadline",
+      title: "Текст",
+      dataIndex: "text",
+      key: "text",
+      render: text => (
+        <BreakWordParagraph>{text}</BreakWordParagraph>
+      )
     },
     {
       title: "Тэги",
@@ -60,11 +69,6 @@ export const TableTab = ({tasks, children, setReservTasks, setCompletedTasks, se
           ))}
         </StatusesBlock>
       )
-    },
-    {
-      title: "Текст",
-      dataIndex: "text",
-      key: "text"
     }
   ]
   // data

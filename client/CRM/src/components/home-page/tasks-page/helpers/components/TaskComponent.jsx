@@ -37,7 +37,7 @@ export const TaskComponent = ({task, type, setCompletedTasks, setTasks, setReser
         </StatusesBlock>
       </BoldContainer>
       <OpacityParagraph>До: {moment(task?.deadline).format("DD/MM/YYYY | HH:mm")}</OpacityParagraph>
-      <div>{task?.text}</div>
+      <p>{task?.text}</p>
     </TaskComponentStyled>
   )
 }
