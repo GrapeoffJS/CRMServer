@@ -6,7 +6,7 @@ import { AccountTypes } from './AccountTypes';
 import { ActionPermissions } from '../../roles/models/ActionPermissions';
 import { DataPermissions } from '../../roles/models/DataPermissions';
 import { SearchIndexer } from '../../../../crmserver/src/SearchIndexer/SearchIndexer';
-import { WorkHours } from '../../../../crmserver/src/crm/tutors/work-hours/models/WorkHours';
+import { WorkHours } from '../../work-hours/models/WorkHours';
 
 const Indexer = SearchIndexer.getInstance();
 

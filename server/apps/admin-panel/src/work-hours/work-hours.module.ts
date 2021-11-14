@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { WorkHoursService } from './work-hours.service';
 import { WorkHoursController } from './work-hours.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { Subscription } from '../subscriptions/models/Subscription.model';
 import CRMUser from '../crmaccounts/models/CRMUser.model';
 
 @Module({
