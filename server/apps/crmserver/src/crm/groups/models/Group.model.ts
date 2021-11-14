@@ -49,6 +49,9 @@ export class Group extends TimeStamps {
     })
     global_schedule: Schedule[];
 
+    @prop({ type: Boolean, required: false, default: false })
+    trial: boolean;
+
     public deletePupil(id: string): void {
         this.pupils.splice(this.pupils.indexOf(id), 1);
     }
