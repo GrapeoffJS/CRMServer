@@ -1,4 +1,12 @@
-import { IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator';
+import {
+    IsBoolean,
+    IsMongoId,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsPositive,
+    IsString
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateGroupDTO {
@@ -27,4 +35,7 @@ export class CreateGroupDTO {
     @IsString()
     @IsMongoId()
     tutor?: string | null;
+
+    @IsBoolean()
+    trial: boolean;
 }

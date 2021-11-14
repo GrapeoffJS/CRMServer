@@ -6,6 +6,7 @@ import { AccountTypes } from './AccountTypes';
 import { ActionPermissions } from '../../roles/models/ActionPermissions';
 import { DataPermissions } from '../../roles/models/DataPermissions';
 import { SearchIndexer } from '../../../../crmserver/src/SearchIndexer/SearchIndexer';
+import { WorkHours } from '../../../../crmserver/src/crm/tutors/work-hours/models/WorkHours';
 
 const Indexer = SearchIndexer.getInstance();
 
@@ -56,6 +57,9 @@ export default class CRMUser {
 
     @prop({ type: () => Array, id: false, required: false, default: [] })
     groupsHistory: GroupsHistoryItem[];
+
+    @prop({ type: Object, required: false, default: null })
+    workHours: WorkHours;
 
     public deleteGroup(id: string): void {
         this.groups.splice(this.groups.indexOf(id), 1);
