@@ -4,9 +4,6 @@ export class Schedule {
     @prop({ type: Boolean, required: false })
     paid: boolean;
 
-    @prop({ type: String, required: false })
-    tutor: string;
-
     @prop({ type: String })
     date: string;
 
