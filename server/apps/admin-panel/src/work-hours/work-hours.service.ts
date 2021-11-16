@@ -20,6 +20,6 @@ export class WorkHoursService {
             throw new NotFoundException();
         }
 
-        return teacher;
+        return this.CRMUserModel.findById(id);
     }
 }

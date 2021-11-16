@@ -1,4 +1,4 @@
-import { Controller, Param, Put } from '@nestjs/common';
+import { Body, Controller, Param, Put } from '@nestjs/common';
 import { CreateWorkHoursDTO } from './DTO/CreateWorkHoursDTO';
 import { WorkHoursService } from './work-hours.service';
 import { MongoID } from '../../../DTO/MongoID';
@@ -11,7 +11,7 @@ export class WorkHoursController {
     @Put(':id')
     public async create(
         @Param() { id }: MongoID,
-        createWorkHoursDTO: CreateWorkHoursDTO
+        @Body() createWorkHoursDTO: CreateWorkHoursDTO
     ) {
         return await this.WorkHoursService.create(id, createWorkHoursDTO);
     }
