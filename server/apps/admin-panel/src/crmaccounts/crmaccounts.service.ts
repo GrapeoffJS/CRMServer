@@ -1,5 +1,9 @@
 import CRMUser from './models/CRMUser.model';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { CreateCRMUserDTO } from './DTO/CreateCRMUserDTO';
 import { genSalt, hash } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
@@ -14,8 +18,7 @@ export class CRMAccountsService {
     constructor(
         @InjectModel(CRMUser)
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
-    ) {
-    }
+    ) {}
 
     public async create(createUserDTO: CreateCRMUserDTO) {
         if (
@@ -48,19 +51,22 @@ export class CRMAccountsService {
     public async findAll(
         limit: number,
         offset: number,
-        accountTypes: AccountTypes[]
+        accountTypes: AccountTypes[],
+        subjects: string[]
     ) {
         let accountsCount: number;
 
         await this.CRMUserModel.find({
-            accountType: { $in: accountTypes }
+            accountType: { $in: accountTypes },
+            subject: { $in: subjects }
         }).countDocuments((err, docsCount) => {
             accountsCount = docsCount;
         });
 
         return {
             accounts: await this.CRMUserModel.find({
-                accountType: { $in: accountTypes }
+                accountType: { $in: accountTypes },
+                subject: { $in: subjects }
             })
                 .populate('role')
                 .skip(offset || 0)

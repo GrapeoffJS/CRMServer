@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Res } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Query,
+    Res
+} from '@nestjs/common';
 import { CreateCRMUserDTO } from './DTO/CreateCRMUserDTO';
 import { CRMAccountsService } from './crmaccounts.service';
 import { path } from './path';
@@ -10,19 +20,20 @@ import { PaginationDTO } from '../../../DTO/PaginationDTO';
 
 @Controller(path)
 export class CRMAccountsController {
-    constructor(private readonly CRMAccountsService: CRMAccountsService) {
-    }
+    constructor(private readonly CRMAccountsService: CRMAccountsService) {}
 
     @Get()
     public async findAll(
         @Query() { limit, offset }: PaginationDTO,
         @Query('accountType') accountTypes: AccountTypes[],
+        @Query('subject') subjects: string[],
         @Res() response: Response
     ) {
         const { accounts, count } = await this.CRMAccountsService.findAll(
             Number(limit),
             Number(offset),
-            accountTypes
+            accountTypes,
+            subjects
         );
 
         return response.header('Count', count).json(accounts);
