@@ -12,7 +12,7 @@ export class TutorsController {
     @Get()
     public async findAll(
         @Query() { limit, offset }: PaginationDTO,
-        @Query('subject') subjects: string[] | string,
+        @Query('subject') subjects: string[],
         @Res() response: Response
     ) {
         const { accounts, count } = await this.TutorsService.findAll(

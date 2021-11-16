@@ -12,11 +12,7 @@ export class TutorsService {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
-    public async findAll(
-        limit: number,
-        offset: number,
-        subjects: string[] | string
-    ) {
+    public async findAll(limit: number, offset: number, subjects: string[]) {
         let accountsCount: number;
         const subjectsPipeline = subjects
             ? { subject: { $in: subjects } }
