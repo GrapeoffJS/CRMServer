@@ -1,4 +1,11 @@
-import { IsEnum, IsMongoId, IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
+import {
+    IsEnum,
+    IsMongoId,
+    IsNotEmpty,
+    IsObject,
+    IsOptional,
+    IsString
+} from 'class-validator';
 import { AccountTypes } from '../models/AccountTypes';
 import { ActionPermissions } from '../../roles/models/ActionPermissions';
 import { DataPermissions } from '../../roles/models/DataPermissions';
@@ -39,4 +46,8 @@ export class CreateCRMUserDTO {
 
     @IsEnum(AccountTypes)
     accountType: AccountTypes;
+
+    @IsOptional()
+    @IsString()
+    subject: string;
 }
