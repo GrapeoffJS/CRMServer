@@ -10,21 +10,29 @@ export class TutorsService {
     constructor(
         @InjectModel(CRMUser)
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
-    ) {
-    }
+    ) {}
 
-    public async findAll(limit: number, offset: number) {
+    public async findAll(
+        limit: number,
+        offset: number,
+        subjects: string[] | string
+    ) {
         let accountsCount: number;
+        const subjectsPipeline = subjects
+            ? { subject: { $in: subjects } }
+            : undefined;
 
         await this.CRMUserModel.find({
-            accountType: AccountTypes.Teacher
+            accountType: AccountTypes.Teacher,
+            ...subjectsPipeline
         }).countDocuments((err, docsCount) => {
             accountsCount = docsCount;
         });
 
         return {
             accounts: await this.CRMUserModel.find({
-                accountType: AccountTypes.Teacher
+                accountType: AccountTypes.Teacher,
+                ...subjectsPipeline
             })
                 .populate('role')
                 .skip(offset || 0)

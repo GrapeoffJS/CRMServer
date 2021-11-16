@@ -26,14 +26,12 @@ export class CRMAccountsController {
     public async findAll(
         @Query() { limit, offset }: PaginationDTO,
         @Query('accountType') accountTypes: AccountTypes[],
-        @Query('subject') subjects: string[],
         @Res() response: Response
     ) {
         const { accounts, count } = await this.CRMAccountsService.findAll(
             Number(limit),
             Number(offset),
-            accountTypes,
-            subjects
+            accountTypes
         );
 
         return response.header('Count', count).json(accounts);

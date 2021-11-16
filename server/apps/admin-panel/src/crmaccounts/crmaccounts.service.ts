@@ -51,22 +51,19 @@ export class CRMAccountsService {
     public async findAll(
         limit: number,
         offset: number,
-        accountTypes: AccountTypes[],
-        subjects: string[]
+        accountTypes: AccountTypes[]
     ) {
         let accountsCount: number;
 
         await this.CRMUserModel.find({
-            accountType: { $in: accountTypes },
-            subject: { $in: subjects }
+            accountType: { $in: accountTypes }
         }).countDocuments((err, docsCount) => {
             accountsCount = docsCount;
         });
 
         return {
             accounts: await this.CRMUserModel.find({
-                accountType: { $in: accountTypes },
-                subject: { $in: subjects }
+                accountType: { $in: accountTypes }
             })
                 .populate('role')
                 .skip(offset || 0)
