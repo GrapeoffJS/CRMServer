@@ -61,6 +61,9 @@ export default class CRMUser {
     @prop({ type: Object, required: false, default: null })
     workHours: WorkHours;
 
+    @prop({ type: String, required: false, default: null })
+    subject: string;
+
     public deleteGroup(id: string): void {
         this.groups.splice(this.groups.indexOf(id), 1);
     }
