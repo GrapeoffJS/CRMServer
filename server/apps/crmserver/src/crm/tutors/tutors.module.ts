@@ -16,5 +16,4 @@ import CRMUser from '../../../../admin-panel/src/crmaccounts/models/CRMUser.mode
     controllers: [TutorsController],
     providers: [TutorsService]
 })
-export class TutorsModule {
-}
+export class TutorsModule {}

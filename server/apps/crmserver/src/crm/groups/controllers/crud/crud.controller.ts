@@ -31,8 +31,7 @@ import { MongoIDs } from '../../../../../../DTO/MongoIDs';
 
 @Controller(path)
 export class CrudController {
-    constructor(private readonly crudService: CrudService) {
-    }
+    constructor(private readonly crudService: CrudService) {}
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreateGroup))
     @UsePipes(CreateGroupValidationPipe)
@@ -58,6 +57,7 @@ export class CrudController {
     @Post('/find')
     public async findAll(
         @Query() { limit, offset }: PaginationDTO,
+        @Query('trial') trial: boolean,
         @Body('filters') filters: FilterDTO,
         @GetDataPermissions() dataPermissions: DataPermissions,
         @Res() response: Response
@@ -65,6 +65,7 @@ export class CrudController {
         const { count, groups } = await this.crudService.findAll(
             limit || 0,
             offset || 0,
+            trial || false,
             filters,
             dataPermissions
         );

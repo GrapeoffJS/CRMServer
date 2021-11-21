@@ -7,17 +7,18 @@ import { TutorsService } from './tutors.service';
 
 @Controller(path)
 export class TutorsController {
-    constructor(private readonly TutorsService: TutorsService) {
-    }
+    constructor(private readonly TutorsService: TutorsService) {}
 
     @Get()
     public async findAll(
         @Query() { limit, offset }: PaginationDTO,
+        @Query('subject') subjects: string[],
         @Res() response: Response
     ) {
         const { accounts, count } = await this.TutorsService.findAll(
             limit,
-            offset
+            offset,
+            subjects || null
         );
 
         return response.header('Count', count).json(accounts);

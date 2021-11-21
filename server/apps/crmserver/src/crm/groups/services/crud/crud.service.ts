@@ -19,8 +19,7 @@ export class CrudService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>,
         @InjectModel(CRMUser)
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
-    ) {
-    }
+    ) {}
 
     public async create(createGroupDTO: CreateGroupDTO): Promise<Group> {
         if (createGroupDTO.tutor === '') createGroupDTO.tutor = null;
@@ -72,23 +71,26 @@ export class CrudService {
     }
 
     public async findAll(
-        limit,
-        offset,
+        limit: number,
+        offset: number,
+        trial = false,
         filters: FilterDTO,
         dataPermissions: DataPermissions
     ) {
         const result = await this.GroupModel.aggregate(
-            this.createFilterPipeline(filters)?.concat({
-                $project: dataPermissions.forGroup
-            }) || [{ $match: {} }, { $project: dataPermissions.forGroup }]
+            this.createFilterPipeline(filters)?.concat(
+                { $match: { trial } },
+                { $project: dataPermissions.forGroup }
+            )
         )
             .skip(offset)
             .limit(limit);
 
-        console.log(result);
-
         const count = await this.GroupModel.aggregate(
-            this.createFilterPipeline(filters) || [{ $match: {} }]
+            this.createFilterPipeline(filters)?.concat(
+                { $match: { trial } },
+                { $project: dataPermissions.forGroup }
+            )
         ).count('count');
 
         return {
