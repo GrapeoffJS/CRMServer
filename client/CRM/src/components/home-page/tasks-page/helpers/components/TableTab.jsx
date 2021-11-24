@@ -6,6 +6,7 @@ import {editDoneTask} from "../../../student/pageStudent/chat/task-item/requests
 import Url from "../../../../../url/url";
 import {StatusesBlock} from "../../../sales-funnel/helpers/sales-funnel-styled";
 import {BreakWordParagraph} from "../Tasks.styled";
+import {NavLink} from "react-router-dom";
 
 export const TableTab = ({tasks, children, setReservTasks, setCompletedTasks, setTodayTasks, setExpiredTasks, setTomorrowTasks}) => {
 
@@ -29,6 +30,7 @@ export const TableTab = ({tasks, children, setReservTasks, setCompletedTasks, se
   const dataSource = tasks.filter(task => task.done !== true).map(task => task = {
     ...task,
     complete: task,
+    forLink: {for: task.for, name: task.name},
     key: task._id,
     deadline: moment(task.deadline).format("DD/MM/YYYY | HH:mm")
   })
@@ -47,8 +49,11 @@ export const TableTab = ({tasks, children, setReservTasks, setCompletedTasks, se
     },
     {
       title: "Название",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "forLink",
+      key: "forLink",
+      render: task => {
+        return task.for ? <NavLink to={`/student/${task?.for || ""}`}>{task.name}</NavLink> : <span>{task.name}</span>
+      }
     },
     {
       title: "Текст",

@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from "react"
-import {DoubleLeftOutlined} from "@ant-design/icons"
-import {DatePicker, Tag} from "antd"
+import {DoubleLeftOutlined, PlusOutlined} from "@ant-design/icons"
+import {DatePicker, Tag, Select} from "antd"
 import moment from "moment"
 import jwt from "jsonwebtoken"
 
 import {
-  AccountTypeSpan,
-  CreateTagBlock,
+  CreateTagButton,
   CreateTask,
-  SelectResponsible,
+  SelectResponsibleAndDate,
   SubmitButton,
-  TagBlock,
+  TagBlockTest,
   WrapperTasks
 } from "./task.styled"
 import {getResponsibles} from "./requests/getResponsibles"
@@ -20,6 +19,8 @@ import {createTask} from "./requests/createTask"
 import {selectResponsible} from "./helpers/selectResponsible";
 import {getTags} from "./requests/getTags";
 import {createTag} from "./requests/createTag";
+
+const {Option} = Select
 
 export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio = {name: "", surname: ""}, _id = "", filterTasks = () => {}}) => {
 
@@ -32,7 +33,6 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
   // useState
   const [responsibles, setResponsibles] = useState([])
   const [tags, setTags] = useState([])
-  const [reservTags, setReservTags] = useState([])
   const [selectedTags, setSelectedTags] = useState([])
   const [selectedResponsible, setSelectedResponsible] = useState(jwt.decode(localStorage.getItem("tokenID")))
   const [tagName, setTagName] = useState("")
@@ -48,15 +48,15 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
   useEffect(() => {
     const getResponsiblesCallback = async () => {
       const responsiblesFromReq = await getResponsibles(Url, search)
-      setResponsibles(prev => prev = responsiblesFromReq.body.hits.hits)
+      const responsibles = responsiblesFromReq.body.hits.hits.map(resp => resp = {...resp, chosen: selectResponsible(resp).id === selectResponsible(selectedResponsible).id ? true : false})
+      setResponsibles(prev => prev = responsibles)
     }
     getResponsiblesCallback()
-  }, [search])
+  }, [search, selectedResponsible])
   useEffect(() => {
     const getTagsFromServer = async () => {
       const tagsRes = await getTags(Url)
       setTags(prev => prev = tagsRes)
-      setReservTags(prev => prev = tagsRes)
     }
     getTagsFromServer()
   }, [])
@@ -74,11 +74,10 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
     setSearch(prev => prev = "")
     setDeadline(prev => prev = moment().get())
     setSelectedResponsible(prev => prev = jwt.decode(localStorage.getItem("tokenID")))
-    setTags(prev => prev = reservTags)
     setSelectedTags(prev => prev = [])
   }
-  const onChangeTagName = (ev) => {
-    setTagName(prev => prev = ev.target.value)
+  const onSearchTag = (searchInput) => {
+    setTagName(prev => prev = searchInput)
   }
   const onChangeTitle = (ev) => {
     setTitle(prev => prev = ev.target.value)
@@ -95,54 +94,48 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
   const onChangeSearch = (ev) => {
     setSearch(prev => prev = ev.target.value)
   }
-  const onClickSelectResponsible = (responsible) => {
-    setSelectedResponsible(prev => prev = responsible)
+  const onChangeResponsible = (ev) => {
+    setSelectedResponsible(prev => prev = responsibles.find(el => el._id === ev.target.value))
   }
-  const onClickDeleteResponsible = (deletedResponsible) => {
-    setSelectedResponsible(prev => prev = "")
-  }
-  const onClickSelectTag = (tag) => {
-    if (selectedTags.findIndex(selTag => selTag._id === tag._id) < 0) {
-      setSelectedTags(prev => prev = [...prev, tag])
-      setTags(prev => prev = prev.filter(tagRes => tagRes._id !== tag._id))
-    } else {
-      setSelectedTags(prev => prev = prev.filter(tagRes => tagRes._id !== tag._id))
-      setTags(prev => prev = [...prev, tag])
-    }
+  const onChangeSelectTag = (tagNames) => {
+    //const tagIds = tags.filter(tag => tagNames.includes(tag.name)).map(tag => tag._id)
+    setSelectedTags(prev => prev = tagNames)
   }
   const onClickCreateTag = async () => {
-    let idx = Math.floor(Math.random() * (10))
+    let idx = Math.floor(Math.random() * colors.length)
     const newTag = {
       name: tagName,
       color: colors[idx]
     }
-    if (!tagName.replaceAll(" ", "").length)
+    if (!tagName.replaceAll(" ", "").length) {
       return swallErr("Ошибка!", "Название тэга не может быть пустым")
+    }
 
     const createdTag = await createTag(Url, newTag)
     setTagName(prev => prev = "")
     setTags(prev => prev = [...prev, createdTag])
-    setReservTags(prev => prev = [...prev, createdTag])
+    setSelectedTags(prev => prev = [...prev, createdTag.name])
   }
   const onClickSubmit = async () => {
     const taskName = portable ? (type !== 2 ? `${selectType(type)} с ${name} ${surname}` : title) : title
+    const responsibleId = selectResponsible(selectedResponsible).id
+    const deadlineISO = deadline.toISOString()
+    const tagsArr = tags.filter(tag => selectedTags.includes(tag.name)).map(tag => tag._id)
+    const forLid = portable ? _id : undefined
     const newTask = {
       name: taskName,
       text,
-      deadline: deadline.toISOString(),
-      responsible: selectedResponsible._id ?? selectedResponsible.id,
-      tags: selectedTags.map(tag => tag._id),
+      deadline: deadlineISO,
+      responsible: responsibleId,
+      tags: tagsArr,
       type,
-      for: portable ? _id : undefined
+      for: forLid
     }
     if (taskName.replaceAll(" ", "").length === 0) {
       return swallErr("Ошибка!", "Название пустое")
     }
     if (deadline && deadline.isBefore(moment().get())) {
       return swallErr("Ошибка!", "Окончательный срок не может быть раньше сегодняшней даты")
-    }
-    if (selectedResponsible === "") {
-      return swallErr("Ошибка!", "Ответсвенный не выбран")
     }
     const createdTask = await createTask(Url, newTask)
     setRelTasks(prev => prev = portable ? [...prev, createdTask] : filterTasks([...prev, createdTask]))
@@ -152,6 +145,7 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
   }
   const onClickOpenCreateTaskMenu = () => {
     setOpened(prev => prev = !prev)
+    setSelectedTags(prev => prev = [])
   }
   // methods
 
@@ -178,57 +172,34 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
           <div className="textarea__text data">
             <textarea placeholder="Задача" name="text" rows={5} value={text} onChange={onChangeText}/>
           </div>
-          <div className="datepicker__deadline data">
-            <DatePicker showTime value={deadline} placeholder="Конечный срок" format={dateFormat}
-                        onChange={onChangeDate}/>
-          </div>
-          <TagBlock portable={portable}>
+          <SelectResponsibleAndDate portable={portable}>
             <div>
-              Выбранные теги:
-              <div>
-                {selectedTags.map(tag => {
-                  return <Tag key={tag._id} color={tag.color} onClick={() => onClickSelectTag(tag)}>{tag.name}</Tag>
-                })}
-              </div>
+              <select value={selectResponsible(selectedResponsible).id} onChange={onChangeResponsible} name="responsible">
+                {responsibles.map(el => (
+                  <option key={el._id} value={selectResponsible(el).id}>
+                    {selectResponsible(el).surname} {selectResponsible(el).name} {selectResponsible(el).midname} {selectResponsible(el).accountType}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
-              Создайте тег:
-              <CreateTagBlock portable={portable}>
-                <input type="text" placeholder="Название тэга" value={tagName} onChange={onChangeTagName}/>
-                <SubmitButton portable={portable} onClick={onClickCreateTag}>
-                  <button>Создать</button>
-                </SubmitButton>
-              </CreateTagBlock>
+              <input type="text" name="search" value={search} onChange={onChangeSearch} placeholder="Поиск"/>
             </div>
             <div>
-              Выберите тег:
-              <div>
-                {tags.map(tag => {
-                  return <Tag key={tag._id} color={tag.color} onClick={() => onClickSelectTag(tag)}>{tag.name}</Tag>
-                })}
-              </div>
+              <DatePicker showTime value={deadline} placeholder="Конечный срок" format={dateFormat}
+                          onChange={onChangeDate}/>
             </div>
-          </TagBlock>
-          <SelectResponsible portable={portable}>
-            <p>Ответственный:</p>
-            <input type="text" name="search" value={search} onChange={onChangeSearch} placeholder="Поиск"/>
-            <div>
-              {responsibles.length > 0 ? responsibles.map(el => (
-                <p key={el._id}
-                   onClick={() => onClickSelectResponsible(el)}>{selectResponsible(el).surname} {selectResponsible(el).name} {selectResponsible(el).midname}
-                  <AccountTypeSpan>{selectResponsible(el).accountType}</AccountTypeSpan></p>
-              )) : <span className="black">Ничего не найдено</span>}
-            </div>
-            <p>Выбран:</p>
-            <div>
-              {selectedResponsible ? <p onClick={() => onClickDeleteResponsible(selectedResponsible)}>
-                {selectResponsible(selectedResponsible).surname} {selectResponsible(selectedResponsible).name} {selectResponsible(selectedResponsible).midname}
-                <AccountTypeSpan>
-                  {selectResponsible(selectedResponsible).accountType}
-                </AccountTypeSpan>
-              </p> : <span className="black">Не выбрано</span>}
-            </div>
-          </SelectResponsible>
+          </SelectResponsibleAndDate>
+          <TagBlockTest>
+            <Select mode="multiple" value={selectedTags} onChange={onChangeSelectTag} onSearch={onSearchTag}>
+              {tags.map(tag => {
+                return <Option key={tag._id} value={tag.name}>{tag.name}</Option>
+              })}
+            </Select>
+            <CreateTagButton onClick={onClickCreateTag}>
+              <PlusOutlined />
+            </CreateTagButton>
+          </TagBlockTest>
           <SubmitButton portable={portable}>
             <button onClick={onClickSubmit}>Создать</button>
           </SubmitButton>

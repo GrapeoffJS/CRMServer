@@ -7,6 +7,7 @@ import {editDoneTask} from "../../../student/pageStudent/chat/task-item/requests
 import Url from "../../../../../url/url";
 import {StatusesBlock} from "../../../sales-funnel/helpers/sales-funnel-styled";
 import {Tag} from "antd";
+import {NavLink} from "react-router-dom";
 
 export const TaskComponent = ({task, type, setCompletedTasks, setTasks, setReservTasks}) => {
 
@@ -29,7 +30,7 @@ export const TaskComponent = ({task, type, setCompletedTasks, setTasks, setReser
     <TaskComponentStyled type={active ? "Tomorrow" : type}>
       <BoldContainer>
         <CustomCheckbox active={active} onClick={onClickChangeActive} type={active ? "Tomorrow" : type}/>
-        {task?.name}
+        {task.for ? <NavLink to={`/student/${task?.for || ""}`}>{task.name}</NavLink> : task.name}
         <StatusesBlock portable={false} contains={task.tags.length}>
           {task.tags.map(tag => (
             <Tag key={tag._id} color={tag.color}>{tag.name}</Tag>

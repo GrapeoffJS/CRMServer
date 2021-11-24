@@ -4,7 +4,7 @@ export const WrapperTasks = styled.div`
   position: ${props => props.portable ? "absolute" : "static"};
   transition: all .5s ease;
   z-index: 10;
-  bottom: ${props => props.opened ? "0": props.type === 2 ? "-600px" : "-580px"};
+  bottom: ${props => props.opened ? "0": props.type === 2 ? "-320px" : "-295px"};
   width: 100%;
   border-radius: ${props => props.portable ? "10px 10px 0 0" : "0"};
   background: ${props => props.portable ? "#1890FF" : "white"};
@@ -42,54 +42,49 @@ export const CreateTask = styled.div`
   display: flex;
   overflow: hidden auto;
   flex-direction: column;
+  font-family: Tahoma;
   .ant-picker {
     cursor: pointer;
-    width: 100%;
     background: transparent;
     border: none;
     .ant-picker-suffix {
-      color: white;
-    }
-    &:focus {
-      outline: none;
+      color: ${props => props.portable ? "white" : "rgba(0, 0, 0, 0.75)"};
     }
   }
   .data {
+      ${props => props.portable ? "" : `
+      font-weight: 500;
+      margin: 5px 0; 
+      padding: 8px 10px;
+      background: #E8EDF7;
+      border-radius: 5px;
+    `}
     padding: 5px 0;
-    border-bottom: 1px solid ${props => props.portable ? "rgba(255, 255, 255, 0.9)" : "rgba(211, 211, 211, 0.9)"};
+    border: none;
+    border-bottom: 1px solid ${props => props.portable ? "rgba(255, 255, 255, 0.9)" : "transparent"};
   }
-  input {
-    color: ${props => props.portable ? "white" : "black"};
+  input, textarea {
+    color: ${props => props.portable ? "white" : "rgba(0, 0, 0, 0.75)"};
     background: transparent;
     border: none;
-    &:focus {
-      outline: none;
-    }
   }
-  input::-webkit-input-placeholder {
-    color: ${props => props.portable ? "rgba(255, 255, 255, 0.7)" : "rgba(211, 211, 211, 0.8)"};
+  input:focus, textarea:focus, .ant-picker:focus {
+      outline: none;
+  }
+  input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: ${props => props.portable ? "rgba(255, 255, 255, 0.7)" : ""};
   }
   textarea {
     resize: none;
     width: 100%;
-    color: ${props => props.portable ? "white" : "black"};
-    background: transparent;
-    border: none;
-    &:focus {
-      outline: none;
-    }
-  }
-  textarea::-webkit-input-placeholder {
-    color: ${props => props.portable ? "rgba(255, 255, 255, 0.7)" : "rgba(211, 211, 211, 0.8)"};
   }
   .type__select {
-    color: ${props => props.portable ? "white" : "black"};
     justify-content: space-between;
     > select:first-of-type {
       cursor: pointer;
       width: 100%;
       border: none;
-      color: ${props => props.portable ? "white" : "black"};
+      color: ${props => props.portable ? "white" : "rgba(0, 0, 0, 0.75)"};
       background: transparent;
       > option {
         color: black;
@@ -100,101 +95,52 @@ export const CreateTask = styled.div`
     }
   }
 `
-export const TagBlock = styled.div`
-  margin: 5px 0 0 0;
+export const TagBlockTest = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   > div {
-    flex: 0 0 calc(100% / 3);
-    color: ${props => props.portable ? "white" : "black"};
-    > div:last-of-type {
-      color: black;
-      border-bottom: 1px solid ${props => props.portable ? "#1890FF" : "lightgray"};
-      background: ${props => props.portable ? "white" : "transparent"};
-      height: 100px;
-      max-height: 100px;
-      overflow: hidden auto;
-      > span {
-        display: block;
-        margin: 2px;
-        cursor: pointer;
-        transition: all .2s ease;
-        &:hover {
-          filter: brightness(0.9);
-        }
-      }
-    }
-  }
-  
-`
-export const CreateTagBlock = styled.section`
-  display: flex;
-  flex-direction: column;
-  > input {
-    width: 100%;
-    color: ${props => props.portable ? "white" : "black"};
-    border-bottom: 1px solid ${props => props.portable ? "white" : "lightgray"};
-    &::-webkit-input-placeholder {
-      color: ${props => props.portable ? "rgba(255, 255, 255, 0.7)" : "rgba(211, 211, 211, 0.8)"};
-    }
+    flex: 0 0 90%;
   }
 `
-export const SelectResponsible = styled.div`
-  display: flex;
-  flex-direction: column;
-  color: ${props => props.portable ? "white" : "black"};
-  .black {
-    color: black;
+export const CreateTagButton = styled.span`
+  border-radius: 4px;
+  background: #E8EDF7;
+  transition: all .2s ease;
+  padding: 0 10px 4px;
+  margin: 0 20px;
+  cursor: pointer;
+  &:hover {
+    background: #BBC0CA;
   }
-  input {
-    border-bottom: 1px solid ${props => props.portable ? "white" : "lightgray"};
+`
+export const SelectResponsibleAndDate = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: ${props => props.portable ? "white" : "rgba(0, 0, 0, 0.75)"};
+  * {
+    margin: 0;
+  }
+  > div {
+    border-radius: 5px;
     margin: 0 0 5px 0;
-  }
-  p {
-    margin: 0;
-  }
-  div:first-of-type {
-    height: 85px;
-  }
-  div {
-    border-bottom: 1px solid lightgray;
-    overflow: hidden auto;
-    padding: 0;
-    margin: 0;
-    background: white;
-    > p {
-      color: ${props => props.portable ? "white" : "#1890FF"};
-      font-weight: 600;
-      position: relative;
-      cursor: pointer;
-      background: ${props => props.portable ? "#1890FF" : "white"};
+    background: ${props => props.portable ? "transparent" : "#E8EDF7"};
+    flex: 0 0 calc(100% / 3.1);
+    > * {
+      border: none;
+      border-radius: ${props => props.portable ? 0 : 5}px;
       margin: 2.5px;
-      padding: 0 30px 0 5px;
-      font-size: 13px;
-      ${props => props.portable ? "border: 1px solid #1890FF" : "border-bottom: 1px solid lightgray"};
-      border-radius: ${props => props.portable ? "4px" : "0"};
-      transition: all .2s ease;
-      &:hover {
-        background: ${props => props.portable ? "transparent" : "lightgray"};
-        color: #1890FF;
-      }
+      background: ${props => props.portable ? "transparent" : "#E8EDF7"};
+      border-bottom: 1px solid ${props => props.portable ? "white" : "transparent"};
+      width: 100%;
+      height: 30px;
+    }
+    > .ant-picker {
+      width: 100%;
+      border-bottom: 1px solid ${props => props.portable ? "white" : "transparent"};
     }
   }
-  > div:last-of-type {
-    margin: 5px 0 0 0;
-    > p {
-      border: none
-    }
-  }
-`
-export const AccountTypeSpan = styled.span`
-  position: absolute;
-  right: 5px;
-  top: 0;
-  margin: 0;
-  padding: 0;
-  color: #FFC700;
-  font-family: "MontBold";
 `
 export const SubmitButton = styled.div`
   display: flex;
@@ -207,8 +153,14 @@ export const SubmitButton = styled.div`
     background: ${props => props.portable ? "white" : "#1890FF"};
     margin: 10px 0 5px 0;
     transition: all .2s ease;
+    ${props => props.portable ? "" : `
+      border-bottom: 3.5px solid #1D74FF;
+    `}
     &:hover {
-      background: ${props => props.portable ? "lightgray" : "#1F75FF"};
+      background: ${props => props.portable ? "lightgray" : "#1083FF"};
+    }
+    &:active {
+      background: ${props => props.portable ? "lightgray" : "#1D74FF"};
     }
   }
 `
