@@ -91,6 +91,8 @@ export class PaymentService {
             throw new NotFoundException();
         }
 
+        pupil.balance -= subscription.price;
+
         await this.PaymentModel.create({
             type: PaymentTypes.Withdraw,
             owner_id: pupil.id,
