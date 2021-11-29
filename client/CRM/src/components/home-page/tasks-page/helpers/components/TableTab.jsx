@@ -8,7 +8,15 @@ import {StatusesBlock} from "../../../sales-funnel/helpers/sales-funnel-styled";
 import {BreakWordParagraph} from "../Tasks.styled";
 import {NavLink} from "react-router-dom";
 
-export const TableTab = ({tasks, children, setReservTasks, setCompletedTasks, setTodayTasks, setExpiredTasks, setTomorrowTasks}) => {
+export const TableTab = ({
+                           tasks,
+                           children,
+                           setReservTasks,
+                           setCompletedTasks,
+                           setTodayTasks,
+                           setExpiredTasks,
+                           setTomorrowTasks
+                         }) => {
 
   // methods
   const onClickChangeActive = async (task) => {

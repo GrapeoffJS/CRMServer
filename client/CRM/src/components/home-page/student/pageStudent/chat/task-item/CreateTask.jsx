@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {DoubleLeftOutlined, PlusOutlined} from "@ant-design/icons"
-import {DatePicker, Tag, Select} from "antd"
+import {DatePicker, Select} from "antd"
 import moment from "moment"
 import jwt from "jsonwebtoken"
 
@@ -9,7 +9,7 @@ import {
   CreateTask,
   SelectResponsibleAndDate,
   SubmitButton,
-  TagBlockTest,
+  TagBlock,
   WrapperTasks
 } from "./task.styled"
 import {getResponsibles} from "./requests/getResponsibles"
@@ -22,7 +22,15 @@ import {createTag} from "./requests/createTag";
 
 const {Option} = Select
 
-export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio = {name: "", surname: ""}, _id = "", filterTasks = () => {}}) => {
+export const CreateTaskComponent = ({
+                                      setOpenedModal,
+                                      setRelTasks,
+                                      portable,
+                                      fio = {name: "", surname: ""},
+                                      _id = "",
+                                      filterTasks = () => {
+                                      }
+                                    }) => {
 
   // data
   let colors = ['magenta', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple']
@@ -36,7 +44,6 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
   const [selectedTags, setSelectedTags] = useState([])
   const [selectedResponsible, setSelectedResponsible] = useState(jwt.decode(localStorage.getItem("tokenID")))
   const [tagName, setTagName] = useState("")
-  const [search, setSearch] = useState("")
   const [opened, setOpened] = useState(false)
   const [title, setTitle] = useState("")
   const [text, setText] = useState("")
@@ -47,12 +54,15 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
   // useEffect
   useEffect(() => {
     const getResponsiblesCallback = async () => {
-      const responsiblesFromReq = await getResponsibles(Url, search)
-      const responsibles = responsiblesFromReq.body.hits.hits.map(resp => resp = {...resp, chosen: selectResponsible(resp).id === selectResponsible(selectedResponsible).id ? true : false})
+      const responsiblesFromReq = await getResponsibles(Url, "")
+      const responsibles = responsiblesFromReq.body.hits.hits.map(resp => resp = {
+        ...resp,
+        chosen: selectResponsible(resp).id === selectResponsible(selectedResponsible).id ? true : false
+      })
       setResponsibles(prev => prev = responsibles)
     }
     getResponsiblesCallback()
-  }, [search, selectedResponsible])
+  }, [selectedResponsible])
   useEffect(() => {
     const getTagsFromServer = async () => {
       const tagsRes = await getTags(Url)
@@ -71,7 +81,6 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
     setTitle(prev => prev = "")
     setText(prev => prev = "")
     setType(prev => prev = 0)
-    setSearch(prev => prev = "")
     setDeadline(prev => prev = moment().get())
     setSelectedResponsible(prev => prev = jwt.decode(localStorage.getItem("tokenID")))
     setSelectedTags(prev => prev = [])
@@ -90,9 +99,6 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
   }
   const onChangeType = (ev) => {
     setType(prev => prev = Number(ev.target.value))
-  }
-  const onChangeSearch = (ev) => {
-    setSearch(prev => prev = ev.target.value)
   }
   const onChangeResponsible = (ev) => {
     setSelectedResponsible(prev => prev = responsibles.find(el => el._id === ev.target.value))
@@ -173,8 +179,9 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
             <textarea placeholder="Задача" name="text" rows={5} value={text} onChange={onChangeText}/>
           </div>
           <SelectResponsibleAndDate portable={portable}>
-            <div>
-              <select value={selectResponsible(selectedResponsible).id} onChange={onChangeResponsible} name="responsible">
+            <div className="background-gray">
+              <select value={selectResponsible(selectedResponsible).id} onChange={onChangeResponsible}
+                      name="responsible">
                 {responsibles.map(el => (
                   <option key={el._id} value={selectResponsible(el).id}>
                     {selectResponsible(el).surname} {selectResponsible(el).name} {selectResponsible(el).midname} {selectResponsible(el).accountType}
@@ -182,24 +189,21 @@ export const CreateTaskComponent = ({setOpenedModal, setRelTasks, portable, fio 
                 ))}
               </select>
             </div>
-            <div>
-              <input type="text" name="search" value={search} onChange={onChangeSearch} placeholder="Поиск"/>
-            </div>
-            <div>
+            <TagBlock className="adaptive-height">
+              <Select mode="multiple" value={selectedTags} onChange={onChangeSelectTag} onSearch={onSearchTag}>
+                {tags.map(tag => {
+                  return <Option key={tag._id} value={tag.name}>{tag.name}</Option>
+                })}
+              </Select>
+              <CreateTagButton onClick={onClickCreateTag}>
+                <PlusOutlined/>
+              </CreateTagButton>
+            </TagBlock>
+            <div className="background-gray">
               <DatePicker showTime value={deadline} placeholder="Конечный срок" format={dateFormat}
                           onChange={onChangeDate}/>
             </div>
           </SelectResponsibleAndDate>
-          <TagBlockTest>
-            <Select mode="multiple" value={selectedTags} onChange={onChangeSelectTag} onSearch={onSearchTag}>
-              {tags.map(tag => {
-                return <Option key={tag._id} value={tag.name}>{tag.name}</Option>
-              })}
-            </Select>
-            <CreateTagButton onClick={onClickCreateTag}>
-              <PlusOutlined />
-            </CreateTagButton>
-          </TagBlockTest>
           <SubmitButton portable={portable}>
             <button onClick={onClickSubmit}>Создать</button>
           </SubmitButton>

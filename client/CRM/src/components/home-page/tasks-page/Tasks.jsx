@@ -90,7 +90,7 @@ const Tasks = () => {
   return (
     <TahomaWrapper>
       <UpperPanelFirstLayer>
-        <Progress reservTasks={reservTasks} completedTasks={completedTasks} statusTasks={statusTasks} />
+        <Progress reservTasks={reservTasks} completedTasks={completedTasks} statusTasks={statusTasks}/>
       </UpperPanelFirstLayer>
       <UpperPanelSecondLayer>
         <Filter filterObj={{filter, setFilter}}/>

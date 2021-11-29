@@ -7,7 +7,7 @@ export const getResponsibles = async (url, query = "") => {
     headers: {
       authorization: `Bearer ${localStorage.getItem("tokenID")}`
     }
-  }).then (res => result = res.data)
+  }).then(res => result = res.data)
 
   return result
 }

@@ -57,11 +57,11 @@ export const TaskComponent = ({task, index, setRelTasks}) => {
           <OpacityParagraph>
             Ответственнен: {resFIO("surname")} {resFIO("name")} {resFIO("midname")}
           </OpacityParagraph>
-          <DeleteButton onClick={() => onClickDeleteTask(task._id)}><CloseOutlined /></DeleteButton>
+          <DeleteButton onClick={() => onClickDeleteTask(task._id)}><CloseOutlined/></DeleteButton>
         </div>
         <p className="done">{task.text}</p>
         <CheckboxContainer>
-          <Checkbox checked={done} onChange={(ev) => onChangeEditDone(task._id, ev)} />
+          <Checkbox checked={done} onChange={(ev) => onChangeEditDone(task._id, ev)}/>
         </CheckboxContainer>
       </WrapperTaskComponent>
     </List.Item>

@@ -4,7 +4,7 @@ export const WrapperTasks = styled.div`
   position: ${props => props.portable ? "absolute" : "static"};
   transition: all .5s ease;
   z-index: 10;
-  bottom: ${props => props.opened ? "0": props.type === 2 ? "-320px" : "-295px"};
+  bottom: ${props => props.opened ? "0" : props.type === 2 ? "-290px" : "-268px"};
   width: 100%;
   border-radius: ${props => props.portable ? "10px 10px 0 0" : "0"};
   background: ${props => props.portable ? "#1890FF" : "white"};
@@ -95,21 +95,30 @@ export const CreateTask = styled.div`
     }
   }
 `
-export const TagBlockTest = styled.div`
+export const TagBlock = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  .ant-select-selection-overflow-item {
+    max-width: 100px;
+  }
   > div {
-    flex: 0 0 90%;
+    flex: 0 0 80%;
   }
 `
 export const CreateTagButton = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 4px;
   background: #E8EDF7;
   transition: all .2s ease;
-  padding: 0 10px 4px;
-  margin: 0 20px;
+  padding: 5px 10px;
+  margin: 0 10px;
+  border: none;
   cursor: pointer;
+  > span {
+    color: black;
+  }
   &:hover {
     background: #BBC0CA;
   }
@@ -122,12 +131,14 @@ export const SelectResponsibleAndDate = styled.div`
   * {
     margin: 0;
   }
+  .background-gray {
+    background: ${props => props.portable ? "transparent" : "#E8EDF7"};
+  }
   > div {
     border-radius: 5px;
     margin: 0 0 5px 0;
-    background: ${props => props.portable ? "transparent" : "#E8EDF7"};
     flex: 0 0 calc(100% / 3.1);
-    > * {
+    > *:not(span) {
       border: none;
       border-radius: ${props => props.portable ? 0 : 5}px;
       margin: 2.5px;
@@ -143,8 +154,6 @@ export const SelectResponsibleAndDate = styled.div`
   }
 `
 export const SubmitButton = styled.div`
-  display: flex;
-  justify-content: center;
   > button {
     border-radius: 4px;
     color: ${props => props.portable ? "#1890FF" : "white"};
