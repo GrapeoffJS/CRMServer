@@ -14,7 +14,7 @@ export class PaymentController {
     constructor(private readonly paymentService: PaymentService) {}
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreatePayment))
-    @Post(':id/PaymentModel')
+    @Post(':id/Payment')
     public async Payment(
         @Param() { id }: MongoID,
         @Query() { amount, subscription }: PaymentDTO,
