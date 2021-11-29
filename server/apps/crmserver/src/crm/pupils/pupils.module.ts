@@ -16,6 +16,7 @@ import { Group } from '../groups/models/Group.model';
 import { Note } from './models/Note.model';
 import { Subscription } from '../../../../admin-panel/src/subscriptions/models/Subscription.model';
 import { SalesFunnelStep } from '../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
+import { Payment } from './models/Payment.model';
 
 @Module({
     imports: [
@@ -43,6 +44,10 @@ import { SalesFunnelStep } from '../../../../admin-panel/src/sales-funnel/models
             {
                 typegooseClass: SalesFunnelStep,
                 schemaOptions: { collection: 'SalesFunnelSteps' }
+            },
+            {
+                typegooseClass: Payment,
+                schemaOptions: { collection: 'Payments' }
             }
         ]),
         JwtModule.registerAsync({
@@ -67,5 +72,4 @@ import { SalesFunnelStep } from '../../../../admin-panel/src/sales-funnel/models
     ],
     providers: [ImportFileService, CrudService, NotesService, PaymentService]
 })
-export class PupilsModule {
-}
+export class PupilsModule {}

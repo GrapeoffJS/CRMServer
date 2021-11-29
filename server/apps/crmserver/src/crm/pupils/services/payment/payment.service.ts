@@ -5,6 +5,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { PaymentTypes } from '../../models/PaymentTypes';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Subscription } from '../../../../../../admin-panel/src/subscriptions/models/Subscription.model';
+import { Payment } from '../../models/Payment.model';
 
 @Injectable()
 export class PaymentService {
@@ -12,27 +13,32 @@ export class PaymentService {
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>,
         @InjectModel(Subscription)
-        private readonly SubscriptionModel: ReturnModelType<typeof Subscription>
-    ) {
-    }
+        private readonly SubscriptionModel: ReturnModelType<
+            typeof Subscription
+        >,
+        @InjectModel(Payment)
+        private readonly PaymentModel: ReturnModelType<typeof Payment>
+    ) {}
 
-    public async addBalance(id: string, amount: number, issuer: string) {
+    public async changeBalance(id: string, amount: number, issuer: string) {
         const pupil = await this.PupilModel.findById(id);
 
         if (!pupil) {
             throw new NotFoundException();
         }
 
-        pupil.balance += amount;
-        pupil.paymentHistory.push({
+        await this.PaymentModel.create({
             type:
                 amount >= 0
                     ? PaymentTypes.Replenishment
                     : PaymentTypes.Withdraw,
-            date: moment().locale('ru').format('LLL'),
-            issuer,
-            amount
+            owner_id: pupil.id,
+            date: moment().locale('ru').format('L'),
+            amount: Math.abs(amount),
+            issuer
         });
+
+        pupil.balance += amount;
 
         await pupil.save();
 
@@ -85,13 +91,13 @@ export class PaymentService {
             throw new NotFoundException();
         }
 
-        pupil.balance -= subscription.price;
-        pupil.paymentHistory.push({
-            subscription: subscriptionID,
+        await this.PaymentModel.create({
             type: PaymentTypes.Withdraw,
-            date: moment().locale('ru').format('LLL'),
+            owner_id: pupil.id,
+            date: moment().locale('ru').format('L'),
             amount: subscription.price,
-            issuer
+            issuer,
+            subscription: subscription.id
         });
 
         await pupil.save();

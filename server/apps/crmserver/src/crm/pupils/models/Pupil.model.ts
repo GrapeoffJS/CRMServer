@@ -2,7 +2,7 @@ import { Genders } from './Genders';
 import { Group } from '../../groups/models/Group.model';
 import { GroupsHistoryItem } from './GroupsHistoryItem';
 import { Note } from './Note.model';
-import { Payment } from './Payment';
+import { Payment } from './Payment.model';
 import { modelOptions, post, prop } from '@typegoose/typegoose';
 import { Schedule } from '../../groups/models/Schedule';
 import { Schema } from 'mongoose';
@@ -74,7 +74,11 @@ export default class Pupil extends TimeStamps {
     })
     localSchedule: Map<string, Schedule[]>;
 
-    @prop({ type: () => [Payment], required: false, _id: false })
+    @prop({
+        ref: () => Payment,
+        localField: '_id',
+        foreignField: 'owner_id'
+    })
     paymentHistory: Payment[];
 
     @prop({

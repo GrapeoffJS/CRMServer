@@ -1,8 +1,12 @@
 import { PaymentTypes } from './PaymentTypes';
 import { prop } from '@typegoose/typegoose';
 import { Subscription } from '../../../../../admin-panel/src/subscriptions/models/Subscription.model';
+import { Schema } from 'mongoose';
 
 export class Payment {
+    @prop({ type: Schema.Types.ObjectId, required: true })
+    owner_id: string;
+
     @prop({ required: true })
     type: PaymentTypes;
 

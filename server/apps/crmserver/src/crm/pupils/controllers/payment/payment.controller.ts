@@ -11,11 +11,10 @@ import { PaymentDTO } from '../../DTO/PaymentDTO';
 
 @Controller(path)
 export class PaymentController {
-    constructor(private readonly paymentService: PaymentService) {
-    }
+    constructor(private readonly paymentService: PaymentService) {}
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreatePayment))
-    @Post(':id/Payment')
+    @Post(':id/PaymentModel')
     public async Payment(
         @Param() { id }: MongoID,
         @Query() { amount, subscription }: PaymentDTO,
@@ -28,7 +27,7 @@ export class PaymentController {
         const issuer = `${surname} ${name} ${midname}`;
 
         if (!subscription) {
-            return await this.paymentService.addBalance(id, amount, issuer);
+            return await this.paymentService.changeBalance(id, amount, issuer);
         }
 
         return await this.paymentService.createPayment(
