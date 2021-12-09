@@ -1,12 +1,12 @@
 import Url from './../../../url/url.js';
-import {swallErr} from './../../../alert/alert.js';
+import {swallErr} from '../../../alert/alert';
 import errorHandler from "../../error-handler/error-handler";
 
 const axios = require('axios'); // AJAX
 
-const Change_Balance = (sym, pupil_id, updeteStudent, Change = () => {}, subscription, group_id, returnBalance) => {
+const Change_Balance = (sym, pupil_id, updeteStudent, subscription, group_id, returnBalance) => {
 
-	let urlLocal = subscription? `/CRM/Pupils/${pupil_id}/Payment?amount=${+sym}&subscription=${subscription}&group_id=${group_id}` : `/CRM/Pupils/${pupil_id}/Payment?amount=${+sym}`
+	let urlLocal = subscription? `/CRM/Pupils/${pupil_id}/Payment?subscription=${subscription}&group_id=${group_id}` : `/CRM/Pupils/${pupil_id}/Payment?amount=${+sym}`
 
 	axios({
 		method: "post",
@@ -17,8 +17,7 @@ const Change_Balance = (sym, pupil_id, updeteStudent, Change = () => {}, subscri
 		},
 	})
 	.then((res) => {
-		Change();
-		updeteStudent();
+		updeteStudent(res.data);
 	})
 	.catch((error) => {
 		errorHandler(

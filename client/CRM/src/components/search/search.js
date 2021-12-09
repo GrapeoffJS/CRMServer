@@ -19,9 +19,9 @@ const Box = styled.div({
 
 const renderItem = (title, obj) => {
 
-    let url = `/student/${obj.id}`
+    let url
 
-    if (obj.type == 'pupil') {
+    if (obj.type === 'pupil') {
         url = `/student/${obj.id}`
     } else {
         url = `/group/${obj.id}`
@@ -29,6 +29,7 @@ const renderItem = (title, obj) => {
 
     return ({
         value: title,
+        key: obj.id,
         label: (
             <Link
                 className="link-info"
@@ -68,7 +69,7 @@ const SearchAll = ({tutorid = ''}) => {
     </span>
     );
 
-    const options = [
+    let options = [
         {
             label: renderTitle('Ученики'),
             options: [],
@@ -80,13 +81,12 @@ const SearchAll = ({tutorid = ''}) => {
     ];
 
     Data.forEach(item => {
-
-        if (item._source.type == 'pupil') {
+        if (item._index === 'pupils') {
 
             let {surname, name, midname} = item._source
             options[0].options.push(renderItem(`${surname} ${name} ${midname}`, item._source))
+        } else if (item._index === 'groups') {
 
-        } else {
             let {group_name} = item._source
             options[1].options.push(renderItem(group_name, item._source))
         }
@@ -108,21 +108,15 @@ const SearchAll = ({tutorid = ''}) => {
         }
     }
 
-
     return (
         <Box>
             <AutoComplete
                 dropdownClassName="certain-category-search-dropdown"
                 dropdownMatchSelectWidth={500}
-                // style={{ width: 250 }}
                 options={options}
                 defaultOpen={() => {
-                    if (Value) {
-                        return true
-                    } else {
-                        return false
-                    }
-                }} // открывает поиск при рендеринге
+                    return !!Value;
+                }}
                 defaultValue={`${Value}`}
                 onSearch={(text) => {
                     onSearchInput(text)

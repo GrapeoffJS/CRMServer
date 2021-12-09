@@ -10,7 +10,8 @@ import {
     DatabaseOutlined,
     UploadOutlined,
     FunnelPlotOutlined,
-    CarryOutOutlined
+    CarryOutOutlined,
+    LikeOutlined
 } from '@ant-design/icons'
 
 import SearchAll from './../search/search.js'
@@ -28,6 +29,7 @@ import Create_Columns_Rows_Pupils from './#more-functions/сreate-columns-and-ro
 
 import styled from '@emotion/styled'
 import {SuspenseComponent} from "../../hocs/SuspenseComponent";
+import TrialLessons from "../trial-lessons/trial-lessons";
 
 const SalesFunnel = React.lazy(() => import("./sales-funnel/sales-funnel"))
 const SuspenseSalesFunnel = SuspenseComponent(<div>Loading SalesFunnel...</div>, SalesFunnel)
@@ -94,6 +96,7 @@ const HomePage = ({logOut}) => {
                                     <SearchAll/>
                                 </Menu.Item>
                                 <Menu.Item
+                                    key={'UploadOutlined'}
                                     icon={<UploadOutlined
                                         onClick={() => document.querySelector(".ButtonUpload").click()}/>}>
                                     <UploadPupils/>
@@ -108,7 +111,7 @@ const HomePage = ({logOut}) => {
                                         Группы
                                     </Link>
                                 </Menu.Item>
-                                <Menu.Item key="4" icon={<CarryOutOutlined />}>
+                                <Menu.Item key="4" icon={<CarryOutOutlined/>}>
                                     <Link to='/tasks'>
                                         Задачи
                                     </Link>
@@ -116,6 +119,11 @@ const HomePage = ({logOut}) => {
                                 <Menu.Item key="5" icon={<FunnelPlotOutlined/>}>
                                     <Link to='/sales-funnel'>
                                         Воронка продаж
+                                    </Link>
+                                </Menu.Item>
+                                <Menu.Item key="trial-lessons" icon={<LikeOutlined/>}>
+                                    <Link to='/trial-lessons'>
+                                        Пробные уроки
                                     </Link>
                                 </Menu.Item>
                                 <SubMenu key="sub1" icon={<DatabaseOutlined/>} title="Сводные таблицы">
@@ -136,7 +144,7 @@ const HomePage = ({logOut}) => {
                                         logOut()
                                     }}
                                     id='LogoutOut'
-                                    key="Logout"
+                                    key={"Logout"}
                                     className='vag123'
                                     icon={<LogoutOutlined/>}>
                                     <Link to='/'>
@@ -148,13 +156,14 @@ const HomePage = ({logOut}) => {
                         <Layout className="site-layout">
                             <Switch>
                                 <Route exact path='/student'
-                                       component={() => <Student/>}/>
+                                       component={Student}/>
                                 <Route path={`/student/:id`} children={() => <StudentPage/>}/>
 
-                                <Route exact path='/group' component={() => <Group/>}/>
+                                <Route exact path='/group' component={Group}/>
                                 <Route path={`/group/:id`} children={() => <GroupPage/>}/>
-                                <Route path={'/sales-funnel'} component={() => <SuspenseSalesFunnel />}/>
-                                <Route path="/tasks" render={() => <SuspenseTasksPage />} />
+                                <Route path={'/sales-funnel'} component={SuspenseSalesFunnel}/>
+                                <Route path="/tasks" render={() => <SuspenseTasksPage/>}/>
+                                <Route path='/trial-lessons' component={TrialLessons}/>
                                 {/*Сводные таблицы*/}
                                 <Route exact path='/table-groups' component={() => <Create_Columns_Rows_Groups/>}/>
 
@@ -164,7 +173,7 @@ const HomePage = ({logOut}) => {
                                     </Box>)}/>
 
                                 <Route path="/student/*">
-                                    <h2>Странца не найдена</h2>
+                                    <h2>Страница не найдена</h2>
                                 </Route>
                             </Switch>
                         </Layout>

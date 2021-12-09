@@ -2,26 +2,12 @@ import React, {useState} from 'react';
 import {Dropdown, Menu} from 'antd';
 
 import Change_Balance from './../../../change-balance/changeBalance.js';
-// Style
-import styled from '@emotion/styled';
-
-const Span = styled.span({
-    borderRadius: '6px',
-    fontWeight: '500',
-    cursor: 'pointer',
-    fontSize: '14px'
-});
-const Div = styled.div`
-  padding: 0;
-  h6 {
-    font-size: 1.25rem;
-  }
-`
+import {Span, Div} from "./balance.style";
 
 const Balance = ({balance_item, pageStudent_id, updeteStudent}) => {
 
     const [visible, setVisible] = useState(false)
-    const [balance, setBalance] = useState(+balance_item ? +balance_item : 0);
+    const [balance, setBalance] = useState(balance_item);
 
     let incBalance = 0;
 
@@ -33,7 +19,7 @@ const Balance = ({balance_item, pageStudent_id, updeteStudent}) => {
         let sum = +balance + +incBalance
         setBalance(sum);
 
-        Change_Balance(incBalance, pageStudent_id, updeteStudent, undefined, undefined, undefined, returnBalance);
+        Change_Balance(incBalance, pageStudent_id, updeteStudent, undefined, undefined, returnBalance);
     }
 
     const menu = (
@@ -63,7 +49,7 @@ const Balance = ({balance_item, pageStudent_id, updeteStudent}) => {
     return (
         <Div className="balance">
             <h6 className="calendar badge bg-success text-light">
-                {balance}
+                {balance_item}
                 <span>₽</span>
             </h6>
             <Dropdown overlay={menu} visible={visible} trigger={['click']}>

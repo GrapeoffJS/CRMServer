@@ -50,7 +50,7 @@ const Tasks = () => {
     }
   }, [filter])
   useEffect(() => {
-    setStatusTasks(prev => prev = Math.ceil(completedTasks.length / reservTasks.length) * 100)
+    setStatusTasks(prev => prev = Math.round(completedTasks.length / reservTasks.length * 100))
   }, [completedTasks, reservTasks])
   // useEffect
 

@@ -84,7 +84,6 @@ export const onDelete = (_id, setStatuses, Statuses, setLoading) => {
 
 export const attachStatus = (statuses_id, setLoading, updateStudent, student_id,) => {
 
-    console.log("logic-statuses")
     setLoading(true)
 
     axios({
@@ -100,7 +99,6 @@ export const attachStatus = (statuses_id, setLoading, updateStudent, student_id,
     })
         .then(res => {
             setLoading(false)
-            console.log(res.data)
             updateStudent(res.data)
         })
         .catch(error => {

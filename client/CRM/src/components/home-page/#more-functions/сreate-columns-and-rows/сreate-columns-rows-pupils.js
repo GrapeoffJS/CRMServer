@@ -23,7 +23,6 @@ const Create_Columns_Rows_Pupils = () => {
 
     const [ValueGroup, setValueGroup] = useState('')
     const [dataStatusesCheck, setDataStatusesCheck] = useState([{name: '1', color: 'red', _id: '345'}, {name: '2', color: 'red', _id: '335'}])
-    // const [dataStatusesChecked, setDataStatusesChecked] = useState()
 
     const [offsetG, setOffsetG] = useState(0)
     const [Count, setCount] = useState(0)
@@ -95,6 +94,10 @@ const Create_Columns_Rows_Pupils = () => {
     const [PhoneTitle, setPhoneTitle] = useState([
         <span style={{paddingLeft: "7px"}}>Номер телефона</span>,
         "phoneNumber",
+    ])
+    const [CreatedAt, setCreatedAt] = useState([
+        <span style={{paddingLeft: "7px"}}>Дата создания</span>,
+        "createdAt",
     ])
     const [p, setP] = useState([
         <span style={{paddingLeft: "7px"}}>Номер телефона родителя</span>,
@@ -521,10 +524,10 @@ const Create_Columns_Rows_Pupils = () => {
         for (let key in param) {
             if (param[key][0]) {
                 if (
-                    key == "surname" ||
-                    key == "name" ||
-                    key == "midname" ||
-                    key == "age"
+                    key === "surname" ||
+                    key === "name" ||
+                    key === "midname" ||
+                    key === "age"
                 ) {
                     filtersLocal[`${key}s`] = param[key];
                 } else {
@@ -637,6 +640,9 @@ const Create_Columns_Rows_Pupils = () => {
         },
         {
             ...getColumn(PhoneTitle, setPhoneTitle, 'Номер телефона', 'phoneNumber')
+        },
+        {
+            ...getColumn(CreatedAt, setCreatedAt, 'Дата создания', 'createdAt')
         },
         {
             ...getColumn(p, setP, 'Номер телефона родителя', 'parentPhoneNumber')

@@ -16,8 +16,6 @@ const PaginationG = ({offset, setOffset, getItem, count}) => {
 		}
 	})
 
-	console.log(offset / getLimit + 1)
-
 	return (
 		<PaginationI>
 			<Pagination 

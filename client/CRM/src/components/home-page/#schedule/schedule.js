@@ -30,12 +30,12 @@ const Schedule = ({global_schedule}) => {
 		);
 	}
 
-	let SpanDay = global_schedule.map((item) => {
+	let SpanDay = global_schedule.map((item, i) => {
 
 		let date = moment(item.date, 'DD.MM.YYYY').format('DD.MM');
 
 		return (
-			<span key={item.date} className="badge bg-light text-dark dataNumber">{date}</span>
+			<span key={`${item.date}${i}`} className="badge bg-light text-dark dataNumber">{date}</span>
 		);
 	});
 

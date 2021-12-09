@@ -9,7 +9,7 @@ import Url from "../../../../../../url/url"
 import {editDoneTask} from "./requests/editDoneTask"
 import {StatusesBlock} from "../../../../sales-funnel/helpers/sales-funnel-styled";
 
-export const TaskComponent = ({task, index, setRelTasks}) => {
+export const TaskComponent = ({task, setRelTasks}) => {
 
   // useState
   const [done, setDone] = useState(task.done)
@@ -42,7 +42,7 @@ export const TaskComponent = ({task, index, setRelTasks}) => {
   // methods
 
   return (
-    <List.Item>
+    <List.Item key={task._id}>
       <WrapperTaskComponent done={done}>
         <div>
           <OpacityContainer>

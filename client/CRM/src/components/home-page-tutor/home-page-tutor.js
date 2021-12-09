@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom";
 
-import {loading, Swalclose} from './../../alert/alert.js'
+import {loading, Swalclose} from '../../alert/alert'
 import Url from './../../url/url.js'
 
 import Today from './today/today.js'
@@ -20,11 +20,12 @@ import {
     CalendarOutlined,
     TeamOutlined,
     SearchOutlined,
-    UserOutlined,
+    UserOutlined, LikeOutlined,
 } from '@ant-design/icons';
 
 import styled from '@emotion/styled';
 import errorHandler from "../error-handler/error-handler";
+import TrialLessonsTutor from "../trial-lessons/trial-lessons-tutor/trial-lessons-tutor";
 
 const axios = require('axios'); // AJAX
 let jwt = require('jsonwebtoken');
@@ -180,6 +181,11 @@ const HomePageTutor = ({logOut}) => {
                                     Группы
                                 </Link>
                             </Menu.Item>
+                            <Menu.Item key="trial-lessons-tutor" icon={<LikeOutlined/>}>
+                                <Link to='/trial-lessons-tutor'>
+                                    Пробные уроки
+                                </Link>
+                            </Menu.Item>
                             <Menu.Item
                                 onClick={() => {
                                     localStorage.removeItem('tokenID')
@@ -209,6 +215,7 @@ const HomePageTutor = ({logOut}) => {
                                 <Route exact path='/groups'>
                                     <AllGroups AllGroups={Groups}/>
                                 </Route>
+                                <Route exact path='/trial-lessons-tutor' component={TrialLessonsTutor}/>
 
                                 <Route exact path={`/student/:id`} children={() => <StudentPage/>}/>
                                 <Route exact path={`/group/:id`} children={() => <GroupPage/>}/>

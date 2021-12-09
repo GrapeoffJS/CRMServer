@@ -33,8 +33,6 @@ const Group = () => {
     const [offsetG, setOffsetG] = useState(0)
     const [Count, setCount] = useState(1)
 
-    const [availableStudents, setAvailableStudents] = useState(['Пусто...']);
-    const [PUPILS_search, setPUPILS_search] = useState([]);
     const [availableTutor, setAvailableTutor] = useState([]);
 
     const [groups, setGroups] = useState([]);
@@ -54,8 +52,6 @@ const Group = () => {
             res.data.forEach((item) => {
                 arr.push([`${item.surname} ${item.name}`, item._id]);
             });
-            setAvailableStudents(arr);
-            setPUPILS_search(arr);
         })
         .catch((error) => {
             errorHandler(update, error)
@@ -191,7 +187,7 @@ const Group = () => {
             <tr key={`${_id}`}>
                 <td className="td-trash" scope="row">
                     <i id={_id} onClick={trashGroup} className="bi bi-trash"
-                       style={{fontSize: '30px', color: '#F56767'}}></i>
+                       style={{fontSize: '30px', color: '#F56767'}}/>
                 </td>
                 <td className="align-middle td-use">
                     <Link
@@ -283,8 +279,8 @@ const Group = () => {
                     <div className="collapse d-flex flex-row-reverse" id="navbarScroll">
                         <div className="d-flex plus-box">
                             <div className="nav-item plus" onClick={showModal}>
-                                <i className="bi bi-people" style={{fontSize: '38px', color: '#F56767'}}></i>
-                                <i className="bi bi-plus" style={{fontSize: '30px', color: '#F56767'}}></i>
+                                <i className="bi bi-people" style={{fontSize: '38px', color: '#F56767'}}/>
+                                <i className="bi bi-plus" style={{fontSize: '30px', color: '#F56767'}}/>
                             </div>
                         </div>
                     </div>
@@ -297,7 +293,7 @@ const Group = () => {
                         <table className="table table-striped">
                             <thead>
                             <tr>
-                                <th className="th-h" scope="col"></th>
+                                <th className="th-h" scope="col"/>
                                 <th className="th-h align-middle" scope="col">Группы</th>
                                 <th className="th-h align-middle" scope="col">Учитель</th>
                                 <th className="th-h align-middle" scope="col">Уровень</th>
@@ -360,7 +356,7 @@ const Group = () => {
                                 <select defaultValue={dataInput.level} onChange={(e) => {
                                     dataInput.level = e.target.value
                                 }} required className="form-control" id="inputGroupSelect01">
-                                    <option defaultValue></option>
+                                    <option defaultValue/>
                                     <option value="1">1 класс</option>
                                     <option value="2">2 класс</option>
                                     <option value="3">3 класс</option>
@@ -374,7 +370,7 @@ const Group = () => {
                                 <select defaultValue={dataInput.tutor} onChange={(e) => {
                                     dataInput.tutor = e.target.value
                                 }} className="form-control">
-                                    <option defaultValue></option>
+                                    <option defaultValue/>
                                     {A_Tutor}
                                 </select>
                             </div>

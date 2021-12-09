@@ -1,17 +1,10 @@
 import React, {useEffect, useState} from "react"
-import {DoubleLeftOutlined, PlusOutlined} from "@ant-design/icons"
+import {DoubleLeftOutlined} from "@ant-design/icons"
 import {DatePicker, Select} from "antd"
 import moment from "moment"
 import jwt from "jsonwebtoken"
 
-import {
-  CreateTagButton,
-  CreateTask,
-  SelectResponsibleAndDate,
-  SubmitButton,
-  TagBlock,
-  WrapperTasks
-} from "./task.styled"
+import {CreateTask, SelectResponsibleAndDate, SubmitButton, TagBlock, WrapperTasks} from "./task.styled"
 import {getResponsibles} from "./requests/getResponsibles"
 import Url from "../../../../../../url/url"
 import {swallErr} from "../../../../../../alert/alert"
@@ -19,6 +12,7 @@ import {createTask} from "./requests/createTask"
 import {selectResponsible} from "./helpers/selectResponsible";
 import {getTags} from "./requests/getTags";
 import {createTag} from "./requests/createTag";
+import {createComment} from "./requests/createComment";
 
 const {Option} = Select
 
@@ -26,6 +20,7 @@ export const CreateTaskComponent = ({
                                       setOpenedModal,
                                       setRelTasks,
                                       portable,
+                                      setComments,
                                       fio = {name: "", surname: ""},
                                       _id = "",
                                       filterTasks = () => {
@@ -69,6 +64,7 @@ export const CreateTaskComponent = ({
       setTags(prev => prev = tagsRes)
     }
     getTagsFromServer()
+    return onCreateTaskClearForm
   }, [])
   // useEffect
 
@@ -84,6 +80,8 @@ export const CreateTaskComponent = ({
     setDeadline(prev => prev = moment().get())
     setSelectedResponsible(prev => prev = jwt.decode(localStorage.getItem("tokenID")))
     setSelectedTags(prev => prev = [])
+    setOpened(prev => prev = false)
+    setTagName(prev => prev = "")
   }
   const onSearchTag = (searchInput) => {
     setTagName(prev => prev = searchInput)
@@ -101,13 +99,14 @@ export const CreateTaskComponent = ({
     setType(prev => prev = Number(ev.target.value))
   }
   const onChangeResponsible = (ev) => {
-    setSelectedResponsible(prev => prev = responsibles.find(el => el._id === ev.target.value))
+    const id = ev.split(" ")[4]
+    setSelectedResponsible(prev => prev = responsibles.find(el => el._id === id))
   }
   const onChangeSelectTag = (tagNames) => {
-    //const tagIds = tags.filter(tag => tagNames.includes(tag.name)).map(tag => tag._id)
     setSelectedTags(prev => prev = tagNames)
   }
-  const onClickCreateTag = async () => {
+  const onClickCreateTag = async (ev) => {
+    if (!(ev.key === "Enter")) return
     let idx = Math.floor(Math.random() * colors.length)
     const newTag = {
       name: tagName,
@@ -144,6 +143,14 @@ export const CreateTaskComponent = ({
       return swallErr("Ошибка!", "Окончательный срок не может быть раньше сегодняшней даты")
     }
     const createdTask = await createTask(Url, newTask)
+    if (portable) {
+      await createComment(Url, _id, {text: `${createdTask.name}\n ${createdTask.text}`})
+      setComments(prev => [...prev, {
+        author: `${createdTask.responsible.surname} ${createdTask.responsible.name} ${createdTask.responsible.midname}`,
+        content: <p>{createdTask.name}<br/>{createdTask.text}</p>,
+        deadline: createdTask.createdAt
+      }])
+    }
     setRelTasks(prev => prev = portable ? [...prev, createdTask] : filterTasks([...prev, createdTask]))
     onCreateTaskClearForm()
     setOpened(prev => prev = false)
@@ -179,25 +186,25 @@ export const CreateTaskComponent = ({
             <textarea placeholder="Задача" name="text" rows={5} value={text} onChange={onChangeText}/>
           </div>
           <SelectResponsibleAndDate portable={portable}>
-            <div className="background-gray">
-              <select value={selectResponsible(selectedResponsible).id} onChange={onChangeResponsible}
-                      name="responsible">
+            <div>
+              <Select showSearch
+                      value={`${selectResponsible(selectedResponsible).surname} ${selectResponsible(selectedResponsible).name} ${selectResponsible(selectedResponsible).midname} ${selectResponsible(selectedResponsible).accountType} ${selectResponsible(selectedResponsible).id}`}
+                      onChange={onChangeResponsible}>
                 {responsibles.map(el => (
-                  <option key={el._id} value={selectResponsible(el).id}>
+                  <Option key={el._id}
+                          value={`${selectResponsible(el).surname} ${selectResponsible(el).name} ${selectResponsible(el).midname} ${selectResponsible(el).accountType} ${selectResponsible(el).id}`}>
                     {selectResponsible(el).surname} {selectResponsible(el).name} {selectResponsible(el).midname} {selectResponsible(el).accountType}
-                  </option>
+                  </Option>
                 ))}
-              </select>
+              </Select>
             </div>
             <TagBlock className="adaptive-height">
-              <Select mode="multiple" value={selectedTags} onChange={onChangeSelectTag} onSearch={onSearchTag}>
+              <Select mode="multiple" value={selectedTags} onInputKeyDown={onClickCreateTag}
+                      onChange={onChangeSelectTag} onSearch={onSearchTag}>
                 {tags.map(tag => {
                   return <Option key={tag._id} value={tag.name}>{tag.name}</Option>
                 })}
               </Select>
-              <CreateTagButton onClick={onClickCreateTag}>
-                <PlusOutlined/>
-              </CreateTagButton>
             </TagBlock>
             <div className="background-gray">
               <DatePicker showTime value={deadline} placeholder="Конечный срок" format={dateFormat}

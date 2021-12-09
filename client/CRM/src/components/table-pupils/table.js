@@ -4,6 +4,8 @@ import {Table} from 'antd';
 import ReturnAge from './../home-page/return-age/returnAge' // Определяет возраст
 
 import styled from '@emotion/styled';
+import moment from "moment";
+import 'moment/locale/ru';
 
 const Box = styled.div({
     'th, td': {
@@ -42,7 +44,8 @@ const Table_Pupils = ({
             discord,
             groups,
             tutor,
-            statuses
+            statuses,
+            createdAt
         } = item
 
         return ({
@@ -66,7 +69,8 @@ const Table_Pupils = ({
             balance: `${balance}`,
             discordNickname: discord,
             groups,
-            statuses
+            statuses,
+            createdAt: moment(createdAt).format('DD - MMMM - YYYY, HH:MM')
         })
     })
 

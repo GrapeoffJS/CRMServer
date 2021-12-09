@@ -4,7 +4,7 @@ export const WrapperTasks = styled.div`
   position: ${props => props.portable ? "absolute" : "static"};
   transition: all .5s ease;
   z-index: 10;
-  bottom: ${props => props.opened ? "0" : props.type === 2 ? "-290px" : "-268px"};
+  bottom: ${props => props.opened ? "-15px" : props.type === 2 ? "-300px" : "-280px"};
   width: 100%;
   border-radius: ${props => props.portable ? "10px 10px 0 0" : "0"};
   background: ${props => props.portable ? "#1890FF" : "white"};
@@ -64,6 +64,7 @@ export const CreateTask = styled.div`
     border-bottom: 1px solid ${props => props.portable ? "rgba(255, 255, 255, 0.9)" : "transparent"};
   }
   input, textarea {
+    width: 100%;
     color: ${props => props.portable ? "white" : "rgba(0, 0, 0, 0.75)"};
     background: transparent;
     border: none;
@@ -102,25 +103,7 @@ export const TagBlock = styled.div`
     max-width: 100px;
   }
   > div {
-    flex: 0 0 80%;
-  }
-`
-export const CreateTagButton = styled.span`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  background: #E8EDF7;
-  transition: all .2s ease;
-  padding: 5px 10px;
-  margin: 0 10px;
-  border: none;
-  cursor: pointer;
-  > span {
-    color: black;
-  }
-  &:hover {
-    background: #BBC0CA;
+    flex: 0 0 100%;
   }
 `
 export const SelectResponsibleAndDate = styled.div`
@@ -138,6 +121,7 @@ export const SelectResponsibleAndDate = styled.div`
     border-radius: 5px;
     margin: 0 0 5px 0;
     flex: 0 0 calc(100% / 3.1);
+    max-width: calc(100% / 3.1);
     > *:not(span) {
       border: none;
       border-radius: ${props => props.portable ? 0 : 5}px;

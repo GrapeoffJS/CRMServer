@@ -242,7 +242,7 @@ const Student = () => {
                 }}
                 bigIcon={true}
                 update={() => {update(0, {}, {}, setUsers, setCount)}}
-                defaultValueOptionFunnel={(<option value='' defaultValue></option>)}
+                defaultValueOptionFunnel={(<option value='' defaultValue/>)}
             />
         </>
     )

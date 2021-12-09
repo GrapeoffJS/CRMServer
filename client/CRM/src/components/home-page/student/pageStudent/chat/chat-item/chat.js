@@ -44,7 +44,6 @@ const Chat = ({notesGlobal, update, _id, commentsObj}) => {
             }
         })
         .then(() => {
-
             setSubmitting(false)
             setComments([...comments, {
                 author: UserName,

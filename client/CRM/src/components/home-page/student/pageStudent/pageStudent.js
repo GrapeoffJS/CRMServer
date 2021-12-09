@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 
 import Url from './../../../../url/url.js';
 
-import PupilsSandTime from './../../group/group-page/PupilsSandTime/PupilsSandTime.js';
+import PupilsAndTime from '../../group/group-page/pupils-and-time/pupils-and-time.js';
 import InfoTable from './Info-table/InfoTable.js';
 import PayHistory from './payment-history/paymentHistory.js';
 import DrawerChat from './chat/drawer-chat.js'
@@ -73,8 +73,8 @@ const PageStudent = () => {
     let PupilsSandTimeGroup = arrIdSch.map((id, i) => {
 
         if (i < groups_id.length) {
-            return <PupilsSandTime key={id} pageInfo={'group'} itemG={dataStudent} dataGroup={id}
-                                   getGroup_Id={() => {
+            return <PupilsAndTime key={id} pageInfo={'group'} itemG={dataStudent} dataGroup={id}
+                                  getGroup_Id={() => {
                                        getStudent_Id(pageStudent_id, setDataS)
                                    }} setData={setDataS} name={groups_id[i]} type='pupil'/>
         }
@@ -107,9 +107,7 @@ const PageStudent = () => {
                 <PayHistory
                     balance_item={balance}
                     pageStudent_id={pageStudent_id}
-                    updeteStudent={() => {
-                        getStudent_Id(pageStudent_id, setDataS)
-                    }}
+                    updeteStudent={setDataS}
                     pay_History={paymentHistory}
                 />
             </div>

@@ -26,7 +26,7 @@ const update = (offset = 0, param = {}, filtersGroups = {}, setUsers = () => {},
 
     for (let key in param) {
         if (param[key][0]) {
-            if (key == 'surname' || key == 'name' || key == 'midname' || key == 'dateOfBirth') {
+            if (key === 'surname' || key === 'name' || key === 'midname' || key === 'dateOfBirth') {
                 filtersLocal[`${key}s`] = param[key]
             } else {
                 filtersLocal[`${key}`] = param[key]
