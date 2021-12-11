@@ -106,7 +106,7 @@ export const TagBlock = styled.div`
     flex: 0 0 100%;
   }
 `
-export const SelectResponsibleAndDate = styled.div`
+export const SelectResponsibleAndDateStyled = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;

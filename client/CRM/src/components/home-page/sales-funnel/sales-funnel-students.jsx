@@ -2,12 +2,10 @@
 import React, {useState} from "react"
 import {Draggable} from "react-beautiful-dnd"
 import {NavLink} from "react-router-dom"
-import {Tag, Button, Dropdown} from "antd"
-import moment from "moment"
+import {Tag, Dropdown} from "antd"
 
 // imports from files of project
 import {
-  DropdownClosestTask,
   FunnelStepStudent,
   HoverTask,
   StatusesBlock,
@@ -26,13 +24,6 @@ export const SalesFunnelStudents = ({Url, card, pupils, pageSize}) => {
   // useState
   const [loaded] = useState(false)
   // useState
-
-  // methods
-  const lengthCalculate = (statuses) => {
-    if (Array.isArray(statuses)) return statuses.length
-    return 0
-  }
-  // methods
 
   return (
     <>

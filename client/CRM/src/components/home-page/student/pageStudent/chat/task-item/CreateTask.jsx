@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from "react"
 import {DoubleLeftOutlined} from "@ant-design/icons"
-import {DatePicker, Select} from "antd"
 import moment from "moment"
 import jwt from "jsonwebtoken"
 
-import {CreateTask, SelectResponsibleAndDate, SubmitButton, TagBlock, WrapperTasks} from "./task.styled"
+import {CreateTask, SubmitButton, WrapperTasks} from "./task.styled"
 import {getResponsibles} from "./requests/getResponsibles"
 import Url from "../../../../../../url/url"
 import {swallErr} from "../../../../../../alert/alert"
 import {createTask} from "./requests/createTask"
-import {selectResponsible} from "./helpers/selectResponsible";
-import {getTags} from "./requests/getTags";
-import {createTag} from "./requests/createTag";
-import {createComment} from "./requests/createComment";
-
-const {Option} = Select
+import {selectResponsible} from "./helpers/selectResponsible"
+import {getTags} from "./requests/getTags"
+import {createComment} from "./requests/createComment"
+import {SelectResponsibleAndDate} from "./components/SelectResponsibleAndDate"
+import hooksHandler from "../../../../../../helpers/hooksHandler"
 
 export const CreateTaskComponent = ({
                                       setOpenedModal,
@@ -28,7 +26,6 @@ export const CreateTaskComponent = ({
                                     }) => {
 
   // data
-  let colors = ['magenta', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple']
   const {name, surname} = fio
   const dateFormat = ["DD/MM/YYYY | HH:mm"]
   // data
@@ -66,6 +63,9 @@ export const CreateTaskComponent = ({
     getTagsFromServer()
     return onCreateTaskClearForm
   }, [])
+  useEffect(() => {
+    setType(prev => Number(prev))
+  }, [type])
   // useEffect
 
   // methods
@@ -82,44 +82,6 @@ export const CreateTaskComponent = ({
     setSelectedTags(prev => prev = [])
     setOpened(prev => prev = false)
     setTagName(prev => prev = "")
-  }
-  const onSearchTag = (searchInput) => {
-    setTagName(prev => prev = searchInput)
-  }
-  const onChangeTitle = (ev) => {
-    setTitle(prev => prev = ev.target.value)
-  }
-  const onChangeText = (ev) => {
-    setText(prev => prev = ev.target.value)
-  }
-  const onChangeDate = (ev) => {
-    setDeadline(prev => prev = ev)
-  }
-  const onChangeType = (ev) => {
-    setType(prev => prev = Number(ev.target.value))
-  }
-  const onChangeResponsible = (ev) => {
-    const id = ev.split(" ")[4]
-    setSelectedResponsible(prev => prev = responsibles.find(el => el._id === id))
-  }
-  const onChangeSelectTag = (tagNames) => {
-    setSelectedTags(prev => prev = tagNames)
-  }
-  const onClickCreateTag = async (ev) => {
-    if (!(ev.key === "Enter")) return
-    let idx = Math.floor(Math.random() * colors.length)
-    const newTag = {
-      name: tagName,
-      color: colors[idx]
-    }
-    if (!tagName.replaceAll(" ", "").length) {
-      return swallErr("Ошибка!", "Название тэга не может быть пустым")
-    }
-
-    const createdTag = await createTag(Url, newTag)
-    setTagName(prev => prev = "")
-    setTags(prev => prev = [...prev, createdTag])
-    setSelectedTags(prev => prev = [...prev, createdTag.name])
   }
   const onClickSubmit = async () => {
     const taskName = portable ? (type !== 2 ? `${selectType(type)} с ${name} ${surname}` : title) : title
@@ -173,44 +135,25 @@ export const CreateTaskComponent = ({
         </div> : ""}
         <CreateTask portable={portable}>
           <div className="type__select data">
-            <select value={type} onChange={onChangeType}>
+            <select value={type} onChange={hooksHandler(setType, "event.target.value")}>
               <option value="0" defaultChecked>Связаться</option>
               <option value="1">Созвониться</option>
               <option value="2">Другое</option>
             </select>
           </div>
           {type === 2 || !portable ? <div className="input__title data">
-            <input placeholder="Название" type="text" name="title" value={title} onChange={onChangeTitle}/>
+            <input placeholder="Название" type="text" name="title" value={title}
+                   onChange={hooksHandler(setTitle, "event.target.value")}/>
           </div> : <p></p>}
           <div className="textarea__text data">
-            <textarea placeholder="Задача" name="text" rows={5} value={text} onChange={onChangeText}/>
+            <textarea placeholder="Задача" name="text" rows={5} value={text}
+                      onChange={hooksHandler(setText, "event.target.value")}/>
           </div>
-          <SelectResponsibleAndDate portable={portable}>
-            <div>
-              <Select showSearch
-                      value={`${selectResponsible(selectedResponsible).surname} ${selectResponsible(selectedResponsible).name} ${selectResponsible(selectedResponsible).midname} ${selectResponsible(selectedResponsible).accountType} ${selectResponsible(selectedResponsible).id}`}
-                      onChange={onChangeResponsible}>
-                {responsibles.map(el => (
-                  <Option key={el._id}
-                          value={`${selectResponsible(el).surname} ${selectResponsible(el).name} ${selectResponsible(el).midname} ${selectResponsible(el).accountType} ${selectResponsible(el).id}`}>
-                    {selectResponsible(el).surname} {selectResponsible(el).name} {selectResponsible(el).midname} {selectResponsible(el).accountType}
-                  </Option>
-                ))}
-              </Select>
-            </div>
-            <TagBlock className="adaptive-height">
-              <Select mode="multiple" value={selectedTags} onInputKeyDown={onClickCreateTag}
-                      onChange={onChangeSelectTag} onSearch={onSearchTag}>
-                {tags.map(tag => {
-                  return <Option key={tag._id} value={tag.name}>{tag.name}</Option>
-                })}
-              </Select>
-            </TagBlock>
-            <div className="background-gray">
-              <DatePicker showTime value={deadline} placeholder="Конечный срок" format={dateFormat}
-                          onChange={onChangeDate}/>
-            </div>
-          </SelectResponsibleAndDate>
+          <SelectResponsibleAndDate portable={portable}
+                                    responsiblesObj={{setSelectedResponsible, responsibles, selectedResponsible}}
+                                    tagName={tagName} tagsObj={{setSelectedTags, setTagName, setTags, tags, selectedTags}}
+                                    hooksHandler={hooksHandler}
+                                    deadlineObj={{setDeadline, deadline, dateFormat}}/>
           <SubmitButton portable={portable}>
             <button onClick={onClickSubmit}>Создать</button>
           </SubmitButton>
