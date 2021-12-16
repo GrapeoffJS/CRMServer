@@ -133,4 +133,28 @@ export class PaymentService {
             }
         ]);
     }
+
+    public async cancelPayment(paymentId: string) {
+        const payment = await this.PaymentModel.findByIdAndDelete(paymentId);
+
+        if (!payment) {
+            throw new NotFoundException();
+        }
+
+        if (!payment.subscription) {
+            if (payment.type === PaymentTypes.Replenishment) {
+                await this.PupilModel.findByIdAndUpdate(payment.owner_id, {
+                    $inc: { balance: -payment.amount }
+                });
+            }
+
+            if (payment.type === PaymentTypes.Withdraw) {
+                await this.PupilModel.findByIdAndUpdate(payment.owner_id, {
+                    $inc: { balance: payment.amount }
+                });
+            }
+        }
+
+        // TODO: Payments by subscription
+    }
 }
