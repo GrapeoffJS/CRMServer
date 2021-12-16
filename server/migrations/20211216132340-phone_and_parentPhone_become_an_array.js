@@ -36,7 +36,9 @@ module.exports = {
                         { $unset: { parentPhone: '' } }
                     );
             }
-        } catch (e) {}
+        } catch (e) {
+            throw e;
+        }
     },
     async down(db, client) {
         const pupils = await db.collection('Pupils').find();
@@ -68,6 +70,8 @@ module.exports = {
                         { $set: { parentPhone: pupil.parentPhones[0] } }
                     );
             }
-        } catch (e) {}
+        } catch (e) {
+            throw e;
+        }
     }
 };
