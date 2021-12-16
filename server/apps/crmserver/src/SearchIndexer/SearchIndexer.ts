@@ -8,8 +8,7 @@ export class SearchIndexer {
     private static _instance: SearchIndexer;
     private _client: Client;
 
-    private constructor() {
-    }
+    private constructor() {}
 
     public static getInstance(): SearchIndexer {
         if (!SearchIndexer._instance) {
@@ -35,8 +34,8 @@ export class SearchIndexer {
                 surname: pupil.surname,
                 midname: pupil.midname,
                 parentFullname: pupil.parentFullname,
-                phone: pupil.phone,
-                parentPhone: pupil.parentPhone,
+                phones: pupil.phones,
+                parentPhones: pupil.parentPhones,
                 tutors: pupil.tutors
             }
         });
@@ -54,8 +53,8 @@ export class SearchIndexer {
                     surname: pupil.surname,
                     midname: pupil.midname,
                     parentFullname: pupil.parentFullname,
-                    phone: pupil.phone,
-                    parentPhone: pupil.parentPhone,
+                    phones: pupil.phones,
+                    parentPhones: pupil.parentPhones,
                     tutors: pupil.tutors
                 }
             }
