@@ -11,6 +11,7 @@ import { ConnectionOptions } from 'mongoose';
 
 @Module({
     imports: [
+        ConfigModule.forRoot(configModuleOptions),
         TypegooseModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
@@ -42,7 +43,6 @@ import { ConnectionOptions } from 'mongoose';
             }
         }),
         AdminPanelModule,
-        ConfigModule.forRoot(configModuleOptions),
         CrmModule,
         AuthenticationModule,
         AuthCheckModule
