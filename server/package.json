@@ -68,6 +68,7 @@
     "@types/jest": "^26.0.22",
     "@types/jsonwebtoken": "^8.5.3",
     "@types/lodash": "^4.14.171",
+    "@types/migrate-mongo": "^8.1.3",
     "@types/moment": "^2.13.0",
     "@types/mongoose": "^5.11.97",
     "@types/mongoose-autopopulate": "^0.10.2",
@@ -86,7 +87,7 @@
     "supertest": "^6.1.3",
     "ts-jest": "^26.5.4",
     "ts-loader": "^8.0.18",
-    "ts-node": "^9.1.1",
+    "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.2.3"
   },
