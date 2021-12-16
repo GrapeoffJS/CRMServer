@@ -9,58 +9,65 @@ module.exports = {
     async up(db, client) {
         const pupils = await db.collection('Pupils').find();
 
-        for (const pupil of await pupils.toArray()) {
-            await db
-                .collection('Pupils')
-                .updateOne(
-                    { _id: pupil._id },
-                    { $set: { phones: [pupil.phone] } }
-                );
+        try {
+            for (const pupil of await pupils.toArray()) {
+                await db
+                    .collection('Pupils')
+                    .updateOne(
+                        { _id: pupil._id },
+                        { $set: { phones: [pupil.phone] } }
+                    );
 
-            await db
-                .collection('Pupils')
-                .updateOne(
-                    { _id: pupil._id },
-                    { $set: { parentPhones: [pupil.parentPhone] } }
-                );
+                await db
+                    .collection('Pupils')
+                    .updateOne(
+                        { _id: pupil._id },
+                        { $set: { parentPhones: [pupil.parentPhone] } }
+                    );
 
-            await db
-                .collection('Pupils')
-                .updateOne({ _id: pupil._id }, { $unset: { phone: '' } });
+                await db
+                    .collection('Pupils')
+                    .updateOne({ _id: pupil._id }, { $unset: { phone: '' } });
 
-            await db
-                .collection('Pupils')
-                .updateOne({ _id: pupil._id }, { $unset: { parentPhone: '' } });
-        }
+                await db
+                    .collection('Pupils')
+                    .updateOne(
+                        { _id: pupil._id },
+                        { $unset: { parentPhone: '' } }
+                    );
+            }
+        } catch (e) {}
     },
     async down(db, client) {
         const pupils = await db.collection('Pupils').find();
 
-        for (const pupil of await pupils.toArray()) {
-            await db
-                .collection('Pupils')
-                .updateOne({ _id: pupil._id }, { $unset: { phones: '' } });
+        try {
+            for (const pupil of await pupils.toArray()) {
+                await db
+                    .collection('Pupils')
+                    .updateOne({ _id: pupil._id }, { $unset: { phones: '' } });
 
-            await db
-                .collection('Pupils')
-                .updateOne(
-                    { _id: pupil._id },
-                    { $unset: { parentPhones: '' } }
-                );
+                await db
+                    .collection('Pupils')
+                    .updateOne(
+                        { _id: pupil._id },
+                        { $unset: { parentPhones: '' } }
+                    );
 
-            await db
-                .collection('Pupils')
-                .updateOne(
-                    { _id: pupil._id },
-                    { $set: { phone: pupil.phones[0] } }
-                );
+                await db
+                    .collection('Pupils')
+                    .updateOne(
+                        { _id: pupil._id },
+                        { $set: { phone: pupil.phones[0] } }
+                    );
 
-            await db
-                .collection('Pupils')
-                .updateOne(
-                    { _id: pupil._id },
-                    { $set: { parentPhone: pupil.parentPhones[0] } }
-                );
-        }
+                await db
+                    .collection('Pupils')
+                    .updateOne(
+                        { _id: pupil._id },
+                        { $set: { parentPhone: pupil.parentPhones[0] } }
+                    );
+            }
+        } catch (e) {}
     }
 };
