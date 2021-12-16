@@ -1,5 +1,13 @@
 import { Genders } from '../models/Genders';
-import { IsEnum, IsISO8601, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+    IsEnum,
+    IsISO8601,
+    IsMongoId,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsString
+} from 'class-validator';
 import Status from '../../statuses/models/Status.model';
 
 export class UpdatePupilDTO {
@@ -31,13 +39,13 @@ export class UpdatePupilDTO {
     dateOfBirth?: string;
 
     @IsOptional()
-    @IsString()
-    phone?: string;
+    @IsString({ each: true })
+    phones?: string[];
 
     @IsOptional()
-    @IsString()
     @IsNotEmpty()
-    parentPhone?: string;
+    @IsString({ each: true })
+    parentPhones?: string[];
 
     @IsOptional()
     @IsString()

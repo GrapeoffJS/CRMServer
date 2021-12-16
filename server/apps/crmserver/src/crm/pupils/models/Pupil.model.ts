@@ -45,11 +45,11 @@ export default class Pupil extends TimeStamps {
     @prop({ type: Date, required: false })
     dateOfBirth: string;
 
-    @prop({ type: String, required: false })
-    phone: string;
+    @prop({ type: [String], required: false })
+    phones: string[];
 
-    @prop({ type: String, required: false })
-    parentPhone: string;
+    @prop({ type: [String], required: false })
+    parentPhones: string[];
 
     @prop({ type: String, required: false })
     parentFullname: string;
