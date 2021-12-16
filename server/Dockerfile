@@ -9,7 +9,6 @@ COPY ./ /CRMServer
 WORKDIR /CRMServer
 
 RUN npm i -g migrate-mongo
-RUN migrate-mongo up
 
 RUN yarn
 RUN yarn build
