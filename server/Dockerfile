@@ -8,6 +8,9 @@ RUN npm i -g pm2
 COPY ./ /CRMServer
 WORKDIR /CRMServer
 
+RUN npm i -g migrate-mongo
+RUN migrate-mongo up
+
 RUN yarn
 RUN yarn build
 RUN rm -rf ./src
