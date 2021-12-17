@@ -34,8 +34,8 @@ export class SearchIndexer {
                 surname: pupil.surname,
                 midname: pupil.midname,
                 parentFullname: pupil.parentFullname,
-                phones: pupil.phones,
-                parentPhones: pupil.parentPhones,
+                phone: pupil.phone,
+                parentPhone: pupil.parentPhone,
                 tutors: pupil.tutors
             }
         });
@@ -53,8 +53,8 @@ export class SearchIndexer {
                     surname: pupil.surname,
                     midname: pupil.midname,
                     parentFullname: pupil.parentFullname,
-                    phones: pupil.phones,
-                    parentPhones: pupil.parentPhones,
+                    phone: pupil.phone,
+                    parentPhone: pupil.parentPhone,
                     tutors: pupil.tutors
                 }
             }
