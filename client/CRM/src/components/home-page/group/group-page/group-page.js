@@ -1,107 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from "react-router-dom";
-
-import Schedule from './../../#schedule/schedule.js';
-import ScheduleForm from './../../#schedule/form/scheduleForm.js';
 import PupilsAndTime from './pupils-and-time/pupils-and-time.js';
 import AddStydentGroup from './../../#more-functions/add-student_group/add-Student_Group.js';
 import InfoTable from './Info-table/InfoTable.js';
-
-import Url from './../../../../url/url.js';
-// Style 
-import './group-page.css';
-import styled from '@emotion/styled';
-import errorHandler from "../../../error-handler/error-handler";
-import axios from "axios";
-
-const breakpoints = [767],
-    mq = breakpoints.map(
-        bp => `@media (max-width: ${bp}px)`
-    );
-
-const GroupPageStyle = styled.div({
-    marginTop: '0px',
-    margin: '0 auto',
-    '.pad': {
-        padding: '0px',
-        paddingRight: '10px',
-        [mq[0]]: {
-            paddingRight: '0px'
-        }
-    },
-    '.infoLog': {
-        marginBottom: '10px',
-        padding: '0',
-        [mq[0]]: {
-            paddingBottom: '10px'
-        },
-        '.calendar': {
-            margin: '9px 0',
-            marginRight: '10px',
-            fontSize: '15px'
-        }
-    },
-    '.group-name': {
-        padding: '0',
-        borderBottom: '1px solid #0dcaf0',
-        [mq[0]]: {
-            borderRight: 'none'
-        }
-    },
-    '.time': {
-        margin: '0',
-        padding: '0',
-        h5: {
-            fontSize: '1.25rem'
-        }
-    },
-    '.ulBox': {
-        borderRadius: '15px',
-        padding: '0px'
-    },
-    '.editing': {
-        background: '#fff',
-        borderRadius: '10px 10px 0 0',
-        i: {
-            marginLeft: '95%',
-            cursor: 'pointer'
-        }
-    },
-    li: {
-        backgroundColor: 'none',
-        span: {
-            fontSize: '16px',
-            margin: '0 5px 5px 0'
-        }
-    }
-});
-
-const TablePupils = styled.div({
-    background: '#fff',
-    margin: '10px 0',
-    padding: '10px',
-    borderRadius: '15px',
-    '& > h3': {
-        fontSize: '22px'
-    }
-});
-
-export const getGroup_Id = (setFun, id, onError, notification = true) => {
-    axios({
-        method: 'get',
-        url: `${Url}/CRM/Groups/${id}`,
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'Authorization': `Bearer ${localStorage.getItem('tokenID')}`
-        }
-    })
-        .then((res) => {
-            setFun(res.data);
-        })
-        .catch((error) => {
-            errorHandler(getGroup_Id, error, onError, notification)
-        });
-}
+import {TablePupils, GroupPageStyle} from "./group-page.style";
+import {getGroup_Id} from "./group-page.logics";
+import Schedule from '../../#schedule/schedule.js';
+import CreateSchedule from "../../#schedule/create-schedule/create-schedule";
 
 const GroupPage = () => {
 
@@ -131,7 +36,7 @@ const GroupPage = () => {
 
     useEffect(() => {
         getGroup_Id(setDataALL, dataGroup);
-    }, [useParams().id]);
+    }, []);
 
     let PUPILS_List = ''
 
@@ -148,7 +53,8 @@ const GroupPage = () => {
     if (pupils) {
         PUPILSandTIME = pupils.map((itemG) => {
             return <PupilsAndTime key={itemG._id} itemG={itemG} dataGroup={dataGroup}
-                                  getGroup_Id={() => getGroup_Id(setDataALL, dataGroup)} setData={setDataALL} surname={itemG.surname}
+                                  getGroup_Id={() => getGroup_Id(setDataALL, dataGroup)} setData={setDataALL}
+                                  surname={itemG.surname}
                                   name={itemG.name} type='group'/>;
         });
     }
@@ -169,8 +75,10 @@ const GroupPage = () => {
                             <h3>{group_name}</h3>
                         </div>
                         <div className="time col-md-12 row">
-                            <h6 className="calendar badge bg-info text-dark">Расписание: </h6>
-                            <ScheduleForm updateGroup={() => getGroup_Id(setDataALL, dataGroup)} groupID={dataGroup}/>
+                            <CreateSchedule updateGroup={(onSuccess) => getGroup_Id((data) => {
+                                setDataALL(data)
+                                onSuccess()
+                            }, dataGroup)} groupID={dataGroup}/>
                             <Schedule global_schedule={global_schedule ? global_schedule : []}/>
                         </div>
                     </div>

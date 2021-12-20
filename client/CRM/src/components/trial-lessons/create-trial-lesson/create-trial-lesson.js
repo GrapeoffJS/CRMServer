@@ -9,7 +9,8 @@ import {
     mapStateToProps,
     mapDispathToProps,
     funOptionSubjects,
-    planning_week
+    planning_week,
+    next_day
 } from "./create-trial-lesson.logics";
 import SelectionStudents from "../selection-students/selection-students";
 import {Swalclose} from "../../../alert/alert";
@@ -82,20 +83,20 @@ const CreateTrialLesson = (
                 <td className={'white'}/>
                 {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map(day => <td key={day}>{day}</td>)}
             </tr>
-            {scheduling(Time8, hour8, 'hour8', '08:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time9, hour9, 'hour9', '09:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time10, hour10, 'hour10', '10:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time11, hour11, 'hour11', '11:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time12, hour12, 'hour12', '12:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time13, hour13, 'hour13', '13:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time14, hour14, 'hour14', '14:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time15, hour15, 'hour15', '15:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time16, hour16, 'hour16', '16:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time17, hour17, 'hour17', '17:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time18, hour18, 'hour18', '18:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time19, hour19, 'hour19', '19:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time20, hour20, 'hour20', '20:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
-            {scheduling(Time21, hour21, 'hour21', '21:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day)}
+            {scheduling(Time8, hour8, 'hour8', '08:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time9, hour9, 'hour9', '09:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time10, hour10, 'hour10', '10:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time11, hour11, 'hour11', '11:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time12, hour12, 'hour12', '12:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time13, hour13, 'hour13', '13:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time14, hour14, 'hour14', '14:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time15, hour15, 'hour15', '15:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time16, hour16, 'hour16', '16:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time17, hour17, 'hour17', '17:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time18, hour18, 'hour18', '18:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time19, hour19, 'hour19', '19:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time20, hour20, 'hour20', '20:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
+            {scheduling(Time21, hour21, 'hour21', '21:00', set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day)}
             </tbody>
         </Table>
     )

@@ -57,24 +57,4 @@ body {
 	.h3-person {
 		margin-left: 5px;
 	}
-
-/*	.modal-header {
-	    position: fixed;
-	    background-color: #fff;
-	    z-index: 99;
-	    width: 95%;
-	    margin: 0 auto;
-	}
-	.alert-modal .alert {
-		position: fixed;
-	    top: 72px;
-	    width: 95%;
-	    z-index: 99;
-	}
-	form {
-		margin-top: 70px;
-	}
-	.modal-form2 {
-		margin-top: 128px;
-	}*/
 }

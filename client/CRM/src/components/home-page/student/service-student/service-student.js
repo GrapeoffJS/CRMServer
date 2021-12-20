@@ -7,10 +7,12 @@ import errorHandler from "../../../error-handler/error-handler";
 const getFunnel = async (set) => {
     let box = await axiosGetFunnelSteps(Url, 8)
 
-    set(prev => prev = box)
+    set(box)
 }
 
-const update = (offset = 0, param = {}, filtersGroups = {}, setUsers = () => {}, setCount = () => {}) => {
+const update = (offset = 0, param = {}, filtersGroups = {}, setUsers = () => {
+}, setCount = () => {
+}) => {
 
     let filtersLocal = {}
 
@@ -66,19 +68,19 @@ const update = (offset = 0, param = {}, filtersGroups = {}, setUsers = () => {},
         },
         data: p
     })
-    .then((res) => {
+        .then((res) => {
 
-        let {data, headers} = res
-        setUsers(data)
-        setCount(headers.count)
-    })
-    .catch((error) => {
-        errorHandler(update, error)
-    })
+            let {data, headers} = res
+            setUsers(data)
+            setCount(headers.count)
+        })
+        .catch((error) => {
+            errorHandler(update, error)
+        })
 }
 
-const trashUser = async (item, update, offsetG, setUsers, setCount) => {
-
+const trashUser = async (item, update, offsetG, delete_all_pupils, add_all_pupils) => {
+    delete_all_pupils(item._id)
     axios({
         method: 'DELETE',
         url: `${Url}/CRM/Pupils/${item._id}`,
@@ -87,12 +89,13 @@ const trashUser = async (item, update, offsetG, setUsers, setCount) => {
             'Authorization': `Bearer ${localStorage.getItem('tokenID')}`
         }
     })
-    .then((res) => {
-        update(offsetG, {}, {}, setUsers, setCount)
-    })
-    .catch((error) => {
-        errorHandler(trashUser, error)
-    })
+        .catch((error) => {
+            errorHandler(() => {
+                trashUser(item, update, offsetG, delete_all_pupils, add_all_pupils)
+            }, error, () => {
+                add_all_pupils(item)
+            })
+        })
 }
 
 const getStudent_Id = (pageStudent_id, setDataS) => {

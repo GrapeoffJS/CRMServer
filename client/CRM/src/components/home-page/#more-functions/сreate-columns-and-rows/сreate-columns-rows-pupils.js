@@ -176,14 +176,14 @@ const Create_Columns_Rows_Pupils = () => {
     };
 
     const emptyAgeGet = (dataIndex) => {
-        if (dataIndex == 'age') {
+        if (dataIndex === 'age') {
             return 'block'
         } else {
             return ' none'
         }
     }
     const ageGet = (type) => {
-        if (type == 'age') {
+        if (type === 'age') {
             return 'number'
         } else {
             return 'text'
@@ -340,7 +340,7 @@ const Create_Columns_Rows_Pupils = () => {
             res.data.body.hits.hits.map(item => {
                 let {id, group_name, type} = item._source
 
-                if (type == 'group') {
+                if (type === 'group') {
                     box[id] = [`${group_name}`, false]
                 }
             })

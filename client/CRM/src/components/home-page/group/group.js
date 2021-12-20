@@ -4,18 +4,23 @@ import {swallGood, swallErr} from '../../../alert/alert';
 import Pagination from './../#more-functions/pagination/pagination.js'
 import RestrictionMessage from '../../restriction-message/restriction-message.js'
 import AddingStudentsToGroup from './adding-students-to-group'
-
 import {Link} from "react-router-dom";
-import {Modal, Button} from 'antd';
-
-// Style
+import {Modal, Button, Input} from 'antd';
 import './group.css';
 import {Table, Form} from './group-style'
 import errorHandler from "../../error-handler/error-handler";
-
+import {connect} from "react-redux";
+import {add_all_groups, delete_all_groups, install_all_groups} from "../../../actions";
 const axios = require('axios'); // AJAX
 
-const Group = () => {
+const Group = (
+    {
+        install_all_groups,
+        add_all_groups,
+        delete_all_groups,
+        groups
+    }
+) => {
 
     // Modal
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -35,29 +40,6 @@ const Group = () => {
 
     const [availableTutor, setAvailableTutor] = useState([]);
 
-    const [groups, setGroups] = useState([]);
-
-    // Получить учеников
-    const getPupils = () => {
-        axios({
-            method: 'post',
-            url: `${Url}/CRM/Pupils/find?limit=150&offset=0`,
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Authorization': `Bearer ${localStorage.getItem('tokenID')}`
-            }
-        })
-        .then((res) => {
-            let arr = [];
-            res.data.forEach((item) => {
-                arr.push([`${item.surname} ${item.name}`, item._id]);
-            });
-        })
-        .catch((error) => {
-            errorHandler(update, error)
-        });
-    }
-
     // Получить группы
     const getGroup = (offset = 0) => {
         axios({
@@ -68,37 +50,36 @@ const Group = () => {
                 'Authorization': `Bearer ${localStorage.getItem('tokenID')}`
             }
         })
-        .then((res) => {
-            let {data, headers} = res
-            setGroups(data)
-            setCount(headers.count)
-        })
-        .catch((error) => {
-            errorHandler(update, error)
-        })
+            .then((res) => {
+                let {data, headers} = res
+                install_all_groups(data)
+                setCount(headers.count)
+            })
+            .catch((error) => {
+                errorHandler(() => getGroup(offset), error)
+            })
     }
 
-    const getTUTOR = (offset = 0) => {
+    const getTUTOR = () => {
         axios({
             method: 'get',
-            url: `${Url}/AdminPanel/CRMAccounts?limit=10&offset=${offset}&accountType=teacher`,
+            url: `${Url}/CRM/Teachers?limit=149&offset=0`,
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'Authorization': `Bearer ${localStorage.getItem('tokenID')}`
             }
         })
-        .then((res) => {
-            let {data} = res
-            setAvailableTutor(data)
-        })
-        .catch((error) => {
-            errorHandler(getTUTOR, error)
-        })
+            .then((res) => {
+                let {data} = res
+                setAvailableTutor(data)
+            })
+            .catch((error) => {
+                errorHandler(getTUTOR, error)
+            })
     }
 
     const update = () => {
         getTUTOR();
-        getPupils();
         getGroup(offsetG);
     };
 
@@ -115,26 +96,12 @@ const Group = () => {
 
     const [pupils, setPupils] = useState([]);
 
-    const [group_name, setGROUP_NAME] = useState(''),
+    const [groupName, setGROUP_NAME] = useState(''),
         [places, setPLACES] = useState(''),
         [tutor, setTUTOR] = useState(''),
         [level, setLEVEL] = useState('');
 
-    let dataInput = {
-        group_name,
-        places,
-        tutor,
-        level
-    };
-
     const addingStudentSafely = (newArr) => {
-
-        const {group_name, places, tutor, level} = dataInput
-
-        setGROUP_NAME(group_name)
-        setPLACES(places)
-        setTUTOR(tutor)
-        setLEVEL(level)
         setPupils(newArr)
     }
 
@@ -153,18 +120,18 @@ const Group = () => {
                     Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
                 },
             })
-            .then((res) => {
-                getGroup(offsetG);
-                i.style.opacity = '1';
-            })
-            .catch((error) => {
-                errorHandler(trashGroup, error)
-            });
+                .then((res) => {
+                    delete_all_groups(res.data._id)
+                    i.style.opacity = '1';
+                })
+                .catch((error) => {
+                    errorHandler(trashGroup, error)
+                });
         };
 
         const {group_name, tutor, level, places, pupils, global_schedule, _id} = item;
 
-        let PUPILS01 = pupils? pupils : []
+        let PUPILS01 = pupils ? pupils : []
 
         let tutorText = 'Учитель не добавлен...',
             time = '-'
@@ -208,8 +175,6 @@ const Group = () => {
 
     const formSubmit = () => {
 
-        let {group_name, places, tutor, level} = dataInput; // + pupils
-
         let PUPILS_ID = [];
         pupils.forEach((item) => {
             PUPILS_ID.push(item.id);
@@ -225,44 +190,44 @@ const Group = () => {
                 Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
             },
             data: {
-                group_name: group_name,
+                group_name: groupName,
                 tutor: tutor || undefined,
                 level: +level,
                 places: +places,
-                pupils: PUPILS_ID
+                pupils: PUPILS_ID,
+                trial: false
             }
         })
-        .then((res) => {
-            setLoading(false)
-            swallGood('Группа создана', 'Теперь добавьте расписание');
-            setIsModalVisible(false)
-            getGroup();
-            setGROUP_NAME('')
-            setPupils([])
-            setPLACES('')
-            setTUTOR('')
-            setLEVEL('')
+            .then((res) => {
+                setLoading(false)
+                swallGood('Группа создана', 'Теперь добавьте расписание');
+                setIsModalVisible(false)
+                add_all_groups(res.data)
+                setGROUP_NAME('')
+                setPLACES('')
+                setTUTOR('')
+                setLEVEL('')
+                setPupils([])
+            })
+            .catch((error) => {
+                setLoading(false)
+                if (error.response) {
+                    RestrictionMessage(error.response.status)
+                    let {status} = error.response;
 
-        })
-        .catch((error) => {
-            setLoading(false)
-            if (error.response) {
-                RestrictionMessage(error.response.status)
-                let {status} = error.response;
-
-                if (status == 400) {
-                    if (+places < PUPILS_ID.length) {
-                        swallErr('Ой...', 'Мест для учеников не хватает');
-                    } else {
-                        swallErr('Ой...', 'Заполните поля правильно');
+                    if (status == 400) {
+                        if (+places < PUPILS_ID.length) {
+                            swallErr('Ой...', 'Мест для учеников не хватает');
+                        } else {
+                            swallErr('Ой...', 'Заполните поля правильно');
+                        }
+                    } else if (status == 401) {
+                        swallErr('Ой...', 'Где токен ?');
+                    } else if (status == 500) {
+                        swallErr('Произошла поломка сервера', 'Сообщите об ошибке владельцу сервиса')
                     }
-                } else if (status == 401) {
-                    swallErr('Ой...', 'Где токен ?');
-                } else if (status == 500) {
-                    swallErr('Произошла поломка сервера', 'Сообщите об ошибке владельцу сервиса')
                 }
-            }
-        });
+            });
     };
 
     return (
@@ -275,13 +240,12 @@ const Group = () => {
                                 <h3>Группы</h3>
                             </div>
                         </div>
-                    </div>
-                    <div className="collapse d-flex flex-row-reverse" id="navbarScroll">
-                        <div className="d-flex plus-box">
-                            <div className="nav-item plus" onClick={showModal}>
-                                <i className="bi bi-people" style={{fontSize: '38px', color: '#F56767'}}/>
-                                <i className="bi bi-plus" style={{fontSize: '30px', color: '#F56767'}}/>
-                            </div>
+                        <div>
+                            <Button
+                                type={'primary'}
+                                onClick={showModal}
+                            >
+                                Создать группу</Button>
                         </div>
                     </div>
                 </div>
@@ -335,8 +299,8 @@ const Group = () => {
                         <div className="row mb-3">
                             <label htmlFor="inputName" className="fs-5 col-sm-4 col-form-label">Имя группы</label>
                             <div className="col-sm-8">
-                                <input defaultValue={dataInput.group_name} autoComplete='off' onChange={(e) => {
-                                    dataInput.group_name = e.target.value
+                                <Input value={groupName} autoComplete='off' onChange={(e) => {
+                                    setGROUP_NAME(e.target.value)
                                 }} required type="name" name="group_name" className={`form-control`} id="group_name"/>
                             </div>
                         </div>
@@ -344,8 +308,8 @@ const Group = () => {
                             <label htmlFor="inputMidname" className="fs-5 col-sm-4 col-form-label">Количество
                                 мест</label>
                             <div className="col-sm-8">
-                                <input defaultValue={dataInput.places} autoComplete='off' onChange={(e) => {
-                                    dataInput.places = e.target.value
+                                <Input value={places} autoComplete='off' onChange={(e) => {
+                                    setPLACES(e.target.value)
                                 }} required type="number" name="places" className={`form-control`} id="places"/>
                             </div>
                         </div>
@@ -353,8 +317,8 @@ const Group = () => {
                             <label htmlFor="inputSirname" className="fs-5 col-sm-4 col-form-label">Уровень
                                 подготовки</label>
                             <div className="col-sm-8 input-group">
-                                <select defaultValue={dataInput.level} onChange={(e) => {
-                                    dataInput.level = e.target.value
+                                <select value={level} onChange={(e) => {
+                                    setLEVEL(e.target.value)
                                 }} required className="form-control" id="inputGroupSelect01">
                                     <option defaultValue/>
                                     <option value="1">1 класс</option>
@@ -367,8 +331,8 @@ const Group = () => {
                         <div className="row mb-3">
                             <label className="fs-5 col-sm-4 col-form-label">Учитель</label>
                             <div className="col-sm-8 input-group">
-                                <select defaultValue={dataInput.tutor} onChange={(e) => {
-                                    dataInput.tutor = e.target.value
+                                <select value={tutor} onChange={(e) => {
+                                    setTUTOR(e.target.value)
                                 }} className="form-control">
                                     <option defaultValue/>
                                     {A_Tutor}
@@ -383,4 +347,13 @@ const Group = () => {
     );
 };
 
-export default Group;
+const mapStateToProps = state => ({
+    groups: state.all_groups
+})
+const mapDispatchToProps = {
+    install_all_groups,
+    add_all_groups,
+    delete_all_groups
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Group);

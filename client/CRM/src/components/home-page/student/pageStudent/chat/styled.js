@@ -11,10 +11,15 @@ export const DivDrawerStyles = styled.div`
     overflow: hidden auto;
     max-height: 220px;
   }
+  .specialList .ant-list-items {
+    max-height: 350px;
+    margin: 0 0 20px 0;
+  }
   .tasks {
     font-family: "MontLight";
   }
 `
+
 export const List = styled.div`
   max-height: 350px;
   overflow: hidden auto;

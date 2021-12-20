@@ -8,10 +8,10 @@ import RestrictionMessage from '../../../../restriction-message/restriction-mess
 import InputMask from 'react-input-mask';
 
 import {loading, Swalclose, Toast} from '../../../../../alert/alert';
-
+import AddStudentGroup from "../add-student-group-/add-student-group-";
+import moment from "moment";
 // Style
 import styled from '@emotion/styled';
-import AddStudentGroup from "../add-student-group-/add-student-group-";
 
 const Info_Table = styled.ul({
     marginLeft: '10px',
@@ -49,6 +49,7 @@ const InfoTable = ({dataStudent, updetePage}) => {
         phone,
         parentPhone,
         discord,
+        createdAt,
         _id
     } = dataStudent;
 
@@ -221,11 +222,7 @@ const InfoTable = ({dataStudent, updetePage}) => {
                 <span className="badge bg-warning text-dark">{surname}</span>
                 <div className={`btn-group`}>
                     <Dropdown overlay={menuSurname} visible={() => {
-                        if (visible === 'Surname') {
-                            return true
-                        } else {
-                            return false
-                        }
+                        return visible === 'Surname';
                     }} trigger={['click']}>
                         <i className="bi bi-pencil"
                            onClick={() => {
@@ -236,18 +233,14 @@ const InfoTable = ({dataStudent, updetePage}) => {
                                }
                            }}
                            style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}
-                        ></i>
+                        />
                     </Dropdown>
                 </div>
             </Li>
             <Li className="list-group-item">Имя: <span className="badge bg-warning text-dark">{name}</span>
                 <div className={`btn-group`}>
                     <Dropdown overlay={menuName} visible={() => {
-                        if (visible === 'Name') {
-                            return true
-                        } else {
-                            return false
-                        }
+                        return visible === 'Name';
                     }} trigger={['hover']}>
                         <i onClick={() => {
                             if (visible === 'Name') {
@@ -257,18 +250,14 @@ const InfoTable = ({dataStudent, updetePage}) => {
                             }
                         }}
                            className="bi bi-pencil"
-                           style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}></i>
+                           style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}/>
                     </Dropdown>
                 </div>
             </Li>
             <Li className="list-group-item">Отчество: <span className="badge bg-warning text-dark">{midname}</span>
                 <div className={`btn-group`}>
                     <Dropdown overlay={menuMidname} visible={() => {
-                        if (visible === 'Midname') {
-                            return true
-                        } else {
-                            return false
-                        }
+                        return visible === 'Midname';
                     }} trigger={['hover']}>
                         <i className="bi bi-pencil"
                            onClick={() => {
@@ -278,13 +267,12 @@ const InfoTable = ({dataStudent, updetePage}) => {
                                    setVisible('Midname')
                                }
                            }}
-                           style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}></i>
+                           style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}/>
                     </Dropdown>
                 </div>
             </Li>
             <Li className="list-group-item">
-                Возраст:
-                <span className="badge bg-success text-light">{ReturnAge(dateOfBirth)}</span>
+                Возраст: <span className="badge bg-success text-light">{ReturnAge(dateOfBirth)}</span>
                 <DatePicker
                     onChange={(data) => {
                         newInfo = {dateOfBirth: data._d.toISOString()}
@@ -294,12 +282,15 @@ const InfoTable = ({dataStudent, updetePage}) => {
                 />
             </Li>
             <Li className="list-group-item">
-                Пол:
-                <span className="badge bg-success text-light">{gender}</span>
+                Пол: <span className="badge bg-success text-light">{gender}</span>
             </Li>
             <Li className="list-group-item">
-                ФИО Родителя:
-                <span className="badge bg-success text-light">{parentFullname}</span>
+                ФИО Родителя: <span className="badge bg-success text-light">{parentFullname}</span>
+            </Li>
+            <Li className="list-group-item">
+                Дата записи ученика: <span className="badge bg-info text-light">
+                    {createdAt ? moment(createdAt).format('DD - MMMM - YYYY, HH:MM') : ''}
+                </span>
             </Li>
             <Li className="list-group-item">Номер родителя: <span
                 className="badge bg-info text-light">{parentPhone}</span>
@@ -307,11 +298,7 @@ const InfoTable = ({dataStudent, updetePage}) => {
                     <Dropdown
                         overlay={menuParentPhone}
                         visible={() => {
-                            if (visible === 'ParentPhone') {
-                                return true
-                            } else {
-                                return false
-                            }
+                            return visible === 'ParentPhone';
                         }}>
                         <i className="bi bi-pencil"
                            onClick={() => {
@@ -321,7 +308,7 @@ const InfoTable = ({dataStudent, updetePage}) => {
                                    setVisible('ParentPhone')
                                }
                            }}
-                           style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}></i>
+                           style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}/>
                     </Dropdown>
                 </div>
             </Li>
@@ -330,11 +317,7 @@ const InfoTable = ({dataStudent, updetePage}) => {
                     <Dropdown
                         overlay={menuPhone}
                         visible={() => {
-                            if (visible === 'Phone') {
-                                return true
-                            } else {
-                                return false
-                            }
+                            return visible === 'Phone';
                         }}>
                         <i className="bi bi-pencil"
                            onClick={() => {
@@ -344,7 +327,7 @@ const InfoTable = ({dataStudent, updetePage}) => {
                                    setVisible('Phone')
                                }
                            }}
-                           style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}></i>
+                           style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}/>
                     </Dropdown>
                 </div>
             </Li>
@@ -366,7 +349,7 @@ const InfoTable = ({dataStudent, updetePage}) => {
                                 }
                             }}
                             style={{fontSize: "20px", color: '#17a2b8', cursor: 'pointer'}}
-                        ></i>
+                        />
                     </Dropdown>
                 </div>
             </Li>

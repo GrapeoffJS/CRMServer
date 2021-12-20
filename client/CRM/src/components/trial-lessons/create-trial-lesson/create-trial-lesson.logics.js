@@ -12,7 +12,7 @@ import {List, Select} from "antd";
 import axios from "axios";
 import errorHandler from "../../error-handler/error-handler";
 import Url from "../../../url/url";
-import {getGroup_Id} from "../../home-page/group/group-page/group-page";
+import {getGroup_Id} from "../../home-page/group/group-page/group-page.logics";
 import moment from "moment";
 
 const mapStateToProps = (state) => ({
@@ -711,7 +711,7 @@ const get_subject_teachers = (setVariable, selected_subject, specify_loading, we
     }
 }
 
-const next_day = (day_name) => {
+const next_day = (day_name, todayDate = '', status = 1) => {
     let nextDay = null
     switch (day_name) {
         case 'Mo':
@@ -736,14 +736,17 @@ const next_day = (day_name) => {
             nextDay = 0
             break
     }
-    let current = moment();
+    let current = todayDate? moment(todayDate, 'DD.MM.YYYY') : moment()
     let currentDay = current.day();
-    if (nextDay < currentDay)
-        nextDay += 7;
+    if (nextDay <= currentDay)
+        if (status)
+            nextDay += 7;
+        else
+            nextDay -= 7;
     return current.day(nextDay).format('DD.MM.YYYY')
 }
 
-const scheduling = (Time, obj, title, name, set_chosen_teacher, chosen_teacher, set_trial_lesson_day) => {
+const scheduling = (Time, obj, title, name, set_chosen_teacher, chosen_teacher, set_trial_lesson_day, next_day) => {
 
     let time = name
 
@@ -818,5 +821,6 @@ export {
     mapStateToProps,
     mapDispathToProps,
     funOptionSubjects,
-    planning_week
+    planning_week,
+    next_day
 }

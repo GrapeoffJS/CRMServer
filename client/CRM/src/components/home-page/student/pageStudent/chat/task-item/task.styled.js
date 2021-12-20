@@ -117,6 +117,9 @@ export const SelectResponsibleAndDateStyled = styled.div`
   .background-gray {
     background: ${props => props.portable ? "transparent" : "#E8EDF7"};
   }
+  .ant-select-selection-search-input {
+    color: black;
+  }
   > div {
     border-radius: 5px;
     margin: 0 0 5px 0;

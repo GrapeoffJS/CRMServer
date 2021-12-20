@@ -152,7 +152,6 @@ export const CreateTaskComponent = ({
           <SelectResponsibleAndDate portable={portable}
                                     responsiblesObj={{setSelectedResponsible, responsibles, selectedResponsible}}
                                     tagName={tagName} tagsObj={{setSelectedTags, setTagName, setTags, tags, selectedTags}}
-                                    hooksHandler={hooksHandler}
                                     deadlineObj={{setDeadline, deadline, dateFormat}}/>
           <SubmitButton portable={portable}>
             <button onClick={onClickSubmit}>Создать</button>

@@ -8,7 +8,16 @@ const initialState = {
     subject_teachers: [],
     local_week: {},
     chosen_teacher: {tutor: {_id: '', surname: '', name: '', midname: ''}, time: '', index: ''},
-    trial_lesson_day: ''
+    trial_lesson_day: '',
+    all_groups: [],
+    param_filters_groups: {
+        group_name: [],
+        level: [],
+        tutor: [],
+        occupied: []
+    },
+    all_pupils: [],
+    funnel: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -66,6 +75,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 students_for_trial_lesson: state.students_for_trial_lesson.filter(pupil => pupil.id !== payload)
             }
+        case 'CLEAR_PUPIL_TO_TRIAL_LESSON':
+            return {
+                ...state,
+                students_for_trial_lesson: []
+            }
         case 'SET_SUBJECT_TEACHERS':
             return {
                 ...state,
@@ -93,6 +107,48 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 trial_lesson_day: payload
+            }
+        case 'INSTALL_ALL_GROUPS':
+            return {
+                ...state,
+                all_groups: payload
+            }
+        case 'ADD_ALL_GROUPS': {
+            return {
+                ...state,
+                all_groups: [...state.all_groups, payload]
+            }
+        }
+        case 'DELETE_ALL_GROUPS':
+            return {
+                ...state,
+                all_groups: state.all_groups.filter(group => group._id !== payload)
+            }
+        case 'INSTALL_PARAM_FILTERS_GROUPS':
+            return {
+                ...state,
+                param_filters_groups: payload
+            }
+        case 'INSTALL_ALL_PUPILS':
+            return {
+                ...state,
+                all_pupils: payload
+            }
+        case 'ADD_ALL_PUPILS': {
+            return {
+                ...state,
+                all_pupils: [...state.all_pupils, payload]
+            }
+        }
+        case 'DELETE_ALL_PUPILS':
+            return {
+                ...state,
+                all_pupils: state.all_pupils.filter(group => group._id !== payload)
+            }
+        case 'INSTALL_FUNNEL':
+            return {
+                ...state,
+                funnel: payload
             }
         default:
             return state

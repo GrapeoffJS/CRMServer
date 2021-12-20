@@ -7,7 +7,7 @@ let Span = styled.div({ // День из расписания ученика.
         fontSize: '15px',
         fontWeight: '600',
         padding: '1px 7px',
-        width: '71px'
+        width: '100px'
     },
     '.btnAbic': {
         width: '100%'

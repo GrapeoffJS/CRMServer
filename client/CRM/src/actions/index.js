@@ -38,6 +38,9 @@ const delete_pupil_to_trial_lesson = id => ({
     type: 'DELETE_PUPIL_TO_TRIAL_LESSON',
     payload: id
 })
+const clear_pupil_to_trial_lesson = () => ({
+    type: 'CLEAR_PUPIL_TO_TRIAL_LESSON'
+})
 const set_subject_teachers = tutors => ({
     type: 'SET_SUBJECT_TEACHERS',
     payload: tutors
@@ -54,6 +57,38 @@ const set_trial_lesson_day = date => ({
     type: 'SET_TRIAL_LESSON_DAY',
     payload: date
 })
+const install_all_groups = data => ({
+    type: 'INSTALL_ALL_GROUPS',
+    payload: data
+})
+const add_all_groups = group => ({
+    type: 'ADD_ALL_GROUPS',
+    payload: group
+})
+const delete_all_groups = _id => ({
+    type: 'DELETE_ALL_GROUPS',
+    payload: _id
+})
+const install_param_filters_groups = data => ({
+    type: 'INSTALL_PARAM_FILTERS_GROUPS',
+    payload: data
+})
+const install_all_pupils = data => ({
+    type: 'INSTALL_ALL_PUPILS',
+    payload: data
+})
+const add_all_pupils = pupil => ({
+    type: 'ADD_ALL_PUPILS',
+    payload: pupil
+})
+const delete_all_pupils = _id => ({
+    type: 'DELETE_ALL_PUPILS',
+    payload: _id
+})
+const install_funnel = funnel => ({
+    type: 'INSTALL_FUNNEL',
+    payload: funnel
+})
 
 export {
     when_choosing_subject,
@@ -69,5 +104,14 @@ export {
     add_trial_lessons,
     delete_trial_lessons,
     change_trial_lessons,
-    free_day_for_teacher
+    free_day_for_teacher,
+    clear_pupil_to_trial_lesson,
+    install_all_groups,
+    add_all_groups,
+    delete_all_groups,
+    install_param_filters_groups,
+    install_all_pupils,
+    add_all_pupils,
+    delete_all_pupils,
+    install_funnel
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useReducer} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from '@emotion/styled'
 
 import ChatItem from './chat-item/chat.js'
@@ -6,18 +6,16 @@ import {CommentList} from "./chat-item/CommentList"
 import {DivDrawerStyles} from "./styled";
 import {Tasks} from "./task-item/Tasks";
 
-const DrawerChat = ({notes, update, _id, fio, tasks}) => {
+const DrawerChat = React.memo(({notes, update, _id, fio, tasks}) => {
 
     // data
     const [comments, setComments] = useState([])
-    const [relTasks, setRelTasks] = useState(tasks ?? [])
-    console.log(relTasks)
+    const [relTasks, setRelTasks] = useState(tasks)
     let notesLocal = notes ? notes : []
     let notesGlobal = []
 
     useEffect(() => {
         let block = document.querySelector('.ant-list-items')
-        if (Array.isArray(tasks)) setRelTasks(prev => prev = tasks)
         if (block) {
             block.scrollTop = block.scrollHeight
         }
@@ -67,10 +65,10 @@ const DrawerChat = ({notes, update, _id, fio, tasks}) => {
                 <ChatItem commentsObj={{comments, setComments}} notesGlobal={notesGlobal} update={update} _id={_id}/>
             </div>
             <COMEN>
-                <Tasks setComments={setComments} tasksObj={{relTasks, setRelTasks}} _id={_id} fio={fio}/>
+                <Tasks tasksObj={{relTasks, setRelTasks}} _id={_id} fio={fio}/>
             </COMEN>
         </DivDrawerStyles>
-    )
-}
+    );
+})
 
 export default DrawerChat

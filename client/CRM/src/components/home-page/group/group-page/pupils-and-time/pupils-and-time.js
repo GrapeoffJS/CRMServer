@@ -210,11 +210,16 @@ const PupilsAndTime = ({itemG, dataGroup, getGroup_Id, setData, surname, name, p
         })
 
         let title = item.title
-        let colorTitle = '';
+        let colorTitle = '',
+            colorSpan = '#1890ff'
         if (item.title) {
             colorTitle = '#ffc107';
         } else if (item.status === 1) {
             colorTitle = '#fff'
+            colorSpan = '#ffc107'
+        }
+        if (item.status === 3) {
+            colorSpan = '#fff'
         }
 
         const menuItem = (
@@ -303,7 +308,7 @@ const PupilsAndTime = ({itemG, dataGroup, getGroup_Id, setData, surname, name, p
                                 }
                             }}
                         >
-                            {day}
+                            {day} <span style={{color: colorSpan}}>{item.duration[0]}</span>
                         </button>
                     </Dropdown>
                 </Span>

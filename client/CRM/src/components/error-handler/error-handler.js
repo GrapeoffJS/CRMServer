@@ -7,6 +7,7 @@ const errorHandler = (onFunction, error, ...additionalActions) => {
         let notification = true
         additionalActions.forEach(fnc => {
             if (typeof fnc !== "boolean") {
+                console.log(fnc)
                 fnc()
             } else {
                 notification = fnc

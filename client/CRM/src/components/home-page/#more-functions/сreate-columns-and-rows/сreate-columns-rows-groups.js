@@ -1,37 +1,38 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from "react-router-dom"
-import {Table, Button, Tag, Input, Space, Checkbox, Menu} from 'antd';
-import {SearchOutlined, CloseCircleOutlined, FilterFilled, MenuFoldOutlined} from '@ant-design/icons';
+import {Button, Input, Space, Checkbox, Menu} from 'antd';
+import {SearchOutlined, CloseCircleOutlined} from '@ant-design/icons';
 
 import TableGroups from './../../../table-groups/table-groups.js'
-import {getColumn} from './../change-column/change-column.js'
+import {getColumn} from '../change-column/change-column'
 import Pagination from './../pagination/pagination.js'
 import getLimit from './../../#more-functions/getLimit/getLimit.js'
-import RestrictionMessage from '../../../restriction-message/restriction-message.js'
-
-import localStorage_change from './../../../../#localStorage_change.js'
 // Style
 import styled from '@emotion/styled';
 
-
 import Url from './../../../../url/url.js'
 import errorHandler from "../../../error-handler/error-handler";
+import {connect} from "react-redux";
+import {install_all_groups, install_param_filters_groups} from "../../../../actions";
 
-const Create_Columns_Rows_Groups = () => {
+const Create_Columns_Rows_Groups = (
+    {
+        dataObj,
+        install_all_groups,
+        paramFilrers,
+        setParamFilrers
+    }
+) => {
 
     const [offsetG, setOffsetG] = useState(0)
     const [Count, setCount] = useState(1)
-
-    const [dataObj, setDataObj] = useState([])
 
     // Filters
     const [loadingButtomFilrer, setLoadingButtomFilrer] = useState(false)
     const [filterDropdownVisible, setFilterDropdownVisible] = useState({
         group_name: false,
     })
-    // /Filters
 
-    // Change colums
     const [g, setG] = useState([
         <span style={{paddingLeft: "7px"}}>Группа</span>,
         "group_name",
@@ -71,23 +72,23 @@ const Create_Columns_Rows_Groups = () => {
                 'Authorization': `Bearer ${localStorage.getItem('tokenID')}`
             }
         })
-        .then((res) => {
-            let {data} = res
-            setTutors(data)
-        })
-        .catch(error => {
-            errorHandler(addTUTOR, error)
-        })
+            .then((res) => {
+                let {data} = res
+                setTutors(data)
+            })
+            .catch(error => {
+                errorHandler(addTUTOR, error)
+            })
     }
 
-    const update = (offset = 0, filters = {}) => { // console.log(filters)
+    const update = (offset = 0, filters = {}) => {
 
         setLoadingButtomFilrer(true)
 
         let box = {}
 
         for (let key in filters) {
-            if (key != 'occupied' & filters[key][0] != undefined) {
+            if (key !== 'occupied' && filters[key][0] !== undefined) {
                 console.log(filters[key], 1)
                 box[`${key}s`] = filters[key]
             } else if (filters[key].length) {
@@ -107,32 +108,32 @@ const Create_Columns_Rows_Groups = () => {
                 filters: box
             }
         })
-        .then(res => {
-            let {data, headers} = res
-            setDataObj(data)
-            setFilterDropdownVisible({group_name: false})
-            setLoadingButtomFilrer(false)
-            setCount(headers.count);
-        })
-        .catch((error) => {
-            errorHandler(update, error, () => {
+            .then(res => {
+                let {data, headers} = res
+                install_all_groups(data)
+                setFilterDropdownVisible({group_name: false})
                 setLoadingButtomFilrer(false)
+                setCount(headers.count);
             })
-        })
+            .catch((error) => {
+                errorHandler(update, error, () => {
+                    setLoadingButtomFilrer(false)
+                })
+            })
     }
 
     useEffect(() => {
         addTUTOR()
-        update()
+        update(0, paramFilrers)
     }, [])
 
-    // Filrers
-    const [paramFilrers, setParamFilrers] = useState({ // paramFilrers
-        group_name: [],
-        level: [],
-        tutor: [],
-        occupied: []
-    });
+    // // Filrers
+    // const [paramFilrers, setParamFilrers] = useState({
+    //     group_name: [],
+    //     level: [],
+    //     tutor: [],
+    //     occupied: []
+    // });
 
     let CheckboxValue = {
         group_name: {}
@@ -190,7 +191,7 @@ const Create_Columns_Rows_Groups = () => {
                              setSelectedKeys,
                              selectedKeys,
                              confirm,
-                             clearFilters,
+                             clearFilters
                          }) => (
             <div style={{padding: 8}}>
                 <Input
@@ -368,11 +369,11 @@ const Create_Columns_Rows_Groups = () => {
             filters: [
                 {
                     text: "Заполненно",
-                    value: true,
+                    value: false,
                 },
                 {
                     text: "Свободно",
-                    value: false,
+                    value: true,
                 },
             ],
             defaultFilteredValue: paramFilrers.occupied.map(item => `${item}`)  // ...paramFilrers.occupied
@@ -404,4 +405,13 @@ const Create_Columns_Rows_Groups = () => {
     )
 }
 
-export default Create_Columns_Rows_Groups
+const mapStateToProps = state => ({
+    dataObj: state.all_groups,
+    paramFilrers: state.param_filters_groups
+})
+const mapDispatchToProps = {
+    install_all_groups,
+    setParamFilrers: install_param_filters_groups
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Create_Columns_Rows_Groups)

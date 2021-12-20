@@ -26,9 +26,29 @@ const CreateTrialLessonStyle = styled.div`
 
   .chosen_teacher {
     margin-top: 16px;
+
     td {
       background: #002140;
       color: #fff;
+    }
+
+    .date {
+      .anticon-double-left {
+        position: relative;
+        top: -1px;
+        color: #1890ff;
+        font-size: 19px;
+        cursor: pointer;
+        margin-right: 8px;
+      }
+      .anticon-double-right {
+        position: relative;
+        top: -1px;
+        color: #1890ff;
+        font-size: 19px;
+        cursor: pointer;
+        margin-left: 8px;
+      }
     }
   }
 `

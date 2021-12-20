@@ -19,6 +19,9 @@ import {axiosGetFunnelSteps, axiosUpdateStudent} from "./helpers/axios-requests"
 
 const SalesFunnel = () => {
 
+  //TODO: Переименовать поля phone и phoneParent на мн.ч
+  //TODO: Поля phones и phoneParents теперь массив.
+
   // data
   const status = 1
   const Url = status ? UrlProd : "https://dvmncrm.herokuapp.com"
@@ -28,6 +31,7 @@ const SalesFunnel = () => {
   const [loaded, setLoaded] = useState(true)
   const [salesFunnelList, setSalesFunnelList] = useState([])
   const [pupilsList, setPupilsList] = useState([])
+  console.log(pupilsList)
   // useState
 
   // useEffect

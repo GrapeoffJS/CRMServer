@@ -48,7 +48,7 @@ const PageStudent = () => {
     });
     const [salesFunnelSteps, setSalesFunnelSteps] = useState([])
 
-    const {notes, groups, name, balance, localSchedule, paymentHistory, tasks, salesFunnelStep} = dataStudent
+    const {notes, groups, name, balance, localSchedule, paymentHistory, salesFunnelStep} = dataStudent
 
     useEffect(() => {
         const requestsAsync = async () => {
@@ -116,7 +116,7 @@ const PageStudent = () => {
                 style={{background: '#fff'}}
             >
                 <DrawerChat
-                    tasks={tasks}
+                    tasks={dataStudent.tasks}
                     notes={notes}
                     fio={{
                         name: dataStudent.name,

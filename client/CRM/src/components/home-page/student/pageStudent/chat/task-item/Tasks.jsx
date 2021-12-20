@@ -8,7 +8,6 @@ export const Tasks = React.memo(({tasksObj, _id, fio, setComments}) => {
 
   // useState
   const {relTasks, setRelTasks} = tasksObj
-  console.log(relTasks)
   // useState
 
   return (

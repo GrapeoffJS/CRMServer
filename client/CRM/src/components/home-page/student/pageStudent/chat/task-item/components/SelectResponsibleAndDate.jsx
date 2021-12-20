@@ -5,14 +5,12 @@ import {selectResponsible} from "../helpers/selectResponsible"
 import {SelectResponsibleAndDateStyled, TagBlock} from "../task.styled"
 import {swallErr} from "../../../../../../../alert/alert"
 import {createTag} from "../requests/createTag"
+import hooksHandler from "../../../../../../../helpers/hooksHandler"
 import Url from "../../../../../../../url/url"
 
 const {Option} = Select
 
-export const SelectResponsibleAndDate = ({portable, responsiblesObj, tagsObj, deadlineObj, tagName, hooksHandler}) => {
-
-  console.log("Render")
-
+export const SelectResponsibleAndDate = ({portable, responsiblesObj, tagsObj, deadlineObj, tagName}) => {
   // data
   const colors = ['magenta', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple']
   const {setSelectedResponsible, selectedResponsible, responsibles} = responsiblesObj

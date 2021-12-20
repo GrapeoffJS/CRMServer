@@ -40,7 +40,7 @@ export const SalesFunnelStudents = ({Url, card, pupils, pageSize}) => {
                   </NavLink>
                 </div>
                 <div>
-                  <VisibilitySpan>Тел.Родителя:</VisibilitySpan> {stud.parentPhone}
+                  <VisibilitySpan>Тел.Родителя:</VisibilitySpan> {/*stud?.phones?.length > 1 ? `${stud?.phones[0]}...` : stud?.phones[0]*/}78
                 </div>
                 <div>
                   <VisibilitySpan>Мин.Абонемент:</VisibilitySpan> {stud.minPaidSubscription || 0}₽

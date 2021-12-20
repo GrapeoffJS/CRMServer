@@ -37,7 +37,7 @@ const AddingStudentsToGroup = ({addStudent, addedStudents}) => {
                 type="button"
                 className="btn btn-info">
                 {`${surname} ${name} ${midname}`}
-                <i className="bi bi-x" style={{fontSize: '15px'}}></i>
+                <i className="bi bi-x" style={{fontSize: '15px'}}/>
             </button>
         )
     })

@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {Table, Tag} from 'antd'
 
-import Url from '../../../url/url.js'
 import ReturnAge from './../return-age/returnAge.js' // Определяет возраст
 import Pagination from './../#more-functions/pagination/pagination.js' // Pagination
-import {SalesFunnelModal} from './../sales-funnel/sales-funnel-modal'
 import {getFunnel, trashUser, update} from "./service-student/service-student";
 
 // Библиотеки
@@ -13,6 +11,9 @@ import './student.css'
 import {Link} from "react-router-dom"
 
 import styled from '@emotion/styled'
+import {connect} from "react-redux";
+import {add_all_pupils, delete_all_pupils, install_all_pupils, install_funnel} from "../../../actions";
+import CreateStudent from "./create-student/create-student";
 
 const mq = [1020, 700].map(
     bp => `@media (max-width: ${bp}px)`
@@ -33,28 +34,10 @@ const TableL = styled.div({
     }
 })
 
-const Student = () => {
+const Student = ({users, setUsers, setFunnel, delete_all_pupils, add_all_pupils}) => {
 
     const [offsetG, setOffsetG] = useState(0)
     const [Count, setCount] = useState(0)
-    const [funnel, setFunnel] = useState([{_id: ''}])
-
-    const [users, setUsers] = useState([
-        {
-            _id: '45343235456645',
-            surname: "Список пуст...",
-            name: "",
-            midname: "",
-            dateOfBirth: "2004-12-07",
-            gender: "",
-            phoneNumber: "",
-            parentPhoneNumber: "",
-            discordNickname: "",
-            groups: [],
-            parentFullname: '',
-            statuses: []
-        }
-    ])
 
     useEffect(() => {
         update(0, {}, {}, setUsers, setCount)
@@ -78,7 +61,7 @@ const Student = () => {
 
         dataSource.push({
             key: _id,
-            trash: () => {trashUser(item, update, offsetG, setUsers, setCount)},
+            trash: () => {trashUser(item, update, offsetG, delete_all_pupils, add_all_pupils)},
             surname: () => (
                 <Link
                     className="link-info"
@@ -212,10 +195,10 @@ const Student = () => {
                                 <h3>Ученики</h3>
                             </div>
                         </div>
+                        <CreateStudent/>
                     </div>
                 </div>
             </nav>
-
             <TableL className=''>
                 <div>
                     <div className={`table_user`}>
@@ -229,23 +212,19 @@ const Student = () => {
                     <Pagination getItem={(offset) => {update(offset, {}, {}, setUsers, setCount)}} count={Count} offset={offsetG} setOffset={setOffsetG}/>
                 </div>
             </TableL>
-            <SalesFunnelModal
-                loader={{
-                    loaded: true, setLoaded: () => {}
-                }}
-                status={1}
-                funnel={funnel[0]? funnel : [{_id: ''}]}
-                pageSize={8}
-                Url={Url}
-                pupils={{
-                    pupilsList: [], setPupilsList: () => {}
-                }}
-                bigIcon={true}
-                update={() => {update(0, {}, {}, setUsers, setCount)}}
-                defaultValueOptionFunnel={(<option value='' defaultValue/>)}
-            />
         </>
     )
 }
 
-export default Student
+const mapStateToProps = state => ({
+    users: state.all_pupils,
+    funnel: state.funnel
+})
+const mapDispatchToProps = {
+    setUsers: install_all_pupils,
+    setFunnel: install_funnel,
+    delete_all_pupils,
+    add_all_pupils
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Student)

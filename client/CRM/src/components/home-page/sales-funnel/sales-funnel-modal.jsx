@@ -15,8 +15,19 @@ import {axiosCreateNewStudent} from "./helpers/axios-requests"
 import {swallErr, swallGood} from "../../../alert/alert"
 import RestrictionMessage from "../../restriction-message/restriction-message"
 import localStorage_change from "../../../#localStorage_change"
+import hooksHandler from "../../../helpers/hooksHandler"
 
-export const SalesFunnelModal = React.memo(({funnel, Url, setPupilsList, status, setLoaded, bigIcon = false, update = () => {}, defaultValueOptionFunnel = ''}) => {
+export const SalesFunnelModal = React.memo(({
+                                              funnel,
+                                              Url,
+                                              setPupilsList,
+                                              status,
+                                              setLoaded,
+                                              bigIcon = false,
+                                              update = () => {
+                                              },
+                                              defaultValueOptionFunnel = ''
+                                            }) => {
 
   // data
   const validateDiscordNickname = new RegExp(/\w+#[0-9]{4}/)
@@ -32,47 +43,25 @@ export const SalesFunnelModal = React.memo(({funnel, Url, setPupilsList, status,
   const [inputSurname, setInputSurname] = useState("")
   const [inputMidname, setInputMidname] = useState("")
   const [selectGender, setSelectGender] = useState("")
-  const [inputParentPhone, setInputParentPhone] = useState("")
+  const [inputParentPhones, setInputParentPhones] = useState("")
   const [inputParentFullname, setInputParentFullname] = useState("")
-  const [inputChildPhone, setInputChildPhone] = useState("")
+  const [inputChildPhones, setInputChildPhones] = useState("")
   const [inputDiscordNickname, setInputDiscordNickname] = useState("")
   const [selectSalesFunnelStep, setSelectSalesFunnelStep] = useState(funnel[0]._id)
+
+  const [mask, setMask] = useState(["+9 (999) 999-99-99"])
+  const [mask2, setMask2] = useState(["+9 (999) 999-99-99"])
   // useState
 
   // Methods
-  //// onChangeHandlers
-  const onChangeHandlerSelectSalesFunnelId = (ev) => {
-    setSelectSalesFunnelStep(prev => prev = ev.target.value)
-  }
-  const onChangeHandlerInputDiscrodNickname = (ev) => {
-    setInputDiscordNickname(prev => prev = ev.target.value)
-  }
-  const onChangeHandlerInputChildPhone = (ev) => {
-    setInputChildPhone(prev => prev = ev.target.value)
-  }
-  const onChangeHandlerInputParentFullname = (ev) => {
-    setInputParentFullname(prev => prev = ev.target.value)
-  }
-  const onChangeHandlerInputParentPhone = (ev) => {
-    setInputParentPhone(prev => prev = ev.target.value)
-  }
-  const onChangeHandlerSelectGender = (ev) => {
-    setSelectGender(prev => prev = ev.target.value)
-  }
-  const onChangeHandlerInputMidname = (ev) => {
-    setInputMidname(prev => prev = ev.target.value)
-  }
-  const onChangeHandlerInputSurname = (ev) => {
-    setInputSurname(prev => prev = ev.target.value)
-  }
-  const onChangeHandlerInputName = (ev) => {
-    setInputName(prev => prev = ev.target.value)
-  }
-  const onChangeHandlerDatePicker = (date) => {
-    setDateValue(prev => prev = date)
-  }
-  //// onChangeHandlers
+  const onFocusHandleInput = (ev) => ev.target.value = ''
+  const onKeyDownInputHandler = (setMask) => {
+    return (event) => {
+      if (!(event.key === "Enter")) return
 
+      setMask(prev => prev = [...prev, ", ", prev[0]])
+    }
+  }
   const deletingDataFromForm = () => {
     setInputName(prev => prev = "")
     setInputSurname(prev => prev = "")
@@ -81,6 +70,8 @@ export const SalesFunnelModal = React.memo(({funnel, Url, setPupilsList, status,
     setSelectGender(prev => prev = "")
     setInputParentFullname(prev => prev = "")
     setInputDiscordNickname(prev => prev = "")
+    setMask(prev => prev = ["+9 (999) 999-99-99"])
+    setMask2(prev => prev = ["+9 (999) 999-99-99"])
   }
   const handleCancel = () => {
     setVisible(false)
@@ -89,7 +80,6 @@ export const SalesFunnelModal = React.memo(({funnel, Url, setPupilsList, status,
   const showModal = () => {
     setVisible(true)
   }
-  const onFocusHandleInputMask = (ev) => ev.target.value = ''
   const handleOk = async () => {
     try {
       setConfirmLoading(true)
@@ -115,9 +105,9 @@ export const SalesFunnelModal = React.memo(({funnel, Url, setPupilsList, status,
         midname: inputMidname,
         gender: selectGender,
         dateOfBirth: dateValue.toISOString(),
-        phone: inputChildPhone || undefined,
+        phones: inputChildPhones.split(",") || undefined,
         discord: inputDiscordNickname !== "" ? String(inputDiscordNickname.match(validateDiscordNickname).shift()) : undefined,
-        parentPhone: inputParentPhone,
+        parentPhones: inputParentPhones.split(","),
         parentFullname: inputParentFullname,
         salesFunnelStep: selectSalesFunnelStep
       }
@@ -198,51 +188,53 @@ export const SalesFunnelModal = React.memo(({funnel, Url, setPupilsList, status,
         <form action="#" method="POST">
           <FlexFunnelElement>
             <p>Имя:</p>
-            <Input onChange={onChangeHandlerInputName} value={inputName} required/>
+            <Input onChange={hooksHandler(setInputName, "event.target.value")} value={inputName} required/>
           </FlexFunnelElement>
           <FlexFunnelElement>
             <p>Фамилия:</p>
-            <Input onChange={onChangeHandlerInputSurname} value={inputSurname} required/>
+            <Input onChange={hooksHandler(setInputSurname, "event.target.value")} value={inputSurname} required/>
           </FlexFunnelElement>
           <FlexFunnelElement>
             <p>Отчество:</p>
-            <Input onChange={onChangeHandlerInputMidname} value={inputMidname} required/>
+            <Input onChange={hooksHandler(setInputMidname, "event.target.value")} value={inputMidname} required/>
           </FlexFunnelElement>
           <FlexFunnelElement>
             <p>Возраст:</p>
             <DatePicker className="form-control" placeholder="ГГГГ.ММ.ДД"
                         defaultValue={moment("01-01-2021", dateFormat)} format={dateFormat}
-                        onChange={onChangeHandlerDatePicker}/>
+                        onChange={hooksHandler(setDateValue, "event")}/>
           </FlexFunnelElement>
           <FlexFunnelElement>
             <p>ФИО Родителя:</p>
-            <Input onChange={onChangeHandlerInputParentFullname} value={inputParentFullname} required
+            <Input onChange={hooksHandler(setInputParentFullname, "event.target.value")} value={inputParentFullname}
+                   required
                    placeholder="Фамилия Имя Отчество"/>
           </FlexFunnelElement>
           <FlexFunnelElement>
             <p>Ник в дискорде:</p>
-            <Input onChange={onChangeHandlerInputDiscrodNickname} value={inputDiscordNickname}
+            <Input onChange={hooksHandler(setInputDiscordNickname, "event.target.value")} value={inputDiscordNickname}
                    placeholder="Необязательно"/>
           </FlexFunnelElement>
           <FlexFunnelElement>
             <p>Номер телефона ребёнка:</p>
-            <InputMask autoComplete="off" onChange={onChangeHandlerInputChildPhone}
-                       onFocus={onFocusHandleInputMask}
+            <InputMask autoComplete="off" onChange={hooksHandler(setInputChildPhones, "event.target.value")}
+                       onKeyDown={onKeyDownInputHandler(setMask)}
+                       onFocus={onFocusHandleInput}
                        style={StylesForInputMaskPhoneParentOrChild} type="tel" name="tel"
                        className="form-control"
-                       mask="+9 (999) 999-99-99" placeholder="Необязательно"/>
+                       mask={mask.join("")} placeholder="Необязательное поле"/>
           </FlexFunnelElement>
           <FlexFunnelElement>
             <p>Номер телефона родителя:</p>
-            <InputMask autoComplete="off" onChange={onChangeHandlerInputParentPhone}
-                       onFocus={onFocusHandleInputMask}
+            <InputMask autoComplete="off" onChange={hooksHandler(setInputParentPhones, "event.target.value")}
+                       onKeyDown={onKeyDownInputHandler(setMask2)}
+                       onFocus={onFocusHandleInput}
                        style={StylesForInputMaskPhoneParentOrChild} type="tel" name="tel"
-                       className="form-control"
-                       mask="+9 (999) 999-99-99"/>
+                       className="form-control" mask={mask2.join("")}/>
           </FlexFunnelElement>
           <FlexFunnelElement>
             <p>Пол:</p>
-            <select onChange={onChangeHandlerSelectGender} name="gender" value={selectGender}
+            <select onChange={hooksHandler(setSelectGender, "event.target.value")} name="gender" value={selectGender}
                     className="form-control"
                     required>
               <option defaultValue></option>
@@ -253,7 +245,7 @@ export const SalesFunnelModal = React.memo(({funnel, Url, setPupilsList, status,
           <FlexFunnelElement>
             <p>Воронка:</p>
             <select className="form-control" name="salesFunnelId" value={selectSalesFunnelStep}
-                    onChange={onChangeHandlerSelectSalesFunnelId}>
+                    onChange={hooksHandler(setSelectSalesFunnelStep, "event.target.value")}>
               {defaultValueOptionFunnel}
               {funnel.map(step => {
                 if (funnel[0]._id === step._id) {
