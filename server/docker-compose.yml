@@ -24,7 +24,7 @@ services:
             - MONGO_INITDB_ROOT_USERNAME=$MONGODB_ROOT_USER
             - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_ROOT_PASSWORD
         ports:
-            - "27017"
+            - "27017:27017"
         env_file: mongodb.env
 
     elastic:
