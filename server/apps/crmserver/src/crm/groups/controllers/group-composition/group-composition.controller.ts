@@ -1,4 +1,11 @@
-import { Body, Controller, Delete, Param, Post, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Param,
+    Post,
+    UseGuards
+} from '@nestjs/common';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
 import { path } from '../../path';
 import { GroupCompositionService } from '../../services/group-composition/group-composition.service';
@@ -12,14 +19,13 @@ import { PupilID } from '../../../../../../DTO/PupilID';
 export class GroupCompositionController {
     constructor(
         private readonly pupilManipulationsService: GroupCompositionService
-    ) {
-    }
+    ) {}
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanAddPupilsToGroup))
     @Post(':id/Pupils')
     public async addPupils(
-        @Param() { id }: MongoID, // Group ID
-        @Body() { ids }: MongoIDs // Pupil IDs
+        @Param() { id }: MongoID,
+        @Body() { ids }: MongoIDs
     ) {
         return await this.pupilManipulationsService.addPupils(id, ids);
     }
