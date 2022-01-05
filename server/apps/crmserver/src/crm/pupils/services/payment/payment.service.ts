@@ -155,6 +155,8 @@ export class PaymentService {
             }
         }
 
-        // TODO: Payments by subscription
+        await this.PupilModel.findByIdAndUpdate(payment.owner_id, {
+            $inc: { balance: payment.amount }
+        });
     }
 }

@@ -19,5 +19,6 @@ export enum ActionPermissions {
     CanCreateNote,
     CanDeleteNote,
     CanUseSearch,
-    CanUseSalesFunnel
+    CanUseSalesFunnel,
+    CanCancelPayment
 }
