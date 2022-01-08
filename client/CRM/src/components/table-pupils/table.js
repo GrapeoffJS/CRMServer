@@ -65,7 +65,7 @@ const Table_Pupils = ({
             phoneNumber: phone,
             tutor,
             parentFullname,
-            parentPhoneNumber: parentPhone,
+            parentPhoneNumber: parentPhone.join(', '),
             balance: `${balance}`,
             discordNickname: discord,
             groups,

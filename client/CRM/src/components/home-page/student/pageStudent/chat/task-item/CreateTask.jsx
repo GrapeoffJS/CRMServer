@@ -84,39 +84,44 @@ export const CreateTaskComponent = ({
     setTagName(prev => prev = "")
   }
   const onClickSubmit = async () => {
-    const taskName = portable ? (type !== 2 ? `${selectType(type)} с ${name} ${surname}` : title) : title
-    const responsibleId = selectResponsible(selectedResponsible).id
-    const deadlineISO = deadline.toISOString()
-    const tagsArr = tags.filter(tag => selectedTags.includes(tag.name)).map(tag => tag._id)
-    const forLid = portable ? _id : undefined
-    const newTask = {
-      name: taskName,
-      text,
-      deadline: deadlineISO,
-      responsible: responsibleId,
-      tags: tagsArr,
-      type,
-      for: forLid
+    try {
+      const taskName = portable ? (type !== 2 ? `${selectType(type)} с ${name} ${surname}` : title) : title
+      const responsibleId = selectResponsible(selectedResponsible).id
+      const deadlineISO = deadline.toISOString()
+      const tagsArr = tags.filter(tag => selectedTags.includes(tag.name)).map(tag => tag._id)
+      const forLid = portable ? _id : undefined
+      const newTask = {
+        name: taskName,
+        text,
+        deadline: deadlineISO,
+        responsible: responsibleId,
+        tags: tagsArr,
+        type,
+        for: forLid
+      }
+      if (taskName.replaceAll(" ", "").length === 0) {
+        return swallErr("Ошибка!", "Название пустое")
+      }
+      if (deadline && deadline.isBefore(moment().get())) {
+        return swallErr("Ошибка!", "Окончательный срок не может быть раньше сегодняшней даты")
+      }
+      const createdTask = await createTask(Url, newTask)
+      if (portable) {
+        await createComment(Url, _id, {text: `${createdTask.name}\n ${createdTask.text}`})
+        setComments(prev => [...prev, {
+          author: `${createdTask.responsible.surname} ${createdTask.responsible.name} ${createdTask.responsible.midname}`,
+          content: <p>{createdTask.name}<br/>{createdTask.text}</p>,
+          deadline: createdTask.createdAt
+        }])
+      }
+      setRelTasks(prev => prev = portable ? [...prev, createdTask] : filterTasks([...prev, createdTask]))
+      onCreateTaskClearForm()
+      setOpened(prev => prev = false)
+      if (!portable) setOpenedModal(prev => prev = false)
+    } catch (error) {
+      console.log(error)
+      swallErr("Ошибка!", "Что-то пошло не так...")
     }
-    if (taskName.replaceAll(" ", "").length === 0) {
-      return swallErr("Ошибка!", "Название пустое")
-    }
-    if (deadline && deadline.isBefore(moment().get())) {
-      return swallErr("Ошибка!", "Окончательный срок не может быть раньше сегодняшней даты")
-    }
-    const createdTask = await createTask(Url, newTask)
-    if (portable) {
-      await createComment(Url, _id, {text: `${createdTask.name}\n ${createdTask.text}`})
-      setComments(prev => [...prev, {
-        author: `${createdTask.responsible.surname} ${createdTask.responsible.name} ${createdTask.responsible.midname}`,
-        content: <p>{createdTask.name}<br/>{createdTask.text}</p>,
-        deadline: createdTask.createdAt
-      }])
-    }
-    setRelTasks(prev => prev = portable ? [...prev, createdTask] : filterTasks([...prev, createdTask]))
-    onCreateTaskClearForm()
-    setOpened(prev => prev = false)
-    if (!portable) setOpenedModal(prev => prev = false)
   }
   const onClickOpenCreateTaskMenu = () => {
     setOpened(prev => prev = !prev)

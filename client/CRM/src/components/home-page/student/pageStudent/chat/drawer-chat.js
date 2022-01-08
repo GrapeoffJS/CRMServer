@@ -6,11 +6,10 @@ import {CommentList} from "./chat-item/CommentList"
 import {DivDrawerStyles} from "./styled";
 import {Tasks} from "./task-item/Tasks";
 
-const DrawerChat = React.memo(({notes, update, _id, fio, tasks}) => {
+const DrawerChat = React.memo(({notes, update, _id, fio, tasksObj}) => {
 
-    // data
+  const {relTasks, setRelTasks} = tasksObj
     const [comments, setComments] = useState([])
-    const [relTasks, setRelTasks] = useState(tasks)
     let notesLocal = notes ? notes : []
     let notesGlobal = []
 
@@ -65,7 +64,7 @@ const DrawerChat = React.memo(({notes, update, _id, fio, tasks}) => {
                 <ChatItem commentsObj={{comments, setComments}} notesGlobal={notesGlobal} update={update} _id={_id}/>
             </div>
             <COMEN>
-                <Tasks tasksObj={{relTasks, setRelTasks}} _id={_id} fio={fio}/>
+                <Tasks tasksObj={{relTasks, setRelTasks}} _id={_id} fio={fio} setComments={setComments}/>
             </COMEN>
         </DivDrawerStyles>
     );

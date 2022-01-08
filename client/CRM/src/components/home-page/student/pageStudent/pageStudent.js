@@ -19,8 +19,8 @@ import {Select} from "antd"
 import {FlexDiv} from "../pageStudent.styled";
 import {axiosGetFunnelSteps, axiosUpdateStudent} from "../../sales-funnel/helpers/axios-requests";
 import TabsPupil from "./tabs-pupil/tabs-pupil";
+import errorHandler from "../../../error-handler/error-handler";
 
-const {Option} = Select
 
 const PageStudent = () => {
 
@@ -44,17 +44,25 @@ const PageStudent = () => {
             {type: 0, date: "", amount: 0, issuer: "", subscription: null}
         ],
         notes: [],
-        statuses: []
+        statuses: [],
+        tasks: []
     });
     const [salesFunnelSteps, setSalesFunnelSteps] = useState([])
+    const [relTasks, setRelTasks] = useState([])
 
     const {notes, groups, name, balance, localSchedule, paymentHistory, salesFunnelStep} = dataStudent
 
     useEffect(() => {
         const requestsAsync = async () => {
-            await getStudent_Id(pageStudent_id, setDataS)
-            const salesFunnelStepsServ = await axiosGetFunnelSteps(Url, 1)
-            setSalesFunnelSteps(prev => prev = salesFunnelStepsServ)
+            try {
+                const studentData = await getStudent_Id(pageStudent_id)
+                setDataS(studentData);
+                setRelTasks(studentData.tasks);
+                const salesFunnelStepsServ = await axiosGetFunnelSteps(Url, 1)
+                setSalesFunnelSteps(prev => prev = salesFunnelStepsServ)
+            } catch (error) {
+                errorHandler(getStudent_Id, error)
+            }
         }
         requestsAsync()
     }, [pageStudent_id]);
@@ -116,7 +124,7 @@ const PageStudent = () => {
                 style={{background: '#fff'}}
             >
                 <DrawerChat
-                    tasks={dataStudent.tasks}
+                    tasksObj={{relTasks, setRelTasks}}
                     notes={notes}
                     fio={{
                         name: dataStudent.name,

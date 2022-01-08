@@ -34,11 +34,11 @@ const Tasks = () => {
       const filteredExpiredTasks = tasks.filter(task => moment(task.deadline).isBefore(moment().get()))
       const filteredTodayTasks = tasks.filter(task => (moment(task.deadline).isBefore(moment().endOf("day")) && moment(task.deadline).isAfter(moment().get())))
       const filteredTomorrowTasks = tasks.filter(task => moment(task.deadline).isAfter(moment().endOf("day")))
-      setCompletedTasks(prev => prev = [...filteredTodayTasks.filter(task => task.done), ...filteredExpiredTasks.filter(task => task.done), ...filteredTomorrowTasks.filter(task => task.done)])
-      setReservTasks(prev => prev = [...filteredTodayTasks, ...filteredExpiredTasks.filter(task => task.done), ...filteredTomorrowTasks.filter(task => task.done)])
-      setExpiredTasks(prev => prev = filteredExpiredTasks.filter(task => task.done !== true))
-      setTodayTasks(prev => prev = filteredTodayTasks.filter(task => task.done !== true))
-      setTomorrowTasks(prev => prev = filteredTomorrowTasks.filter(task => task.done !== true))
+      setCompletedTasks(prev => prev = [...filteredTodayTasks.filter(task => task.done), ...filteredTomorrowTasks.filter(task => task.done)])
+      setReservTasks(prev => prev = [...filteredTodayTasks, ...filteredTomorrowTasks.filter(task => task.done)])
+      setExpiredTasks(prev => prev = filteredExpiredTasks.filter(task => !task.done))
+      setTodayTasks(prev => prev = filteredTodayTasks.filter(task => !task.done))
+      setTomorrowTasks(prev => prev = filteredTomorrowTasks.filter(task => !task.done))
       setAllTasks(prev => prev = tasks)
     }
     getTasksFromServer()
@@ -51,7 +51,7 @@ const Tasks = () => {
     }
   }, [filter])
   useEffect(() => {
-    setStatusTasks(prev => prev = Math.round(completedTasks.length / reservTasks.length * 100))
+    setStatusTasks(prev => prev = reservTasks.length ? Math.round(completedTasks.length / reservTasks.length * 100) : 100)
   }, [completedTasks, reservTasks])
   // useEffect
 

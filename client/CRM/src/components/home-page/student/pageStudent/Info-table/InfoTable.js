@@ -154,7 +154,7 @@ const InfoTable = ({dataStudent, updetePage}) => {
                     mask='+9 (999) 999-99-99'
                     placeholder="Новый номер"
                     onChange={(e) => {
-                        newInfo = {parentPhone: `${e.target.value}`}
+                        newInfo = {parentPhone: [`${e.target.value}`]}
                     }}
                     type="name" className="text-dark form-control col-12"/>
             </Menu.Item>

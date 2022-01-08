@@ -98,21 +98,19 @@ const trashUser = async (item, update, offsetG, delete_all_pupils, add_all_pupil
         })
 }
 
-const getStudent_Id = (pageStudent_id, setDataS) => {
-    axios({
+const getStudent_Id = async (pageStudent_id) => {
+    let result
+
+    await axios({
         method: 'get',
         url: `${Url}/CRM/Pupils/${pageStudent_id}`,
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
             'Authorization': `Bearer ${localStorage.getItem('tokenID')}`
         }
-    })
-        .then((res) => {
-            setDataS(res.data);
-        })
-        .catch((error) => {
-            errorHandler(getStudent_Id, error)
-        })
+    }).then((response) => result = response.data)
+
+    return result
 }
 
 export {

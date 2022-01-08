@@ -1,6 +1,7 @@
 import {DatePicker, Form, Input} from "antd";
 import InputMask from "react-input-mask";
 import React from "react";
+
 const textError = 'Пожалуйста, заполните это поле!'
 
 const InputBox = ({label, name, required = true}) => {
@@ -28,11 +29,13 @@ const InputPhone = ({label, name, required = true}) => {
                 message: textError
             }]}
         >
-            <InputMask autoComplete="off"
-                       type="tel"
-                       name="tel"
-                       className="form-control"
-                       mask="+9 (999) 999-99-99"/>
+            <InputMask
+                autoComplete="off"
+                type="tel"
+                name="tel"
+                className="form-control"
+                mask="+9 (999) 999-99-99"
+            />
         </Form.Item>
     )
 }

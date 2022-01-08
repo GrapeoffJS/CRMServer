@@ -75,7 +75,7 @@ const Student = ({users, setUsers, setFunnel, delete_all_pupils, add_all_pupils}
             gender,
             phoneNumber: phone,
             tutor: '',
-            parentPhoneNumber: parentPhone,
+            parentPhoneNumber: parentPhone.join(', '),
             parentFullname,
             balance: `${balance}`,
             groups: groups ? groups : [],
