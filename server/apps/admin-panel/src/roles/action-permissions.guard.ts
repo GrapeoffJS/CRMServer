@@ -23,9 +23,8 @@ export const ActionPermissionsGuard = (
                 return false;
             }
 
-            for (let i = 0; i < requiredActionPermissions.length; i++) {
-                if (!actionPermissions.includes(requiredActionPermissions[i]))
-                    return false;
+            for (const item of requiredActionPermissions) {
+                if (!actionPermissions.includes(item)) return false;
             }
 
             return true;
