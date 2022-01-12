@@ -5,15 +5,15 @@ import { SubscriptionsService } from './subscriptions.service';
 
 @Controller(path)
 export class SubscriptionsController {
-    constructor(private readonly SubscriptionsService: SubscriptionsService) {}
+    constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
     @Get()
     public async findAll() {
-        return await this.SubscriptionsService.findAll();
+        return await this.subscriptionsService.findAll();
     }
 
     @Get(':id')
     public async findById(@Param() { id }: MongoID) {
-        return await this.SubscriptionsService.findById(id);
+        return await this.subscriptionsService.findById(id);
     }
 }

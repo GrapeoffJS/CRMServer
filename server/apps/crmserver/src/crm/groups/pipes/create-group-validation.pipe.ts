@@ -10,6 +10,7 @@ import { CreateGroupDTO } from '../DTO/CreateGroupDTO';
 export class CreateGroupValidationPipe implements PipeTransform {
     transform(
         value: CreateGroupDTO,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         metadata: ArgumentMetadata
     ): CreateGroupDTO {
         if (value?.pupils?.length > value.places)

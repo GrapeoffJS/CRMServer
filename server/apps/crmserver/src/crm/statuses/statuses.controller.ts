@@ -15,16 +15,16 @@ import { MongoID } from '../../../../DTO/MongoID';
 
 @Controller(path)
 export class StatusesController {
-    constructor(private readonly StatusesService: StatusesService) {}
+    constructor(private readonly statusesService: StatusesService) {}
 
     @Get()
     public async findAll() {
-        return await this.StatusesService.findAll();
+        return await this.statusesService.findAll();
     }
 
     @Post()
     public async create(@Body() createStatusDTO: CreateStatusDTO) {
-        return this.StatusesService.create(createStatusDTO);
+        return this.statusesService.create(createStatusDTO);
     }
 
     @Patch(':id')
@@ -32,11 +32,11 @@ export class StatusesController {
         @Param() { id }: MongoID,
         @Body() updateStatusDTO: UpdateStatusDTO
     ) {
-        return await this.StatusesService.update(id, updateStatusDTO);
+        return await this.statusesService.update(id, updateStatusDTO);
     }
 
     @Delete(':id')
     public async delete(@Param() { id }: MongoID) {
-        return await this.StatusesService.delete(id);
+        return await this.statusesService.delete(id);
     }
 }

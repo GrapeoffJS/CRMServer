@@ -7,16 +7,16 @@ import { UpdateTaskDTO } from './DTO/UpdateTaskDTO';
 
 @Controller(path)
 export class TasksController {
-    constructor(private readonly TasksService: TasksService) {}
+    constructor(private readonly tasksService: TasksService) {}
 
     @Post()
     public async create(@Body() createTaskDTO: CreateTaskDTO) {
-        return await this.TasksService.create(createTaskDTO);
+        return await this.tasksService.create(createTaskDTO);
     }
 
     @Delete(':id')
     public async delete(@Param() { id }: MongoID) {
-        return await this.TasksService.delete(id);
+        return await this.tasksService.delete(id);
     }
 
     @Patch(':id')
@@ -24,6 +24,6 @@ export class TasksController {
         @Param() { id }: MongoID,
         @Body() updateTaskDTO: UpdateTaskDTO
     ) {
-        return await this.TasksService.update(id, updateTaskDTO);
+        return await this.tasksService.update(id, updateTaskDTO);
     }
 }

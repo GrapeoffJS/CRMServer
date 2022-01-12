@@ -15,16 +15,16 @@ import { UpdateTaskTagDTO } from './DTO/UpdateTaskTagDTO';
 
 @Controller(path)
 export class TaskTagsController {
-    constructor(private readonly TaskTagsService: TaskTagsService) {}
+    constructor(private readonly taskTagsService: TaskTagsService) {}
 
     @Get()
     public async findAll() {
-        return await this.TaskTagsService.findAll();
+        return await this.taskTagsService.findAll();
     }
 
     @Post()
     public async create(@Body() createTaskTagDTO: CreateTaskTagDTO) {
-        return this.TaskTagsService.create(createTaskTagDTO);
+        return this.taskTagsService.create(createTaskTagDTO);
     }
 
     @Patch(':id')
@@ -32,11 +32,11 @@ export class TaskTagsController {
         @Param() { id }: MongoID,
         @Body() updateTaskTagDTO: UpdateTaskTagDTO
     ) {
-        return await this.TaskTagsService.update(id, updateTaskTagDTO);
+        return await this.taskTagsService.update(id, updateTaskTagDTO);
     }
 
     @Delete(':id')
     public async delete(@Param() { id }: MongoID) {
-        return await this.TaskTagsService.delete(id);
+        return await this.taskTagsService.delete(id);
     }
 }
