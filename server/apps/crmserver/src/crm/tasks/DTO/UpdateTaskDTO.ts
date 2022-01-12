@@ -43,4 +43,8 @@ export class UpdateTaskDTO {
     @IsString()
     @IsISO8601({ strict: true })
     completedOn: string;
+
+    @IsOptional()
+    @IsBoolean()
+    archived: boolean;
 }

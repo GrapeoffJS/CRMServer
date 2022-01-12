@@ -32,4 +32,7 @@ export class Task extends TimeStamps {
 
     @prop({ type: () => [TaskTag], ref: () => TaskTag })
     tags: string[];
+
+    @prop({ type: Boolean, default: false })
+    archived: boolean;
 }
