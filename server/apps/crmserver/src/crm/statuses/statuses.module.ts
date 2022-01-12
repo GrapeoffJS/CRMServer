@@ -32,5 +32,4 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     controllers: [StatusesController],
     providers: [StatusesService]
 })
-export class StatusesModule {
-}
+export class StatusesModule {}
