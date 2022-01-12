@@ -39,7 +39,6 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "compression": "^1.7.4",
-    "csurf": "^1.11.0",
     "csvtojson": "^2.0.10",
     "dotenv": "^10.0.0",
     "helmet": "^4.6.0",
