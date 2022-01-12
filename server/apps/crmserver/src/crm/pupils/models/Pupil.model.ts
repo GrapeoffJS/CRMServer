@@ -89,14 +89,12 @@ export default class Pupil extends TimeStamps {
     @prop({
         type: () => Array,
         _id: false,
-
         default: []
     })
     groupsHistory: GroupsHistoryItem[];
 
     @prop({
         type: [Tutor],
-
         default: [],
         _id: false
     })
