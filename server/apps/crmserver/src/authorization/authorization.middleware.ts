@@ -12,11 +12,10 @@ import { TokenPayload } from '../authentication/TokenPayload';
 @Injectable()
 export class AuthorizationMiddleware implements NestMiddleware {
     constructor(
-        private readonly JwtService: JwtService,
+        private readonly jwtService: JwtService,
         @InjectModel(CRMUser)
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
-    ) {
-    }
+    ) {}
 
     async use(req: ExtendedRequest, res: Response, next: () => void) {
         const token = req.headers?.authorization?.split(' ')[1];
@@ -25,7 +24,7 @@ export class AuthorizationMiddleware implements NestMiddleware {
 
         try {
             const { id, login, accountType, name, surname, midname } =
-                await this.JwtService.verifyAsync<TokenPayload>(token);
+                await this.jwtService.verifyAsync<TokenPayload>(token);
 
             const user = await this.CRMUserModel.findOne({
                 _id: id,

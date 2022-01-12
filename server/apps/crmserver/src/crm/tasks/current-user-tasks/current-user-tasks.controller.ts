@@ -9,7 +9,7 @@ import { path } from './path';
 @Controller(path)
 export class CurrentUserTasksController {
     constructor(
-        private readonly CurrentUserTasksService: CurrentUserTasksService,
+        private readonly currentUserTasksService: CurrentUserTasksService,
         private readonly JWTService: JwtService
     ) {}
 
@@ -23,6 +23,6 @@ export class CurrentUserTasksController {
             tags = Array(tags);
         }
 
-        return await this.CurrentUserTasksService.findAll(tags, id);
+        return await this.currentUserTasksService.findAll(tags, id);
     }
 }

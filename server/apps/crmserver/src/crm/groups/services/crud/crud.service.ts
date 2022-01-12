@@ -213,7 +213,7 @@ export class CrudService {
     ): Promise<Group> {
         await this.GroupModel.findOneAndUpdate({ _id: id }, updateGroupDTO);
 
-        const group = await this.GroupModel.findById(id)
+        return this.GroupModel.findById(id)
             .select(dataPermissions.forGroup)
             .populate([
                 {
@@ -231,8 +231,6 @@ export class CrudService {
                     }
                 }
             ]);
-
-        return group;
     }
 
     private createFilterPipeline(filters: FilterDTO): any {

@@ -47,12 +47,12 @@ export class TutorManipulationsService {
             throw new NotFoundException();
         }
 
-        pupils.forEach(async pupil => {
+        for (const pupil of pupils) {
             pupil.deleteTutor(group.id);
             pupil.addTutor(tutor.id, group.id);
 
             await pupil.save();
-        });
+        }
 
         group.tutor = tutorId;
 

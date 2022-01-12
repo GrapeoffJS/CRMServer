@@ -34,7 +34,7 @@ export class NotesService {
             throw new BadRequestException();
         }
 
-        this.NoteModel.create({
+        await this.NoteModel.create({
             owner_id,
             text,
             date: new Date(),

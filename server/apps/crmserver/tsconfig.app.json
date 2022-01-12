@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "declaration": false,
-    "outDir": "../../dist/apps/crmserver"
+    "outDir": "../../dist/apps/crmserver",
   },
   "include": [
     "src/**/*"
@@ -12,5 +12,6 @@
     "dist",
     "test",
     "**/*spec.ts"
-  ]
+  ],
+
 }

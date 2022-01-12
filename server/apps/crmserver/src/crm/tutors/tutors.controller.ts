@@ -7,7 +7,7 @@ import { TutorsService } from './tutors.service';
 
 @Controller(path)
 export class TutorsController {
-    constructor(private readonly TutorsService: TutorsService) {}
+    constructor(private readonly tutorsService: TutorsService) {}
 
     @Get()
     public async findAll(
@@ -15,7 +15,7 @@ export class TutorsController {
         @Query('subject') subjects: string[],
         @Res() response: Response
     ) {
-        const { accounts, count } = await this.TutorsService.findAll(
+        const { accounts, count } = await this.tutorsService.findAll(
             limit,
             offset,
             subjects || null
@@ -26,6 +26,6 @@ export class TutorsController {
 
     @Get(':id')
     public async findById(@Param() { id }: MongoID) {
-        return await this.TutorsService.findById(id);
+        return await this.tutorsService.findById(id);
     }
 }

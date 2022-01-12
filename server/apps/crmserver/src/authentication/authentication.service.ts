@@ -11,8 +11,8 @@ export class AuthenticationService {
     constructor(
         @InjectModel(CRMUser)
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>,
-        private readonly ConfigService: ConfigService,
-        private readonly JwtService: JwtService
+        private readonly configService: ConfigService,
+        private readonly jwtService: JwtService
     ) {}
 
     public async authenticate(login: string, password: string) {
@@ -29,7 +29,7 @@ export class AuthenticationService {
         }
 
         return {
-            token: this.JwtService.sign({
+            token: this.jwtService.sign({
                 id: candidate.id,
                 login: candidate.login,
                 name: candidate.name,

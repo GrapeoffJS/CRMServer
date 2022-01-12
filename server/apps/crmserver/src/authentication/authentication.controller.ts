@@ -5,11 +5,11 @@ import { AuthenticationService } from './authentication.service';
 @Controller('/auth')
 export class AuthenticationController {
     constructor(
-        private readonly AuthenticationService: AuthenticationService
+        private readonly authenticationService: AuthenticationService
     ) {}
 
     @Post()
     public async authenticate(@Body() { login, password }: AuthenticationDTO) {
-        return await this.AuthenticationService.authenticate(login, password);
+        return await this.authenticationService.authenticate(login, password);
     }
 }
