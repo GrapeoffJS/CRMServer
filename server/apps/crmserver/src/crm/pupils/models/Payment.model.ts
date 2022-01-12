@@ -2,8 +2,9 @@ import { PaymentTypes } from './PaymentTypes';
 import { prop } from '@typegoose/typegoose';
 import { Subscription } from '../../../../../admin-panel/src/subscriptions/models/Subscription.model';
 import { Schema } from 'mongoose';
+import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
-export class Payment {
+export class Payment extends TimeStamps {
     @prop({ type: Schema.Types.ObjectId, required: true })
     owner_id: string;
 

@@ -1,7 +1,7 @@
 import { prop } from '@typegoose/typegoose';
 
 export class Schedule {
-    @prop({ type: Boolean, required: false })
+    @prop({ type: Boolean })
     paid: boolean;
 
     @prop({ type: String })
@@ -10,15 +10,15 @@ export class Schedule {
     @prop({ type: () => [String] })
     duration: string[];
 
-    @prop({ type: Number, required: false, default: 2 })
+    @prop({ type: Number, default: 2 })
     status: number;
 
     @prop({ type: String })
     message: string;
 
-    @prop({ type: String, required: false })
+    @prop({ type: String })
     start: string;
 
-    @prop({ type: String, required: false })
+    @prop({ type: String })
     finish: string;
 }

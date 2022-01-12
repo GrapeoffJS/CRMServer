@@ -49,7 +49,7 @@ export class Group extends TimeStamps {
     })
     global_schedule: Schedule[];
 
-    @prop({ type: Boolean, required: false, default: false })
+    @prop({ type: Boolean, default: false })
     trial: boolean;
 
     public deletePupil(id: string): void {

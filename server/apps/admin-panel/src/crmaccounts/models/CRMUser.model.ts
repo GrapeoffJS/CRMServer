@@ -7,6 +7,7 @@ import { ActionPermissions } from '../../roles/models/ActionPermissions';
 import { DataPermissions } from '../../roles/models/DataPermissions';
 import { SearchIndexer } from '../../../../crmserver/src/SearchIndexer/SearchIndexer';
 import { WorkHours } from '../../work-hours/models/WorkHours';
+import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
 const Indexer = SearchIndexer.getInstance();
 
@@ -19,7 +20,7 @@ const Indexer = SearchIndexer.getInstance();
 @post<CRMUser>('findOneAndUpdate', user => {
     Indexer.updateCRMUser(user);
 })
-export default class CRMUser {
+export default class CRMUser extends TimeStamps {
     @prop({ type: String, required: true })
     name: string;
 
@@ -38,13 +39,13 @@ export default class CRMUser {
     @prop({ type: String, enum: AccountTypes, required: true })
     accountType: AccountTypes;
 
-    @prop({ type: Role, ref: () => Role, required: false, default: null })
+    @prop({ type: Role, ref: () => Role, default: null })
     role: Role | string | null;
 
-    @prop({ type: Array, required: false, default: null })
+    @prop({ type: Array, default: null })
     localActionPermissions: ActionPermissions[];
 
-    @prop({ type: Array, required: false, default: null })
+    @prop({ type: Array, default: null })
     localDataPermissions: DataPermissions;
 
     @prop({
@@ -55,13 +56,13 @@ export default class CRMUser {
     })
     groups: string[];
 
-    @prop({ type: () => Array, id: false, required: false, default: [] })
+    @prop({ type: () => Array, id: false, default: [] })
     groupsHistory: GroupsHistoryItem[];
 
-    @prop({ type: Object, required: false, default: null })
+    @prop({ type: Object, default: null })
     workHours: WorkHours;
 
-    @prop({ type: String, required: false, default: null })
+    @prop({ type: String, default: null })
     subject: string;
 
     public deleteGroup(id: string): void {

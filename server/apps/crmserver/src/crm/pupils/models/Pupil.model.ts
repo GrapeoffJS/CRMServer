@@ -42,22 +42,22 @@ export default class Pupil extends TimeStamps {
     @prop({ enum: Genders, type: String, required: true })
     gender: string;
 
-    @prop({ type: Date, required: false })
+    @prop({ type: Date })
     dateOfBirth: string;
 
-    @prop({ type: [String], required: false })
+    @prop({ type: [String] })
     phone: string[];
 
-    @prop({ type: [String], required: false })
+    @prop({ type: [String] })
     parentPhone: string[];
 
-    @prop({ type: String, required: false })
+    @prop({ type: String })
     parentFullname: string;
 
-    @prop({ type: Number, required: false, default: 0 })
+    @prop({ type: Number, default: 0 })
     balance: number;
 
-    @prop({ type: String, required: false })
+    @prop({ type: String })
     discord: string;
 
     @prop({
@@ -111,7 +111,7 @@ export default class Pupil extends TimeStamps {
     })
     salesFunnelStep: string;
 
-    @prop({ type: [Status], required: false, ref: () => Status })
+    @prop({ type: [Status], ref: () => Status })
     statuses: Status[];
 
     public deleteGroup(id: string): void {
