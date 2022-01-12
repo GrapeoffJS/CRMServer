@@ -33,5 +33,4 @@ import { CurrentUserTasksModule } from './current-user-tasks/current-user-tasks.
     controllers: [TasksController],
     providers: [TasksService]
 })
-export class TasksModule {
-}
+export class TasksModule {}

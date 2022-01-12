@@ -29,7 +29,6 @@ export class Group extends TimeStamps {
     @prop({
         type: String,
         ref: () => CRMUser,
-        required: false,
         default: null
     })
     tutor: string | null;
@@ -37,14 +36,12 @@ export class Group extends TimeStamps {
     @prop({
         type: Array,
         ref: () => Pupil,
-        required: false,
         default: []
     })
     pupils: string[];
 
     @prop({
         type: () => [Schedule],
-        required: false,
         _id: false
     })
     global_schedule: Schedule[];

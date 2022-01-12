@@ -7,8 +7,7 @@ import { UpdateTaskDTO } from './DTO/UpdateTaskDTO';
 
 @Controller(path)
 export class TasksController {
-    constructor(private readonly TasksService: TasksService) {
-    }
+    constructor(private readonly TasksService: TasksService) {}
 
     @Post()
     public async create(@Body() createTaskDTO: CreateTaskDTO) {

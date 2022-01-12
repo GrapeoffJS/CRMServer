@@ -62,14 +62,12 @@ export default class Pupil extends TimeStamps {
 
     @prop({
         type: () => Array,
-        ref: () => Group,
-        required: false
+        ref: () => Group
     })
     groups: string[];
 
     @prop({
         type: Schema.Types.Mixed,
-        required: false,
         default: new Map()
     })
     localSchedule: Map<string, Schedule[]>;
@@ -91,14 +89,14 @@ export default class Pupil extends TimeStamps {
     @prop({
         type: () => Array,
         _id: false,
-        required: false,
+
         default: []
     })
     groupsHistory: GroupsHistoryItem[];
 
     @prop({
         type: [Tutor],
-        required: false,
+
         default: [],
         _id: false
     })

@@ -51,7 +51,6 @@ export default class CRMUser extends TimeStamps {
     @prop({
         type: () => [Group],
         ref: () => Group,
-        required: false,
         default: []
     })
     groups: string[];

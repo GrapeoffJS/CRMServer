@@ -9,8 +9,7 @@ import { SalesFunnelPaginationDTO } from './DTO/SalesFunnelPaginationDTO';
 
 @Controller(path)
 export class SalesFunnelController {
-    constructor(private readonly salesFunnelService: SalesFunnelService) {
-    }
+    constructor(private readonly salesFunnelService: SalesFunnelService) {}
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSalesFunnel))
     @Get()

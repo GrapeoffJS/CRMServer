@@ -16,7 +16,6 @@ export class SalesFunnelStep {
 
     @prop({
         type: [Pupil],
-        required: false,
         default: [],
         ref: () => Pupil,
         localField: '_id',

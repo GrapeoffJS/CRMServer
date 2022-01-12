@@ -1,7 +1,11 @@
 import moment from 'moment';
 import Pupil from '../../../pupils/models/Pupil.model';
 import { ADD_PUPILS_ERRORS } from '../../constants';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { Group } from '../../models/Group.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
@@ -13,8 +17,7 @@ export class GroupCompositionService {
         private readonly GroupModel: ReturnModelType<typeof Group>,
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>
-    ) {
-    }
+    ) {}
 
     public async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
         const group = await this.GroupModel.findById(id);

@@ -11,8 +11,7 @@ import { TutorID } from '../../../../../../DTO/TutorID';
 export class TutorManipulationsController {
     constructor(
         private readonly tutorManipulationsService: TutorManipulationsService
-    ) {
-    }
+    ) {}
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanAddTutor))
     @Post(':id/Teacher')

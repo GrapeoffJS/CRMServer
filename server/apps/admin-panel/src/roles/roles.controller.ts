@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post
+} from '@nestjs/common';
 import { CreateRoleDTO } from './DTO/CreateRoleDTO';
 import { path } from './path';
 import { RolesService } from './roles.service';
@@ -7,8 +15,7 @@ import { MongoID } from '../../../DTO/MongoID';
 
 @Controller(path)
 export class RolesController {
-    constructor(private readonly RolesService: RolesService) {
-    }
+    constructor(private readonly RolesService: RolesService) {}
 
     @Post()
     public async create(@Body() createRoleDTO: CreateRoleDTO) {

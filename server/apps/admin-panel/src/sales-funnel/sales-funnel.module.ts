@@ -21,5 +21,4 @@ import Pupil from '../../../crmserver/src/crm/pupils/models/Pupil.model';
     controllers: [SalesFunnelController],
     providers: [SalesFunnelService]
 })
-export class SalesFunnelModule {
-}
+export class SalesFunnelModule {}

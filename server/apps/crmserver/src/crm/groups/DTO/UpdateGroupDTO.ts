@@ -1,4 +1,11 @@
-import { IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator';
+import {
+    IsMongoId,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsPositive,
+    IsString
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class UpdateGroupDTO {

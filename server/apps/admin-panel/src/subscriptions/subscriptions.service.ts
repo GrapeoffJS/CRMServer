@@ -10,8 +10,7 @@ export class SubscriptionsService {
     constructor(
         @InjectModel(Subscription)
         private readonly SubscriptionModel: ReturnModelType<typeof Subscription>
-    ) {
-    }
+    ) {}
 
     public async create(
         createSubscriptionDTO: CreateSubscriptionDTO

@@ -3,11 +3,10 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class SearchService {
-    constructor(private readonly ElasticService: ElasticsearchService) {
-    }
+    constructor(private readonly ElasticService: ElasticsearchService) {}
 
     public search(query: string, tutorId?: string) {
-        const correctedQuery = this.getCorrectedQuery(query);
+        const correctedQuery = SearchService.getCorrectedQuery(query);
 
         return this.ElasticService.search({
             index: ['pupils', 'groups'],
@@ -17,7 +16,7 @@ export class SearchService {
     }
 
     public searchCRMUsers(query: string) {
-        const correctedQuery = this.getCorrectedQuery(query);
+        const correctedQuery = SearchService.getCorrectedQuery(query);
 
         return this.ElasticService.search({
             index: 'crmusers',
@@ -26,7 +25,7 @@ export class SearchService {
         });
     }
 
-    private getCorrectedQuery(query: string) {
+    private static getCorrectedQuery(query: string) {
         return query
             .split(' ')
             .map(item => `*${item.toString()}*`)

@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { dbUri } from '../../../../test-utils/dbUri';
 import { SalesFunnelService } from './sales-funnel.service';
 import { SalesFunnelController } from './sales-funnel.controller';
 import { SalesFunnelStep } from './models/SalesFunnelStep.model';

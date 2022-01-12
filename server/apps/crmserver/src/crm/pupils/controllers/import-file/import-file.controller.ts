@@ -1,4 +1,11 @@
-import { BadRequestException, Controller, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+    BadRequestException,
+    Controller,
+    Post,
+    UploadedFile,
+    UseGuards,
+    UseInterceptors
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImportFileService } from '../../services/import-file/import-file.service';
 import { MimeTypes } from '../../MimeTypes';
@@ -8,8 +15,7 @@ import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermi
 
 @Controller(path)
 export class ImportFileController {
-    constructor(private readonly importFileService: ImportFileService) {
-    }
+    constructor(private readonly importFileService: ImportFileService) {}
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanImportFile))
     @Post('/uploadFile')

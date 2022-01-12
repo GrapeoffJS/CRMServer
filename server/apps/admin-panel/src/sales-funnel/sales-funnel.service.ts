@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
 import { InjectModel } from 'nestjs-typegoose';
 import { SalesFunnelStep } from './models/SalesFunnelStep.model';
@@ -11,11 +15,12 @@ import Pupil from '../../../crmserver/src/crm/pupils/models/Pupil.model';
 export class SalesFunnelService {
     constructor(
         @InjectModel(SalesFunnelStep)
-        private readonly SalesFunnelStepModel: ReturnModelType<typeof SalesFunnelStep>,
+        private readonly SalesFunnelStepModel: ReturnModelType<
+            typeof SalesFunnelStep
+        >,
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>
-    ) {
-    }
+    ) {}
 
     public create(createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
         return this.SalesFunnelStepModel.create(createSalesFunnelStepDTO);

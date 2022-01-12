@@ -1,4 +1,11 @@
-import { IsArray, IsBoolean, IsMongoId, IsObject, IsOptional, IsString } from 'class-validator';
+import {
+    IsArray,
+    IsBoolean,
+    IsMongoId,
+    IsObject,
+    IsOptional,
+    IsString
+} from 'class-validator';
 
 export class FilterDTO {
     @IsOptional()

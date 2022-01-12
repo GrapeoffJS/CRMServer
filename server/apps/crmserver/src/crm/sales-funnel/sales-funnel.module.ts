@@ -36,5 +36,4 @@ import Pupil from '../pupils/models/Pupil.model';
     providers: [SalesFunnelService],
     controllers: [SalesFunnelController]
 })
-export class SalesFunnelModule {
-}
+export class SalesFunnelModule {}

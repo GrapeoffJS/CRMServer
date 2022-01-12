@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { CreateRoleDTO } from './DTO/CreateRoleDTO';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
@@ -10,8 +14,7 @@ export class RolesService {
     constructor(
         @InjectModel(Role)
         private readonly RoleModel: ReturnModelType<typeof Role>
-    ) {
-    }
+    ) {}
 
     public async create(createRoleDTO: CreateRoleDTO) {
         try {

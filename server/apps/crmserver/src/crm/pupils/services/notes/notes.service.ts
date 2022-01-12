@@ -1,6 +1,10 @@
 import CRMUser from 'apps/admin-panel/src/crmaccounts/models/CRMUser.model';
 import Pupil from '../../models/Pupil.model';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Note } from '../../models/Note.model';
@@ -13,8 +17,7 @@ export class NotesService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>,
         @InjectModel(Note)
         private readonly NoteModel: ReturnModelType<typeof Note>
-    ) {
-    }
+    ) {}
 
     public async addNote(
         owner_id: string,

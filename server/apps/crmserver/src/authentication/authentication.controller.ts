@@ -6,8 +6,7 @@ import { AuthenticationService } from './authentication.service';
 export class AuthenticationController {
     constructor(
         private readonly AuthenticationService: AuthenticationService
-    ) {
-    }
+    ) {}
 
     @Post()
     public async authenticate(@Body() { login, password }: AuthenticationDTO) {

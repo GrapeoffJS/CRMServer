@@ -22,7 +22,6 @@ export class Payment extends TimeStamps {
 
     @prop({
         type: Subscription,
-        required: false,
         ref: () => Subscription,
         default: null
     })

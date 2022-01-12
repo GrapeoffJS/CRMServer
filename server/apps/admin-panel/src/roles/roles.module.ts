@@ -16,5 +16,4 @@ import { Role } from './models/Role.model';
     providers: [RolesService],
     controllers: [RolesController]
 })
-export class RolesModule {
-}
+export class RolesModule {}

@@ -10,8 +10,7 @@ export class StatusesService {
     constructor(
         @InjectModel(Status)
         private readonly StatusModel: ReturnModelType<typeof Status>
-    ) {
-    }
+    ) {}
 
     public async findAll() {
         return this.StatusModel.find();

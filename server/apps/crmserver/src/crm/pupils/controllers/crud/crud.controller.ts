@@ -28,8 +28,7 @@ import { MongoID } from '../../../../../../DTO/MongoID';
 
 @Controller(path)
 export class CrudController {
-    constructor(private readonly crudService: CrudService) {
-    }
+    constructor(private readonly crudService: CrudService) {}
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreatePupil))
     @Post()

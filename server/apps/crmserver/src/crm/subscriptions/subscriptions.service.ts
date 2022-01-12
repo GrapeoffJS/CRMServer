@@ -8,8 +8,7 @@ export class SubscriptionsService {
     constructor(
         @InjectModel(Subscription)
         private readonly SubscriptionModel: ReturnModelType<typeof Subscription>
-    ) {
-    }
+    ) {}
 
     public async findAll() {
         return this.SubscriptionModel.find();
