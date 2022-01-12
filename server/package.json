@@ -1,8 +1,11 @@
 {
   "name": "crmserver",
   "description": "",
-  "author": "",
+  "author": "GrapeoffJS",
   "private": true,
+  "engines": {
+    "node": "16.13.2"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
