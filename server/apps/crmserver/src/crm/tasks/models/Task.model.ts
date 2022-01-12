@@ -12,11 +12,14 @@ export class Task extends TimeStamps {
     @prop({ type: CRMUser, ref: () => CRMUser, required: true })
     responsible: string;
 
-    @prop({ type: Pupil, ref: () => Pupil, required: false })
+    @prop({ type: Pupil, ref: () => Pupil })
     for: string;
 
     @prop({ type: Date, required: true })
     deadline: string;
+
+    @prop({ type: Date })
+    completedOn: string;
 
     @prop({ type: String })
     text: string;
@@ -27,6 +30,6 @@ export class Task extends TimeStamps {
     @prop({ type: Boolean, default: false })
     done: boolean;
 
-    @prop({ type: () => [TaskTag], ref: () => TaskTag, required: false })
+    @prop({ type: () => [TaskTag], ref: () => TaskTag })
     tags: string[];
 }

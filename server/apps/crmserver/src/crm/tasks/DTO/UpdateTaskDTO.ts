@@ -1,4 +1,12 @@
-import { IsBoolean, IsEnum, IsISO8601, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+    IsBoolean,
+    IsEnum,
+    IsISO8601,
+    IsMongoId,
+    IsNotEmpty,
+    IsOptional,
+    IsString
+} from 'class-validator';
 import { TaskTypes } from '../models/TaskTypes';
 
 export class UpdateTaskDTO {
@@ -29,4 +37,10 @@ export class UpdateTaskDTO {
     @IsOptional()
     @IsBoolean()
     done: boolean;
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsString()
+    @IsISO8601({ strict: true })
+    completedOn: string;
 }
