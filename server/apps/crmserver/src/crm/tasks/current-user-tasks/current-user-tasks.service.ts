@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Task } from '../models/Task.model';
 import { InjectModel } from 'nestjs-typegoose';
-import moment from 'moment';
 import { Types } from 'mongoose';
 
 @Injectable()
@@ -29,20 +28,6 @@ export class CurrentUserTasksService {
                 }
             },
             tagsFilter,
-            {
-                $match: {
-                    deadline: {
-                        $lt: new Date(
-                            moment()
-                                .add(1, 'day')
-                                .set('hour', 23)
-                                .minutes(59)
-                                .seconds(59)
-                                .toISOString()
-                        )
-                    }
-                }
-            },
             {
                 $sort: {
                     deadline: 1
