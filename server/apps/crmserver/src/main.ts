@@ -6,6 +6,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { SearchIndexer } from './SearchIndexer/SearchIndexer';
 import getESConnectionUri from './config/getESConnectionUri';
 import { ConfigService } from '@nestjs/config';
+import csurf from 'csurf';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -17,6 +18,7 @@ async function bootstrap() {
     });
     app.use(helmet());
     app.use(compression());
+    app.use(csurf());
 
     app.useGlobalPipes(
         new ValidationPipe({
