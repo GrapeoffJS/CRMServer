@@ -110,22 +110,22 @@ export default class Pupil extends TimeStamps {
     @prop({ type: [Status], ref: () => Status })
     statuses: Status[];
 
-    public deleteGroup(id: string): void {
+    deleteGroup(id: string): void {
         this.groups.splice(this.groups.indexOf(id), 1);
     }
 
-    public addGroupToHistory(groupName: string, date: string) {
+    addGroupToHistory(groupName: string, date: string) {
         this.groupsHistory.push({
             group_name: groupName,
             additionDate: date
         });
     }
 
-    public setGroupSchedule(groupId: string, schedule: Schedule[]) {
+    setGroupSchedule(groupId: string, schedule: Schedule[]) {
         this.localSchedule.set(groupId, schedule);
     }
 
-    public addTutor(tutorId: string, groupId: string) {
+    addTutor(tutorId: string, groupId: string) {
         if (this.tutors.findIndex(tutor => tutor.group === groupId) === -1) {
             this.tutors.push({
                 group: groupId,
@@ -134,7 +134,7 @@ export default class Pupil extends TimeStamps {
         }
     }
 
-    public deleteTutor(groupId: string) {
+    deleteTutor(groupId: string) {
         const index = this.tutors.findIndex(tutor => tutor.group === groupId);
 
         if (index !== -1) {
@@ -142,7 +142,7 @@ export default class Pupil extends TimeStamps {
         }
     }
 
-    public updateGroupsList(groupId: string) {
+    updateGroupsList(groupId: string) {
         this.groups = [...new Set(this.groups).add(groupId)];
     }
 }

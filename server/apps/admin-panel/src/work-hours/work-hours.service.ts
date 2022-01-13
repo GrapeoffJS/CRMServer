@@ -11,7 +11,7 @@ export class WorkHoursService {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
-    public async create(id: string, { workHours }: CreateWorkHoursDTO) {
+    async create(id: string, { workHours }: CreateWorkHoursDTO) {
         const teacher = await this.CRMUserModel.findByIdAndUpdate(id, {
             workHours
         });

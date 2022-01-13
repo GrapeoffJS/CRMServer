@@ -9,7 +9,7 @@ export class WorkHoursController {
     constructor(private readonly WorkHoursService: WorkHoursService) {}
 
     @Put(':id')
-    public async create(
+    async create(
         @Param() { id }: MongoID,
         @Body() createWorkHoursDTO: CreateWorkHoursDTO
     ) {

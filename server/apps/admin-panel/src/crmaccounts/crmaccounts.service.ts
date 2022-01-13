@@ -20,7 +20,7 @@ export class CRMAccountsService {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
-    public async create(createUserDTO: CreateCRMUserDTO) {
+    async create(createUserDTO: CreateCRMUserDTO) {
         if (
             createUserDTO.role &&
             (createUserDTO.localActionPermissions ||
@@ -48,11 +48,7 @@ export class CRMAccountsService {
         }
     }
 
-    public async findAll(
-        limit: number,
-        offset: number,
-        accountTypes: AccountTypes[]
-    ) {
+    async findAll(limit: number, offset: number, accountTypes: AccountTypes[]) {
         let accountsCount: number;
 
         await this.CRMUserModel.find({
@@ -72,7 +68,7 @@ export class CRMAccountsService {
         };
     }
 
-    public async findById(id: string) {
+    async findById(id: string) {
         const user = await this.CRMUserModel.findById(id).populate([
             {
                 path: 'groups',
@@ -92,7 +88,7 @@ export class CRMAccountsService {
         return user;
     }
 
-    public async edit(id: string, updateCRMUserDTO: UpdateCRMUserDTO) {
+    async edit(id: string, updateCRMUserDTO: UpdateCRMUserDTO) {
         if (
             updateCRMUserDTO.role &&
             (updateCRMUserDTO.localActionPermissions ||
@@ -114,7 +110,7 @@ export class CRMAccountsService {
         });
     }
 
-    public async delete(login: string) {
+    async delete(login: string) {
         const user = await this.CRMUserModel.findOneAndDelete({
             login: login
         });

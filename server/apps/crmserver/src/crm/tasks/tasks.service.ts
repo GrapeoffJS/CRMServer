@@ -14,7 +14,7 @@ export class TasksService {
         private readonly TaskModel: ReturnModelType<typeof Task>
     ) {}
 
-    public async create(createTaskDTO: CreateTaskDTO) {
+    async create(createTaskDTO: CreateTaskDTO) {
         const task = await this.TaskModel.create(createTaskDTO);
 
         return this.TaskModel.findById(task.id).populate([
@@ -29,11 +29,11 @@ export class TasksService {
         ]);
     }
 
-    public async delete(id: string) {
+    async delete(id: string) {
         return this.TaskModel.findByIdAndDelete(id);
     }
 
-    public async update(id: string, updateTaskDTO: UpdateTaskDTO) {
+    async update(id: string, updateTaskDTO: UpdateTaskDTO) {
         await this.TaskModel.updateOne({ _id: id }, updateTaskDTO);
         return this.TaskModel.findById(id);
     }

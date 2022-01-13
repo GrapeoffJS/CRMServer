@@ -20,7 +20,7 @@ export class PaymentService {
         private readonly PaymentModel: ReturnModelType<typeof Payment>
     ) {}
 
-    public async changeBalance(id: string, amount: number, issuer: string) {
+    async changeBalance(id: string, amount: number, issuer: string) {
         const pupil = await this.PupilModel.findById(id);
 
         if (!pupil) {
@@ -72,11 +72,7 @@ export class PaymentService {
         ]);
     }
 
-    public async createPayment(
-        id: string,
-        subscriptionID: string,
-        issuer: string
-    ) {
+    async createPayment(id: string, subscriptionID: string, issuer: string) {
         const pupil = await this.PupilModel.findById(id);
 
         if (!pupil) {
@@ -134,7 +130,7 @@ export class PaymentService {
         ]);
     }
 
-    public async cancelPayment(paymentId: string) {
+    async cancelPayment(paymentId: string) {
         const payment = await this.PaymentModel.findByIdAndDelete(paymentId);
 
         if (!payment) {

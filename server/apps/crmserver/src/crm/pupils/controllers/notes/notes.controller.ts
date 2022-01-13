@@ -23,7 +23,7 @@ export class NotesController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreateNote))
     @Post(':id/Notes')
-    public async addNote(
+    async addNote(
         @Req() req,
         @Param() { id }: MongoID,
         @Body() createNoteDTO: CreateNoteDTO
@@ -35,7 +35,7 @@ export class NotesController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteNote))
     @Delete('/Notes/:id')
-    public async deleteNote(@Param() { id }: MongoID): Promise<Pupil> {
+    async deleteNote(@Param() { id }: MongoID): Promise<Pupil> {
         return await this.notesService.deleteNote(id);
     }
 }

@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 export class SearchService {
     constructor(private readonly ElasticService: ElasticsearchService) {}
 
-    public search(query: string, tutorId?: string) {
+    search(query: string, tutorId?: string) {
         const correctedQuery = SearchService.getCorrectedQuery(query);
 
         return this.ElasticService.search({
@@ -15,7 +15,7 @@ export class SearchService {
         });
     }
 
-    public searchCRMUsers(query: string) {
+    searchCRMUsers(query: string) {
         const correctedQuery = SearchService.getCorrectedQuery(query);
 
         return this.ElasticService.search({

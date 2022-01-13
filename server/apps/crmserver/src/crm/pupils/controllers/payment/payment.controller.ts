@@ -15,7 +15,7 @@ export class PaymentController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreatePayment))
     @Post(':id/Payment')
-    public async payment(
+    async payment(
         @Param() { id }: MongoID,
         @Query() { amount, subscription }: PaymentDTO,
         @Req() req: Request
@@ -39,7 +39,7 @@ export class PaymentController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCancelPayment))
     @Post('/CancelPayment/:id')
-    public async cancelPayment(@Param() { id }: MongoID) {
+    async cancelPayment(@Param() { id }: MongoID) {
         return await this.paymentService.cancelPayment(id);
     }
 }

@@ -10,11 +10,11 @@ export class SubscriptionsService {
         private readonly SubscriptionModel: ReturnModelType<typeof Subscription>
     ) {}
 
-    public async findAll() {
+    async findAll() {
         return this.SubscriptionModel.find();
     }
 
-    public async findById(id: string) {
+    async findById(id: string) {
         return this.SubscriptionModel.findById(id);
     }
 }

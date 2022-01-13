@@ -10,7 +10,7 @@ export class TutorsController {
     constructor(private readonly tutorsService: TutorsService) {}
 
     @Get()
-    public async findAll(
+    async findAll(
         @Query() { limit, offset }: PaginationDTO,
         @Query('subject') subjects: string[],
         @Res() response: Response
@@ -25,7 +25,7 @@ export class TutorsController {
     }
 
     @Get(':id')
-    public async findById(@Param() { id }: MongoID) {
+    async findById(@Param() { id }: MongoID) {
         return await this.tutorsService.findById(id);
     }
 }

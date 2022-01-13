@@ -11,7 +11,7 @@ export class SearchController {
     constructor(private readonly searchService: SearchService) {}
 
     @Get('/autocompletion')
-    public async search(
+    async search(
         @Query('query') searchQuery: string,
         @Query() { tutorID }: TutorID
     ) {
@@ -19,7 +19,7 @@ export class SearchController {
     }
 
     @Get('/CRMUsers')
-    public async searchCRMUsers(@Query('query') searchQuery: string) {
+    async searchCRMUsers(@Query('query') searchQuery: string) {
         return this.searchService.searchCRMUsers(searchQuery);
     }
 }

@@ -15,7 +15,7 @@ export class TutorManipulationsController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanAddTutor))
     @Post(':id/Teacher')
-    public async addTutor(
+    async addTutor(
         @Param() { id }: GroupID,
         @Query() { tutorID }: TutorID
     ): Promise<Group> {

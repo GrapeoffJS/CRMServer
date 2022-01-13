@@ -15,7 +15,7 @@ export class AuthenticationService {
         private readonly jwtService: JwtService
     ) {}
 
-    public async authenticate(login: string, password: string) {
+    async authenticate(login: string, password: string) {
         const candidate = await this.CRMUserModel.findOne({ login }).select(
             '+password'
         );

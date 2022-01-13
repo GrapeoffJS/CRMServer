@@ -19,7 +19,7 @@ export class NotesService {
         private readonly NoteModel: ReturnModelType<typeof Note>
     ) {}
 
-    public async addNote(
+    async addNote(
         owner_id: string,
         { text }: CreateNoteDTO,
         { name, surname, midname }: CRMUser
@@ -65,7 +65,7 @@ export class NotesService {
         ]);
     }
 
-    public async deleteNote(id: string): Promise<Pupil> {
+    async deleteNote(id: string): Promise<Pupil> {
         const note = await this.NoteModel.findById(id);
 
         if (!note) {

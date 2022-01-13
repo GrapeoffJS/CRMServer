@@ -14,7 +14,7 @@ export class ScheduleController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSetGroupSchedule))
     @Post(':id/Schedule')
-    public async addGlobalSchedule(
+    async addGlobalSchedule(
         @Param() { id }: MongoID,
         @Body() schedule: Schedule[]
     ) {
@@ -28,7 +28,7 @@ export class ScheduleController {
         )
     )
     @Put(':id/Pupils/:pupilID/Schedule')
-    public async updatePupilSchedule(
+    async updatePupilSchedule(
         @Param() { id }: GroupID,
         @Param() { pupilID }: PupilID,
         @Body() schedule: Schedule[]

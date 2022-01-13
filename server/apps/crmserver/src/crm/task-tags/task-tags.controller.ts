@@ -18,17 +18,17 @@ export class TaskTagsController {
     constructor(private readonly taskTagsService: TaskTagsService) {}
 
     @Get()
-    public async findAll() {
+    async findAll() {
         return await this.taskTagsService.findAll();
     }
 
     @Post()
-    public async create(@Body() createTaskTagDTO: CreateTaskTagDTO) {
+    async create(@Body() createTaskTagDTO: CreateTaskTagDTO) {
         return this.taskTagsService.create(createTaskTagDTO);
     }
 
     @Patch(':id')
-    public async update(
+    async update(
         @Param() { id }: MongoID,
         @Body() updateTaskTagDTO: UpdateTaskTagDTO
     ) {
@@ -36,7 +36,7 @@ export class TaskTagsController {
     }
 
     @Delete(':id')
-    public async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoID) {
         return await this.taskTagsService.delete(id);
     }
 }

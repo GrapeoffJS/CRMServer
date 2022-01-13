@@ -21,7 +21,7 @@ export class CrudService {
         private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
-    public async create(createGroupDTO: CreateGroupDTO): Promise<Group> {
+    async create(createGroupDTO: CreateGroupDTO): Promise<Group> {
         if (createGroupDTO.tutor === '') createGroupDTO.tutor = null;
 
         const tutor = await this.CRMUserModel.findById(createGroupDTO.tutor);
@@ -70,7 +70,7 @@ export class CrudService {
         ]);
     }
 
-    public async findAll(
+    async findAll(
         limit: number,
         offset: number,
         trial = false,
@@ -114,7 +114,7 @@ export class CrudService {
         };
     }
 
-    public async findById(
+    async findById(
         id: string,
         dataPermissions: DataPermissions
     ): Promise<Group> {
@@ -151,7 +151,7 @@ export class CrudService {
         ]);
     }
 
-    public async findByIds(
+    async findByIds(
         ids: string[],
         dataPermissions: DataPermissions
     ): Promise<Group[]> {
@@ -176,10 +176,7 @@ export class CrudService {
             ]);
     }
 
-    public async delete(
-        id: string,
-        dataPermissions: DataPermissions
-    ): Promise<Group> {
+    async delete(id: string, dataPermissions: DataPermissions): Promise<Group> {
         const group = await this.GroupModel.findByIdAndDelete(id).select(
             dataPermissions.forGroup
         );
@@ -206,7 +203,7 @@ export class CrudService {
         ]);
     }
 
-    public async edit(
+    async edit(
         id: string,
         updateGroupDTO: UpdateGroupDTO,
         dataPermissions: DataPermissions

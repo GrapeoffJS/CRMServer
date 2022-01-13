@@ -21,24 +21,22 @@ export class SalesFunnelController {
     constructor(private readonly SalesFunnelService: SalesFunnelService) {}
 
     @Post()
-    public async create(
-        @Body() createSalesFunnelStepDTO: CreateSalesFunnelStepDTO
-    ) {
+    async create(@Body() createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
         return await this.SalesFunnelService.create(createSalesFunnelStepDTO);
     }
 
     @Get()
-    public async findAll() {
+    async findAll() {
         return await this.SalesFunnelService.findAll();
     }
 
     @Get(':order')
-    public async getByOrder(@Param('order', ParseIntPipe) order: number) {
+    async getByOrder(@Param('order', ParseIntPipe) order: number) {
         return await this.SalesFunnelService.findByOrder(order);
     }
 
     @Patch(':id')
-    public async edit(
+    async edit(
         @Param() { id }: MongoID,
         @Body() updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
     ) {
@@ -46,12 +44,12 @@ export class SalesFunnelController {
     }
 
     @Delete(':id')
-    public async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoID) {
         return await this.SalesFunnelService.delete(id);
     }
 
     @Put()
-    public async changeOrders(@Body() changeOrderDTO: ChangeOrderDTO[]) {
+    async changeOrders(@Body() changeOrderDTO: ChangeOrderDTO[]) {
         return await this.SalesFunnelService.changeOrders(changeOrderDTO);
     }
 }

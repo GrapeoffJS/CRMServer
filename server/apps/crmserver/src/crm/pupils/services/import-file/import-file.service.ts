@@ -19,7 +19,7 @@ export class ImportFileService {
         >
     ) {}
 
-    public async uploadCSV(file: Express.Multer.File) {
+    async uploadCSV(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];
         const salesFunnelStep = await this.SalesFunnelStepModel.findOne({
             order: 1
@@ -60,7 +60,7 @@ export class ImportFileService {
         return;
     }
 
-    public async uploadXLSX(file: Express.Multer.File) {
+    async uploadXLSX(file: Express.Multer.File) {
         const errorsOnLines: number[] = [];
         const salesFunnelStep = await this.SalesFunnelStepModel.findOne({
             order: 1

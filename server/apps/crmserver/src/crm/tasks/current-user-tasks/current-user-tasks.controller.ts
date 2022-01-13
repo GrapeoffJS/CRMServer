@@ -14,7 +14,7 @@ export class CurrentUserTasksController {
     ) {}
 
     @Get()
-    public async findAll(@Query('tag') tags, @Req() request: Request) {
+    async findAll(@Query('tag') tags, @Req() request: Request) {
         const { id } = this.JWTService.decode(
             request.headers.authorization.split(' ')[1]
         ) as DocumentType<CRMUser>;

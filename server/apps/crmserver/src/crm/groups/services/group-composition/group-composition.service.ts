@@ -19,7 +19,7 @@ export class GroupCompositionService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
-    public async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
+    async addPupils(id: string, pupilsToAdd: string[]): Promise<Group> {
         const group = await this.GroupModel.findById(id);
 
         if (!group) {
@@ -69,7 +69,7 @@ export class GroupCompositionService {
         ]);
     }
 
-    public async deletePupil(groupId: string, pupilId: string) {
+    async deletePupil(groupId: string, pupilId: string) {
         const group = await this.GroupModel.findById(groupId);
         const pupil = await this.PupilModel.findById(pupilId);
 

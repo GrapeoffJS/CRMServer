@@ -11,7 +11,7 @@ export class CurrentUserTasksService {
         private readonly TaskModel: ReturnModelType<typeof Task>
     ) {}
 
-    public async findAll(tags: string[] | undefined, id: string) {
+    async findAll(tags: string[] | undefined, id: string) {
         const tagsFilter =
             typeof tags === 'object'
                 ? {

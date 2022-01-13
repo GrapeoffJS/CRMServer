@@ -23,7 +23,7 @@ export class CRMAccountsController {
     constructor(private readonly CRMAccountsService: CRMAccountsService) {}
 
     @Get()
-    public async findAll(
+    async findAll(
         @Query() { limit, offset }: PaginationDTO,
         @Query('accountType') accountTypes: AccountTypes[],
         @Res() response: Response
@@ -38,17 +38,17 @@ export class CRMAccountsController {
     }
 
     @Get(':id')
-    public async findById(@Param() { id }: MongoID) {
+    async findById(@Param() { id }: MongoID) {
         return await this.CRMAccountsService.findById(id);
     }
 
     @Post()
-    public async create(@Body() createUserDTO: CreateCRMUserDTO) {
+    async create(@Body() createUserDTO: CreateCRMUserDTO) {
         return await this.CRMAccountsService.create(createUserDTO);
     }
 
     @Patch(':id')
-    public async edit(
+    async edit(
         @Param() { id }: MongoID,
         @Body() updateCRMUserDTO: UpdateCRMUserDTO
     ) {
@@ -56,7 +56,7 @@ export class CRMAccountsController {
     }
 
     @Delete(':login')
-    public async delete(@Param('login') login: string) {
+    async delete(@Param('login') login: string) {
         return await this.CRMAccountsService.delete(login);
     }
 }

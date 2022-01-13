@@ -12,21 +12,21 @@ export class StatusesService {
         private readonly StatusModel: ReturnModelType<typeof Status>
     ) {}
 
-    public async findAll() {
+    async findAll() {
         return this.StatusModel.find();
     }
 
-    public async create(createStatusDTO: CreateStatusDTO) {
+    async create(createStatusDTO: CreateStatusDTO) {
         return this.StatusModel.create(createStatusDTO);
     }
 
-    public async update(id: string, updateStatusDTO: UpdateStatusDTO) {
+    async update(id: string, updateStatusDTO: UpdateStatusDTO) {
         await this.StatusModel.findByIdAndUpdate(id, updateStatusDTO);
 
         return this.StatusModel.findById(id);
     }
 
-    public async delete(id: string) {
+    async delete(id: string) {
         return this.StatusModel.findByIdAndDelete(id);
     }
 }

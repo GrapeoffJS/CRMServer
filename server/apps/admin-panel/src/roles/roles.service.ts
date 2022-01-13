@@ -16,7 +16,7 @@ export class RolesService {
         private readonly RoleModel: ReturnModelType<typeof Role>
     ) {}
 
-    public async create(createRoleDTO: CreateRoleDTO) {
+    async create(createRoleDTO: CreateRoleDTO) {
         try {
             return await this.RoleModel.create(createRoleDTO);
         } catch (e) {
@@ -24,11 +24,11 @@ export class RolesService {
         }
     }
 
-    public async findAll() {
+    async findAll() {
         return this.RoleModel.find();
     }
 
-    public async delete(id: string) {
+    async delete(id: string) {
         const role = await this.RoleModel.findByIdAndDelete(id);
 
         if (!role) {
@@ -38,7 +38,7 @@ export class RolesService {
         return this.RoleModel.findById(id);
     }
 
-    public async edit(id: string, updateRoleDTO: UpdateRoleDTO) {
+    async edit(id: string, updateRoleDTO: UpdateRoleDTO) {
         const role = await this.RoleModel.findByIdAndUpdate(id, updateRoleDTO);
 
         if (!role) {

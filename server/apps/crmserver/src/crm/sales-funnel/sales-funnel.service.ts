@@ -17,13 +17,13 @@ export class SalesFunnelService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
-    public async findAll(limit: number) {
+    async findAll(limit: number) {
         return this.SalesFunnelStepModel.aggregate(
             getFindAllAggregation(limit)
         );
     }
 
-    public async findById(id: string, limit: number, offset: number) {
+    async findById(id: string, limit: number, offset: number) {
         return this.SalesFunnelStepModel.aggregate(
             getFindByIdAggregation(id, offset, limit)
         );

@@ -36,16 +36,14 @@ export class CrudController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreateGroup))
     @UsePipes(CreateGroupValidationPipe)
     @Post()
-    public async create(
-        @Body() createGroupDTO: CreateGroupDTO
-    ): Promise<Group> {
+    async create(@Body() createGroupDTO: CreateGroupDTO): Promise<Group> {
         return await this.crudService.create(createGroupDTO);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanGetGroupsList))
     @HttpCode(HttpStatus.OK)
     @Post('/getByIds')
-    public async findByIds(
+    async findByIds(
         @Body() { ids }: MongoIDs,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group[]> {
@@ -55,7 +53,7 @@ export class CrudController {
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanGetGroupsList))
     @HttpCode(HttpStatus.OK)
     @Post('/find')
-    public async findAll(
+    async findAll(
         @Query() { limit, offset }: PaginationDTO,
         @Query('trial') trial: boolean,
         @Body('filters') filters: FilterDTO,
@@ -75,7 +73,7 @@ export class CrudController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSeeGroupPage))
     @Get(':id')
-    public async findById(
+    async findById(
         @Param() { id }: MongoID,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group> {
@@ -84,7 +82,7 @@ export class CrudController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteGroup))
     @Delete(':id')
-    public async delete(
+    async delete(
         @Param() { id }: MongoID,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Group> {
@@ -93,7 +91,7 @@ export class CrudController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanEditGroup))
     @Patch(':id')
-    public async edit(
+    async edit(
         @Param() { id }: MongoID,
         @Body() updateGroupDTO: UpdateGroupDTO,
         @GetDataPermissions() dataPermissions: DataPermissions

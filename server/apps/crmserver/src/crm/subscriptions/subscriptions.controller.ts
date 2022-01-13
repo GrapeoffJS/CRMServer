@@ -8,12 +8,12 @@ export class SubscriptionsController {
     constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
     @Get()
-    public async findAll() {
+    async findAll() {
         return await this.subscriptionsService.findAll();
     }
 
     @Get(':id')
-    public async findById(@Param() { id }: MongoID) {
+    async findById(@Param() { id }: MongoID) {
         return await this.subscriptionsService.findById(id);
     }
 }

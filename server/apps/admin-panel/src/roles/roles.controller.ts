@@ -18,22 +18,22 @@ export class RolesController {
     constructor(private readonly RolesService: RolesService) {}
 
     @Post()
-    public async create(@Body() createRoleDTO: CreateRoleDTO) {
+    async create(@Body() createRoleDTO: CreateRoleDTO) {
         return await this.RolesService.create(createRoleDTO);
     }
 
     @Get()
-    public async findAll() {
+    async findAll() {
         return await this.RolesService.findAll();
     }
 
     @Delete(':id')
-    public async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoID) {
         return await this.RolesService.delete(id);
     }
 
     @Patch(':id')
-    public async update(
+    async update(
         @Param() { id }: MongoID,
         @Body() updateRoleDTO: UpdateRoleDTO
     ) {

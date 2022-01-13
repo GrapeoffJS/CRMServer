@@ -23,19 +23,13 @@ export class GroupCompositionController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanAddPupilsToGroup))
     @Post(':id/Pupils')
-    public async addPupils(
-        @Param() { id }: MongoID,
-        @Body() { ids }: MongoIDs
-    ) {
+    async addPupils(@Param() { id }: MongoID, @Body() { ids }: MongoIDs) {
         return await this.pupilManipulationsService.addPupils(id, ids);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeleteGroupPupils))
     @Delete(':id/Pupils/:pupilID')
-    public async deletePupil(
-        @Param() { id }: GroupID,
-        @Param() { pupilID }: PupilID
-    ) {
+    async deletePupil(@Param() { id }: GroupID, @Param() { pupilID }: PupilID) {
         return await this.pupilManipulationsService.deletePupil(id, pupilID);
     }
 }

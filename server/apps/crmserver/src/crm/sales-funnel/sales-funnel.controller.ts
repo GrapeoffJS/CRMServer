@@ -13,13 +13,13 @@ export class SalesFunnelController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSalesFunnel))
     @Get()
-    public async findAll(@Query() { limit }: SalesFunnelLimitDTO) {
+    async findAll(@Query() { limit }: SalesFunnelLimitDTO) {
         return await this.salesFunnelService.findAll(limit);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSalesFunnel))
     @Get(':id')
-    public async findById(
+    async findById(
         @Param() { id }: MongoID,
         @Query() { limit, offset }: SalesFunnelPaginationDTO
     ) {

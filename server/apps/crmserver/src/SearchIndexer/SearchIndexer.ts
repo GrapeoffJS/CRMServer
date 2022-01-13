@@ -8,7 +8,7 @@ export class SearchIndexer {
     private static _instance: SearchIndexer;
     private _client: Client;
 
-    public static getInstance(): SearchIndexer {
+    static getInstance(): SearchIndexer {
         if (!SearchIndexer._instance) {
             SearchIndexer._instance = new SearchIndexer();
             return SearchIndexer._instance;
@@ -17,11 +17,11 @@ export class SearchIndexer {
         return SearchIndexer._instance;
     }
 
-    public connect(connectionOptions: ClientOptions): void {
+    connect(connectionOptions: ClientOptions): void {
         this._client = new Client(connectionOptions);
     }
 
-    public indexPupil(pupil: DocumentType<Pupil>): void {
+    indexPupil(pupil: DocumentType<Pupil>): void {
         this._client.index({
             index: 'pupils',
             id: pupil.id,
@@ -39,7 +39,7 @@ export class SearchIndexer {
         });
     }
 
-    public updatePupil(pupil: DocumentType<Pupil>): void {
+    updatePupil(pupil: DocumentType<Pupil>): void {
         this._client.update({
             id: pupil.id,
             index: 'pupils',
@@ -59,11 +59,11 @@ export class SearchIndexer {
         });
     }
 
-    public deletePupil(pupil: DocumentType<Pupil>): void {
+    deletePupil(pupil: DocumentType<Pupil>): void {
         this._client.delete({ id: pupil.id, index: 'pupils' });
     }
 
-    public indexGroup(group: DocumentType<Group>): void {
+    indexGroup(group: DocumentType<Group>): void {
         this._client.index({
             index: 'groups',
             id: group.id,
@@ -76,7 +76,7 @@ export class SearchIndexer {
         });
     }
 
-    public updateGroup(group: DocumentType<Group>): void {
+    updateGroup(group: DocumentType<Group>): void {
         this._client.update({
             id: group.id,
             index: 'groups',
@@ -91,11 +91,11 @@ export class SearchIndexer {
         });
     }
 
-    public deleteGroup(group: DocumentType<Group>): void {
+    deleteGroup(group: DocumentType<Group>): void {
         this._client.delete({ id: group.id, index: 'groups' });
     }
 
-    public indexCRMUser(user: DocumentType<CRMUser>) {
+    indexCRMUser(user: DocumentType<CRMUser>) {
         this._client.index({
             id: user.id,
             index: 'crmusers',
@@ -109,7 +109,7 @@ export class SearchIndexer {
         });
     }
 
-    public updateCRMUser(user: DocumentType<CRMUser>) {
+    updateCRMUser(user: DocumentType<CRMUser>) {
         this._client.index({
             id: user.id,
             index: 'crmusers',
@@ -125,7 +125,7 @@ export class SearchIndexer {
         });
     }
 
-    public deleteCRMUser(user: DocumentType<CRMUser>) {
+    deleteCRMUser(user: DocumentType<CRMUser>) {
         this._client.delete({ id: user.id, index: 'crmusers' });
     }
 }

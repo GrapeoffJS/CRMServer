@@ -16,11 +16,11 @@ export class CrudService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
-    public async create(createPupilDTO: CreatePupilDTO): Promise<Pupil> {
+    async create(createPupilDTO: CreatePupilDTO): Promise<Pupil> {
         return this.PupilModel.create(createPupilDTO);
     }
 
-    public async findAll(
+    async findAll(
         limit: number,
         offset: number,
         filters: FilterDTO,
@@ -61,7 +61,7 @@ export class CrudService {
         };
     }
 
-    public async findById(
+    async findById(
         id: string,
         dataPermissions: DataPermissions
     ): Promise<Pupil> {
@@ -179,10 +179,7 @@ export class CrudService {
         return populated[0];
     }
 
-    public async delete(
-        id: string,
-        dataPermissions: DataPermissions
-    ): Promise<Pupil> {
+    async delete(id: string, dataPermissions: DataPermissions): Promise<Pupil> {
         const pupil = await this.PupilModel.findByIdAndDelete(id)
             .select(dataPermissions.forPupil)
             .populate({
@@ -197,7 +194,7 @@ export class CrudService {
         return pupil;
     }
 
-    public async edit(
+    async edit(
         id: string,
         updatePupilDTO: UpdatePupilDTO,
         dataPermissions: DataPermissions

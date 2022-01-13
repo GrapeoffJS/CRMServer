@@ -18,17 +18,17 @@ export class StatusesController {
     constructor(private readonly statusesService: StatusesService) {}
 
     @Get()
-    public async findAll() {
+    async findAll() {
         return await this.statusesService.findAll();
     }
 
     @Post()
-    public async create(@Body() createStatusDTO: CreateStatusDTO) {
+    async create(@Body() createStatusDTO: CreateStatusDTO) {
         return this.statusesService.create(createStatusDTO);
     }
 
     @Patch(':id')
-    public async update(
+    async update(
         @Param() { id }: MongoID,
         @Body() updateStatusDTO: UpdateStatusDTO
     ) {
@@ -36,7 +36,7 @@ export class StatusesController {
     }
 
     @Delete(':id')
-    public async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoID) {
         return await this.statusesService.delete(id);
     }
 }

@@ -14,10 +14,7 @@ export class ScheduleService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
-    public async addGlobalSchedule(
-        id: string,
-        schedule: Schedule[]
-    ): Promise<Group> {
+    async addGlobalSchedule(id: string, schedule: Schedule[]): Promise<Group> {
         const group = await this.GroupModel.findById(id);
 
         if (!group) {
@@ -56,7 +53,7 @@ export class ScheduleService {
         ]);
     }
 
-    public async updatePupilSchedule(
+    async updatePupilSchedule(
         groupId: string,
         pupilId: string,
         schedule: Schedule[]

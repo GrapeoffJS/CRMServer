@@ -64,15 +64,15 @@ export default class CRMUser extends TimeStamps {
     @prop({ type: String, default: null })
     subject: string;
 
-    public deleteGroup(id: string): void {
+    deleteGroup(id: string): void {
         this.groups.splice(this.groups.indexOf(id), 1);
     }
 
-    public updateGroupsList(groupId: string) {
+    updateGroupsList(groupId: string) {
         this.groups = [...new Set(this.groups).add(groupId)];
     }
 
-    public addGroupToHistory(groupName: string, date: string) {
+    addGroupToHistory(groupName: string, date: string) {
         this.groupsHistory.push({ group_name: groupName, additionDate: date });
     }
 }

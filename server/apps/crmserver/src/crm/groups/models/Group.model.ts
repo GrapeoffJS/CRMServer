@@ -49,11 +49,11 @@ export class Group extends TimeStamps {
     @prop({ type: Boolean, default: false })
     trial: boolean;
 
-    public deletePupil(id: string): void {
+    deletePupil(id: string): void {
         this.pupils.splice(this.pupils.indexOf(id), 1);
     }
 
-    public addPupils(ids: string[]): void {
+    addPupils(ids: string[]): void {
         this.pupils = [...new Set<string>(this.pupils.concat(ids))];
     }
 }

@@ -32,14 +32,14 @@ export class CrudController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanCreatePupil))
     @Post()
-    public async create(@Body() data: CreatePupilDTO): Promise<Pupil> {
+    async create(@Body() data: CreatePupilDTO): Promise<Pupil> {
         return await this.crudService.create(data);
     }
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanGetPupilsList))
     @HttpCode(HttpStatus.OK)
     @Post('/find')
-    public async findAll(
+    async findAll(
         @Query() { limit, offset }: PaginationDTO,
         @Body('filters') filters: FilterDTO,
         @GetDataPermissions() dataPermissions: DataPermissions,
@@ -57,7 +57,7 @@ export class CrudController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanSeePupilPage))
     @Get('/:id')
-    public async findById(
+    async findById(
         @Param() { id }: MongoID,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Pupil> {
@@ -66,7 +66,7 @@ export class CrudController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanDeletePupil))
     @Delete('/:id')
-    public async delete(
+    async delete(
         @Param() { id }: MongoID,
         @GetDataPermissions() dataPermissions: DataPermissions
     ): Promise<Pupil> {
@@ -75,7 +75,7 @@ export class CrudController {
 
     @UseGuards(ActionPermissionsGuard(ActionPermissions.CanEditPupil))
     @Patch('/:id')
-    public async edit(
+    async edit(
         @Param() { id }: MongoID,
         @Body() updatePupilDTO: UpdatePupilDTO,
         @GetDataPermissions() dataPermissions: DataPermissions

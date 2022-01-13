@@ -12,21 +12,21 @@ export class TaskTagsService {
         private readonly TaskTagModel: ReturnModelType<typeof TaskTag>
     ) {}
 
-    public async findAll() {
+    async findAll() {
         return this.TaskTagModel.find();
     }
 
-    public async create(createTaskTagDTO: CreateTaskTagDTO) {
+    async create(createTaskTagDTO: CreateTaskTagDTO) {
         return this.TaskTagModel.create(createTaskTagDTO);
     }
 
-    public async update(id: string, updateTaskTagDTO: UpdateTaskTagDTO) {
+    async update(id: string, updateTaskTagDTO: UpdateTaskTagDTO) {
         await this.TaskTagModel.findByIdAndUpdate(id, updateTaskTagDTO);
 
         return this.TaskTagModel.findById(id);
     }
 
-    public async delete(id: string) {
+    async delete(id: string) {
         return this.TaskTagModel.findByIdAndDelete(id);
     }
 }

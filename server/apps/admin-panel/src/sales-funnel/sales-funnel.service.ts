@@ -22,20 +22,17 @@ export class SalesFunnelService {
         private readonly PupilModel: ReturnModelType<typeof Pupil>
     ) {}
 
-    public create(createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
+    create(createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
         return this.SalesFunnelStepModel.create(createSalesFunnelStepDTO);
     }
 
-    public async findAll() {
+    async findAll() {
         return this.SalesFunnelStepModel.find()
             .select({ pupils: 0 })
             .sort({ order: 1 });
     }
 
-    public async edit(
-        id: string,
-        updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
-    ) {
+    async edit(id: string, updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO) {
         await this.SalesFunnelStepModel.updateOne(
             { _id: id },
             updateSalesFunnelStepDTO
@@ -44,7 +41,7 @@ export class SalesFunnelService {
         return this.SalesFunnelStepModel.findById(id);
     }
 
-    public async changeOrders(changeOrderDTO: ChangeOrderDTO[]) {
+    async changeOrders(changeOrderDTO: ChangeOrderDTO[]) {
         for (const step of changeOrderDTO) {
             await this.SalesFunnelStepModel.updateOne(
                 { _id: step.id },
@@ -55,7 +52,7 @@ export class SalesFunnelService {
         return this.SalesFunnelStepModel.find().select({ pupils: 0 });
     }
 
-    public async delete(id: string) {
+    async delete(id: string) {
         const stepToDelete = await this.SalesFunnelStepModel.findById(id);
 
         if (!stepToDelete) {
@@ -81,7 +78,7 @@ export class SalesFunnelService {
         return stepToDelete;
     }
 
-    public async findByOrder(order: number) {
+    async findByOrder(order: number) {
         return this.SalesFunnelStepModel.findOne({ order });
     }
 }
