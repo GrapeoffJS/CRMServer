@@ -4,21 +4,23 @@ module.exports = {
         project: 'tsconfig.json',
         sourceType: 'module'
     },
-    plugins: ['@typescript-eslint/eslint-plugin'],
+    plugins: ['@typescript-eslint/eslint-plugin', 'sonarjs'],
     extends: [
         'plugin:@typescript-eslint/recommended',
-        'plugin:prettier/recommended'
+        'plugin:prettier/recommended',
+        'plugin:sonarjs/recommended'
     ],
     root: true,
     env: {
         node: true,
         jest: true
     },
-    ignorePatterns: ['.eslintrc.js'],
+    ignorePatterns: ['.eslintrc.js', '*.spec.ts'],
     rules: {
         '@typescript-eslint/interface-name-prefix': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
-        '@typescript-eslint/no-explicit-any': 'off'
+        '@typescript-eslint/no-explicit-any': 'off',
+        'sonarjs/no-duplicate-string': 'off'
     }
 };
