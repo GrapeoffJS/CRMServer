@@ -4,15 +4,17 @@ import moment from "moment"
 import {CloseOutlined} from "@ant-design/icons"
 
 import {CheckboxContainer, DeleteButton, OpacityContainer, OpacityParagraph, WrapperTaskComponent} from "./task.styled"
-import {deleteTask} from "./requests/deleteTask"
 import Url from "../../../../../../url/url"
-import {editDoneTask} from "./requests/editDoneTask"
+import {editTask} from "./requests/editTask"
 import {StatusesBlock} from "../../../../sales-funnel/helpers/sales-funnel-styled";
+import {createComment} from "./requests/createComment";
+import {swallErr} from "../../../../../../alert/alert";
 
-export const TaskComponent = ({task, setRelTasks}) => {
+export const TaskComponent = ({task, setRelTasks, setComments, _id}) => {
 
   // useState
   const [done, setDone] = useState(task.done)
+  console.log(task)
   // useState
 
   // methods
@@ -28,16 +30,32 @@ export const TaskComponent = ({task, setRelTasks}) => {
   }
   const onClickDeleteTask = async (id) => {
     try {
-      await deleteTask(Url, id)
+      await editTask(Url, id, {archived: true})
       setRelTasks(prev => prev.filter(task => task._id !== id))
     } catch (err) {
       console.log(err)
     }
   }
-  const onChangeEditDone = async (id, ev) => {
-    const checked = ev.target.checked
-    await editDoneTask(Url, id, {done: checked})
-    setDone(prev => prev = checked)
+  async function onChangeEditDone(id, ev) {
+    try {
+      const checked = ev.target.checked
+
+      await editTask(Url, id, {done: true, completedOn: moment().toISOString(), archived: true})
+
+      setRelTasks(prev => prev.filter(task => task._id !== id))
+      setDone(prev => prev = checked)
+
+      await createComment(Url, _id, {text: `${task.name}\n${task.text}`, color: "crimson"})
+      setComments(prev => [...prev, {
+        author: `${resFIO("surname")} ${resFIO("name")} ${resFIO("midname")}`,
+        content: <><p style={{color: "crimson"}}>{task.name}</p><p>{task.text}</p></>,
+        deadline: moment().get().toISOString(),
+        color: "crimson"
+      }])
+    } catch (err) {
+      console.log(err)
+      swallErr("Ошибка!", "Что-то пошло не так...")
+    }
   }
   // methods
 

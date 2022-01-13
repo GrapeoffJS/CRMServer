@@ -22,24 +22,26 @@ const DrawerChat = React.memo(({notes, update, _id, fio, tasksObj}) => {
 
     notesLocal.forEach((item, i) => {
 
-        let {author, date, text} = item
+        let {author, date, text, color} = item
 
         if (comments[0]) {
             if (author + text !== comments[0].author + comments[0].content.props.children) {
                 notesGlobal.push(
                     {
-                        author: author,
+                        author,
                         content: <p>{text}</p>,
                         datetime: date,
+                        color
                     }
                 )
             }
         } else {
             notesGlobal.push(
                 {
-                    author: author,
+                    author,
                     content: <p>{text}</p>,
                     datetime: date,
+                    color
                 }
             )
         }

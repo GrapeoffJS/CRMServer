@@ -16,7 +16,7 @@ const errorHandler = (onFunction, error, ...additionalActions) => {
     let { status, data } = error.response
 
     if (data.message === 'Bad Request' && notification) {
-      swallErr('Не возможно удалить воронку в которой есть ученик')
+      swallErr('Невозможно удалить воронку в которой есть ученик')
     } else if (status == 404 && notification) {
       swallErr('Сервер не найден')
     } else if (status == 401) {

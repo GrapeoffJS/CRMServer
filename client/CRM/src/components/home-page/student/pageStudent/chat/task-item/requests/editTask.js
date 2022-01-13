@@ -1,7 +1,7 @@
 import axios from "axios"
 
-export const editDoneTask = async (url, id, done) => {
-  await axios.patch(`${url}/CRM/Tasks/${id}`, done, {
+export const editTask = async (url, id, property) => {
+  await axios.patch(`${url}/CRM/Tasks/${id}`, property, {
     headers: {
       authorization: `Bearer ${localStorage.getItem("tokenID")}`
     }

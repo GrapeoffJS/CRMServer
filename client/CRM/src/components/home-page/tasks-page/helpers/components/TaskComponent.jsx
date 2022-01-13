@@ -3,11 +3,13 @@ import {useState} from "react";
 
 import {BoldContainer, OpacityParagraph, TaskComponentStyled} from "../Tasks.styled";
 import {CustomCheckbox} from "./CustomCheckbox";
-import {editDoneTask} from "../../../student/pageStudent/chat/task-item/requests/editDoneTask";
+import {editTask} from "../../../student/pageStudent/chat/task-item/requests/editTask";
 import Url from "../../../../../url/url";
 import {StatusesBlock} from "../../../sales-funnel/helpers/sales-funnel-styled";
 import {Tag} from "antd";
 import {NavLink} from "react-router-dom";
+import {createComment} from "../../../student/pageStudent/chat/task-item/requests/createComment";
+import {swallErr} from "../../../../../alert/alert";
 
 export const TaskComponent = ({task, type, setCompletedTasks, setTasks, setReservTasks}) => {
 
@@ -17,12 +19,20 @@ export const TaskComponent = ({task, type, setCompletedTasks, setTasks, setReser
 
   // methods
   const onClickChangeActive = async () => {
-    setActive(prev => prev = !prev)
-    await editDoneTask(Url, task._id, {done: true})
-    task.done = true
-    setCompletedTasks(prev => prev = [...prev, task].filter(complTask => complTask.done))
-    if (type !== "Today") setReservTasks(prev => prev = [...prev, task])
-    setTasks(prev => prev = prev.filter(uncompleTask => !uncompleTask.done))
+    try {
+      setActive(prev => prev = !prev)
+      if (task.for) {
+        await createComment(Url, task.for, {text: `${task.name}\n${task.text}`, color: "crimson"})
+      }
+      await editTask(Url, task._id, {done: true, archived: true, completedOn: moment().toISOString()})
+      task.done = true
+      setCompletedTasks(prev => prev = [...prev, task].filter(complTask => complTask.done))
+      if (type !== "Today") setReservTasks(prev => prev = [...prev, task])
+      setTasks(prev => prev = prev.filter(uncompleTask => !uncompleTask.done))
+    } catch (err) {
+      console.log(err)
+      swallErr("Ошибка!", "Что-то пошло не так...")
+    }
   }
   // methods
 

@@ -2,7 +2,7 @@ import { Table, Tag } from 'antd'
 import moment from 'moment'
 
 import { DeleteOutlined } from '@ant-design/icons'
-import { editDoneTask } from '../../../student/pageStudent/chat/task-item/requests/editDoneTask'
+import { editTask } from '../../../student/pageStudent/chat/task-item/requests/editTask'
 import Url from '../../../../../url/url'
 import { StatusesBlock } from '../../../sales-funnel/helpers/sales-funnel-styled'
 import { BreakWordParagraph } from '../Tasks.styled'
@@ -10,7 +10,6 @@ import { NavLink } from 'react-router-dom'
 
 export const TableTab = ({
   tasks,
-  children,
   setReservTasks,
   setCompletedTasks,
   setTodayTasks,
@@ -19,7 +18,7 @@ export const TableTab = ({
 }) => {
   // methods
   const onClickChangeActive = async (task) => {
-    await editDoneTask(Url, task._id, { done: true })
+    await editTask(Url, task._id, { done: true })
     task.done = true
     setCompletedTasks((prev) => {
       prev = [...prev, task].filter((complTask) => complTask.done)
