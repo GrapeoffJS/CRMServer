@@ -30,7 +30,7 @@ export class NotesService {
             throw new NotFoundException();
         }
 
-        if (!text) {
+        if (!createNoteDTO.text) {
             throw new BadRequestException();
         }
 
