@@ -13,4 +13,7 @@ export class Note {
 
     @prop({ type: String, required: true })
     text: string;
+
+    @prop({ type: String })
+    color: string;
 }
