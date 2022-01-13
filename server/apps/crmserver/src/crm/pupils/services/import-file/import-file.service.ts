@@ -56,8 +56,6 @@ export class ImportFileService {
         for (const pupil of pupils) {
             await this.PupilModel.create(pupil);
         }
-
-        return;
     }
 
     async uploadXLSX(file: Express.Multer.File) {

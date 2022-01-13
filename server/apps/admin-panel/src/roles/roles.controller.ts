@@ -15,21 +15,21 @@ import { MongoID } from '../../../DTO/MongoID';
 
 @Controller(path)
 export class RolesController {
-    constructor(private readonly RolesService: RolesService) {}
+    constructor(private readonly rolesService: RolesService) {}
 
     @Post()
     async create(@Body() createRoleDTO: CreateRoleDTO) {
-        return await this.RolesService.create(createRoleDTO);
+        return await this.rolesService.create(createRoleDTO);
     }
 
     @Get()
     async findAll() {
-        return await this.RolesService.findAll();
+        return await this.rolesService.findAll();
     }
 
     @Delete(':id')
     async delete(@Param() { id }: MongoID) {
-        return await this.RolesService.delete(id);
+        return await this.rolesService.delete(id);
     }
 
     @Patch(':id')
@@ -37,6 +37,6 @@ export class RolesController {
         @Param() { id }: MongoID,
         @Body() updateRoleDTO: UpdateRoleDTO
     ) {
-        return await this.RolesService.edit(id, updateRoleDTO);
+        return await this.rolesService.edit(id, updateRoleDTO);
     }
 }

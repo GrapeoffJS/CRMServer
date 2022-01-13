@@ -3,8 +3,6 @@ import { GroupsHistoryItem } from './GroupsHistoryItem';
 import { post, prop } from '@typegoose/typegoose';
 import { Role } from '../../roles/models/Role.model';
 import { AccountTypes } from './AccountTypes';
-import { ActionPermissions } from '../../roles/models/ActionPermissions';
-import { DataPermissions } from '../../roles/models/DataPermissions';
 import { SearchIndexer } from '../../../../crmserver/src/SearchIndexer/SearchIndexer';
 import { WorkHours } from '../../work-hours/models/WorkHours';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
@@ -41,12 +39,6 @@ export default class CRMUser extends TimeStamps {
 
     @prop({ type: Role, ref: () => Role, default: null })
     role: Role | string | null;
-
-    @prop({ type: Array, default: null })
-    localActionPermissions: ActionPermissions[];
-
-    @prop({ type: Array, default: null })
-    localDataPermissions: DataPermissions;
 
     @prop({
         type: () => [Group],

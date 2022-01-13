@@ -21,22 +21,6 @@ export class CRMAccountsService {
     ) {}
 
     async create(createUserDTO: CreateCRMUserDTO) {
-        if (
-            createUserDTO.role &&
-            (createUserDTO.localActionPermissions ||
-                createUserDTO.localDataPermissions)
-        ) {
-            throw new BadRequestException();
-        } else if (
-            !createUserDTO.role &&
-            !(
-                createUserDTO.localActionPermissions ||
-                createUserDTO.localDataPermissions
-            )
-        ) {
-            throw new BadRequestException();
-        }
-
         const salt = await genSalt();
 
         createUserDTO.password = await hash(createUserDTO.password, salt);
@@ -89,14 +73,6 @@ export class CRMAccountsService {
     }
 
     async edit(id: string, updateCRMUserDTO: UpdateCRMUserDTO) {
-        if (
-            updateCRMUserDTO.role &&
-            (updateCRMUserDTO.localActionPermissions ||
-                updateCRMUserDTO.localDataPermissions)
-        ) {
-            throw new BadRequestException();
-        }
-
         const user = await this.CRMUserModel.findOneAndUpdate(
             { _id: id },
             updateCRMUserDTO

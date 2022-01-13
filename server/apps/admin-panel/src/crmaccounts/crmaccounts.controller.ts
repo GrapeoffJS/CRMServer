@@ -20,7 +20,7 @@ import { PaginationDTO } from '../../../DTO/PaginationDTO';
 
 @Controller(path)
 export class CRMAccountsController {
-    constructor(private readonly CRMAccountsService: CRMAccountsService) {}
+    constructor(private readonly crmAccountsService: CRMAccountsService) {}
 
     @Get()
     async findAll(
@@ -28,7 +28,7 @@ export class CRMAccountsController {
         @Query('accountType') accountTypes: AccountTypes[],
         @Res() response: Response
     ) {
-        const { accounts, count } = await this.CRMAccountsService.findAll(
+        const { accounts, count } = await this.crmAccountsService.findAll(
             Number(limit),
             Number(offset),
             accountTypes
@@ -39,12 +39,12 @@ export class CRMAccountsController {
 
     @Get(':id')
     async findById(@Param() { id }: MongoID) {
-        return await this.CRMAccountsService.findById(id);
+        return await this.crmAccountsService.findById(id);
     }
 
     @Post()
     async create(@Body() createUserDTO: CreateCRMUserDTO) {
-        return await this.CRMAccountsService.create(createUserDTO);
+        return await this.crmAccountsService.create(createUserDTO);
     }
 
     @Patch(':id')
@@ -52,11 +52,11 @@ export class CRMAccountsController {
         @Param() { id }: MongoID,
         @Body() updateCRMUserDTO: UpdateCRMUserDTO
     ) {
-        return await this.CRMAccountsService.edit(id, updateCRMUserDTO);
+        return await this.crmAccountsService.edit(id, updateCRMUserDTO);
     }
 
     @Delete(':login')
     async delete(@Param('login') login: string) {
-        return await this.CRMAccountsService.delete(login);
+        return await this.crmAccountsService.delete(login);
     }
 }

@@ -18,21 +18,21 @@ import { path } from './path';
 
 @Controller(path)
 export class SalesFunnelController {
-    constructor(private readonly SalesFunnelService: SalesFunnelService) {}
+    constructor(private readonly salesFunnelService: SalesFunnelService) {}
 
     @Post()
     async create(@Body() createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
-        return await this.SalesFunnelService.create(createSalesFunnelStepDTO);
+        return await this.salesFunnelService.create(createSalesFunnelStepDTO);
     }
 
     @Get()
     async findAll() {
-        return await this.SalesFunnelService.findAll();
+        return await this.salesFunnelService.findAll();
     }
 
     @Get(':order')
     async getByOrder(@Param('order', ParseIntPipe) order: number) {
-        return await this.SalesFunnelService.findByOrder(order);
+        return await this.salesFunnelService.findByOrder(order);
     }
 
     @Patch(':id')
@@ -40,16 +40,16 @@ export class SalesFunnelController {
         @Param() { id }: MongoID,
         @Body() updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
     ) {
-        return await this.SalesFunnelService.edit(id, updateSalesFunnelStepDTO);
+        return await this.salesFunnelService.edit(id, updateSalesFunnelStepDTO);
     }
 
     @Delete(':id')
     async delete(@Param() { id }: MongoID) {
-        return await this.SalesFunnelService.delete(id);
+        return await this.salesFunnelService.delete(id);
     }
 
     @Put()
     async changeOrders(@Body() changeOrderDTO: ChangeOrderDTO[]) {
-        return await this.SalesFunnelService.changeOrders(changeOrderDTO);
+        return await this.salesFunnelService.changeOrders(changeOrderDTO);
     }
 }

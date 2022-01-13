@@ -6,13 +6,13 @@ import { path } from './path';
 
 @Controller(path)
 export class WorkHoursController {
-    constructor(private readonly WorkHoursService: WorkHoursService) {}
+    constructor(private readonly workHoursService: WorkHoursService) {}
 
     @Put(':id')
     async create(
         @Param() { id }: MongoID,
         @Body() createWorkHoursDTO: CreateWorkHoursDTO
     ) {
-        return await this.WorkHoursService.create(id, createWorkHoursDTO);
+        return await this.workHoursService.create(id, createWorkHoursDTO);
     }
 }

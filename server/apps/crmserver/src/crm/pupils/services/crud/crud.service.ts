@@ -233,6 +233,7 @@ export class CrudService {
             ]);
     }
 
+    // eslint-disable-next-line sonarjs/cognitive-complexity
     private createFilterPipeline(filters: FilterDTO): any[] {
         if (!filters) return;
 
