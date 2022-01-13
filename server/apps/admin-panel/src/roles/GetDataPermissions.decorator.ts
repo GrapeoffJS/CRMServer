@@ -6,6 +6,6 @@ export const GetDataPermissions = createParamDecorator(
     (data: any, context: ExecutionContext) => {
         const user = context.switchToHttp().getRequest<ExtendedRequest>().user;
 
-        return (user.role as Role).dataPermissions || user.localDataPermissions;
+        return (user.role as Role).dataPermissions;
     }
 );

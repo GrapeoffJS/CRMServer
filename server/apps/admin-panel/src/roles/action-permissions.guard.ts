@@ -15,9 +15,7 @@ export const ActionPermissionsGuard = (
                 .switchToHttp()
                 .getRequest<ExtendedRequest>().user;
 
-            const actionPermissions =
-                (user.role as Role)?.actionPermissions ||
-                user.localActionPermissions;
+            const actionPermissions = (user.role as Role)?.actionPermissions;
 
             if (actionPermissions === null) {
                 return false;
