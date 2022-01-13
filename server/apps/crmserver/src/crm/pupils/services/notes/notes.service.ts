@@ -21,7 +21,7 @@ export class NotesService {
 
     async addNote(
         owner_id: string,
-        { text }: CreateNoteDTO,
+        createNoteDTO: CreateNoteDTO,
         { name, surname, midname }: CRMUser
     ): Promise<Pupil> {
         const pupil = await this.PupilModel.findById(owner_id);
@@ -36,7 +36,7 @@ export class NotesService {
 
         await this.NoteModel.create({
             owner_id,
-            text,
+            ...createNoteDTO,
             date: new Date(),
             author: `${surname} ${name} ${midname}`
         });
