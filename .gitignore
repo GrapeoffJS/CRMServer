@@ -1,10 +1,8 @@
 # compiled output
-/server/dist
+dist
 
-server/node_modules
-server/.env
-client/AdminPanel/node_modules
-client/CRM/node_modules
+node_modules
+.env
 
 # Logs
 logs

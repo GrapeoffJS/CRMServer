@@ -1,5 +1,0 @@
-/client/CRM/node_modules
-/client/AdminPanel/node_modules
-/server/node_modules
-docker-compose.yml
-*.md
