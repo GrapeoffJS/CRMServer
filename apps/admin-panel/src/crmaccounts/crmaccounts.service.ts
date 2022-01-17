@@ -8,62 +8,45 @@ import { CreateCRMUserDTO } from './DTO/CreateCRMUserDTO';
 import { genSalt, hash } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { AccountTypes } from './models/AccountTypes';
 import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
-import { Role } from '../roles/models/Role.model';
-import { Group } from '../../../crmserver/src/crm/groups/models/Group.model';
 
 @Injectable()
 export class CRMAccountsService {
     constructor(
         @InjectModel(CRMUser)
-        private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
+        private readonly crmUserModel: ReturnModelType<typeof CRMUser>
     ) {}
 
     async create(createUserDTO: CreateCRMUserDTO) {
         const salt = await genSalt();
-
         createUserDTO.password = await hash(createUserDTO.password, salt);
 
         try {
-            return await this.CRMUserModel.create(createUserDTO);
+            return await this.crmUserModel.create(createUserDTO);
         } catch (err) {
             throw new BadRequestException('USER_WITH_THIS_LOGIN_EXISTS');
         }
     }
 
-    async findAll(limit: number, offset: number, accountTypes: AccountTypes[]) {
-        let accountsCount: number;
+    async get(limit: number, offset: number) {
+        let count: number;
 
-        await this.CRMUserModel.find({
-            accountType: { $in: accountTypes }
-        }).countDocuments((err, docsCount) => {
-            accountsCount = docsCount;
+        await this.crmUserModel.find().countDocuments((err, docsCount) => {
+            count = docsCount;
         });
 
         return {
-            accounts: await this.CRMUserModel.find({
-                accountType: { $in: accountTypes }
-            })
+            accounts: await this.crmUserModel
+                .find()
                 .populate('role')
-                .skip(offset || 0)
-                .limit(limit || 0),
-            count: accountsCount?.toString()
+                .skip(offset)
+                .limit(limit),
+            count
         };
     }
 
-    async findById(id: string) {
-        const user = await this.CRMUserModel.findById(id).populate([
-            {
-                path: 'groups',
-                select: '_id GROUP_NAME',
-                model: Group
-            },
-            {
-                path: 'role',
-                model: Role
-            }
-        ]);
+    async getByID(id: string) {
+        const user = await this.crmUserModel.findById(id).populate('role');
 
         if (!user) {
             throw new NotFoundException();
@@ -72,24 +55,19 @@ export class CRMAccountsService {
         return user;
     }
 
-    async edit(id: string, updateCRMUserDTO: UpdateCRMUserDTO) {
-        const user = await this.CRMUserModel.findOneAndUpdate(
+    async update(id: string, updateCRMUserDTO: UpdateCRMUserDTO) {
+        const user = await this.crmUserModel.findOneAndUpdate(
             { _id: id },
             updateCRMUserDTO
         );
 
         if (!user) throw new NotFoundException();
 
-        return this.CRMUserModel.findById(id).populate({
-            path: 'role',
-            model: Role
-        });
+        return this.crmUserModel.findById(id).populate('role');
     }
 
-    async delete(login: string) {
-        const user = await this.CRMUserModel.findOneAndDelete({
-            login: login
-        });
+    async delete(id: string) {
+        const user = await this.crmUserModel.findByIdAndDelete(id);
 
         if (!user) {
             throw new NotFoundException();
