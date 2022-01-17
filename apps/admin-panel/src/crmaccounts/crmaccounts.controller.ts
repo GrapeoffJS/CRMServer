@@ -11,35 +11,31 @@ import {
 } from '@nestjs/common';
 import { CreateCRMUserDTO } from './DTO/CreateCRMUserDTO';
 import { CRMAccountsService } from './crmaccounts.service';
-import { path } from './path';
 import { Response } from 'express';
-import { AccountTypes } from './models/AccountTypes';
 import { UpdateCRMUserDTO } from './DTO/UpdateCRMUserDTO';
-import { MongoID } from '../../../DTO/MongoID';
-import { PaginationDTO } from '../../../DTO/PaginationDTO';
+import { MongoID } from '../../../../utils/DTO/MongoID';
+import { PaginationDTO } from '../../../../utils/DTO/PaginationDTO';
 
-@Controller(path)
+@Controller('/admin-panel/crm-accounts')
 export class CRMAccountsController {
     constructor(private readonly crmAccountsService: CRMAccountsService) {}
 
     @Get()
-    async findAll(
+    async get(
         @Query() { limit, offset }: PaginationDTO,
-        @Query('accountType') accountTypes: AccountTypes[],
         @Res() response: Response
     ) {
-        const { accounts, count } = await this.crmAccountsService.findAll(
-            Number(limit),
-            Number(offset),
-            accountTypes
+        const { accounts, count } = await this.crmAccountsService.get(
+            limit,
+            offset
         );
 
-        return response.header('Count', count).json(accounts);
+        return response.header('Count', count.toString()).json(accounts);
     }
 
     @Get(':id')
-    async findById(@Param() { id }: MongoID) {
-        return await this.crmAccountsService.findById(id);
+    async getByID(@Param() { id }: MongoID) {
+        return await this.crmAccountsService.getByID(id);
     }
 
     @Post()
@@ -48,15 +44,15 @@ export class CRMAccountsController {
     }
 
     @Patch(':id')
-    async edit(
+    async update(
         @Param() { id }: MongoID,
         @Body() updateCRMUserDTO: UpdateCRMUserDTO
     ) {
-        return await this.crmAccountsService.edit(id, updateCRMUserDTO);
+        return await this.crmAccountsService.update(id, updateCRMUserDTO);
     }
 
-    @Delete(':login')
-    async delete(@Param('login') login: string) {
-        return await this.crmAccountsService.delete(login);
+    @Delete(':id')
+    async delete(@Param() { id }: MongoID) {
+        return await this.crmAccountsService.delete(id);
     }
 }
