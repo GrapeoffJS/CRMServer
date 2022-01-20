@@ -1,7 +1,7 @@
 import { Body, Controller, Param, Put } from '@nestjs/common';
 import { CreateWorkHoursDTO } from './DTO/CreateWorkHoursDTO';
 import { WorkHoursService } from './work-hours.service';
-import { MongoID } from '../../../DTO/MongoID';
+import { MongoID } from '../../../../utils/DTO/MongoID';
 import { path } from './path';
 
 @Controller(path)

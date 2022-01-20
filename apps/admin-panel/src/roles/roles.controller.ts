@@ -11,7 +11,7 @@ import { CreateRoleDTO } from './DTO/CreateRoleDTO';
 import { path } from './path';
 import { RolesService } from './roles.service';
 import { UpdateRoleDTO } from './DTO/UpdateRoleDTO';
-import { MongoID } from '../../../DTO/MongoID';
+import { MongoID } from '../../../../utils/DTO/MongoID';
 
 @Controller(path)
 export class RolesController {

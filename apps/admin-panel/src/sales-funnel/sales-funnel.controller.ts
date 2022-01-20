@@ -13,7 +13,7 @@ import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
 import { SalesFunnelService } from './sales-funnel.service';
 import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
 import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
-import { MongoID } from '../../../DTO/MongoID';
+import { MongoID } from '../../../../utils/DTO/MongoID';
 import { path } from './path';
 
 @Controller(path)

@@ -26,6 +26,16 @@ export class AllStaffService {
         };
     }
 
+    async getByID(id: string): Promise<CRMUser> {
+        const found = await this.crmUserModel.findById(id);
+
+        if (!found) {
+            throw new NotFoundException();
+        }
+
+        return found;
+    }
+
     async delete(id: string): Promise<CRMUser> {
         const deleted = await this.crmUserModel.findByIdAndDelete(id);
 

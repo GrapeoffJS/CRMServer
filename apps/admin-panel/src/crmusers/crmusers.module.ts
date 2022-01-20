@@ -5,20 +5,20 @@ import { Tutor } from './models/Tutor.model';
 import { Admin } from './models/Admin.model';
 import { Partner } from './models/Partner.model';
 import { SeniorTutor } from './models/SeniorTutor.model';
-import { Support } from './models/Support.model';
+import { Supporter } from './models/Supporter.model';
 import { Manager } from './models/Manager.model';
-import { ManagerService } from './services/manager/manager.service';
-import { TutorService } from './services/tutor/tutor.service';
-import { SeniorTutorService } from './services/senior-tutor/senior-tutor.service';
-import { PartnerService } from './services/partner/partner.service';
-import { SupportService } from './services/support/support.service';
-import { AdminService } from './services/admin/admin.service';
-import { AdminController } from './controllers/admin/admin.controller';
-import { ManagerController } from './controllers/manager/manager.controller';
-import { PartnerController } from './controllers/partner/partner.controller';
-import { SeniorTutorController } from './controllers/senior-teacher/senior-tutor.controller';
-import { SupportController } from './controllers/support/support.controller';
-import { TutorController } from './controllers/tutor/tutor.controller';
+import { ManagersService } from './services/managers/managers.service';
+import { TutorsService } from './services/tutors/tutors.service';
+import { SeniorTutorsService } from './services/senior-tutors/senior-tutors.service';
+import { PartnersService } from './services/partners/partners.service';
+import { SupportersService } from './services/supporters/supporters.service';
+import { AdminsService } from './services/admins/admins.service';
+import { AdminsController } from './controllers/admins/admins.controller';
+import { ManagersController } from './controllers/managers/managers.controller';
+import { PartnersController } from './controllers/partners/partners.controller';
+import { SeniorTutorsController } from './controllers/senior-teachers/senior-tutors.controller';
+import { SupportersController } from './controllers/supporters/supporters.controller';
+import { TutorsController } from './controllers/tutors/tutors.controller';
 import { AllStaffController } from './controllers/all-staff/all-staff.controller';
 import { AllStaffService } from './services/all-staff/all-staff.service';
 import { PasswordProtectorService } from './services/password-protector/password-protector.service';
@@ -34,28 +34,28 @@ import { PasswordProtectorService } from './services/password-protector/password
                     Partner,
                     Tutor,
                     SeniorTutor,
-                    Support
+                    Supporter
                 ],
                 schemaOptions: { collection: 'CRMUsers' }
             }
         ])
     ],
     controllers: [
-        AdminController,
-        ManagerController,
-        PartnerController,
-        SeniorTutorController,
-        SupportController,
-        TutorController,
+        AdminsController,
+        ManagersController,
+        PartnersController,
+        SeniorTutorsController,
+        SupportersController,
+        TutorsController,
         AllStaffController
     ],
     providers: [
-        ManagerService,
-        TutorService,
-        SeniorTutorService,
-        PartnerService,
-        SupportService,
-        AdminService,
+        ManagersService,
+        TutorsService,
+        SeniorTutorsService,
+        PartnersService,
+        SupportersService,
+        AdminsService,
         AllStaffService,
         PasswordProtectorService
     ]

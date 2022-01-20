@@ -12,7 +12,7 @@ import { Subscription } from './models/Subscription.model';
 import { SubscriptionsService } from './subscriptions.service';
 import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
 import { path } from './path';
-import { MongoID } from '../../../DTO/MongoID';
+import { MongoID } from '../../../../utils/DTO/MongoID';
 
 @Controller(path)
 export class SubscriptionsController {
