@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { ExtendedRequest } from '../../../crmserver/src/authorization/ExtendedRequest';
+import { ExtendedRequest } from '../../../crm/src/authorization/ExtendedRequest';
 import { Role } from './models/Role.model';
 
 export const GetDataPermissions = createParamDecorator(

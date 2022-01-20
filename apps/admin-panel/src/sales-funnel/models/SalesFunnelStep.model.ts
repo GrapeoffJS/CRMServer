@@ -1,5 +1,5 @@
 import { modelOptions, prop } from '@typegoose/typegoose';
-import Pupil from '../../../../crmserver/src/crm/pupils/models/Pupil.model';
+import Pupil from '../../../../crm/src/crm/pupils/models/Pupil.model';
 
 @modelOptions({
     schemaOptions: {

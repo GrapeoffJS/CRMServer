@@ -1,7 +1,7 @@
 import { ActionPermissions } from './models/ActionPermissions';
 import { CanActivate, ExecutionContext, mixin } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { ExtendedRequest } from '../../../crmserver/src/authorization/ExtendedRequest';
+import { ExtendedRequest } from '../../../crm/src/authorization/ExtendedRequest';
 import { Role } from './models/Role.model';
 
 export const ActionPermissionsGuard = (

@@ -9,7 +9,7 @@ import { SalesFunnelStep } from './models/SalesFunnelStep.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
 import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
-import Pupil from '../../../crmserver/src/crm/pupils/models/Pupil.model';
+import Pupil from '../../../crm/src/crm/pupils/models/Pupil.model';
 
 @Injectable()
 export class SalesFunnelService {

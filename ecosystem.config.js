@@ -1,7 +1,7 @@
 module.exports = {
     apps: {
         name: 'CRMServer',
-        script: './dist/apps/crmserver/main.js',
+        script: './dist/apps/crm/main.js',
         instances: 'max',
         exec_mode: 'cluster'
     }
