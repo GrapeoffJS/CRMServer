@@ -1,7 +1,6 @@
-import { IsEnum, IsMongoId, IsNotEmpty, IsString } from 'class-validator';
-import { AccountTypes } from '../Types/AccountTypes';
+import { IsMongoId, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateCRMUserDTO {
+export class BasicCRMUserDTO {
     @IsNotEmpty()
     @IsString()
     name: string;
@@ -22,10 +21,6 @@ export class CreateCRMUserDTO {
     @IsString()
     password: string;
 
-    @IsNotEmpty()
     @IsMongoId()
     role: string;
-
-    @IsEnum(AccountTypes)
-    accountType: AccountTypes;
 }
