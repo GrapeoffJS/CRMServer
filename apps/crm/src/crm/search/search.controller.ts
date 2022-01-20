@@ -1,6 +1,6 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
-import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
+import { ActionPermissions } from 'apps/admin-panel/src/roles/types/ActionPermissions';
 import { path } from './path';
 import { SearchService } from './search.service';
 import { TutorID } from '../../../../../utils/DTO/TutorID';

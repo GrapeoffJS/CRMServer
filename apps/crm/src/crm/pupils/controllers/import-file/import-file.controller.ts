@@ -11,7 +11,7 @@ import { ImportFileService } from '../../services/import-file/import-file.servic
 import { MimeTypes } from '../../MimeTypes';
 import { path } from '../../path';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
-import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
+import { ActionPermissions } from 'apps/admin-panel/src/roles/types/ActionPermissions';
 
 @Controller(path)
 export class ImportFileController {

@@ -1,5 +1,5 @@
-import { ActionPermissions } from '../models/ActionPermissions';
-import { DataPermissions } from '../models/DataPermissions';
+import { ActionPermissions } from '../types/ActionPermissions';
+import { DataPermissions } from '../types/DataPermissions';
 import { IsEnum, IsNotEmpty, IsObject, IsString } from 'class-validator';
 
 export class CreateRoleDTO {

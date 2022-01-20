@@ -5,8 +5,8 @@ import {
     IsOptional,
     IsString
 } from 'class-validator';
-import { ActionPermissions } from '../models/ActionPermissions';
-import { DataPermissions } from '../models/DataPermissions';
+import { ActionPermissions } from '../types/ActionPermissions';
+import { DataPermissions } from '../types/DataPermissions';
 
 export class UpdateRoleDTO {
     @IsOptional()

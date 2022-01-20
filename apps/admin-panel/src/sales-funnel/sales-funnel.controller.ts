@@ -14,9 +14,8 @@ import { SalesFunnelService } from './sales-funnel.service';
 import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
 import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
 import { MongoID } from '../../../../utils/DTO/MongoID';
-import { path } from './path';
 
-@Controller(path)
+@Controller('/admin-panel/sales-funnel')
 export class SalesFunnelController {
     constructor(private readonly salesFunnelService: SalesFunnelService) {}
 

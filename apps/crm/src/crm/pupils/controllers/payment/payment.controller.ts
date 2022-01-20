@@ -3,7 +3,7 @@ import { path } from '../../path';
 import { PaymentService } from '../../services/payment/payment.service';
 import { Request } from 'express';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
-import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
+import { ActionPermissions } from 'apps/admin-panel/src/roles/types/ActionPermissions';
 import { CRMUser } from '../../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { decode } from 'jsonwebtoken';
 import { MongoID } from '../../../../../../../utils/DTO/MongoID';

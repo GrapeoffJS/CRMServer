@@ -1,1 +1,1 @@
-export const path = '/AdminPanel/WorkHours';
+export const path = '/admin-panel/work-hours';

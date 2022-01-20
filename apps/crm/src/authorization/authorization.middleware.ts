@@ -7,7 +7,7 @@ import { PopulateOptions } from 'mongoose';
 import { Response } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Role } from '../../../admin-panel/src/roles/models/Role.model';
-import { TokenPayload } from '../authentication/TokenPayload';
+import { TokenPayload } from '../authentication/types/TokenPayload';
 
 @Injectable()
 export class AuthorizationMiddleware implements NestMiddleware {

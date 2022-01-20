@@ -11,10 +11,9 @@ import { CreateSubscriptionDTO } from './DTO/CreateSubscriptionDTO';
 import { Subscription } from './models/Subscription.model';
 import { SubscriptionsService } from './subscriptions.service';
 import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
-import { path } from './path';
 import { MongoID } from '../../../../utils/DTO/MongoID';
 
-@Controller(path)
+@Controller('/admin-panel/subscriptions')
 export class SubscriptionsController {
     constructor(private readonly subscriptionsService: SubscriptionsService) {}
 

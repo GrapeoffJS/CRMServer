@@ -19,10 +19,10 @@ import { FilterDTO } from '../../DTO/FilterDTO';
 import { path } from '../../path';
 import { Response } from 'express';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
-import { ActionPermissions } from '../../../../../../admin-panel/src/roles/models/ActionPermissions';
+import { ActionPermissions } from '../../../../../../admin-panel/src/roles/types/ActionPermissions';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
 import { GetDataPermissions } from 'apps/admin-panel/src/roles/GetDataPermissions.decorator';
-import { DataPermissions } from '../../../../../../admin-panel/src/roles/models/DataPermissions';
+import { DataPermissions } from '../../../../../../admin-panel/src/roles/types/DataPermissions';
 import { PaginationDTO } from '../../../../../../../utils/DTO/PaginationDTO';
 import { MongoID } from '../../../../../../../utils/DTO/MongoID';
 

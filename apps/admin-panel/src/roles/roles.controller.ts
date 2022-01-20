@@ -8,12 +8,11 @@ import {
     Post
 } from '@nestjs/common';
 import { CreateRoleDTO } from './DTO/CreateRoleDTO';
-import { path } from './path';
 import { RolesService } from './roles.service';
 import { UpdateRoleDTO } from './DTO/UpdateRoleDTO';
 import { MongoID } from '../../../../utils/DTO/MongoID';
 
-@Controller(path)
+@Controller('/admin-panel/roles')
 export class RolesController {
     constructor(private readonly rolesService: RolesService) {}
 

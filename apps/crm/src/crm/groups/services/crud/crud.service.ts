@@ -8,7 +8,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdateGroupDTO } from '../../DTO/UpdateGroupDTO';
-import { DataPermissions } from '../../../../../../admin-panel/src/roles/models/DataPermissions';
+import { DataPermissions } from '../../../../../../admin-panel/src/roles/types/DataPermissions';
 
 @Injectable()
 export class CrudService {

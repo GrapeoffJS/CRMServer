@@ -1,6 +1,6 @@
 import { prop } from '@typegoose/typegoose';
-import { ActionPermissions } from './ActionPermissions';
-import { DataPermissions } from './DataPermissions';
+import { ActionPermissions } from '../types/ActionPermissions';
+import { DataPermissions } from '../types/DataPermissions';
 
 export class Role {
     @prop({ type: String, required: true, unique: true })

@@ -3,7 +3,7 @@ import { path } from '../../path';
 import { Schedule } from '../../models/Schedule';
 import { ScheduleService } from '../../services/schedule/schedule.service';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
-import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
+import { ActionPermissions } from 'apps/admin-panel/src/roles/types/ActionPermissions';
 import { MongoID } from '../../../../../../../utils/DTO/MongoID';
 import { GroupID } from '../../../../../../../utils/DTO/GroupID';
 import { PupilID } from '../../../../../../../utils/DTO/PupilID';

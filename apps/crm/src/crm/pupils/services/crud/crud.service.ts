@@ -6,7 +6,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdatePupilDTO } from '../../DTO/UpdatePupilDTO';
-import { DataPermissions } from 'apps/admin-panel/src/roles/models/DataPermissions';
+import { DataPermissions } from 'apps/admin-panel/src/roles/types/DataPermissions';
 import { Types } from 'mongoose';
 
 @Injectable()

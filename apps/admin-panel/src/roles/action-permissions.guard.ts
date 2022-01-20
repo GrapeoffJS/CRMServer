@@ -1,4 +1,4 @@
-import { ActionPermissions } from './models/ActionPermissions';
+import { ActionPermissions } from './types/ActionPermissions';
 import { CanActivate, ExecutionContext, mixin } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { ExtendedRequest } from '../../../crm/src/authorization/ExtendedRequest';
