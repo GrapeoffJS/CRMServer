@@ -1,11 +1,11 @@
-import CRMUser from 'apps/admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from 'apps/admin-panel/src/crmusers/models/CRMUser.model';
 import moment from 'moment';
 import Pupil from '../../../pupils/models/Pupil.model';
 import { Group } from '../../models/Group.model';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { AccountTypes } from '../../../../../../admin-panel/src/crmaccounts/models/AccountTypes';
+import { AccountTypes } from '../../../../../../admin-panel/src/crmusers/models/AccountTypes';
 
 @Injectable()
 export class TutorManipulationsService {

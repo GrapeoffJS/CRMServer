@@ -4,9 +4,9 @@ import { PaymentService } from '../../services/payment/payment.service';
 import { Request } from 'express';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
 import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
-import CRMUser from '../../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from '../../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { decode } from 'jsonwebtoken';
-import { MongoID } from '../../../../../../DTO/MongoID';
+import { MongoID } from '../../../../../../../utils/DTO/MongoID';
 import { PaymentDTO } from '../../DTO/PaymentDTO';
 
 @Controller(path)

@@ -1,4 +1,4 @@
-import CRMUser from 'apps/admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from 'apps/admin-panel/src/crmusers/models/CRMUser.model';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';

@@ -45,7 +45,7 @@ export class PaymentService {
         return this.PupilModel.findById(id).populate([
             {
                 path: 'groups',
-                select: '_id group_name tutor',
+                select: '_id group_name tutors',
                 populate: {
                     path: 'tutor'
                 }
@@ -103,7 +103,7 @@ export class PaymentService {
         return this.PupilModel.findById(id).populate([
             {
                 path: 'groups',
-                select: '_id group_name tutor',
+                select: '_id group_name tutors',
                 populate: {
                     path: 'tutor'
                 }

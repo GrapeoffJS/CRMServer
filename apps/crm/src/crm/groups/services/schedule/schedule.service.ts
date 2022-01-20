@@ -75,7 +75,7 @@ export class ScheduleService {
         return await saved.populate([
             {
                 path: 'groups',
-                select: '_id group_name tutor',
+                select: '_id group_name tutors',
                 populate: {
                     path: 'tutor'
                 }

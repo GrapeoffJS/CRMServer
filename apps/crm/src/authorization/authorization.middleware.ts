@@ -1,4 +1,4 @@
-import CRMUser from '../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { ExtendedRequest } from './ExtendedRequest';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';

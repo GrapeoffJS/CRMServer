@@ -4,7 +4,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { Task } from './models/Task.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdateTaskDTO } from './DTO/UpdateTaskDTO';
-import CRMUser from '../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from '../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { TaskTag } from '../task-tags/models/TaskTag.model';
 
 @Injectable()

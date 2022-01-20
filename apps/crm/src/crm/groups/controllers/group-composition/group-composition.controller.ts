@@ -10,10 +10,10 @@ import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permis
 import { path } from '../../path';
 import { GroupCompositionService } from '../../services/group-composition/group-composition.service';
 import { ActionPermissions } from '../../../../../../admin-panel/src/roles/models/ActionPermissions';
-import { MongoID } from '../../../../../../DTO/MongoID';
-import { MongoIDs } from '../../../../../../DTO/MongoIDs';
-import { GroupID } from '../../../../../../DTO/GroupID';
-import { PupilID } from '../../../../../../DTO/PupilID';
+import { MongoID } from '../../../../../../../utils/DTO/MongoID';
+import { MongoIDs } from '../../../../../../../utils/DTO/MongoIDs';
+import { GroupID } from '../../../../../../../utils/DTO/GroupID';
+import { PupilID } from '../../../../../../../utils/DTO/PupilID';
 
 @Controller(path)
 export class GroupCompositionController {

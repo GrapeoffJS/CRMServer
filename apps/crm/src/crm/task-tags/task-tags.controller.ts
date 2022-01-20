@@ -8,7 +8,7 @@ import {
     Post
 } from '@nestjs/common';
 import { path } from './path';
-import { MongoID } from '../../../../DTO/MongoID';
+import { MongoID } from '../../../../../utils/DTO/MongoID';
 import { TaskTagsService } from './task-tags.service';
 import { CreateTaskTagDTO } from './DTO/CreateTaskTagDTO';
 import { UpdateTaskTagDTO } from './DTO/UpdateTaskTagDTO';

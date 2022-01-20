@@ -1,4 +1,4 @@
-import CRMUser from '../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from '../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { Group } from '../../groups/models/Group.model';
 import { prop } from '@typegoose/typegoose';
 

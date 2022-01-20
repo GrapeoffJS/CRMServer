@@ -2,7 +2,6 @@ import { Client, ClientOptions } from '@elastic/elasticsearch';
 import { DocumentType } from '@typegoose/typegoose';
 import Pupil from '../crm/pupils/models/Pupil.model';
 import { Group } from '../crm/groups/models/Group.model';
-import CRMUser from '../../../admin-panel/src/crmaccounts/models/CRMUser.model';
 
 export class SearchIndexer {
     private static _instance: SearchIndexer;
@@ -95,7 +94,7 @@ export class SearchIndexer {
         this._client.delete({ id: group.id, index: 'groups' });
     }
 
-    indexCRMUser(user: DocumentType<CRMUser>) {
+    indexCRMUser(user) {
         this._client.index({
             id: user.id,
             index: 'crmusers',
@@ -109,7 +108,7 @@ export class SearchIndexer {
         });
     }
 
-    updateCRMUser(user: DocumentType<CRMUser>) {
+    updateCRMUser(user) {
         this._client.index({
             id: user.id,
             index: 'crmusers',
@@ -125,7 +124,7 @@ export class SearchIndexer {
         });
     }
 
-    deleteCRMUser(user: DocumentType<CRMUser>) {
+    deleteCRMUser(user) {
         this._client.delete({ id: user.id, index: 'crmusers' });
     }
 }

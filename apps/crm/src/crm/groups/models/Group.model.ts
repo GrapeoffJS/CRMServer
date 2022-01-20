@@ -1,4 +1,4 @@
-import CRMUser from '../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from '../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import Pupil from '../../pupils/models/Pupil.model';
 import { post, prop } from '@typegoose/typegoose';
 import { Schedule } from './Schedule';

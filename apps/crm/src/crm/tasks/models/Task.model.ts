@@ -1,6 +1,6 @@
 import { TaskTypes } from './TaskTypes';
 import { prop } from '@typegoose/typegoose';
-import CRMUser from '../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from '../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import Pupil from '../../pupils/models/Pupil.model';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { TaskTag } from '../../task-tags/models/TaskTag.model';

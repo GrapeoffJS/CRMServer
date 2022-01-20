@@ -3,7 +3,7 @@ import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permis
 import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
 import { path } from './path';
 import { SearchService } from './search.service';
-import { TutorID } from '../../../../DTO/TutorID';
+import { TutorID } from '../../../../../utils/DTO/TutorID';
 
 @UseGuards(ActionPermissionsGuard(ActionPermissions.CanUseSearch))
 @Controller(path)

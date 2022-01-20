@@ -11,10 +11,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const configService = app.get<ConfigService>(ConfigService);
 
-    app.enableCors({
-        exposedHeaders: 'Count',
-        origin: '*'
-    });
+    app.enableCors();
     app.use(helmet());
     app.use(compression());
 

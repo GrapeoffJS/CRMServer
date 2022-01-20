@@ -46,7 +46,7 @@ export class CrudService {
             pupils: await this.PupilModel.populate(result, [
                 {
                     path: 'groups',
-                    select: '_id group_name tutor',
+                    select: '_id group_name tutors',
                     populate: {
                         path: 'tutor'
                     }
@@ -141,7 +141,7 @@ export class CrudService {
         const populated = await this.PupilModel.populate(pupil, [
             {
                 path: 'groups',
-                select: '_id group_name tutor',
+                select: '_id group_name tutors',
                 populate: {
                     path: 'tutor'
                 }
@@ -206,7 +206,7 @@ export class CrudService {
             .populate([
                 {
                     path: 'groups',
-                    select: '_id group_name tutor',
+                    select: '_id group_name tutors',
                     populate: {
                         path: 'tutor'
                     }

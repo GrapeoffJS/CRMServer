@@ -23,8 +23,8 @@ import { ActionPermissions } from '../../../../../../admin-panel/src/roles/model
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
 import { GetDataPermissions } from 'apps/admin-panel/src/roles/GetDataPermissions.decorator';
 import { DataPermissions } from '../../../../../../admin-panel/src/roles/models/DataPermissions';
-import { PaginationDTO } from '../../../../../../DTO/PaginationDTO';
-import { MongoID } from '../../../../../../DTO/MongoID';
+import { PaginationDTO } from '../../../../../../../utils/DTO/PaginationDTO';
+import { MongoID } from '../../../../../../../utils/DTO/MongoID';
 
 @Controller(path)
 export class CrudController {

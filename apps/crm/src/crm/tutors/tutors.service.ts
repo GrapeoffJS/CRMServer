@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import CRMUser from '../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from '../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { AccountTypes } from '../../../../admin-panel/src/crmaccounts/models/AccountTypes';
+import { AccountTypes } from '../../../../admin-panel/src/crmusers/types/AccountTypes';
 import { Role } from '../../../../admin-panel/src/roles/models/Role.model';
 
 @Injectable()

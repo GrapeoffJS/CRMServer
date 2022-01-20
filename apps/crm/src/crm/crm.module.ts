@@ -5,7 +5,7 @@ import { AuthorizationMiddleware } from '../authorization/authorization.middlewa
 import { TypegooseModule } from 'nestjs-typegoose';
 import Pupil from './pupils/models/Pupil.model';
 import { Group } from './groups/models/Group.model';
-import CRMUser from '../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configModuleOptions from '../config/configModuleOptions';

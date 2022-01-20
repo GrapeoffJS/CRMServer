@@ -4,8 +4,8 @@ import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermi
 import { Group } from '../../models/Group.model';
 import { path } from '../../path';
 import { TutorManipulationsService } from '../../services/tutor-manipulations/tutor-manipulations.service';
-import { GroupID } from '../../../../../../DTO/GroupID';
-import { TutorID } from '../../../../../../DTO/TutorID';
+import { GroupID } from '../../../../../../../utils/DTO/GroupID';
+import { TutorID } from '../../../../../../../utils/DTO/TutorID';
 
 @Controller(path)
 export class TutorManipulationsController {

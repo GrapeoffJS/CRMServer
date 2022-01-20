@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { path } from './path';
 import { SalesFunnelService } from './sales-funnel.service';
 import { SalesFunnelLimitDTO } from './DTO/SalesFunnelLimitDTO';
-import { MongoID } from '../../../../DTO/MongoID';
+import { MongoID } from '../../../../../utils/DTO/MongoID';
 import { ActionPermissionsGuard } from '../../../../admin-panel/src/roles/action-permissions.guard';
 import { ActionPermissions } from '../../../../admin-panel/src/roles/models/ActionPermissions';
 import { SalesFunnelPaginationDTO } from './DTO/SalesFunnelPaginationDTO';

@@ -1,4 +1,4 @@
-import CRMUser from 'apps/admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from 'apps/admin-panel/src/crmusers/models/CRMUser.model';
 import moment from 'moment';
 import Pupil from '../../../pupils/models/Pupil.model';
 import { CreateGroupDTO } from '../../DTO/CreateGroupDTO';

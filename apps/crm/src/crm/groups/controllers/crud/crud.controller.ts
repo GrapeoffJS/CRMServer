@@ -25,9 +25,9 @@ import { ActionPermissionsGuard } from '../../../../../../admin-panel/src/roles/
 import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
 import { GetDataPermissions } from '../../../../../../admin-panel/src/roles/GetDataPermissions.decorator';
 import { DataPermissions } from '../../../../../../admin-panel/src/roles/models/DataPermissions';
-import { MongoID } from '../../../../../../DTO/MongoID';
-import { PaginationDTO } from '../../../../../../DTO/PaginationDTO';
-import { MongoIDs } from '../../../../../../DTO/MongoIDs';
+import { MongoID } from '../../../../../../../utils/DTO/MongoID';
+import { PaginationDTO } from '../../../../../../../utils/DTO/PaginationDTO';
+import { MongoIDs } from '../../../../../../../utils/DTO/MongoIDs';
 
 @Controller(path)
 export class CrudController {

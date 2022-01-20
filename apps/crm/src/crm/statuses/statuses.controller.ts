@@ -11,7 +11,7 @@ import { path } from './path';
 import { StatusesService } from './statuses.service';
 import { CreateStatusDTO } from './DTO/CreateStatusDTO';
 import { UpdateStatusDTO } from './DTO/UpdateStatusDTO';
-import { MongoID } from '../../../../DTO/MongoID';
+import { MongoID } from '../../../../../utils/DTO/MongoID';
 
 @Controller(path)
 export class StatusesController {

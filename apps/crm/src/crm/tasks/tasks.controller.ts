@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
 import { path } from './path';
 import { CreateTaskDTO } from './DTO/CreateTaskDTO';
 import { TasksService } from './tasks.service';
-import { MongoID } from '../../../../DTO/MongoID';
+import { MongoID } from '../../../../../utils/DTO/MongoID';
 import { UpdateTaskDTO } from './DTO/UpdateTaskDTO';
 
 @Controller(path)

@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { path } from './path';
 import { Response } from 'express';
-import { PaginationDTO } from '../../../../DTO/PaginationDTO';
-import { MongoID } from '../../../../DTO/MongoID';
+import { PaginationDTO } from '../../../../../utils/DTO/PaginationDTO';
+import { MongoID } from '../../../../../utils/DTO/MongoID';
 import { TutorsService } from './tutors.service';
 
 @Controller(path)

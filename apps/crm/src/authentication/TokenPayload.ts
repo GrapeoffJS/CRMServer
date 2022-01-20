@@ -1,4 +1,4 @@
-import { AccountTypes } from '../../../admin-panel/src/crmaccounts/models/AccountTypes';
+import { AccountTypes } from '../../../admin-panel/src/crmusers/types/AccountTypes';
 
 export type TokenPayload = {
     id: string;

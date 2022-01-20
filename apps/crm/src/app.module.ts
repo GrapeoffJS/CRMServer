@@ -1,6 +1,5 @@
 import configModuleOptions from './config/configModuleOptions';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CrmModule } from './crm/crm.module';
 import { Module } from '@nestjs/common';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AuthCheckModule } from './auth-check/auth-check.module';
@@ -43,7 +42,7 @@ import { ConnectionOptions } from 'mongoose';
             }
         }),
         AdminPanelModule,
-        CrmModule,
+        // CrmModule,
         AuthenticationModule,
         AuthCheckModule
     ],

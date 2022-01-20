@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { path } from './path';
-import { MongoID } from '../../../../DTO/MongoID';
+import { MongoID } from '../../../../../utils/DTO/MongoID';
 import { SubscriptionsService } from './subscriptions.service';
 
 @Controller(path)

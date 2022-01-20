@@ -13,9 +13,9 @@ import { path } from '../../path';
 import { ActionPermissionsGuard } from 'apps/admin-panel/src/roles/action-permissions.guard';
 import { ActionPermissions } from 'apps/admin-panel/src/roles/models/ActionPermissions';
 import { decode } from 'jsonwebtoken';
-import CRMUser from '../../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from '../../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { CreateNoteDTO } from '../../DTO/CreateNoteDTO';
-import { MongoID } from '../../../../../../DTO/MongoID';
+import { MongoID } from '../../../../../../../utils/DTO/MongoID';
 
 @Controller(path)
 export class NotesController {

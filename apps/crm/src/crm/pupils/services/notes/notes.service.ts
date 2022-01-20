@@ -1,4 +1,4 @@
-import CRMUser from 'apps/admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from 'apps/admin-panel/src/crmusers/models/CRMUser.model';
 import Pupil from '../../models/Pupil.model';
 import {
     BadRequestException,
@@ -44,7 +44,7 @@ export class NotesService {
         return this.PupilModel.findById(owner_id).populate([
             {
                 path: 'groups',
-                select: '_id group_name tutor',
+                select: '_id group_name tutors',
                 populate: {
                     path: 'tutor'
                 }
@@ -77,7 +77,7 @@ export class NotesService {
         return this.PupilModel.findById(note.owner_id).populate([
             {
                 path: 'groups',
-                select: '_id group_name tutor',
+                select: '_id group_name tutors',
                 populate: {
                     path: 'tutor'
                 }

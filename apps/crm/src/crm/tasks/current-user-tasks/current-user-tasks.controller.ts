@@ -2,7 +2,7 @@ import { Controller, Get, Query, Req } from '@nestjs/common';
 import { CurrentUserTasksService } from './current-user-tasks.service';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
-import CRMUser from '../../../../../admin-panel/src/crmaccounts/models/CRMUser.model';
+import { CRMUser } from '../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { DocumentType } from '@typegoose/typegoose';
 import { path } from './path';
 
