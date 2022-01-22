@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { SalesFunnelController } from './sales-funnel.controller';
 import { SalesFunnelService } from './sales-funnel.service';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { SalesFunnelStep } from './models/SalesFunnelStep.model';
+import { SalesFunnelStepModel } from './models/SalesFunnelStep.model';
 import Pupil from '../../../crm/src/crm/pupils/models/Pupil.model';
 
 @Module({
@@ -13,7 +13,7 @@ import Pupil from '../../../crm/src/crm/pupils/models/Pupil.model';
                 schemaOptions: { collection: 'Pupils' }
             },
             {
-                typegooseClass: SalesFunnelStep,
+                typegooseClass: SalesFunnelStepModel,
                 schemaOptions: { collection: 'SalesFunnelSteps' }
             }
         ])

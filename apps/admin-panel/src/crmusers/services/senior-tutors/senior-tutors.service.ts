@@ -4,19 +4,21 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
 import { CreateSeniorTutorDTO } from '../../DTO/SeniorTutor/CreateSeniorTutorDTO';
 import { UpdateSeniorTutorDTO } from '../../DTO/SeniorTutor/UpdateSeniorTutorDTO';
-import { SeniorTutor } from '../../models/SeniorTutor.model';
+import { SeniorTutorModel } from '../../models/SeniorTutor.model';
 
 @Injectable()
 export class SeniorTutorsService {
     constructor(
-        @InjectModel(SeniorTutor)
-        private readonly seniorTutorModel: ReturnModelType<typeof SeniorTutor>,
+        @InjectModel(SeniorTutorModel)
+        private readonly seniorTutorModel: ReturnModelType<
+            typeof SeniorTutorModel
+        >,
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
     async create(
         createSeniorTutorDTO: CreateSeniorTutorDTO
-    ): Promise<SeniorTutor> {
+    ): Promise<SeniorTutorModel> {
         createSeniorTutorDTO.password = await this.passwordProtector.hash(
             createSeniorTutorDTO.password
         );
@@ -27,7 +29,7 @@ export class SeniorTutorsService {
     async get(
         limit: number,
         offset: number
-    ): Promise<{ count: number; docs: SeniorTutor[] }> {
+    ): Promise<{ count: number; docs: SeniorTutorModel[] }> {
         let count: number;
 
         this.seniorTutorModel.countDocuments((err, docsCount) => {
@@ -40,14 +42,14 @@ export class SeniorTutorsService {
         };
     }
 
-    async getByID(id: string): Promise<SeniorTutor> {
+    async getByID(id: string): Promise<SeniorTutorModel> {
         return this.seniorTutorModel.findById(id);
     }
 
     async update(
         id: string,
         updateSeniorTutorDTO: UpdateSeniorTutorDTO
-    ): Promise<SeniorTutor> {
+    ): Promise<SeniorTutorModel> {
         const updated = this.seniorTutorModel.findByIdAndUpdate(
             id,
             updateSeniorTutorDTO
@@ -60,7 +62,7 @@ export class SeniorTutorsService {
         return this.seniorTutorModel.findById(id);
     }
 
-    async delete(id: string): Promise<SeniorTutor> {
+    async delete(id: string): Promise<SeniorTutorModel> {
         const deleted = this.seniorTutorModel.findByIdAndDelete(id);
 
         if (!deleted) {

@@ -2,34 +2,36 @@ import { CreateSubscriptionDTO } from './DTO/CreateSubscriptionDTO';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { Subscription } from './models/Subscription.model';
+import { SubscriptionStatus } from './models/Subscription.model';
 import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
 
 @Injectable()
 export class SubscriptionsService {
     constructor(
-        @InjectModel(Subscription)
-        private readonly SubscriptionModel: ReturnModelType<typeof Subscription>
+        @InjectModel(SubscriptionStatus)
+        private readonly SubscriptionModel: ReturnModelType<
+            typeof SubscriptionStatus
+        >
     ) {}
 
     async create(
         createSubscriptionDTO: CreateSubscriptionDTO
-    ): Promise<Subscription> {
+    ): Promise<SubscriptionStatus> {
         return await this.SubscriptionModel.create(createSubscriptionDTO);
     }
 
-    async findAll(): Promise<Subscription[]> {
+    async findAll(): Promise<SubscriptionStatus[]> {
         return this.SubscriptionModel.find();
     }
 
-    async findById(id: string): Promise<Subscription> {
+    async findById(id: string): Promise<SubscriptionStatus> {
         return this.SubscriptionModel.findById(id);
     }
 
     async edit(
         id: string,
         updateSubscriptionDTO: UpdateSubscriptionDTO
-    ): Promise<Subscription> {
+    ): Promise<SubscriptionStatus> {
         await this.SubscriptionModel.updateOne(
             { _id: id },
             updateSubscriptionDTO
@@ -38,7 +40,7 @@ export class SubscriptionsService {
         return this.SubscriptionModel.findById(id);
     }
 
-    async delete(id: string): Promise<Subscription> {
+    async delete(id: string): Promise<SubscriptionStatus> {
         return this.SubscriptionModel.findByIdAndDelete(id);
     }
 }

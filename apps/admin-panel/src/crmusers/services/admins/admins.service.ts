@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { Admin } from '../../models/Admin.model';
+import { AdminModel } from '../../models/Admin.model';
 import { CreateAdminDTO } from '../../DTO/Admin/CreateAdminDTO';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
 import { UpdateAdminDTO } from '../../DTO/Admin/UpdateAdminDTO';
@@ -9,12 +9,12 @@ import { UpdateAdminDTO } from '../../DTO/Admin/UpdateAdminDTO';
 @Injectable()
 export class AdminsService {
     constructor(
-        @InjectModel(Admin)
-        private readonly adminModel: ReturnModelType<typeof Admin>,
+        @InjectModel(AdminModel)
+        private readonly adminModel: ReturnModelType<typeof AdminModel>,
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createAdminDTO: CreateAdminDTO): Promise<Admin> {
+    async create(createAdminDTO: CreateAdminDTO): Promise<AdminModel> {
         createAdminDTO.password = await this.passwordProtector.hash(
             createAdminDTO.password
         );
@@ -25,7 +25,7 @@ export class AdminsService {
     async get(
         limit: number,
         offset: number
-    ): Promise<{ count: number; docs: Admin[] }> {
+    ): Promise<{ count: number; docs: AdminModel[] }> {
         let count: number;
 
         this.adminModel.countDocuments((err, docsCount) => {
@@ -38,7 +38,7 @@ export class AdminsService {
         };
     }
 
-    async getByID(id: string): Promise<Admin> {
+    async getByID(id: string): Promise<AdminModel> {
         const found = await this.adminModel.findById(id);
 
         if (!found) {
@@ -48,12 +48,15 @@ export class AdminsService {
         return found;
     }
 
-    async update(id: string, updateAdminDTO: UpdateAdminDTO): Promise<Admin> {
+    async update(
+        id: string,
+        updateAdminDTO: UpdateAdminDTO
+    ): Promise<AdminModel> {
         this.adminModel.findByIdAndUpdate(id, updateAdminDTO);
         return this.adminModel.findById(id);
     }
 
-    async delete(id: string): Promise<Admin> {
+    async delete(id: string): Promise<AdminModel> {
         return this.adminModel.findByIdAndDelete(id);
     }
 }

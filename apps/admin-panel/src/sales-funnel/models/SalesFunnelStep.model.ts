@@ -7,7 +7,7 @@ import Pupil from '../../../../crm/src/crm/pupils/models/Pupil.model';
         toObject: { virtuals: true }
     }
 })
-export class SalesFunnelStep {
+export class SalesFunnelStepModel {
     @prop({ type: String, required: true })
     name: string;
 

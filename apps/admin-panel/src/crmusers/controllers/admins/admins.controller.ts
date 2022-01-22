@@ -9,7 +9,7 @@ import {
     Query
 } from '@nestjs/common';
 import { AdminsService } from '../../services/admins/admins.service';
-import { Admin } from '../../models/Admin.model';
+import { AdminModel } from '../../models/Admin.model';
 import { CreateAdminDTO } from '../../DTO/Admin/CreateAdminDTO';
 import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
 import { MongoID } from '../../../../../../utils/DTO/MongoID';
@@ -20,14 +20,14 @@ export class AdminsController {
     constructor(private readonly adminsService: AdminsService) {}
 
     @Post()
-    async create(@Body() createAdminDTO: CreateAdminDTO): Promise<Admin> {
+    async create(@Body() createAdminDTO: CreateAdminDTO): Promise<AdminModel> {
         return await this.adminsService.create(createAdminDTO);
     }
 
     @Get()
     async get(
         @Query() { limit, offset }: PaginationDTO
-    ): Promise<{ docs: Admin[]; count: number }> {
+    ): Promise<{ docs: AdminModel[]; count: number }> {
         const { count, docs } = await this.adminsService.get(limit, offset);
 
         return {
@@ -37,7 +37,7 @@ export class AdminsController {
     }
 
     @Get(':id')
-    async getByID(@Param() { id }: MongoID): Promise<Admin> {
+    async getByID(@Param() { id }: MongoID): Promise<AdminModel> {
         return await this.adminsService.getByID(id);
     }
 
@@ -45,12 +45,12 @@ export class AdminsController {
     async update(
         @Param() { id }: MongoID,
         @Body() updateAdminDTO: UpdateAdminDTO
-    ): Promise<Admin> {
+    ): Promise<AdminModel> {
         return await this.adminsService.update(id, updateAdminDTO);
     }
 
     @Delete(':id')
-    async delete(@Param() { id }: MongoID): Promise<Admin> {
+    async delete(@Param() { id }: MongoID): Promise<AdminModel> {
         return await this.adminsService.delete(id);
     }
 }

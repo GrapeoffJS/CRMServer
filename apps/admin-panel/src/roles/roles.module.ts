@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { RolesController } from './roles.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { Role } from './models/Role.model';
+import { RoleModel } from './models/Role.model';
 
 @Module({
     imports: [
         TypegooseModule.forFeature([
             {
-                typegooseClass: Role,
+                typegooseClass: RoleModel,
                 schemaOptions: { collection: 'Roles' }
             }
         ])

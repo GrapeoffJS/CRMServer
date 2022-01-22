@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
 import { MongoID } from '../../../../../../utils/DTO/MongoID';
-import { Partner } from '../../models/Partner.model';
+import { PartnerModel } from '../../models/Partner.model';
 import { UpdatePartnerDTO } from '../../DTO/Partner/UpdatePartnerDTO';
 import { PartnersService } from '../../services/partners/partners.service';
 import { CreatePartnerDTO } from '../../DTO/Partner/CreatePartnerDTO';
@@ -20,14 +20,16 @@ export class PartnersController {
     constructor(private readonly partnersService: PartnersService) {}
 
     @Post()
-    async create(@Body() createPartnerDTO: CreatePartnerDTO): Promise<Partner> {
+    async create(
+        @Body() createPartnerDTO: CreatePartnerDTO
+    ): Promise<PartnerModel> {
         return await this.partnersService.create(createPartnerDTO);
     }
 
     @Get()
     async get(
         @Query() { limit, offset }: PaginationDTO
-    ): Promise<{ docs: Partner[]; count: number }> {
+    ): Promise<{ docs: PartnerModel[]; count: number }> {
         const { count, docs } = await this.partnersService.get(limit, offset);
 
         return {
@@ -37,7 +39,7 @@ export class PartnersController {
     }
 
     @Get(':id')
-    async getByID(@Param() { id }: MongoID): Promise<Partner> {
+    async getByID(@Param() { id }: MongoID): Promise<PartnerModel> {
         return await this.partnersService.getByID(id);
     }
 
@@ -45,12 +47,12 @@ export class PartnersController {
     async update(
         @Param() { id }: MongoID,
         @Body() updatePartnerDTO: UpdatePartnerDTO
-    ): Promise<Partner> {
+    ): Promise<PartnerModel> {
         return await this.partnersService.update(id, updatePartnerDTO);
     }
 
     @Delete(':id')
-    async delete(@Param() { id }: MongoID): Promise<Partner> {
+    async delete(@Param() { id }: MongoID): Promise<PartnerModel> {
         return await this.partnersService.delete(id);
     }
 }

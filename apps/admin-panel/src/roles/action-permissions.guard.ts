@@ -2,7 +2,7 @@ import { ActionPermissions } from './types/ActionPermissions';
 import { CanActivate, ExecutionContext, mixin } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { ExtendedRequest } from '../../../crm/src/authorization/ExtendedRequest';
-import { Role } from './models/Role.model';
+import { RoleModel } from './models/Role.model';
 
 export const ActionPermissionsGuard = (
     ...requiredActionPermissions: ActionPermissions[]
@@ -15,7 +15,8 @@ export const ActionPermissionsGuard = (
                 .switchToHttp()
                 .getRequest<ExtendedRequest>().user;
 
-            const actionPermissions = (user.role as Role)?.actionPermissions;
+            const actionPermissions = (user.role as RoleModel)
+                ?.actionPermissions;
 
             if (actionPermissions === null) {
                 return false;

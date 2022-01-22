@@ -1,5 +1,5 @@
-import { CRMUser } from './CRMUser.model';
-import { Group } from '../../../../crm/src/crm/groups/models/Group.model';
+import { CRMUserModel } from './CRMUser.model';
+import { GroupModel } from '../../../../crm/src/crm/groups/models/Group.model';
 import { WorkHours } from '../../work-hours/models/WorkHours';
 import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { AccountTypes } from '../types/AccountTypes';
@@ -10,15 +10,15 @@ import { AccountTypes } from '../types/AccountTypes';
         toObject: { virtuals: true }
     }
 })
-export class Tutor extends CRMUser {
+export class TutorModel extends CRMUserModel {
     @prop({
-        type: [Group],
-        ref: () => Group,
+        type: [GroupModel],
+        ref: () => GroupModel,
         localField: '_id',
         foreignField: 'tutor',
         select: false
     })
-    groups: Ref<Group>[];
+    groups: Ref<GroupModel>[];
 
     @prop({ type: Object, default: null })
     workHours: WorkHours;

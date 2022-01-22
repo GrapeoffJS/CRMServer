@@ -1,19 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { CRMUser } from '../../models/CRMUser.model';
+import { CRMUserModel } from '../../models/CRMUser.model';
 import { InjectModel } from 'nestjs-typegoose';
 
 @Injectable()
 export class AllStaffService {
     constructor(
-        @InjectModel(CRMUser)
-        private readonly crmUserModel: ReturnModelType<typeof CRMUser>
+        @InjectModel(CRMUserModel)
+        private readonly crmUserModel: ReturnModelType<typeof CRMUserModel>
     ) {}
 
     async get(
         limit: number,
         offset: number
-    ): Promise<{ count: number; docs: CRMUser[] }> {
+    ): Promise<{ count: number; docs: CRMUserModel[] }> {
         let count: number;
 
         this.crmUserModel.countDocuments((err, docsCount) => {
@@ -26,7 +26,7 @@ export class AllStaffService {
         };
     }
 
-    async getByID(id: string): Promise<CRMUser> {
+    async getByID(id: string): Promise<CRMUserModel> {
         const found = await this.crmUserModel.findById(id);
 
         if (!found) {
@@ -36,7 +36,7 @@ export class AllStaffService {
         return found;
     }
 
-    async delete(id: string): Promise<CRMUser> {
+    async delete(id: string): Promise<CRMUserModel> {
         const deleted = await this.crmUserModel.findByIdAndDelete(id);
 
         if (!deleted) {

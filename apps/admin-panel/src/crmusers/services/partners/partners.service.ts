@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import { Partner } from '../../models/Partner.model';
+import { PartnerModel } from '../../models/Partner.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
 import { CreatePartnerDTO } from '../../DTO/Partner/CreatePartnerDTO';
@@ -9,12 +9,12 @@ import { UpdatePartnerDTO } from '../../DTO/Partner/UpdatePartnerDTO';
 @Injectable()
 export class PartnersService {
     constructor(
-        @InjectModel(Partner)
-        private readonly partnerModel: ReturnModelType<typeof Partner>,
+        @InjectModel(PartnerModel)
+        private readonly partnerModel: ReturnModelType<typeof PartnerModel>,
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createPartnerDTO: CreatePartnerDTO): Promise<Partner> {
+    async create(createPartnerDTO: CreatePartnerDTO): Promise<PartnerModel> {
         createPartnerDTO.password = await this.passwordProtector.hash(
             createPartnerDTO.password
         );
@@ -25,7 +25,7 @@ export class PartnersService {
     async get(
         limit: number,
         offset: number
-    ): Promise<{ count: number; docs: Partner[] }> {
+    ): Promise<{ count: number; docs: PartnerModel[] }> {
         let count: number;
 
         this.partnerModel.countDocuments((err, docsCount) => {
@@ -38,14 +38,14 @@ export class PartnersService {
         };
     }
 
-    async getByID(id: string): Promise<Partner> {
+    async getByID(id: string): Promise<PartnerModel> {
         return this.partnerModel.findById(id);
     }
 
     async update(
         id: string,
         updatePartnerDTO: UpdatePartnerDTO
-    ): Promise<Partner> {
+    ): Promise<PartnerModel> {
         const updated = this.partnerModel.findByIdAndUpdate(
             id,
             updatePartnerDTO
@@ -58,7 +58,7 @@ export class PartnersService {
         return this.partnerModel.findById(id);
     }
 
-    async delete(id: string): Promise<Partner> {
+    async delete(id: string): Promise<PartnerModel> {
         const deleted = this.partnerModel.findByIdAndDelete(id);
 
         if (!deleted) {

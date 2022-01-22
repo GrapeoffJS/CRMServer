@@ -11,7 +11,7 @@ import {
 import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
 import { MongoID } from '../../../../../../utils/DTO/MongoID';
 import { UpdateManagerDTO } from '../../DTO/Manager/UpdateManagerDTO';
-import { Manager } from '../../models/Manager.model';
+import { ManagerModel } from '../../models/Manager.model';
 import { CreateManagerDTO } from '../../DTO/Manager/CreateManagerDTO';
 import { ManagersService } from '../../services/managers/managers.service';
 
@@ -20,14 +20,16 @@ export class ManagersController {
     constructor(private readonly managersService: ManagersService) {}
 
     @Post()
-    async create(@Body() createManagerDTO: CreateManagerDTO): Promise<Manager> {
+    async create(
+        @Body() createManagerDTO: CreateManagerDTO
+    ): Promise<ManagerModel> {
         return await this.managersService.create(createManagerDTO);
     }
 
     @Get()
     async get(
         @Query() { limit, offset }: PaginationDTO
-    ): Promise<{ docs: Manager[]; count: number }> {
+    ): Promise<{ docs: ManagerModel[]; count: number }> {
         const { count, docs } = await this.managersService.get(limit, offset);
 
         return {
@@ -37,7 +39,7 @@ export class ManagersController {
     }
 
     @Get(':id')
-    async getByID(@Param() { id }: MongoID): Promise<Manager> {
+    async getByID(@Param() { id }: MongoID): Promise<ManagerModel> {
         return await this.managersService.getByID(id);
     }
 
@@ -45,12 +47,12 @@ export class ManagersController {
     async update(
         @Param() { id }: MongoID,
         @Body() updateManagerDTO: UpdateManagerDTO
-    ): Promise<Manager> {
+    ): Promise<ManagerModel> {
         return await this.managersService.update(id, updateManagerDTO);
     }
 
     @Delete(':id')
-    async delete(@Param() { id }: MongoID): Promise<Manager> {
+    async delete(@Param() { id }: MongoID): Promise<ManagerModel> {
         return await this.managersService.delete(id);
     }
 }

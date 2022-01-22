@@ -1,6 +1,6 @@
 import { prop } from '@typegoose/typegoose';
 
-export class Subscription {
+export class SubscriptionStatus {
     @prop({ type: String, required: true })
     name: string;
 

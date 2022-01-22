@@ -2,13 +2,12 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { CreateWorkHoursDTO } from './DTO/CreateWorkHoursDTO';
-import { CRMUser } from '../crmusers/models/CRMUser.model';
 
 @Injectable()
 export class WorkHoursService {
     constructor(
-        @InjectModel(CRMUser)
-        private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
+        @InjectModel(CRMUserModel)
+        private readonly CRMUserModel: ReturnModelType<typeof CRMUserModel>
     ) {}
 
     async create(id: string, { workHours }: CreateWorkHoursDTO) {

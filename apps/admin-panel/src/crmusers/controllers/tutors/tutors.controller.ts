@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { TutorsService } from '../../services/tutors/tutors.service';
 import { CreateTutorDTO } from '../../DTO/Tutor/CreateTutorDTO';
-import { Tutor } from '../../models/Tutor.model';
+import { TutorModel } from '../../models/Tutor.model';
 import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
 import { MongoID } from '../../../../../../utils/DTO/MongoID';
 import { UpdateTutorDTO } from '../../DTO/Tutor/UpdateTutorDTO';
@@ -20,14 +20,14 @@ export class TutorsController {
     constructor(private readonly tutorsService: TutorsService) {}
 
     @Post()
-    async create(@Body() createTutorDTO: CreateTutorDTO): Promise<Tutor> {
+    async create(@Body() createTutorDTO: CreateTutorDTO): Promise<TutorModel> {
         return await this.tutorsService.create(createTutorDTO);
     }
 
     @Get()
     async get(
         @Query() { limit, offset }: PaginationDTO
-    ): Promise<{ docs: Tutor[]; count: number }> {
+    ): Promise<{ docs: TutorModel[]; count: number }> {
         const { count, docs } = await this.tutorsService.get(limit, offset);
 
         return {
@@ -37,7 +37,7 @@ export class TutorsController {
     }
 
     @Get(':id')
-    async getByID(@Param() { id }: MongoID): Promise<Tutor> {
+    async getByID(@Param() { id }: MongoID): Promise<TutorModel> {
         return await this.tutorsService.getByID(id);
     }
 
@@ -45,12 +45,12 @@ export class TutorsController {
     async update(
         @Param() { id }: MongoID,
         @Body() updateTutorDTO: UpdateTutorDTO
-    ): Promise<Tutor> {
+    ): Promise<TutorModel> {
         return await this.tutorsService.update(id, updateTutorDTO);
     }
 
     @Delete(':id')
-    async delete(@Param() { id }: MongoID): Promise<Tutor> {
+    async delete(@Param() { id }: MongoID): Promise<TutorModel> {
         return await this.tutorsService.delete(id);
     }
 }

@@ -2,19 +2,19 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { Manager } from '../../models/Manager.model';
+import { ManagerModel } from '../../models/Manager.model';
 import { UpdateManagerDTO } from '../../DTO/Manager/UpdateManagerDTO';
 import { CreateManagerDTO } from '../../DTO/Manager/CreateManagerDTO';
 
 @Injectable()
 export class ManagersService {
     constructor(
-        @InjectModel(Manager)
-        private readonly managerModel: ReturnModelType<typeof Manager>,
+        @InjectModel(ManagerModel)
+        private readonly managerModel: ReturnModelType<typeof ManagerModel>,
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createAdminDTO: CreateManagerDTO): Promise<Manager> {
+    async create(createAdminDTO: CreateManagerDTO): Promise<ManagerModel> {
         createAdminDTO.password = await this.passwordProtector.hash(
             createAdminDTO.password
         );
@@ -25,7 +25,7 @@ export class ManagersService {
     async get(
         limit: number,
         offset: number
-    ): Promise<{ count: number; docs: Manager[] }> {
+    ): Promise<{ count: number; docs: ManagerModel[] }> {
         let count: number;
 
         this.managerModel.countDocuments((err, docsCount) => {
@@ -38,14 +38,14 @@ export class ManagersService {
         };
     }
 
-    async getByID(id: string): Promise<Manager> {
+    async getByID(id: string): Promise<ManagerModel> {
         return this.managerModel.findById(id);
     }
 
     async update(
         id: string,
         updateManagerDTO: UpdateManagerDTO
-    ): Promise<Manager> {
+    ): Promise<ManagerModel> {
         const updated = this.managerModel.findByIdAndUpdate(
             id,
             updateManagerDTO
@@ -58,7 +58,7 @@ export class ManagersService {
         return this.managerModel.findById(id);
     }
 
-    async delete(id: string): Promise<Manager> {
+    async delete(id: string): Promise<ManagerModel> {
         const deleted = this.managerModel.findByIdAndDelete(id);
 
         if (!deleted) {

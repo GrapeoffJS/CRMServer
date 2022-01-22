@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
 import { InjectModel } from 'nestjs-typegoose';
-import { SalesFunnelStep } from './models/SalesFunnelStep.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
 import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
@@ -14,9 +13,9 @@ import Pupil from '../../../crm/src/crm/pupils/models/Pupil.model';
 @Injectable()
 export class SalesFunnelService {
     constructor(
-        @InjectModel(SalesFunnelStep)
+        @InjectModel(SalesFunnelStepModel)
         private readonly SalesFunnelStepModel: ReturnModelType<
-            typeof SalesFunnelStep
+            typeof SalesFunnelStepModel
         >,
         @InjectModel(Pupil)
         private readonly PupilModel: ReturnModelType<typeof Pupil>

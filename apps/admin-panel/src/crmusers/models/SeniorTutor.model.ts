@@ -1,8 +1,8 @@
-import { CRMUser } from './CRMUser.model';
+import { CRMUserModel } from './CRMUser.model';
 import { prop } from '@typegoose/typegoose';
 import { AccountTypes } from '../types/AccountTypes';
 
-export class SeniorTutor extends CRMUser {
+export class SeniorTutorModel extends CRMUserModel {
     @prop({ type: () => String, default: AccountTypes.SeniorTutor })
     accountType: string;
 }

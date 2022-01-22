@@ -1,7 +1,7 @@
 import { prop, Ref } from '@typegoose/typegoose';
-import { Role } from '../../roles/models/Role.model';
+import { RoleModel } from '../../roles/models/Role.model';
 
-export class CRMUser {
+export class CRMUserModel {
     @prop({ type: () => String, required: true })
     name: string;
 
@@ -17,6 +17,6 @@ export class CRMUser {
     @prop({ type: () => String, select: false, required: true })
     password: string;
 
-    @prop({ type: () => Role, ref: () => Role, required: true })
-    role: Ref<Role>;
+    @prop({ type: () => RoleModel, ref: () => RoleModel, required: true })
+    role: Ref<RoleModel>;
 }

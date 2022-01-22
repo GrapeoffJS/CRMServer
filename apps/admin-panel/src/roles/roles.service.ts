@@ -6,14 +6,13 @@ import {
 import { CreateRoleDTO } from './DTO/CreateRoleDTO';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { Role } from './models/Role.model';
 import { UpdateRoleDTO } from './DTO/UpdateRoleDTO';
 
 @Injectable()
 export class RolesService {
     constructor(
-        @InjectModel(Role)
-        private readonly RoleModel: ReturnModelType<typeof Role>
+        @InjectModel(RoleModel)
+        private readonly RoleModel: ReturnModelType<typeof RoleModel>
     ) {}
 
     async create(createRoleDTO: CreateRoleDTO) {

@@ -8,7 +8,7 @@ import {
     Post
 } from '@nestjs/common';
 import { CreateSubscriptionDTO } from './DTO/CreateSubscriptionDTO';
-import { Subscription } from './models/Subscription.model';
+import { SubscriptionStatus } from './models/Subscription.model';
 import { SubscriptionsService } from './subscriptions.service';
 import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
 import { MongoID } from '../../../../utils/DTO/MongoID';
@@ -20,17 +20,17 @@ export class SubscriptionsController {
     @Post()
     async create(
         @Body() createSubscriptionDTO: CreateSubscriptionDTO
-    ): Promise<Subscription> {
+    ): Promise<SubscriptionStatus> {
         return await this.subscriptionsService.create(createSubscriptionDTO);
     }
 
     @Get()
-    async findAll(): Promise<Subscription[]> {
+    async findAll(): Promise<SubscriptionStatus[]> {
         return await this.subscriptionsService.findAll();
     }
 
     @Get(':id')
-    async findById(@Param() { id }: MongoID): Promise<Subscription> {
+    async findById(@Param() { id }: MongoID): Promise<SubscriptionStatus> {
         return await this.subscriptionsService.findById(id);
     }
 
@@ -38,12 +38,12 @@ export class SubscriptionsController {
     async edit(
         @Param() { id }: MongoID,
         updateSubscriptionDTO: UpdateSubscriptionDTO
-    ): Promise<Subscription> {
+    ): Promise<SubscriptionStatus> {
         return await this.subscriptionsService.edit(id, updateSubscriptionDTO);
     }
 
     @Delete(':id')
-    async delete(@Param() { id }: MongoID): Promise<Subscription> {
+    async delete(@Param() { id }: MongoID): Promise<SubscriptionStatus> {
         return await this.subscriptionsService.delete(id);
     }
 }

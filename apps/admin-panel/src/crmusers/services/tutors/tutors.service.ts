@@ -4,17 +4,17 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
 import { CreateTutorDTO } from '../../DTO/Tutor/CreateTutorDTO';
 import { UpdateTutorDTO } from '../../DTO/Tutor/UpdateTutorDTO';
-import { Tutor } from '../../models/Tutor.model';
+import { TutorModel } from '../../models/Tutor.model';
 
 @Injectable()
 export class TutorsService {
     constructor(
-        @InjectModel(Tutor)
-        private readonly tutorModel: ReturnModelType<typeof Tutor>,
+        @InjectModel(TutorModel)
+        private readonly tutorModel: ReturnModelType<typeof TutorModel>,
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createTutorDTO: CreateTutorDTO): Promise<Tutor> {
+    async create(createTutorDTO: CreateTutorDTO): Promise<TutorModel> {
         createTutorDTO.password = await this.passwordProtector.hash(
             createTutorDTO.password
         );
@@ -25,7 +25,7 @@ export class TutorsService {
     async get(
         limit: number,
         offset: number
-    ): Promise<{ count: number; docs: Tutor[] }> {
+    ): Promise<{ count: number; docs: TutorModel[] }> {
         let count: number;
 
         this.tutorModel.countDocuments((err, docsCount) => {
@@ -38,11 +38,14 @@ export class TutorsService {
         };
     }
 
-    async getByID(id: string): Promise<Tutor> {
+    async getByID(id: string): Promise<TutorModel> {
         return this.tutorModel.findById(id);
     }
 
-    async update(id: string, updateTutorDTO: UpdateTutorDTO): Promise<Tutor> {
+    async update(
+        id: string,
+        updateTutorDTO: UpdateTutorDTO
+    ): Promise<TutorModel> {
         const updated = this.tutorModel.findByIdAndUpdate(id, updateTutorDTO);
 
         if (!updated) {
@@ -52,7 +55,7 @@ export class TutorsService {
         return this.tutorModel.findById(id);
     }
 
-    async delete(id: string): Promise<Tutor> {
+    async delete(id: string): Promise<TutorModel> {
         const deleted = await this.tutorModel.findByIdAndDelete(id);
 
         if (!deleted) {

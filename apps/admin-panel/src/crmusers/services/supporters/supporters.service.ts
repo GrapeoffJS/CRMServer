@@ -4,17 +4,19 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
 import { CreateSupporterDTO } from '../../DTO/Supporter/CreateSupporterDTO';
 import { UpdateSupporterDTO } from '../../DTO/Supporter/UpdateSupporterDTO';
-import { Supporter } from '../../models/Supporter.model';
+import { SupporterModel } from '../../models/Supporter.model';
 
 @Injectable()
 export class SupportersService {
     constructor(
-        @InjectModel(Supporter)
-        private readonly supportModel: ReturnModelType<typeof Supporter>,
+        @InjectModel(SupporterModel)
+        private readonly supportModel: ReturnModelType<typeof SupporterModel>,
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createSupportDTO: CreateSupporterDTO): Promise<Supporter> {
+    async create(
+        createSupportDTO: CreateSupporterDTO
+    ): Promise<SupporterModel> {
         createSupportDTO.password = await this.passwordProtector.hash(
             createSupportDTO.password
         );
@@ -25,7 +27,7 @@ export class SupportersService {
     async get(
         limit: number,
         offset: number
-    ): Promise<{ count: number; docs: Supporter[] }> {
+    ): Promise<{ count: number; docs: SupporterModel[] }> {
         let count: number;
 
         this.supportModel.countDocuments((err, docsCount) => {
@@ -38,19 +40,19 @@ export class SupportersService {
         };
     }
 
-    async getByID(id: string): Promise<Supporter> {
+    async getByID(id: string): Promise<SupporterModel> {
         return this.supportModel.findById(id);
     }
 
     async update(
         id: string,
         updateSupportDTO: UpdateSupporterDTO
-    ): Promise<Supporter> {
+    ): Promise<SupporterModel> {
         this.supportModel.findByIdAndUpdate(id, updateSupportDTO);
         return this.supportModel.findById(id);
     }
 
-    async delete(id: string): Promise<Supporter> {
+    async delete(id: string): Promise<SupporterModel> {
         const deleted = await this.supportModel.findByIdAndDelete(id);
 
         if (!deleted) {
