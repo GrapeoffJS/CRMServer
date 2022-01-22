@@ -3,7 +3,7 @@ import { ActionPermissions } from '../types/ActionPermissions';
 import { DataPermissions } from '../types/DataPermissions';
 
 export class RoleModel {
-    @prop({ type: String, required: true, unique: true })
+    @prop({ type: () => String, required: true, unique: true })
     name: string;
 
     @prop({

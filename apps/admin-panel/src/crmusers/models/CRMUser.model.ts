@@ -1,7 +1,8 @@
 import { prop, Ref } from '@typegoose/typegoose';
 import { RoleModel } from '../../roles/models/Role.model';
+import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
-export class CRMUserModel {
+export class CRMUserModel extends TimeStamps {
     @prop({ type: () => String, required: true })
     name: string;
 
@@ -9,7 +10,7 @@ export class CRMUserModel {
     surname: string;
 
     @prop({ type: () => String, required: true })
-    midname: string;
+    middleName: string;
 
     @prop({ type: () => String, unique: true, required: true })
     login: string;
@@ -17,6 +18,10 @@ export class CRMUserModel {
     @prop({ type: () => String, select: false, required: true })
     password: string;
 
-    @prop({ type: () => RoleModel, ref: () => RoleModel, required: true })
+    @prop({
+        type: () => RoleModel,
+        ref: () => RoleModel,
+        required: true
+    })
     role: Ref<RoleModel>;
 }

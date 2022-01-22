@@ -20,10 +20,10 @@ export class TutorModel extends CRMUserModel {
     })
     groups: Ref<GroupModel>[];
 
-    @prop({ type: Object, default: null })
+    @prop({ type: () => Object, default: null })
     workHours: WorkHours;
 
-    @prop({ type: String, default: null })
+    @prop({ type: () => String, default: null })
     subject: string;
 
     @prop({ type: () => String, default: AccountTypes.Tutor })

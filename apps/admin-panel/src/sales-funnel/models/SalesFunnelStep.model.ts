@@ -1,5 +1,5 @@
 import { modelOptions, prop } from '@typegoose/typegoose';
-import Pupil from '../../../../crm/src/crm/pupils/models/Pupil.model';
+import { StudentModel } from '../../../../crm/src/crm/students/models/Student.model';
 
 @modelOptions({
     schemaOptions: {
@@ -8,24 +8,25 @@ import Pupil from '../../../../crm/src/crm/pupils/models/Pupil.model';
     }
 })
 export class SalesFunnelStepModel {
-    @prop({ type: String, required: true })
+    @prop({ type: () => String, required: true })
     name: string;
 
-    @prop({ type: Number, required: true })
+    @prop({ type: () => Number, required: true })
     order: number;
 
     @prop({
-        type: [Pupil],
-        default: [],
-        ref: () => Pupil,
+        type: () => [StudentModel],
+        ref: () => StudentModel,
         localField: '_id',
-        foreignField: 'salesFunnelStep'
+        foreignField: 'salesFunnelStep',
+        default: [],
+        select: false
     })
-    pupils: Pupil[];
+    students: StudentModel[];
 
-    @prop({ type: String, required: true, maxlength: 7 })
+    @prop({ type: () => String, required: true, maxlength: 7 })
     background: string;
 
-    @prop({ type: String, default: '#000000', maxlength: 7 })
+    @prop({ type: () => String, default: '#000000', maxlength: 7 })
     color: string;
 }
