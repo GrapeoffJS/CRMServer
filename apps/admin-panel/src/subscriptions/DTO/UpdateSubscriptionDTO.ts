@@ -1,29 +1,4 @@
-import {
-    IsNotEmpty,
-    IsNumber,
-    IsOptional,
-    IsPositive,
-    IsString
-} from 'class-validator';
-import { Type } from 'class-transformer';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateSubscriptionDTO } from './CreateSubscriptionDTO';
 
-export class UpdateSubscriptionDTO {
-    @IsOptional()
-    @IsNotEmpty()
-    @IsString()
-    name: string;
-
-    @Type(() => Number)
-    @IsOptional()
-    @IsPositive()
-    @IsNotEmpty()
-    @IsNumber()
-    price: number;
-
-    @Type(() => Number)
-    @IsOptional()
-    @IsPositive()
-    @IsNotEmpty()
-    @IsNumber()
-    houseCount: number;
-}
+export class UpdateSubscriptionDTO extends PartialType(CreateSubscriptionDTO) {}

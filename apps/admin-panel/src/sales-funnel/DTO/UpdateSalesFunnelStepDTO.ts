@@ -1,20 +1,6 @@
-import { IsHexColor, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { OmitType, PartialType } from '@nestjs/mapped-types';
+import { CreateSalesFunnelStepDTO } from './CreateSalesFunnelStepDTO';
 
-export class UpdateSalesFunnelStepDTO {
-    @IsOptional()
-    @IsNotEmpty()
-    @IsString()
-    name: string;
-
-    @IsOptional()
-    @IsNotEmpty()
-    @IsString()
-    @IsHexColor()
-    background: string;
-
-    @IsOptional()
-    @IsNotEmpty()
-    @IsString()
-    @IsHexColor()
-    color: string;
-}
+export class UpdateSalesFunnelStepDTO extends PartialType(
+    OmitType(CreateSalesFunnelStepDTO, ['order'] as const)
+) {}

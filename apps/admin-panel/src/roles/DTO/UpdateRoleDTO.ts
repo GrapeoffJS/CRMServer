@@ -1,24 +1,4 @@
-import {
-    IsEnum,
-    IsNotEmpty,
-    IsObject,
-    IsOptional,
-    IsString
-} from 'class-validator';
-import { ActionPermissions } from '../types/ActionPermissions';
-import { DataPermissions } from '../types/DataPermissions';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateRoleDTO } from './CreateRoleDTO';
 
-export class UpdateRoleDTO {
-    @IsOptional()
-    @IsNotEmpty()
-    @IsString()
-    name?: string;
-
-    @IsOptional()
-    @IsEnum(ActionPermissions, { each: true })
-    actionPermissions?: ActionPermissions[];
-
-    @IsOptional()
-    @IsObject()
-    dataPermissions?: DataPermissions;
-}
+export class UpdateRoleDTO extends PartialType(CreateRoleDTO) {}
