@@ -1,40 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTaskDTO } from './DTO/CreateTaskDTO';
 import { InjectModel } from 'nestjs-typegoose';
-import { Task } from './models/Task.model';
+import { TaskModel } from './models/Task.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { UpdateTaskDTO } from './DTO/UpdateTaskDTO';
-import { CRMUser } from '../../../../admin-panel/src/crmusers/models/CRMUser.model';
-import { TaskTag } from '../task-tags/models/TaskTag.model';
+import { CRMUserModel } from '../../../../admin-panel/src/crmusers/models/CRMUser.model';
+import { TaskTagModel } from '../task-tags/models/TaskTag.model';
 
 @Injectable()
 export class TasksService {
     constructor(
-        @InjectModel(Task)
-        private readonly TaskModel: ReturnModelType<typeof Task>
+        @InjectModel(TaskModel)
+        private readonly taskModel: ReturnModelType<typeof TaskModel>
     ) {}
 
     async create(createTaskDTO: CreateTaskDTO) {
-        const task = await this.TaskModel.create(createTaskDTO);
+        const task = await this.taskModel.create(createTaskDTO);
 
-        return this.TaskModel.findById(task.id).populate([
+        return this.taskModel.findById(task.id).populate([
             {
                 path: 'responsible',
-                model: CRMUser
+                model: CRMUserModel
             },
             {
                 path: 'tags',
-                model: TaskTag
+                model: TaskTagModel
             }
         ]);
     }
 
     async delete(id: string) {
-        return this.TaskModel.findByIdAndDelete(id);
+        return this.taskModel.findByIdAndDelete(id);
     }
 
     async update(id: string, updateTaskDTO: UpdateTaskDTO) {
-        await this.TaskModel.updateOne({ _id: id }, updateTaskDTO);
-        return this.TaskModel.findById(id);
+        await this.taskModel.updateOne({ _id: id }, updateTaskDTO);
+        return this.taskModel.findById(id);
     }
 }

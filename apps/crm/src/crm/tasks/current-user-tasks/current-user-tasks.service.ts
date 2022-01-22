@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { Task } from '../models/Task.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { Types } from 'mongoose';
 
 @Injectable()
 export class CurrentUserTasksService {
     constructor(
-        @InjectModel(Task)
-        private readonly TaskModel: ReturnModelType<typeof Task>
+        @InjectModel(TaskModel)
+        private readonly TaskModel: ReturnModelType<typeof TaskModel>
     ) {}
 
     async findAll(tags: string[] | undefined, id: string) {

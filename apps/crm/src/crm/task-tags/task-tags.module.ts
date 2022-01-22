@@ -4,13 +4,13 @@ import { TaskTagsService } from './task-tags.service';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TaskTag } from './models/TaskTag.model';
+import { TaskTagModel } from './models/TaskTag.model';
 
 @Module({
     imports: [
         TypegooseModule.forFeature([
             {
-                typegooseClass: TaskTag,
+                typegooseClass: TaskTagModel,
                 schemaOptions: { collection: 'TaskTags' }
             }
         ]),

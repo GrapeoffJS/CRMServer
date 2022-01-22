@@ -1,30 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import { SalesFunnelStep } from '../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
+import { SalesFunnelStepModel } from '../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
 import { ReturnModelType } from '@typegoose/typegoose';
-import Pupil from '../pupils/models/Pupil.model';
+import { StudentModel } from '../students/models/Student.model';
 import { getFindAllAggregation } from './aggregations/getFindAllAggregation';
 import { getFindByIdAggregation } from './aggregations/getFindByIdAggregation';
 
 @Injectable()
 export class SalesFunnelService {
     constructor(
-        @InjectModel(SalesFunnelStep)
-        private readonly SalesFunnelStepModel: ReturnModelType<
-            typeof SalesFunnelStep
+        @InjectModel(SalesFunnelStepModel)
+        private readonly salesFunnelStepModel: ReturnModelType<
+            typeof SalesFunnelStepModel
         >,
-        @InjectModel(Pupil)
-        private readonly PupilModel: ReturnModelType<typeof Pupil>
+        @InjectModel(StudentModel)
+        private readonly PupilModel: ReturnModelType<typeof StudentModel>
     ) {}
 
     async findAll(limit: number) {
-        return this.SalesFunnelStepModel.aggregate(
+        return this.salesFunnelStepModel.aggregate(
             getFindAllAggregation(limit)
         );
     }
 
     async findById(id: string, limit: number, offset: number) {
-        return this.SalesFunnelStepModel.aggregate(
+        return this.salesFunnelStepModel.aggregate(
             getFindByIdAggregation(id, offset, limit)
         );
     }

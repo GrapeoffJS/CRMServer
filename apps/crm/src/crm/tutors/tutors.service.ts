@@ -1,15 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import { CRMUser } from '../../../../admin-panel/src/crmusers/models/CRMUser.model';
+import { CRMUserModel } from '../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { AccountTypes } from '../../../../admin-panel/src/crmusers/types/AccountTypes';
-import { Role } from '../../../../admin-panel/src/roles/models/Role.model';
+import { RoleModel } from '../../../../admin-panel/src/roles/models/Role.model';
 
 @Injectable()
 export class TutorsService {
     constructor(
-        @InjectModel(CRMUser)
-        private readonly CRMUserModel: ReturnModelType<typeof CRMUser>
+        @InjectModel(CRMUserModel)
+        private readonly CRMUserModel: ReturnModelType<typeof CRMUserModel>
     ) {}
 
     async findAll(limit: number, offset: number, subjects: string[]) {
@@ -37,7 +37,7 @@ export class TutorsService {
         };
     }
 
-    async findById(id: string): Promise<CRMUser> {
+    async findById(id: string): Promise<CRMUserModel> {
         const user = await this.CRMUserModel.findOne({
             accountType: AccountTypes.Teacher,
             _id: id
@@ -48,7 +48,7 @@ export class TutorsService {
             },
             {
                 path: 'role',
-                model: Role
+                model: RoleModel
             }
         ]);
 

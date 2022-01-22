@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { Task } from './models/Task.model';
+import { TaskModel } from './models/Task.model';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CurrentUserTasksModule } from './current-user-tasks/current-user-tasks.module';
@@ -11,7 +11,7 @@ import { CurrentUserTasksModule } from './current-user-tasks/current-user-tasks.
     imports: [
         TypegooseModule.forFeature([
             {
-                typegooseClass: Task,
+                typegooseClass: TaskModel,
                 schemaOptions: { collection: 'Tasks' }
             }
         ]),

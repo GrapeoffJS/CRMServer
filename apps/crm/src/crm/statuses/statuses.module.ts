@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { StatusesController } from './statuses.controller';
 import { StatusesService } from './statuses.service';
 import { TypegooseModule } from 'nestjs-typegoose';
-import Status from './models/Status.model';
+import StatusModel from './models/Status.model';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
@@ -10,7 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     imports: [
         TypegooseModule.forFeature([
             {
-                typegooseClass: Status,
+                typegooseClass: StatusModel,
                 schemaOptions: {
                     collection: 'Statuses'
                 }

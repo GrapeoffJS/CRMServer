@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import Status from './models/Status.model';
+import StatusModel from './models/Status.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { CreateStatusDTO } from './DTO/CreateStatusDTO';
 import { UpdateStatusDTO } from './DTO/UpdateStatusDTO';
@@ -8,25 +8,32 @@ import { UpdateStatusDTO } from './DTO/UpdateStatusDTO';
 @Injectable()
 export class StatusesService {
     constructor(
-        @InjectModel(Status)
-        private readonly StatusModel: ReturnModelType<typeof Status>
+        @InjectModel(StatusModel)
+        private readonly statusModel: ReturnModelType<typeof StatusModel>
     ) {}
 
     async findAll() {
-        return this.StatusModel.find();
+        return this.statusModel.find();
     }
 
     async create(createStatusDTO: CreateStatusDTO) {
-        return this.StatusModel.create(createStatusDTO);
+        return this.statusModel.create(createStatusDTO);
     }
 
     async update(id: string, updateStatusDTO: UpdateStatusDTO) {
-        await this.StatusModel.findByIdAndUpdate(id, updateStatusDTO);
+        const found = await this.statusModel.findByIdAndUpdate(
+            id,
+            updateStatusDTO
+        );
 
-        return this.StatusModel.findById(id);
+        if (!found) {
+            throw new NotFoundException();
+        }
+
+        return this.statusModel.findById(id);
     }
 
     async delete(id: string) {
-        return this.StatusModel.findByIdAndDelete(id);
+        return this.statusModel.findByIdAndDelete(id);
     }
 }

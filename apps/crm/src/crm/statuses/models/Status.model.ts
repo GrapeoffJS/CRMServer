@@ -1,9 +1,9 @@
 import { prop } from '@typegoose/typegoose';
 
-export default class Status {
-    @prop({ type: String, required: true })
+export default class StatusModel {
+    @prop({ type: () => String, required: true })
     name: string;
 
-    @prop({ type: String, required: true })
+    @prop({ type: () => String, required: true })
     color: string;
 }
