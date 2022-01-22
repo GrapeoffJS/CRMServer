@@ -1,38 +1,29 @@
-import { GroupsModule } from './groups/groups.module';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { PupilsModule } from './pupils/pupils.module';
 import { AuthorizationMiddleware } from '../authorization/authorization.middleware';
 import { TypegooseModule } from 'nestjs-typegoose';
-import Pupil from './pupils/models/Pupil.model';
-import { Group } from './groups/models/Group.model';
-import { CRMUser } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
+import { StudentModel } from './students/models/Student.model';
+import { CRMUserModel } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configModuleOptions from '../config/configModuleOptions';
-import { SearchModule } from './search/search.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { TutorsModule } from './tutors/tutors.module';
 import { SalesFunnelModule } from './sales-funnel/sales-funnel.module';
 import { StatusesModule } from './statuses/statuses.module';
 import { TasksModule } from './tasks/tasks.module';
 import { TaskTagsModule } from './task-tags/task-tags.module';
+import { GroupsModule } from './groups/groups.module';
+import { SearchModule } from './search/search.module';
+import { StudentsModule } from './students/students.module';
 
 @Module({
     imports: [
-        PupilsModule,
-        GroupsModule,
-        SearchModule,
         TypegooseModule.forFeature([
             {
-                typegooseClass: Pupil,
-                schemaOptions: { collection: 'Pupils' }
+                typegooseClass: StudentModel
             },
             {
-                typegooseClass: Group,
-                schemaOptions: { collection: 'Groups' }
-            },
-            {
-                typegooseClass: CRMUser,
+                typegooseClass: CRMUserModel,
                 schemaOptions: { collection: 'CRMUsers' }
             }
         ]),
@@ -54,7 +45,10 @@ import { TaskTagsModule } from './task-tags/task-tags.module';
         SalesFunnelModule,
         StatusesModule,
         TasksModule,
-        TaskTagsModule
+        TaskTagsModule,
+        GroupsModule,
+        SearchModule,
+        StudentsModule
     ]
 })
 export class CrmModule implements NestModule {
