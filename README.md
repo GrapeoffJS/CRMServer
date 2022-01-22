@@ -40,15 +40,27 @@ $ yarn install
 
 ```bash
 # development
-$ yarn start
-
-# watch mode
 $ yarn start:dev
 
 # production mode
 $ yarn build
 $ yarn start:prod
 ```
+
+## Generating documentation
+
+```bash
+$ yarn doc
+```
+
+Then open [localhost:8080](http://localhost:8080/)
+
+## Deployment
+```bash
+$ docker compose up --build -d
+```
+
+It recuires at least 16GB RAM.
 
 ## License
 
