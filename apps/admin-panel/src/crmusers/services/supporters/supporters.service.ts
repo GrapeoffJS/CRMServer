@@ -41,7 +41,13 @@ export class SupportersService {
     }
 
     async getByID(id: string): Promise<SupporterModel> {
-        return this.supportModel.findById(id);
+        const found = await this.supportModel.findById(id);
+
+        if (!found) {
+            throw new NotFoundException();
+        }
+
+        return found;
     }
 
     async update(

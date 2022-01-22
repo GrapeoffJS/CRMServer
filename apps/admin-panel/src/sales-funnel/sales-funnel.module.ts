@@ -3,14 +3,13 @@ import { SalesFunnelController } from './sales-funnel.controller';
 import { SalesFunnelService } from './sales-funnel.service';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { SalesFunnelStepModel } from './models/SalesFunnelStep.model';
-import Pupil from '../../../crm/src/crm/pupils/models/Pupil.model';
+import { StudentModel } from '../../../crm/src/crm/students/models/Student.model';
 
 @Module({
     imports: [
         TypegooseModule.forFeature([
             {
-                typegooseClass: Pupil,
-                schemaOptions: { collection: 'Pupils' }
+                typegooseClass: StudentModel
             },
             {
                 typegooseClass: SalesFunnelStepModel,

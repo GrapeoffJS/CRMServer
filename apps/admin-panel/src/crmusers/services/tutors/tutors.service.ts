@@ -39,7 +39,13 @@ export class TutorsService {
     }
 
     async getByID(id: string): Promise<TutorModel> {
-        return this.tutorModel.findById(id);
+        const found = await this.tutorModel.findById(id);
+
+        if (!found) {
+            throw new NotFoundException();
+        }
+
+        return found;
     }
 
     async update(

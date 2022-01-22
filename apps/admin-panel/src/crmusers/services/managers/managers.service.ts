@@ -39,7 +39,13 @@ export class ManagersService {
     }
 
     async getByID(id: string): Promise<ManagerModel> {
-        return this.managerModel.findById(id);
+        const found = await this.managerModel.findById(id);
+
+        if (!found) {
+            throw new NotFoundException();
+        }
+
+        return found;
     }
 
     async update(

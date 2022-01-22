@@ -39,7 +39,13 @@ export class PartnersService {
     }
 
     async getByID(id: string): Promise<PartnerModel> {
-        return this.partnerModel.findById(id);
+        const found = await this.partnerModel.findById(id);
+
+        if (!found) {
+            throw new NotFoundException();
+        }
+
+        return found;
     }
 
     async update(
