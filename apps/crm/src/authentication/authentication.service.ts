@@ -1,4 +1,3 @@
-import { CRMUser } from 'apps/admin-panel/src/crmusers/models/CRMUser.model';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
@@ -9,8 +8,8 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthenticationService {
     constructor(
-        @InjectModel(CRMUser)
-        private readonly CRMUserModel: ReturnModelType<typeof CRMUser>,
+        @InjectModel(CRMUserModel)
+        private readonly CRMUserModel: ReturnModelType<typeof CRMUserModel>,
         private readonly configService: ConfigService,
         private readonly jwtService: JwtService
     ) {}

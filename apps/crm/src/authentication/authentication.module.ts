@@ -1,4 +1,4 @@
-import { CRMUser } from 'apps/admin-panel/src/crmusers/models/CRMUser.model';
+import { CRMUserModel } from 'apps/admin-panel/src/crmusers/models/CRMUser.model';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -10,7 +10,7 @@ import { JwtModule } from '@nestjs/jwt';
     imports: [
         TypegooseModule.forFeature([
             {
-                typegooseClass: CRMUser,
+                typegooseClass: CRMUserModel,
                 schemaOptions: { collection: 'CRMUsers' }
             }
         ]),
