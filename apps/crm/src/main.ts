@@ -3,6 +3,8 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import morgan from 'morgan';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -27,6 +29,21 @@ async function bootstrap() {
         prefix: 'v',
         type: VersioningType.URI
     });
+
+    const config = new DocumentBuilder()
+        .setTitle('CRM API')
+        .setDescription('CRM API Documentation')
+        .setVersion('1')
+        .build();
+
+    const apiDocument = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api/docs', app, apiDocument);
+
+    app.use(
+        morgan(
+            ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]'
+        )
+    );
 
     await app.listen(process.env.PORT || 4200);
 }
