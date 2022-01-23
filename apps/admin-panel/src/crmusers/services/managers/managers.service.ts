@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
@@ -19,21 +23,20 @@ export class ManagersService {
             createAdminDTO.password
         );
 
-        return this.managerModel.create(createAdminDTO);
+        try {
+            const user = await this.managerModel.create(CreateManagerDTO);
+            return this.managerModel.findById(user.id);
+        } catch (e) {
+            throw new BadRequestException('User with this login exists');
+        }
     }
 
     async get(
         limit: number,
         offset: number
     ): Promise<{ count: number; docs: ManagerModel[] }> {
-        let count: number;
-
-        this.managerModel.countDocuments((err, docsCount) => {
-            count = docsCount;
-        });
-
         return {
-            count,
+            count: await this.managerModel.countDocuments().exec(),
             docs: await this.managerModel.find().skip(offset).limit(limit)
         };
     }

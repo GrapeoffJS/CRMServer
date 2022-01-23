@@ -20,15 +20,15 @@ export class SubscriptionsService {
         return await this.SubscriptionModel.create(createSubscriptionDTO);
     }
 
-    async findAll(): Promise<SubscriptionStatus[]> {
+    async get(): Promise<SubscriptionStatus[]> {
         return this.SubscriptionModel.find();
     }
 
-    async findById(id: string): Promise<SubscriptionStatus> {
+    async getByID(id: string): Promise<SubscriptionStatus> {
         return this.SubscriptionModel.findById(id);
     }
 
-    async edit(
+    async update(
         id: string,
         updateSubscriptionDTO: UpdateSubscriptionDTO
     ): Promise<SubscriptionStatus> {

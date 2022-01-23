@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
@@ -10,7 +14,7 @@ import { SupporterModel } from '../../models/Supporter.model';
 export class SupportersService {
     constructor(
         @InjectModel(SupporterModel)
-        private readonly supportModel: ReturnModelType<typeof SupporterModel>,
+        private readonly supporterModel: ReturnModelType<typeof SupporterModel>,
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
@@ -21,27 +25,26 @@ export class SupportersService {
             createSupportDTO.password
         );
 
-        return this.supportModel.create(createSupportDTO);
+        try {
+            const user = await this.supporterModel.create(CreateSupporterDTO);
+            return this.supporterModel.findById(user.id);
+        } catch (e) {
+            throw new BadRequestException('User with this login exists');
+        }
     }
 
     async get(
         limit: number,
         offset: number
     ): Promise<{ count: number; docs: SupporterModel[] }> {
-        let count: number;
-
-        this.supportModel.countDocuments((err, docsCount) => {
-            count = docsCount;
-        });
-
         return {
-            count,
-            docs: await this.supportModel.find().skip(offset).limit(limit)
+            count: await this.supporterModel.countDocuments().exec(),
+            docs: await this.supporterModel.find().skip(offset).limit(limit)
         };
     }
 
     async getByID(id: string): Promise<SupporterModel> {
-        const found = await this.supportModel.findById(id);
+        const found = await this.supporterModel.findById(id);
 
         if (!found) {
             throw new NotFoundException();
@@ -54,12 +57,12 @@ export class SupportersService {
         id: string,
         updateSupportDTO: UpdateSupporterDTO
     ): Promise<SupporterModel> {
-        this.supportModel.findByIdAndUpdate(id, updateSupportDTO);
-        return this.supportModel.findById(id);
+        this.supporterModel.findByIdAndUpdate(id, updateSupportDTO);
+        return this.supporterModel.findById(id);
     }
 
     async delete(id: string): Promise<SupporterModel> {
-        const deleted = await this.supportModel.findByIdAndDelete(id);
+        const deleted = await this.supporterModel.findByIdAndDelete(id);
 
         if (!deleted) {
             throw new NotFoundException();

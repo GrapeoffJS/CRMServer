@@ -14,11 +14,14 @@ import { UpdateManagerDTO } from '../../DTO/Manager/UpdateManagerDTO';
 import { ManagerModel } from '../../models/Manager.model';
 import { CreateManagerDTO } from '../../DTO/Manager/CreateManagerDTO';
 import { ManagersService } from '../../services/managers/managers.service';
+import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('/admin-panel/crm-users/managers')
 @Controller('/admin-panel/crm-users/managers')
 export class ManagersController {
     constructor(private readonly managersService: ManagersService) {}
 
+    @ApiBody({ type: () => CreateManagerDTO })
     @Post()
     async create(
         @Body() createManagerDTO: CreateManagerDTO
@@ -26,23 +29,23 @@ export class ManagersController {
         return await this.managersService.create(createManagerDTO);
     }
 
+    @ApiQuery({ name: 'limit', type: () => Number })
+    @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
     async get(
         @Query() { limit, offset }: PaginationDTO
     ): Promise<{ docs: ManagerModel[]; count: number }> {
-        const { count, docs } = await this.managersService.get(limit, offset);
-
-        return {
-            docs,
-            count
-        };
+        return await this.managersService.get(limit, offset);
     }
 
+    @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
     async getByID(@Param() { id }: MongoID): Promise<ManagerModel> {
         return await this.managersService.getByID(id);
     }
 
+    @ApiParam({ name: 'id', type: () => String })
+    @ApiBody({ type: () => UpdateManagerDTO })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
@@ -51,6 +54,7 @@ export class ManagersController {
         return await this.managersService.update(id, updateManagerDTO);
     }
 
+    @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
     async delete(@Param() { id }: MongoID): Promise<ManagerModel> {
         return await this.managersService.delete(id);

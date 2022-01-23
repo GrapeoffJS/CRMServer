@@ -1,4 +1,7 @@
-export type DataPermissions = {
+import { ApiProperty } from '@nestjs/swagger';
+
+export class DataPermissions {
+    @ApiProperty()
     forPupil: {
         phone?: 1;
         dateOfBirth?: 1;
@@ -15,6 +18,8 @@ export type DataPermissions = {
         statuses?: 1;
         notes?: 1;
     };
+
+    @ApiProperty()
     forGroup: {
         group_name?: 1;
         tutor?: 1;
@@ -23,4 +28,4 @@ export type DataPermissions = {
         places?: 1;
         global_schedule?: 1;
     };
-};
+}

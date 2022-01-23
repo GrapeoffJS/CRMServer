@@ -1,7 +1,8 @@
-import { prop, Ref } from '@typegoose/typegoose';
+import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { RoleModel } from '../../roles/models/Role.model';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
+@modelOptions({ schemaOptions: { collection: 'CRMUsers' } })
 export class CRMUserModel extends TimeStamps {
     @prop({ type: () => String, required: true })
     name: string;

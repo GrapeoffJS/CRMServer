@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { AdminModel } from '../../models/Admin.model';
@@ -19,21 +23,20 @@ export class AdminsService {
             createAdminDTO.password
         );
 
-        return this.adminModel.create(createAdminDTO);
+        try {
+            const user = await this.adminModel.create(createAdminDTO);
+            return this.adminModel.findById(user.id);
+        } catch (e) {
+            throw new BadRequestException('User with this login exists');
+        }
     }
 
     async get(
         limit: number,
         offset: number
     ): Promise<{ count: number; docs: AdminModel[] }> {
-        let count: number;
-
-        this.adminModel.countDocuments((err, docsCount) => {
-            count = docsCount;
-        });
-
         return {
-            count,
+            count: await this.adminModel.countDocuments().exec(),
             docs: await this.adminModel.find().skip(offset).limit(limit)
         };
     }
@@ -52,11 +55,25 @@ export class AdminsService {
         id: string,
         updateAdminDTO: UpdateAdminDTO
     ): Promise<AdminModel> {
-        this.adminModel.findByIdAndUpdate(id, updateAdminDTO);
+        const updated = await this.adminModel.findByIdAndUpdate(
+            id,
+            updateAdminDTO
+        );
+
+        if (!updated) {
+            throw new NotFoundException();
+        }
+
         return this.adminModel.findById(id);
     }
 
     async delete(id: string): Promise<AdminModel> {
-        return this.adminModel.findByIdAndDelete(id);
+        const deleted = await this.adminModel.findByIdAndDelete(id);
+
+        if (!deleted) {
+            throw new NotFoundException();
+        }
+
+        return deleted;
     }
 }

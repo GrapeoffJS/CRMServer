@@ -35,8 +35,7 @@ import { PasswordProtectorService } from './services/password-protector/password
                     TutorModel,
                     SeniorTutorModel,
                     SupporterModel
-                ],
-                schemaOptions: { collection: 'CRMUsers' }
+                ]
             }
         ])
     ],

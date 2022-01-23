@@ -14,11 +14,14 @@ import { PartnerModel } from '../../models/Partner.model';
 import { UpdatePartnerDTO } from '../../DTO/Partner/UpdatePartnerDTO';
 import { PartnersService } from '../../services/partners/partners.service';
 import { CreatePartnerDTO } from '../../DTO/Partner/CreatePartnerDTO';
+import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('/admin-panel/crm-users/partners')
 @Controller('/admin-panel/crm-users/partners')
 export class PartnersController {
     constructor(private readonly partnersService: PartnersService) {}
 
+    @ApiBody({ type: () => CreatePartnerDTO })
     @Post()
     async create(
         @Body() createPartnerDTO: CreatePartnerDTO
@@ -26,23 +29,23 @@ export class PartnersController {
         return await this.partnersService.create(createPartnerDTO);
     }
 
+    @ApiQuery({ name: 'limit', type: () => Number })
+    @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
     async get(
         @Query() { limit, offset }: PaginationDTO
     ): Promise<{ docs: PartnerModel[]; count: number }> {
-        const { count, docs } = await this.partnersService.get(limit, offset);
-
-        return {
-            docs,
-            count
-        };
+        return await this.partnersService.get(limit, offset);
     }
 
+    @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
     async getByID(@Param() { id }: MongoID): Promise<PartnerModel> {
         return await this.partnersService.getByID(id);
     }
 
+    @ApiParam({ name: 'id', type: () => String })
+    @ApiBody({ type: () => UpdatePartnerDTO })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
@@ -51,6 +54,7 @@ export class PartnersController {
         return await this.partnersService.update(id, updatePartnerDTO);
     }
 
+    @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
     async delete(@Param() { id }: MongoID): Promise<PartnerModel> {
         return await this.partnersService.delete(id);

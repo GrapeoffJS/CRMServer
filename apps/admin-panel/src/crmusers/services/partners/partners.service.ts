@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { PartnerModel } from '../../models/Partner.model';
 import { ReturnModelType } from '@typegoose/typegoose';
@@ -19,21 +23,20 @@ export class PartnersService {
             createPartnerDTO.password
         );
 
-        return this.partnerModel.create(createPartnerDTO);
+        try {
+            const user = await this.partnerModel.create(CreatePartnerDTO);
+            return this.partnerModel.findById(user.id);
+        } catch (e) {
+            throw new BadRequestException('User with this login exists');
+        }
     }
 
     async get(
         limit: number,
         offset: number
     ): Promise<{ count: number; docs: PartnerModel[] }> {
-        let count: number;
-
-        this.partnerModel.countDocuments((err, docsCount) => {
-            count = docsCount;
-        });
-
         return {
-            count,
+            count: await this.partnerModel.countDocuments().exec(),
             docs: await this.partnerModel.find().skip(offset).limit(limit)
         };
     }

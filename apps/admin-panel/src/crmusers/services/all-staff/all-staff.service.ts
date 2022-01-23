@@ -14,14 +14,8 @@ export class AllStaffService {
         limit: number,
         offset: number
     ): Promise<{ count: number; docs: CRMUserModel[] }> {
-        let count: number;
-
-        this.crmUserModel.countDocuments((err, docsCount) => {
-            count = docsCount;
-        });
-
         return {
-            count,
+            count: await this.crmUserModel.countDocuments().exec(),
             docs: await this.crmUserModel.find().skip(offset).limit(limit)
         };
     }

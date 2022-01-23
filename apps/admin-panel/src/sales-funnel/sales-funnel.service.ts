@@ -26,11 +26,14 @@ export class SalesFunnelService {
         return this.salesFunnelStepModel.create(createSalesFunnelStepDTO);
     }
 
-    async findAll() {
+    async get() {
         return this.salesFunnelStepModel.find().sort({ order: 1 });
     }
 
-    async edit(id: string, updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO) {
+    async update(
+        id: string,
+        updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
+    ) {
         await this.salesFunnelStepModel.updateOne(
             { _id: id },
             updateSalesFunnelStepDTO
