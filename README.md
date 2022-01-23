@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+CRM System REST API server.
 
 ## Installation
 
@@ -53,7 +53,17 @@ $ yarn start:prod
 $ yarn doc
 ```
 
-Then open [localhost:8080](http://localhost:8080/)
+Then open [http://localhost:8080](http://localhost:8080/) in your browser.
+
+## API Documentation
+
+If you need API Documentation do these following steps:
+
+1. Start the application
+```bash
+$ yarn start
+```
+2. Open [http://localhost:4200/api/docs](http://localhost:4200/api/docs) in your browser.
 
 ## Deployment
 ```bash
