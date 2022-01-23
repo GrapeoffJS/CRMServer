@@ -2,12 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { Types } from 'mongoose';
+import { TaskModel } from '../models/Task.model';
 
 @Injectable()
 export class CurrentUserTasksService {
     constructor(
         @InjectModel(TaskModel)
-        private readonly TaskModel: ReturnModelType<typeof TaskModel>
+        private readonly taskModel: ReturnModelType<typeof TaskModel>
     ) {}
 
     async findAll(tags: string[] | undefined, id: string) {
@@ -20,7 +21,7 @@ export class CurrentUserTasksService {
                   }
                 : { $match: {} };
 
-        return this.TaskModel.aggregate([
+        return this.taskModel.aggregate([
             {
                 $match: {
                     responsible: Types.ObjectId(id)

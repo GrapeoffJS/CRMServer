@@ -5,6 +5,7 @@ import { SalesFunnelStepModel } from '../../../../admin-panel/src/sales-funnel/m
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SalesFunnelController } from './sales-funnel.controller';
+import { StudentModel } from '../students/models/Student.model';
 
 @Module({
     imports: [
@@ -14,8 +15,8 @@ import { SalesFunnelController } from './sales-funnel.controller';
                 schemaOptions: { collection: 'SalesFunnelSteps' }
             },
             {
-                typegooseClass: Pupil,
-                schemaOptions: { collection: 'Pupils' }
+                typegooseClass: StudentModel,
+                schemaOptions: { collection: 'Students' }
             }
         ]),
         JwtModule.registerAsync({
