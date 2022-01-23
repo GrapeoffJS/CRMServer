@@ -1,13 +1,8 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AuthorizationMiddleware } from '../authorization/authorization.middleware';
-import { TypegooseModule } from 'nestjs-typegoose';
-import { StudentModel } from './students/models/Student.model';
-import { CRMUserModel } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
+import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configModuleOptions from '../config/configModuleOptions';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
-import { TutorsModule } from './tutors/tutors.module';
 import { SalesFunnelModule } from './sales-funnel/sales-funnel.module';
 import { StatusesModule } from './statuses/statuses.module';
 import { TasksModule } from './tasks/tasks.module';
@@ -18,15 +13,6 @@ import { StudentsModule } from './students/students.module';
 
 @Module({
     imports: [
-        TypegooseModule.forFeature([
-            {
-                typegooseClass: StudentModel
-            },
-            {
-                typegooseClass: CRMUserModel,
-                schemaOptions: { collection: 'CRMUsers' }
-            }
-        ]),
         JwtModule.registerAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
@@ -41,7 +27,6 @@ import { StudentsModule } from './students/students.module';
         }),
         ConfigModule.forRoot(configModuleOptions),
         SubscriptionsModule,
-        TutorsModule,
         SalesFunnelModule,
         StatusesModule,
         TasksModule,
@@ -51,8 +36,4 @@ import { StudentsModule } from './students/students.module';
         StudentsModule
     ]
 })
-export class CrmModule implements NestModule {
-    configure(consumer: MiddlewareConsumer): any {
-        consumer.apply(AuthorizationMiddleware).forRoutes('/CRM/*');
-    }
-}
+export class CrmModule {}
