@@ -1,12 +1,12 @@
 import configModuleOptions from './config/configModuleOptions';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { AuthenticationModule } from './authentication/authentication.module';
-import { AuthCheckModule } from './auth-check/auth-check.module';
 import { TypegooseModule } from 'nestjs-typegoose';
 import getMongoConnectionUri from './config/getMongoConnectionUri';
 import { AdminPanelModule } from '../../admin-panel/src/admin-panel.module';
 import { ConnectionOptions } from 'mongoose';
+import { CrmModule } from './crm/crm.module';
+import { HealthCheckModule } from './health-check/health-check.module';
 
 @Module({
     imports: [
@@ -42,9 +42,8 @@ import { ConnectionOptions } from 'mongoose';
             }
         }),
         AdminPanelModule,
-        // CrmModule,
-        AuthenticationModule,
-        AuthCheckModule
+        CrmModule,
+        HealthCheckModule
     ],
     controllers: [],
     providers: []
