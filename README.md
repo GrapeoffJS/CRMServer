@@ -57,7 +57,7 @@ Then open [http://localhost:8080](http://localhost:8080/) in your browser.
 
 ## API Documentation
 
-If you need API Documentation do these following steps:
+If you need API Documentation, do these following steps:
 
 1. Start the application
 ```bash
@@ -70,7 +70,7 @@ $ yarn start
 $ docker compose up --build -d
 ```
 
-It recuires at least 16GB RAM.
+It requires at least 16GB RAM.
 
 ## License
 
