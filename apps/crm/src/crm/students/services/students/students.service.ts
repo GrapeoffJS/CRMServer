@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { StudentModel } from '../../models/Student.model';
 import { InjectModel } from 'nestjs-typegoose';
-import { CreateStudentDTO } from '../../DTO/CreateStudentDTO';
-import { UpdateStudentDTO } from '../../DTO/UpdateStudentDTO';
+import { CreateStudentDTO } from '../../DTO/Student/CreateStudentDTO';
+import { UpdateStudentDTO } from '../../DTO/Student/UpdateStudentDTO';
 
 @Injectable()
 export class StudentsService {
@@ -20,14 +20,8 @@ export class StudentsService {
         limit: number,
         offset: number
     ): Promise<{ count: number; docs: StudentModel[] }> {
-        let count: number;
-
-        this.studentModel.countDocuments((err, docsCount) => {
-            count = docsCount;
-        });
-
         return {
-            count,
+            count: await this.studentModel.countDocuments().exec(),
             docs: await this.studentModel.find().skip(offset).limit(limit)
         };
     }

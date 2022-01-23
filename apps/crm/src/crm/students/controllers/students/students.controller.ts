@@ -1,40 +1,62 @@
-import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Query
+} from '@nestjs/common';
 import { StudentsService } from '../../services/students/students.service';
-import { CreateStudentDTO } from '../../DTO/CreateStudentDTO';
+import { CreateStudentDTO } from '../../DTO/Student/CreateStudentDTO';
 import { PaginationDTO } from '../../../../../../../utils/DTO/PaginationDTO';
 import { StudentModel } from '../../models/Student.model';
 import { MongoID } from '../../../../../../../utils/DTO/MongoID';
-import { UpdateStudentDTO } from '../../DTO/UpdateStudentDTO';
+import { UpdateStudentDTO } from '../../DTO/Student/UpdateStudentDTO';
+import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('/crm/students')
 @Controller('/crm/students')
 export class StudentsController {
     constructor(private readonly studentsService: StudentsService) {}
 
+    @ApiBody({ type: () => CreateStudentDTO })
     @Post()
-    async create(@Body() createStudentDTO: CreateStudentDTO) {
+    async create(
+        @Body() createStudentDTO: CreateStudentDTO
+    ): Promise<StudentModel> {
         return await this.studentsService.create(createStudentDTO);
     }
 
+    @ApiQuery({ name: 'limit', type: () => Number })
+    @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get({
-        limit,
-        offset
-    }: PaginationDTO): Promise<{ count: number; docs: StudentModel[] }> {
+    async get(
+        @Query() { limit, offset }: PaginationDTO
+    ): Promise<{ count: number; docs: StudentModel[] }> {
         return await this.studentsService.get(limit, offset);
     }
 
+    @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID({ id }: MongoID) {
+    async getByID(@Param() { id }: MongoID): Promise<StudentModel> {
         return await this.studentsService.getByID(id);
     }
 
+    @ApiParam({ name: 'id', type: () => String })
+    @ApiBody({ type: () => UpdateStudentDTO })
     @Patch(':id')
-    async update({ id }: MongoID, updateStudentDTO: UpdateStudentDTO) {
+    async update(
+        @Param() { id }: MongoID,
+        @Body() updateStudentDTO: UpdateStudentDTO
+    ): Promise<StudentModel> {
         return await this.studentsService.update(id, updateStudentDTO);
     }
 
+    @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete({ id }: MongoID) {
+    async delete(@Param() { id }: MongoID): Promise<StudentModel> {
         return await this.studentsService.delete(id);
     }
 }

@@ -4,6 +4,7 @@ import { Genders } from '../types/Genders';
 import StatusModel from '../../statuses/models/Status.model';
 import { SalesFunnelStepModel } from '../../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
 import mongooseAutoPopulate from 'mongoose-autopopulate';
+import { NoteModel } from './Note.model';
 
 @plugin(mongooseAutoPopulate)
 @modelOptions({
@@ -58,4 +59,11 @@ export class StudentModel extends TimeStamps {
         autopopulate: true
     })
     statuses: Ref<StatusModel>[];
+
+    @prop({
+        type: () => [NoteModel],
+        ref: () => NoteModel,
+        autopopulate: true
+    })
+    notes: Ref<NoteModel>;
 }
