@@ -2,7 +2,7 @@ import compression from 'compression';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -13,9 +13,20 @@ async function bootstrap() {
 
     app.useGlobalPipes(
         new ValidationPipe({
-            transform: true
+            transform: true,
+            whitelist: true,
+            forbidNonWhitelisted: true,
+            always: true,
+            forbidUnknownValues: true
         })
     );
+
+    app.setGlobalPrefix('/api');
+    app.enableVersioning({
+        defaultVersion: '1',
+        prefix: 'v',
+        type: VersioningType.URI
+    });
 
     await app.listen(process.env.PORT || 4200);
 }
