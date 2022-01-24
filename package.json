@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "@elastic/elasticsearch": "7.13.0",
+        "@hapi/joi": "^17.1.1",
         "@nestjs/axios": "^0.0.5",
         "@nestjs/cli": "^7.6.0",
         "@nestjs/common": "^8.2.5",
