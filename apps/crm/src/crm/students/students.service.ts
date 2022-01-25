@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { StudentModel } from '../../models/Student.model';
+import { StudentModel } from './models/Student.model';
 import { InjectModel } from 'nestjs-typegoose';
-import { CreateStudentDTO } from '../../DTO/Student/CreateStudentDTO';
-import { UpdateStudentDTO } from '../../DTO/Student/UpdateStudentDTO';
+import { CreateStudentDTO } from './DTO/CreateStudentDTO';
+import { UpdateStudentDTO } from './DTO/UpdateStudentDTO';
 
 @Injectable()
 export class StudentsService {

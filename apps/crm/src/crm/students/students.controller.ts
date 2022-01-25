@@ -8,12 +8,12 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { StudentsService } from '../../services/students/students.service';
-import { CreateStudentDTO } from '../../DTO/Student/CreateStudentDTO';
-import { PaginationDTO } from '../../../../../../../utils/DTO/PaginationDTO';
-import { StudentModel } from '../../models/Student.model';
-import { MongoID } from '../../../../../../../utils/DTO/MongoID';
-import { UpdateStudentDTO } from '../../DTO/Student/UpdateStudentDTO';
+import { StudentsService } from './students.service';
+import { CreateStudentDTO } from './DTO/CreateStudentDTO';
+import { PaginationDTO } from '../../../../../utils/DTO/PaginationDTO';
+import { StudentModel } from './models/Student.model';
+import { MongoID } from '../../../../../utils/DTO/MongoID';
+import { UpdateStudentDTO } from './DTO/UpdateStudentDTO';
 import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('/crm/students')

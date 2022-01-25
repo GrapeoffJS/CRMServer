@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { NoteModel } from '../../models/Note.model';
-import { CreateNoteDTO } from '../../DTO/Note/CreateNoteDTO';
-import { UpdateNoteDTO } from '../../DTO/Note/UpdateNoteDTO';
+import { NoteModel } from './models/Note.model';
+import { CreateNoteDTO } from './DTO/CreateNoteDTO';
+import { UpdateNoteDTO } from './DTO/UpdateNoteDTO';
 import { InjectModel } from 'nestjs-typegoose';
 
 @Injectable()

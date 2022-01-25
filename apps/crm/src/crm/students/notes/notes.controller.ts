@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
-import { NotesService } from '../../services/notes/notes.service';
-import { CreateNoteDTO } from '../../DTO/Note/CreateNoteDTO';
-import { MongoID } from '../../../../../../../utils/DTO/MongoID';
-import { StudentID } from '../../DTO/Student/StudentID';
-import { NoteID } from '../../DTO/Note/NoteID';
-import { UpdateNoteDTO } from '../../DTO/Note/UpdateNoteDTO';
-import { NoteModel } from '../../models/Note.model';
+import { NotesService } from './notes.service';
+import { CreateNoteDTO } from './DTO/CreateNoteDTO';
+import { MongoID } from '../../../../../../utils/DTO/MongoID';
+import { StudentID } from '../DTO/StudentID';
+import { NoteID } from './DTO/NoteID';
+import { UpdateNoteDTO } from './DTO/UpdateNoteDTO';
+import { NoteModel } from './models/Note.model';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('/crm/students/')

@@ -4,7 +4,7 @@ import { Genders } from '../types/Genders';
 import StatusModel from '../../statuses/models/Status.model';
 import { SalesFunnelStepModel } from '../../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
 import mongooseAutoPopulate from 'mongoose-autopopulate';
-import { NoteModel } from './Note.model';
+import { NoteModel } from '../notes/models/Note.model';
 
 @plugin(mongooseAutoPopulate)
 @modelOptions({

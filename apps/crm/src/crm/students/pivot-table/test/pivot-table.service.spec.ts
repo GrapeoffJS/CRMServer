@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PivotTableService } from './pivot-table.service';
+import { PivotTableService } from '../pivot-table.service';
 
 describe('PivotTableService', () => {
   let service: PivotTableService;

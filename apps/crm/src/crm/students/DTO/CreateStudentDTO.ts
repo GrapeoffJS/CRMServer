@@ -6,7 +6,7 @@ import {
     IsOptional,
     IsString
 } from 'class-validator';
-import { Genders } from '../../types/Genders';
+import { Genders } from '../types/Genders';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateStudentDTO {

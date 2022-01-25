@@ -1,25 +1,22 @@
 import { Module } from '@nestjs/common';
-import { StudentsService } from './services/students/students.service';
-import { PivotTableService } from './services/pivot-table/pivot-table.service';
+import { StudentsService } from './students.service';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { StudentModel } from './models/Student.model';
-import { StudentsController } from './controllers/students/students.controller';
-import { NotesService } from './services/notes/notes.service';
-import { NoteModel } from './models/Note.model';
-import { NotesController } from './controllers/notes/notes.controller';
+import { StudentsController } from './students.controller';
+import { NotesModule } from './notes/notes.module';
+import { PivotTableModule } from './pivot-table/pivot-table.module';
 
 @Module({
     imports: [
         TypegooseModule.forFeature([
             {
                 typegooseClass: StudentModel
-            },
-            {
-                typegooseClass: NoteModel
             }
-        ])
+        ]),
+        NotesModule,
+        PivotTableModule
     ],
-    providers: [StudentsService, PivotTableService, NotesService],
-    controllers: [StudentsController, NotesController]
+    providers: [StudentsService],
+    controllers: [StudentsController]
 })
 export class StudentsModule {}
