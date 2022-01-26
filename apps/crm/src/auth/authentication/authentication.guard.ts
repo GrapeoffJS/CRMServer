@@ -12,13 +12,6 @@ import { Request } from 'express';
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const authenticationModule = await NestFactory.createApplicationContext(
-            AuthenticationModule
-        );
-
-        const jwtService: JwtService =
-            authenticationModule.get<JwtService>(JwtService);
-
         const request = context.switchToHttp().getRequest<Request>();
 
         if (
@@ -27,6 +20,13 @@ export class AuthenticationGuard implements CanActivate {
         ) {
             return true;
         }
+
+        const authenticationModule = await NestFactory.createApplicationContext(
+            AuthenticationModule
+        );
+
+        const jwtService: JwtService =
+            authenticationModule.get<JwtService>(JwtService);
 
         try {
             await jwtService.verify(
