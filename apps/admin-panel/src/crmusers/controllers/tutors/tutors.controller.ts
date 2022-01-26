@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Query
+} from '@nestjs/common';
 import { TutorsService } from '../../services/tutors/tutors.service';
 import { CreateTutorDTO } from '../../DTO/Tutor/CreateTutorDTO';
 import { TutorModel } from '../../models/Tutor.model';

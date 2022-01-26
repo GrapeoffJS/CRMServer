@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { PartnerModel } from '../../models/Partner.model';
 import { ReturnModelType } from '@typegoose/typegoose';

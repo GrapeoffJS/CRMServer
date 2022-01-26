@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post
+} from '@nestjs/common';
 import { CreateRoleDTO } from './DTO/CreateRoleDTO';
 import { RolesService } from './roles.service';
 import { UpdateRoleDTO } from './DTO/UpdateRoleDTO';

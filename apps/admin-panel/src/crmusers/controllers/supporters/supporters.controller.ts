@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Query
+} from '@nestjs/common';
 import { SupportersService } from '../../services/supporters/supporters.service';
 import { CreateSupporterDTO } from '../../DTO/Supporter/CreateSupporterDTO';
 import { SupporterModel } from '../../models/Supporter.model';
