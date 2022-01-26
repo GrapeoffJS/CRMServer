@@ -1,11 +1,4 @@
-import {
-    IsHexColor,
-    IsNotEmpty,
-    IsNumber,
-    IsOptional,
-    IsString,
-    Min
-} from 'class-validator';
+import { IsHexColor, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
