@@ -14,7 +14,7 @@ import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
 import { MongoID } from '../../../../utils/DTO/MongoID';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('/admin-panel/subscriptions')
+@ApiTags('Admin Panel / Subscriptions')
 @Controller('/admin-panel/subscriptions')
 export class SubscriptionsController {
     constructor(private readonly subscriptionsService: SubscriptionsService) {}

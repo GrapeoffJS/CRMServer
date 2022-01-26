@@ -4,7 +4,7 @@ import { WorkHoursService } from './work-hours.service';
 import { MongoID } from '../../../../utils/DTO/MongoID';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('/admin-panel/work-hours')
+@ApiTags('Admin Panel / Work Hours')
 @Controller('/admin-panel/work-hours')
 export class WorkHoursController {
     constructor(private readonly workHoursService: WorkHoursService) {}

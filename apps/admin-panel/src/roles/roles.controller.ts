@@ -14,7 +14,7 @@ import { MongoID } from '../../../../utils/DTO/MongoID';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { RoleModel } from './models/Role.model';
 
-@ApiTags('/admin-panel/roles')
+@ApiTags('Admin Panel / Roles')
 @Controller('/admin-panel/roles')
 export class RolesController {
     constructor(private readonly rolesService: RolesService) {}

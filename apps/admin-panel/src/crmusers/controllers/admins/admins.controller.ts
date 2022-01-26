@@ -16,7 +16,7 @@ import { MongoID } from '../../../../../../utils/DTO/MongoID';
 import { UpdateAdminDTO } from '../../DTO/Admin/UpdateAdminDTO';
 import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('/admin-panel/crm-users/admins')
+@ApiTags('Admin Panel / CRM Users / Admins')
 @Controller('/admin-panel/crm-users/admins')
 export class AdminsController {
     constructor(private readonly adminsService: AdminsService) {}

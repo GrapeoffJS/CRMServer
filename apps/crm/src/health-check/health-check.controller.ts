@@ -7,7 +7,9 @@ import {
 } from '@nestjs/terminus';
 import { TypegooseHealthIndicatorService } from './indicators/typegoose-health-indicator/typegoose-health-indicator.service';
 import { ElasticSearchHealthIndicatorService } from './indicators/elastic-search-health-indicator/elastic-search-health-indicator.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Health Check')
 @Controller('/health-check')
 export class HealthCheckController {
     constructor(

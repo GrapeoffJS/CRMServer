@@ -16,7 +16,7 @@ import { CreateManagerDTO } from '../../DTO/Manager/CreateManagerDTO';
 import { ManagersService } from '../../services/managers/managers.service';
 import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('/admin-panel/crm-users/managers')
+@ApiTags('Admin Panel / CRM Users / Managers')
 @Controller('/admin-panel/crm-users/managers')
 export class ManagersController {
     constructor(private readonly managersService: ManagersService) {}

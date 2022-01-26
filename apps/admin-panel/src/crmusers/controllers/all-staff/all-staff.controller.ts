@@ -5,7 +5,7 @@ import { AllStaffService } from '../../services/all-staff/all-staff.service';
 import { CRMUserModel } from '../../models/CRMUser.model';
 import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('/admin-panel/crm-users')
+@ApiTags('Admin Panel / CRM Users')
 @Controller('/admin-panel/crm-users')
 export class AllStaffController {
     constructor(private readonly allStaffService: AllStaffService) {}

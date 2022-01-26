@@ -16,7 +16,7 @@ import { PartnersService } from '../../services/partners/partners.service';
 import { CreatePartnerDTO } from '../../DTO/Partner/CreatePartnerDTO';
 import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('/admin-panel/crm-users/partners')
+@ApiTags('Admin Panel / CRM Users / Partners')
 @Controller('/admin-panel/crm-users/partners')
 export class PartnersController {
     constructor(private readonly partnersService: PartnersService) {}

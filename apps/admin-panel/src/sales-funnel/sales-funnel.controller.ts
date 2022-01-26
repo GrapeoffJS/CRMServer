@@ -16,7 +16,7 @@ import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
 import { MongoID } from '../../../../utils/DTO/MongoID';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('/admin-panel/sales-funnel')
+@ApiTags('Admin Panel / Sales Funnel')
 @Controller('/admin-panel/sales-funnel')
 export class SalesFunnelController {
     constructor(private readonly salesFunnelService: SalesFunnelService) {}
