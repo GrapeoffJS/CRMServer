@@ -4,7 +4,6 @@ import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import morgan from 'morgan';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
@@ -40,12 +39,6 @@ async function bootstrap() {
 
     const apiDocument = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/docs', app, apiDocument);
-
-    app.use(
-        morgan(
-            ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]'
-        )
-    );
 
     await app.listen(app.get<ConfigService>(ConfigService).get('PORT'));
 }
