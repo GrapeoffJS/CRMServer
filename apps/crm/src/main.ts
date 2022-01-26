@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import morgan from 'morgan';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -45,7 +46,7 @@ async function bootstrap() {
         )
     );
 
-    await app.listen(process.env.PORT || 4200);
+    await app.listen(app.get<ConfigService>(ConfigService).get('PORT'));
 }
 
 bootstrap().then(r => r);

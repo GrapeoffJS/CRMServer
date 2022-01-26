@@ -1,7 +1,9 @@
-import { modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { modelOptions, plugin, prop, Ref } from '@typegoose/typegoose';
 import { RoleModel } from '../../roles/models/Role.model';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
+import mongooseAutoPopulate from 'mongoose-autopopulate';
 
+@plugin(mongooseAutoPopulate)
 @modelOptions({ schemaOptions: { collection: 'CRMUsers' } })
 export class CRMUserModel extends TimeStamps {
     @prop({ type: () => String, required: true })
@@ -22,6 +24,7 @@ export class CRMUserModel extends TimeStamps {
     @prop({
         type: () => RoleModel,
         ref: () => RoleModel,
+        autopopulate: true,
         required: true
     })
     role: Ref<RoleModel>;

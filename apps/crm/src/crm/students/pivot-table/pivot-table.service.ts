@@ -10,5 +10,5 @@ export class PivotTableService {
         private readonly studentModel: ReturnModelType<typeof StudentModel>
     ) {}
 
-    async filter(): Promise<StudentModel[]> {}
+    // async filter(): Promise<StudentModel[]> {}
 }
