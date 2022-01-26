@@ -15,10 +15,17 @@ import { PaginationDTO } from '../../../../../utils/DTO/PaginationDTO';
 import { StudentModel } from './models/Student.model';
 import { MongoID } from '../../../../../utils/DTO/MongoID';
 import { UpdateStudentDTO } from './DTO/UpdateStudentDTO';
-import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiBody,
+    ApiParam,
+    ApiQuery,
+    ApiTags
+} from '@nestjs/swagger';
 import { AuthenticationGuard } from '../../auth/authentication/authentication.guard';
 
 @ApiTags('/crm/students')
+@ApiBearerAuth()
 @UseGuards(AuthenticationGuard)
 @Controller('/crm/students')
 export class StudentsController {

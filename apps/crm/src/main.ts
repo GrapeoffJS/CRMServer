@@ -35,6 +35,7 @@ async function bootstrap() {
         .setTitle('CRM API')
         .setDescription('CRM API Documentation')
         .setVersion('1')
+        .addBearerAuth()
         .build();
 
     const apiDocument = SwaggerModule.createDocument(app, config);
