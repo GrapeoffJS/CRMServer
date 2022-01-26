@@ -17,7 +17,7 @@ import { NoteModel } from './models/Note.model';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { AuthenticationGuard } from '../../../auth/authentication/authentication.guard';
 
-@ApiTags('Students/Notes')
+@ApiTags('Students / Notes')
 @ApiBearerAuth()
 @UseGuards(AuthenticationGuard)
 @Controller('/crm/students')
