@@ -19,7 +19,6 @@ import { AuthenticationGuard } from '../../../auth/authentication/authentication
 
 @ApiTags('Students / Notes')
 @ApiBearerAuth()
-@UseGuards(AuthenticationGuard)
 @Controller('/crm/students')
 export class NotesController {
     constructor(private readonly notesService: NotesService) {}

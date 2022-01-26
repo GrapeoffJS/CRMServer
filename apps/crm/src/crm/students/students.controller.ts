@@ -26,7 +26,6 @@ import { AuthenticationGuard } from '../../auth/authentication/authentication.gu
 
 @ApiTags('Students')
 @ApiBearerAuth()
-@UseGuards(AuthenticationGuard)
 @Controller('/crm/students')
 export class StudentsController {
     constructor(private readonly studentsService: StudentsService) {}

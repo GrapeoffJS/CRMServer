@@ -19,12 +19,18 @@ export class AuthenticationGuard implements CanActivate {
         const jwtService: JwtService =
             authenticationModule.get<JwtService>(JwtService);
 
+        const request = context.switchToHttp().getRequest<Request>();
+
+        if (
+            request.url.indexOf('admin-panel') !== -1 ||
+            request.url.indexOf('auth') !== -1
+        ) {
+            return true;
+        }
+
         try {
             await jwtService.verify(
-                context
-                    .switchToHttp()
-                    .getRequest<Request>()
-                    .headers.authorization.split(' ')[1]
+                request.headers.authorization.split(' ')[1]
             );
 
             return true;

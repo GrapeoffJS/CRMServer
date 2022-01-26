@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
+import { AuthenticationGuard } from './auth/authentication/authentication.guard';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -22,6 +23,8 @@ async function bootstrap() {
             forbidUnknownValues: true
         })
     );
+
+    app.useGlobalGuards(new AuthenticationGuard());
 
     app.setGlobalPrefix('/api');
     app.enableVersioning({
