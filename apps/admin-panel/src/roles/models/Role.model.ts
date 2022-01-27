@@ -7,14 +7,14 @@ export class RoleModel {
     name: string;
 
     @prop({
-        type: [Number],
+        type: () => [Number],
         enum: ActionPermissions,
         required: true
     })
     actionPermissions: ActionPermissions[];
 
     @prop({
-        type: Object,
+        type: () => Object,
         required: true
     })
     dataPermissions: DataPermissions;
