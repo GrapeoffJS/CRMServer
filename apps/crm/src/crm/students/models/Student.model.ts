@@ -1,10 +1,11 @@
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { modelOptions, plugin, prop, Ref } from '@typegoose/typegoose';
 import { Genders } from '../types/Genders';
-import StatusModel from '../../statuses/models/Status.model';
+import { StatusModel } from '../statuses/models/Status.model';
 import { SalesFunnelStepModel } from '../../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
 import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { NoteModel } from '../notes/models/Note.model';
+import { GroupModel } from '../../groups/models/Group.model';
 
 @plugin(mongooseAutoPopulate)
 @modelOptions({
@@ -63,7 +64,18 @@ export class StudentModel extends TimeStamps {
     @prop({
         type: () => [NoteModel],
         ref: () => NoteModel,
+        localField: '_id',
+        foreignField: 'owner_id',
         autopopulate: true
     })
-    notes: Ref<NoteModel>;
+    notes: Ref<NoteModel>[];
+
+    @prop({
+        type: () => [GroupModel],
+        ref: () => GroupModel,
+        localField: '_id',
+        foreignField: 'students',
+        autopopulate: { maxDepth: 1 }
+    })
+    groups: Ref<GroupModel>[];
 }
