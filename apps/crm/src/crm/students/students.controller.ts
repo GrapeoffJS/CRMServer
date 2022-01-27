@@ -6,8 +6,7 @@ import {
     Param,
     Patch,
     Post,
-    Query,
-    UseGuards
+    Query
 } from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { CreateStudentDTO } from './DTO/CreateStudentDTO';
@@ -22,7 +21,6 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { AuthenticationGuard } from '../../auth/authentication/authentication.guard';
 
 @ApiTags('Students')
 @ApiBearerAuth()

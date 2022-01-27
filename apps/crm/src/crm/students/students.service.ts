@@ -4,12 +4,15 @@ import { StudentModel } from './models/Student.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { CreateStudentDTO } from './DTO/CreateStudentDTO';
 import { UpdateStudentDTO } from './DTO/UpdateStudentDTO';
+import { GroupModel } from '../groups/models/Group.model';
 
 @Injectable()
 export class StudentsService {
     constructor(
         @InjectModel(StudentModel)
-        private readonly studentModel: ReturnModelType<typeof StudentModel>
+        private readonly studentModel: ReturnModelType<typeof StudentModel>,
+        @InjectModel(GroupModel)
+        private readonly groupModel: ReturnModelType<typeof GroupModel>
     ) {}
 
     async create(createStudentDTO: CreateStudentDTO): Promise<StudentModel> {
@@ -53,12 +56,17 @@ export class StudentsService {
     }
 
     async delete(id: string) {
-        const deleted = await this.studentModel.findByIdAndDelete(id);
+        const candidate = await this.studentModel.findById(id);
 
-        if (!deleted) {
+        if (!candidate) {
             throw new NotFoundException();
         }
 
-        return deleted;
+        await this.groupModel.updateMany(
+            { students: { $all: [candidate.id] } },
+            { $pull: { students: candidate.id } }
+        );
+
+        return this.studentModel.findByIdAndUpdate(id);
     }
 }

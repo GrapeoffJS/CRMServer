@@ -1,12 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Param,
-    Patch,
-    Post,
-    UseGuards
-} from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { CreateNoteDTO } from './DTO/CreateNoteDTO';
 import { MongoID } from '../../../../../../utils/DTO/MongoID';
@@ -15,9 +7,8 @@ import { NoteID } from './DTO/NoteID';
 import { UpdateNoteDTO } from './DTO/UpdateNoteDTO';
 import { NoteModel } from './models/Note.model';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
-import { AuthenticationGuard } from '../../../auth/authentication/authentication.guard';
 
-@ApiTags('Students / Notes')
+@ApiTags('Students / Students / Notes')
 @ApiBearerAuth()
 @Controller('/crm/students')
 export class NotesController {
