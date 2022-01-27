@@ -16,7 +16,7 @@ export class TutorModel extends CRMUserModel {
         ref: () => GroupModel,
         localField: '_id',
         foreignField: 'tutor',
-        select: false
+        autopopulate: { maxDepth: 1 }
     })
     groups: Ref<GroupModel>[];
 
