@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { GroupService } from './group.service';
+import { GroupsService } from './groups.service';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { GroupModel } from './models/Group.model';
 import { StudentModel } from '../students/models/Student.model';
+import { GroupsController } from './groups.controller';
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { StudentModel } from '../students/models/Student.model';
             { typegooseClass: StudentModel }
         ])
     ],
-    providers: [GroupService]
+    providers: [GroupsService],
+    controllers: [GroupsController]
 })
 export class GroupsModule {}

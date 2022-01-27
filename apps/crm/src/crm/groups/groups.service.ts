@@ -11,7 +11,7 @@ import { CreateGroupDTO } from './DTO/CreateGroupDTO';
 import { UpdateGroupDTO } from './DTO/UpdateGroupDTO';
 
 @Injectable()
-export class GroupService {
+export class GroupsService {
     constructor(
         @InjectModel(StudentModel)
         private readonly studentModel: ReturnModelType<typeof StudentModel>,
