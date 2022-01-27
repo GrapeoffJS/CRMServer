@@ -6,7 +6,7 @@ export class DataPermissions {
         phone?: 1;
         dateOfBirth?: 1;
         parentPhone?: 1;
-        parentFullname?: 1;
+        parentFullName?: 1;
         balance?: 1;
         discord?: 1;
         paymentHistory?: 1;
