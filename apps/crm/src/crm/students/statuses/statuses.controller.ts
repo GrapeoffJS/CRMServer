@@ -15,6 +15,7 @@ import { MongoID } from '../../../../../../utils/DTO/MongoID';
 import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
 import { StatusModel } from './models/Status.model';
 import {
+    ApiBearerAuth,
     ApiBody,
     ApiCreatedResponse,
     ApiOkResponse,
@@ -24,6 +25,7 @@ import {
 } from '@nestjs/swagger';
 
 @ApiTags('CRM / Statuses')
+@ApiBearerAuth()
 @Controller('/crm/statuses')
 export class StatusesController {
     constructor(private readonly statusesService: StatusesService) {}

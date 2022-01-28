@@ -14,6 +14,7 @@ import { PaginationDTO } from '../../../../../utils/DTO/PaginationDTO';
 import { MongoID } from '../../../../../utils/DTO/MongoID';
 import { UpdateGroupDTO } from './DTO/UpdateGroupDTO';
 import {
+    ApiBearerAuth,
     ApiBody,
     ApiCreatedResponse,
     ApiOkResponse,
@@ -24,6 +25,7 @@ import {
 import { GroupModel } from './models/Group.model';
 
 @ApiTags('CRM / Groups')
+@ApiBearerAuth()
 @Controller('/crm/groups')
 export class GroupsController {
     constructor(private readonly groupsService: GroupsService) {}
