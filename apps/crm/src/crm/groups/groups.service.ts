@@ -19,7 +19,7 @@ export class GroupsService {
         private readonly groupModel: ReturnModelType<typeof GroupModel>
     ) {}
 
-    async create(createGroupDTO: CreateGroupDTO): Promise<GroupModel> {
+    async create(createGroupDTO: CreateGroupDTO) {
         if (createGroupDTO.students.length > createGroupDTO.places) {
             throw new BadRequestException(
                 "Students' length is more than places"
@@ -29,17 +29,14 @@ export class GroupsService {
         return this.groupModel.create(createGroupDTO);
     }
 
-    async get(
-        limit: number,
-        offset: number
-    ): Promise<{ docs: GroupModel[]; count: number }> {
+    async get(limit: number, offset: number) {
         return {
             docs: await this.groupModel.find().skip(offset).limit(limit),
             count: await this.groupModel.countDocuments().exec()
         };
     }
 
-    async getByID(id: string): Promise<GroupModel> {
+    async getByID(id: string) {
         const found = await this.groupModel.findById(id);
 
         if (!found) {
@@ -49,10 +46,7 @@ export class GroupsService {
         return found;
     }
 
-    async update(
-        id: string,
-        updateGroupDTO: UpdateGroupDTO
-    ): Promise<GroupModel> {
+    async update(id: string, updateGroupDTO: UpdateGroupDTO) {
         const updated = await this.groupModel.findByIdAndUpdate(
             id,
             updateGroupDTO
@@ -65,7 +59,7 @@ export class GroupsService {
         return this.groupModel.findById(id);
     }
 
-    async delete(id: string): Promise<GroupModel> {
+    async delete(id: string) {
         const deleted = await this.groupModel.findByIdAndDelete(id);
 
         if (!deleted) {

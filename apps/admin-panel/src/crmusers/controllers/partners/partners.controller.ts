@@ -14,49 +14,59 @@ import { PartnerModel } from '../../models/Partner.model';
 import { UpdatePartnerDTO } from '../../DTO/Partner/UpdatePartnerDTO';
 import { PartnersService } from '../../services/partners/partners.service';
 import { CreatePartnerDTO } from '../../DTO/Partner/CreatePartnerDTO';
-import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBody,
+    ApiCreatedResponse,
+    ApiOkResponse,
+    ApiParam,
+    ApiQuery,
+    ApiTags
+} from '@nestjs/swagger';
 
 @ApiTags('Admin Panel / CRM Users / Partners')
 @Controller('/admin-panel/crm-users/partners')
 export class PartnersController {
     constructor(private readonly partnersService: PartnersService) {}
 
+    @ApiCreatedResponse({ type: () => PartnerModel })
     @ApiBody({ type: () => CreatePartnerDTO })
     @Post()
-    async create(
-        @Body() createPartnerDTO: CreatePartnerDTO
-    ): Promise<PartnerModel> {
+    async create(@Body() createPartnerDTO: CreatePartnerDTO) {
         return await this.partnersService.create(createPartnerDTO);
     }
-
+    @ApiOkResponse({
+        type: () => PartnerModel,
+        isArray: true
+    })
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get(
-        @Query() { limit, offset }: PaginationDTO
-    ): Promise<{ docs: PartnerModel[]; count: number }> {
+    async get(@Query() { limit, offset }: PaginationDTO) {
         return await this.partnersService.get(limit, offset);
     }
 
+    @ApiOkResponse({ type: () => PartnerModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID): Promise<PartnerModel> {
+    async getByID(@Param() { id }: MongoID) {
         return await this.partnersService.getByID(id);
     }
 
+    @ApiOkResponse({ type: () => PartnerModel })
     @ApiParam({ name: 'id', type: () => String })
     @ApiBody({ type: () => UpdatePartnerDTO })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
         @Body() updatePartnerDTO: UpdatePartnerDTO
-    ): Promise<PartnerModel> {
+    ) {
         return await this.partnersService.update(id, updatePartnerDTO);
     }
 
+    @ApiOkResponse({ type: () => PartnerModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID): Promise<PartnerModel> {
+    async delete(@Param() { id }: MongoID) {
         return await this.partnersService.delete(id);
     }
 }

@@ -11,7 +11,7 @@ import { Request } from 'express';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
-    async canActivate(context: ExecutionContext): Promise<boolean> {
+    async canActivate(context: ExecutionContext) {
         const request = context.switchToHttp().getRequest<Request>();
 
         if (

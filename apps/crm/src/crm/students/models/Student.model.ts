@@ -6,6 +6,7 @@ import { SalesFunnelStepModel } from '../../../../../admin-panel/src/sales-funne
 import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { NoteModel } from '../notes/models/Note.model';
 import { GroupModel } from '../../groups/models/Group.model';
+import { ApiProperty } from '@nestjs/swagger';
 
 @plugin(mongooseAutoPopulate)
 @modelOptions({
@@ -16,36 +17,47 @@ import { GroupModel } from '../../groups/models/Group.model';
     }
 })
 export class StudentModel extends TimeStamps {
+    @ApiProperty()
     @prop({ type: () => String, required: true })
     name: string;
 
+    @ApiProperty()
     @prop({ type: () => String, required: true })
     surname: string;
 
+    @ApiProperty()
     @prop({ type: () => String, required: true })
     middleName: string;
 
+    @ApiProperty({ enum: () => Genders })
     @prop({ enum: Genders, required: true })
     gender: string;
 
+    @ApiProperty({ type: () => Date })
     @prop({ type: () => Date, required: true })
     dateOfBirth: Date;
 
+    @ApiProperty()
     @prop({ type: () => String })
     phone: string;
 
+    @ApiProperty()
     @prop({ type: () => String, required: true })
     parentPhone: string;
 
+    @ApiProperty()
     @prop({ type: () => String, required: true })
     parentFullName: string;
 
+    @ApiProperty()
     @prop({ type: () => Number, default: 0 })
     balance: number;
 
+    @ApiProperty()
     @prop({ type: () => String })
     discord: string;
 
+    @ApiProperty({ type: () => SalesFunnelStepModel })
     @prop({
         type: () => SalesFunnelStepModel,
         ref: () => SalesFunnelStepModel,
@@ -54,6 +66,7 @@ export class StudentModel extends TimeStamps {
     })
     salesFunnelStep: Ref<SalesFunnelStepModel>;
 
+    @ApiProperty({ type: () => StatusModel, isArray: true })
     @prop({
         type: () => [StatusModel],
         ref: () => StatusModel,
@@ -61,6 +74,7 @@ export class StudentModel extends TimeStamps {
     })
     statuses: Ref<StatusModel>[];
 
+    @ApiProperty({ type: () => NoteModel, isArray: true })
     @prop({
         type: () => [NoteModel],
         ref: () => NoteModel,
@@ -70,6 +84,7 @@ export class StudentModel extends TimeStamps {
     })
     notes: Ref<NoteModel>[];
 
+    @ApiProperty({ type: () => GroupModel, isArray: true })
     @prop({
         type: () => [GroupModel],
         ref: () => GroupModel,

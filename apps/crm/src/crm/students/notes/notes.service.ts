@@ -12,10 +12,7 @@ export class NotesService {
         private readonly noteModel: ReturnModelType<typeof NoteModel>
     ) {}
 
-    async create(
-        studentID: string,
-        createNoteDTO: CreateNoteDTO
-    ): Promise<NoteModel> {
+    async create(studentID: string, createNoteDTO: CreateNoteDTO) {
         return this.noteModel.create({
             owner_id: studentID,
             ...createNoteDTO
@@ -26,7 +23,7 @@ export class NotesService {
         studentID: string,
         noteID: string,
         updateNoteDTO: UpdateNoteDTO
-    ): Promise<NoteModel> {
+    ) {
         const updated = await this.noteModel.findOneAndUpdate(
             {
                 _id: noteID,
@@ -42,7 +39,7 @@ export class NotesService {
         return this.noteModel.findOne({ _id: noteID, owner_id: studentID });
     }
 
-    async delete(studentID: string, noteID: string): Promise<NoteModel> {
+    async delete(studentID: string, noteID: string) {
         const deleted = await this.noteModel.findOneAndDelete({
             _id: noteID,
             owner_id: studentID

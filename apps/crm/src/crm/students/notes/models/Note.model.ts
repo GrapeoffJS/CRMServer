@@ -3,6 +3,7 @@ import { StudentModel } from '../../models/Student.model';
 import { CRMUserModel } from '../../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import mongooseAutoPopulate from 'mongoose-autopopulate';
+import { ApiProperty } from '@nestjs/swagger';
 
 @plugin(mongooseAutoPopulate)
 @modelOptions({
@@ -11,9 +12,11 @@ import mongooseAutoPopulate from 'mongoose-autopopulate';
     }
 })
 export class NoteModel extends TimeStamps {
+    @ApiProperty()
     @prop({ type: () => StudentModel, ref: () => StudentModel, required: true })
     owner_id: Ref<StudentModel>;
 
+    @ApiProperty({ type: () => CRMUserModel })
     @prop({
         type: () => CRMUserModel,
         ref: () => CRMUserModel,
@@ -22,9 +25,11 @@ export class NoteModel extends TimeStamps {
     })
     author: Ref<CRMUserModel>;
 
+    @ApiProperty()
     @prop({ type: () => String, required: true })
     text: string;
 
+    @ApiProperty()
     @prop({ type: () => String })
     color: string;
 }

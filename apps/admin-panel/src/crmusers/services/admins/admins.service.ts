@@ -18,7 +18,7 @@ export class AdminsService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createAdminDTO: CreateAdminDTO): Promise<AdminModel> {
+    async create(createAdminDTO: CreateAdminDTO) {
         createAdminDTO.password = await this.passwordProtector.hash(
             createAdminDTO.password
         );
@@ -31,17 +31,14 @@ export class AdminsService {
         }
     }
 
-    async get(
-        limit: number,
-        offset: number
-    ): Promise<{ count: number; docs: AdminModel[] }> {
+    async get(limit: number, offset: number) {
         return {
             count: await this.adminModel.countDocuments().exec(),
             docs: await this.adminModel.find().skip(offset).limit(limit)
         };
     }
 
-    async getByID(id: string): Promise<AdminModel> {
+    async getByID(id: string) {
         const found = await this.adminModel.findById(id);
 
         if (!found) {
@@ -51,10 +48,7 @@ export class AdminsService {
         return found;
     }
 
-    async update(
-        id: string,
-        updateAdminDTO: UpdateAdminDTO
-    ): Promise<AdminModel> {
+    async update(id: string, updateAdminDTO: UpdateAdminDTO) {
         const updated = await this.adminModel.findByIdAndUpdate(
             id,
             updateAdminDTO
@@ -67,7 +61,7 @@ export class AdminsService {
         return this.adminModel.findById(id);
     }
 
-    async delete(id: string): Promise<AdminModel> {
+    async delete(id: string) {
         const deleted = await this.adminModel.findByIdAndDelete(id);
 
         if (!deleted) {

@@ -15,21 +15,18 @@ export class StudentsService {
         private readonly groupModel: ReturnModelType<typeof GroupModel>
     ) {}
 
-    async create(createStudentDTO: CreateStudentDTO): Promise<StudentModel> {
+    async create(createStudentDTO: CreateStudentDTO) {
         return this.studentModel.create(createStudentDTO);
     }
 
-    async get(
-        limit: number,
-        offset: number
-    ): Promise<{ count: number; docs: StudentModel[] }> {
+    async get(limit: number, offset: number) {
         return {
             count: await this.studentModel.countDocuments().exec(),
             docs: await this.studentModel.find().skip(offset).limit(limit)
         };
     }
 
-    async getByID(id: string): Promise<StudentModel> {
+    async getByID(id: string) {
         const found = await this.studentModel.findById(id);
 
         if (!found) {
@@ -39,10 +36,7 @@ export class StudentsService {
         return found;
     }
 
-    async update(
-        id: string,
-        updateStudentDTO: UpdateStudentDTO
-    ): Promise<StudentModel> {
+    async update(id: string, updateStudentDTO: UpdateStudentDTO) {
         const updated = await this.studentModel.findByIdAndUpdate(
             id,
             updateStudentDTO

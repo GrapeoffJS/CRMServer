@@ -1,9 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-    HealthCheckError,
-    HealthIndicator,
-    HealthIndicatorResult
-} from '@nestjs/terminus';
+import { HealthCheckError, HealthIndicator } from '@nestjs/terminus';
 import { getConnectionToken } from 'nestjs-typegoose';
 import { mongoose } from '@typegoose/typegoose';
 
@@ -15,7 +11,7 @@ export class TypegooseHealthIndicatorService extends HealthIndicator {
         super();
     }
 
-    async isHealthy(key: string): Promise<HealthIndicatorResult> {
+    async isHealthy(key: string) {
         const isHealthy = this.connection.readyState === 1;
         const result = this.getStatus(key, isHealthy, {
             connectionState: this.connection.readyState

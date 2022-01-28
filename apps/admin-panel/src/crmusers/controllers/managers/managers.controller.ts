@@ -14,49 +14,60 @@ import { UpdateManagerDTO } from '../../DTO/Manager/UpdateManagerDTO';
 import { ManagerModel } from '../../models/Manager.model';
 import { CreateManagerDTO } from '../../DTO/Manager/CreateManagerDTO';
 import { ManagersService } from '../../services/managers/managers.service';
-import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBody,
+    ApiCreatedResponse,
+    ApiOkResponse,
+    ApiParam,
+    ApiQuery,
+    ApiTags
+} from '@nestjs/swagger';
 
 @ApiTags('Admin Panel / CRM Users / Managers')
 @Controller('/admin-panel/crm-users/managers')
 export class ManagersController {
     constructor(private readonly managersService: ManagersService) {}
 
+    @ApiCreatedResponse({ type: () => ManagerModel })
     @ApiBody({ type: () => CreateManagerDTO })
     @Post()
-    async create(
-        @Body() createManagerDTO: CreateManagerDTO
-    ): Promise<ManagerModel> {
+    async create(@Body() createManagerDTO: CreateManagerDTO) {
         return await this.managersService.create(createManagerDTO);
     }
 
+    @ApiOkResponse({
+        type: () => ManagerModel,
+        isArray: true
+    })
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get(
-        @Query() { limit, offset }: PaginationDTO
-    ): Promise<{ docs: ManagerModel[]; count: number }> {
+    async get(@Query() { limit, offset }: PaginationDTO) {
         return await this.managersService.get(limit, offset);
     }
 
+    @ApiOkResponse({ type: () => ManagerModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID): Promise<ManagerModel> {
+    async getByID(@Param() { id }: MongoID) {
         return await this.managersService.getByID(id);
     }
 
+    @ApiOkResponse({ type: () => ManagerModel })
     @ApiParam({ name: 'id', type: () => String })
     @ApiBody({ type: () => UpdateManagerDTO })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
         @Body() updateManagerDTO: UpdateManagerDTO
-    ): Promise<ManagerModel> {
+    ) {
         return await this.managersService.update(id, updateManagerDTO);
     }
 
+    @ApiOkResponse({ type: () => ManagerModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID): Promise<ManagerModel> {
+    async delete(@Param() { id }: MongoID) {
         return await this.managersService.delete(id);
     }
 }

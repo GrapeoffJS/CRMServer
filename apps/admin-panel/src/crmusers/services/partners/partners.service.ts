@@ -18,7 +18,7 @@ export class PartnersService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createPartnerDTO: CreatePartnerDTO): Promise<PartnerModel> {
+    async create(createPartnerDTO: CreatePartnerDTO) {
         createPartnerDTO.password = await this.passwordProtector.hash(
             createPartnerDTO.password
         );
@@ -31,17 +31,14 @@ export class PartnersService {
         }
     }
 
-    async get(
-        limit: number,
-        offset: number
-    ): Promise<{ count: number; docs: PartnerModel[] }> {
+    async get(limit: number, offset: number) {
         return {
             count: await this.partnerModel.countDocuments().exec(),
             docs: await this.partnerModel.find().skip(offset).limit(limit)
         };
     }
 
-    async getByID(id: string): Promise<PartnerModel> {
+    async getByID(id: string) {
         const found = await this.partnerModel.findById(id);
 
         if (!found) {
@@ -51,10 +48,7 @@ export class PartnersService {
         return found;
     }
 
-    async update(
-        id: string,
-        updatePartnerDTO: UpdatePartnerDTO
-    ): Promise<PartnerModel> {
+    async update(id: string, updatePartnerDTO: UpdatePartnerDTO) {
         const updated = this.partnerModel.findByIdAndUpdate(
             id,
             updatePartnerDTO
@@ -67,7 +61,7 @@ export class PartnersService {
         return this.partnerModel.findById(id);
     }
 
-    async delete(id: string): Promise<PartnerModel> {
+    async delete(id: string) {
         const deleted = this.partnerModel.findByIdAndDelete(id);
 
         if (!deleted) {

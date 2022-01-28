@@ -10,17 +10,14 @@ export class AllStaffService {
         private readonly crmUserModel: ReturnModelType<typeof CRMUserModel>
     ) {}
 
-    async get(
-        limit: number,
-        offset: number
-    ): Promise<{ count: number; docs: CRMUserModel[] }> {
+    async get(limit: number, offset: number) {
         return {
             count: await this.crmUserModel.countDocuments().exec(),
             docs: await this.crmUserModel.find().skip(offset).limit(limit)
         };
     }
 
-    async getByID(id: string): Promise<CRMUserModel> {
+    async getByID(id: string) {
         const found = await this.crmUserModel.findById(id);
 
         if (!found) {
@@ -30,7 +27,7 @@ export class AllStaffService {
         return found;
     }
 
-    async delete(id: string): Promise<CRMUserModel> {
+    async delete(id: string) {
         const deleted = await this.crmUserModel.findByIdAndDelete(id);
 
         if (!deleted) {

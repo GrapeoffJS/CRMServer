@@ -12,24 +12,18 @@ export class StatusesService {
         private readonly statusModel: ReturnModelType<typeof StatusModel>
     ) {}
 
-    async get(
-        limit: number,
-        offset: number
-    ): Promise<{ docs: StatusModel[]; count: number }> {
+    async get(limit: number, offset: number) {
         return {
             docs: await this.statusModel.find().skip(offset).limit(limit),
             count: await this.statusModel.countDocuments().exec()
         };
     }
 
-    async create(createStatusDTO: CreateStatusDTO): Promise<StatusModel> {
+    async create(createStatusDTO: CreateStatusDTO) {
         return this.statusModel.create(createStatusDTO);
     }
 
-    async update(
-        id: string,
-        updateStatusDTO: UpdateStatusDTO
-    ): Promise<StatusModel> {
+    async update(id: string, updateStatusDTO: UpdateStatusDTO) {
         const found = await this.statusModel.findByIdAndUpdate(
             id,
             updateStatusDTO
@@ -42,7 +36,7 @@ export class StatusesService {
         return this.statusModel.findById(id);
     }
 
-    async delete(id: string): Promise<StatusModel> {
+    async delete(id: string) {
         const deleted = await this.statusModel.findByIdAndDelete(id);
 
         if (!deleted) {

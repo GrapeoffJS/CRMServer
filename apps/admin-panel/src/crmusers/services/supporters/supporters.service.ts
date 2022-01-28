@@ -18,9 +18,7 @@ export class SupportersService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(
-        createSupportDTO: CreateSupporterDTO
-    ): Promise<SupporterModel> {
+    async create(createSupportDTO: CreateSupporterDTO) {
         createSupportDTO.password = await this.passwordProtector.hash(
             createSupportDTO.password
         );
@@ -33,17 +31,14 @@ export class SupportersService {
         }
     }
 
-    async get(
-        limit: number,
-        offset: number
-    ): Promise<{ count: number; docs: SupporterModel[] }> {
+    async get(limit: number, offset: number) {
         return {
             count: await this.supporterModel.countDocuments().exec(),
             docs: await this.supporterModel.find().skip(offset).limit(limit)
         };
     }
 
-    async getByID(id: string): Promise<SupporterModel> {
+    async getByID(id: string) {
         const found = await this.supporterModel.findById(id);
 
         if (!found) {
@@ -53,15 +48,12 @@ export class SupportersService {
         return found;
     }
 
-    async update(
-        id: string,
-        updateSupportDTO: UpdateSupporterDTO
-    ): Promise<SupporterModel> {
+    async update(id: string, updateSupportDTO: UpdateSupporterDTO) {
         this.supporterModel.findByIdAndUpdate(id, updateSupportDTO);
         return this.supporterModel.findById(id);
     }
 
-    async delete(id: string): Promise<SupporterModel> {
+    async delete(id: string) {
         const deleted = await this.supporterModel.findByIdAndDelete(id);
 
         if (!deleted) {

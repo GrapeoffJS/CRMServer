@@ -14,25 +14,35 @@ import { TutorModel } from '../../models/Tutor.model';
 import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
 import { MongoID } from '../../../../../../utils/DTO/MongoID';
 import { UpdateTutorDTO } from '../../DTO/Tutor/UpdateTutorDTO';
-import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBody,
+    ApiCreatedResponse,
+    ApiOkResponse,
+    ApiParam,
+    ApiQuery,
+    ApiTags
+} from '@nestjs/swagger';
 
 @ApiTags('Admin Panel / CRM Users / Tutors')
 @Controller('/admin-panel/crm-users/tutors')
 export class TutorsController {
     constructor(private readonly tutorsService: TutorsService) {}
 
+    @ApiCreatedResponse({ type: () => TutorModel })
     @ApiBody({ type: () => CreateTutorDTO })
     @Post()
-    async create(@Body() createTutorDTO: CreateTutorDTO): Promise<TutorModel> {
+    async create(@Body() createTutorDTO: CreateTutorDTO) {
         return await this.tutorsService.create(createTutorDTO);
     }
 
+    @ApiOkResponse({
+        type: () => TutorModel,
+        isArray: true
+    })
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get(
-        @Query() { limit, offset }: PaginationDTO
-    ): Promise<{ docs: TutorModel[]; count: number }> {
+    async get(@Query() { limit, offset }: PaginationDTO) {
         const { count, docs } = await this.tutorsService.get(limit, offset);
 
         return {
@@ -41,25 +51,28 @@ export class TutorsController {
         };
     }
 
+    @ApiOkResponse({ type: () => TutorModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID): Promise<TutorModel> {
+    async getByID(@Param() { id }: MongoID) {
         return await this.tutorsService.getByID(id);
     }
 
+    @ApiOkResponse({ type: () => TutorModel })
     @ApiParam({ name: 'id', type: () => String })
     @ApiBody({ type: () => UpdateTutorDTO })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
         @Body() updateTutorDTO: UpdateTutorDTO
-    ): Promise<TutorModel> {
+    ) {
         return await this.tutorsService.update(id, updateTutorDTO);
     }
 
+    @ApiOkResponse({ type: () => TutorModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID): Promise<TutorModel> {
+    async delete(@Param() { id }: MongoID) {
         return await this.tutorsService.delete(id);
     }
 }

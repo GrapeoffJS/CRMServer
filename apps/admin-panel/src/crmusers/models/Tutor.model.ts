@@ -3,6 +3,7 @@ import { GroupModel } from '../../../../crm/src/crm/groups/models/Group.model';
 import { WorkHours } from '../../work-hours/models/WorkHours';
 import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { AccountTypes } from '../types/AccountTypes';
+import { ApiProperty } from '@nestjs/swagger';
 
 @modelOptions({
     schemaOptions: {
@@ -11,6 +12,7 @@ import { AccountTypes } from '../types/AccountTypes';
     }
 })
 export class TutorModel extends CRMUserModel {
+    @ApiProperty({ type: () => GroupModel, isArray: true })
     @prop({
         type: [GroupModel],
         ref: () => GroupModel,
@@ -20,12 +22,15 @@ export class TutorModel extends CRMUserModel {
     })
     groups: Ref<GroupModel>[];
 
+    @ApiProperty({ type: () => WorkHours })
     @prop({ type: () => Object, default: null })
     workHours: WorkHours;
 
+    @ApiProperty()
     @prop({ type: () => String, default: null })
     subject: string;
 
+    @ApiProperty()
     @prop({ type: () => String, default: AccountTypes.Tutor })
     accountType: string;
 }

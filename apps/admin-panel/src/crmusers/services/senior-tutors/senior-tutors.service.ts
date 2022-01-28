@@ -20,9 +20,7 @@ export class SeniorTutorsService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(
-        createSeniorTutorDTO: CreateSeniorTutorDTO
-    ): Promise<SeniorTutorModel> {
+    async create(createSeniorTutorDTO: CreateSeniorTutorDTO) {
         createSeniorTutorDTO.password = await this.passwordProtector.hash(
             createSeniorTutorDTO.password
         );
@@ -37,17 +35,14 @@ export class SeniorTutorsService {
         }
     }
 
-    async get(
-        limit: number,
-        offset: number
-    ): Promise<{ count: number; docs: SeniorTutorModel[] }> {
+    async get(limit: number, offset: number) {
         return {
             count: await this.seniorTutorModel.countDocuments().exec(),
             docs: await this.seniorTutorModel.find().skip(offset).limit(limit)
         };
     }
 
-    async getByID(id: string): Promise<SeniorTutorModel> {
+    async getByID(id: string) {
         const found = await this.seniorTutorModel.findById(id);
 
         if (!found) {
@@ -57,10 +52,7 @@ export class SeniorTutorsService {
         return found;
     }
 
-    async update(
-        id: string,
-        updateSeniorTutorDTO: UpdateSeniorTutorDTO
-    ): Promise<SeniorTutorModel> {
+    async update(id: string, updateSeniorTutorDTO: UpdateSeniorTutorDTO) {
         const updated = this.seniorTutorModel.findByIdAndUpdate(
             id,
             updateSeniorTutorDTO
@@ -73,7 +65,7 @@ export class SeniorTutorsService {
         return this.seniorTutorModel.findById(id);
     }
 
-    async delete(id: string): Promise<SeniorTutorModel> {
+    async delete(id: string) {
         const deleted = this.seniorTutorModel.findByIdAndDelete(id);
 
         if (!deleted) {

@@ -18,7 +18,7 @@ export class TutorsService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createTutorDTO: CreateTutorDTO): Promise<TutorModel> {
+    async create(createTutorDTO: CreateTutorDTO) {
         createTutorDTO.password = await this.passwordProtector.hash(
             createTutorDTO.password
         );
@@ -31,17 +31,14 @@ export class TutorsService {
         }
     }
 
-    async get(
-        limit: number,
-        offset: number
-    ): Promise<{ count: number; docs: TutorModel[] }> {
+    async get(limit: number, offset: number) {
         return {
             count: await this.tutorModel.countDocuments().exec(),
             docs: await this.tutorModel.find().skip(offset).limit(limit)
         };
     }
 
-    async getByID(id: string): Promise<TutorModel> {
+    async getByID(id: string) {
         const found = await this.tutorModel.findById(id);
 
         if (!found) {
@@ -51,10 +48,7 @@ export class TutorsService {
         return found;
     }
 
-    async update(
-        id: string,
-        updateTutorDTO: UpdateTutorDTO
-    ): Promise<TutorModel> {
+    async update(id: string, updateTutorDTO: UpdateTutorDTO) {
         const updated = this.tutorModel.findByIdAndUpdate(id, updateTutorDTO);
 
         if (!updated) {
@@ -64,7 +58,7 @@ export class TutorsService {
         return this.tutorModel.findById(id);
     }
 
-    async delete(id: string): Promise<TutorModel> {
+    async delete(id: string) {
         const deleted = await this.tutorModel.findByIdAndDelete(id);
 
         if (!deleted) {

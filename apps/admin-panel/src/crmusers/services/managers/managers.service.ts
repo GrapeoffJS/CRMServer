@@ -18,7 +18,7 @@ export class ManagersService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createAdminDTO: CreateManagerDTO): Promise<ManagerModel> {
+    async create(createAdminDTO: CreateManagerDTO) {
         createAdminDTO.password = await this.passwordProtector.hash(
             createAdminDTO.password
         );
@@ -31,17 +31,14 @@ export class ManagersService {
         }
     }
 
-    async get(
-        limit: number,
-        offset: number
-    ): Promise<{ count: number; docs: ManagerModel[] }> {
+    async get(limit: number, offset: number) {
         return {
             count: await this.managerModel.countDocuments().exec(),
             docs: await this.managerModel.find().skip(offset).limit(limit)
         };
     }
 
-    async getByID(id: string): Promise<ManagerModel> {
+    async getByID(id: string) {
         const found = await this.managerModel.findById(id);
 
         if (!found) {
@@ -51,10 +48,7 @@ export class ManagersService {
         return found;
     }
 
-    async update(
-        id: string,
-        updateManagerDTO: UpdateManagerDTO
-    ): Promise<ManagerModel> {
+    async update(id: string, updateManagerDTO: UpdateManagerDTO) {
         const updated = this.managerModel.findByIdAndUpdate(
             id,
             updateManagerDTO
@@ -67,7 +61,7 @@ export class ManagersService {
         return this.managerModel.findById(id);
     }
 
-    async delete(id: string): Promise<ManagerModel> {
+    async delete(id: string) {
         const deleted = this.managerModel.findByIdAndDelete(id);
 
         if (!deleted) {

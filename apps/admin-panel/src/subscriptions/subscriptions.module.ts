@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { SubscriptionStatus } from './models/Subscription.model';
+import { SubscriptionModel } from './models/Subscription.model';
 import { SubscriptionsController } from './subscriptions.controller';
 import { SubscriptionsService } from './subscriptions.service';
 import { TypegooseModule } from 'nestjs-typegoose';
@@ -8,7 +8,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
     imports: [
         TypegooseModule.forFeature([
             {
-                typegooseClass: SubscriptionStatus,
+                typegooseClass: SubscriptionModel,
                 schemaOptions: { collection: 'Subscriptions' }
             }
         ])

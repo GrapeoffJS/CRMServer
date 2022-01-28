@@ -16,14 +16,14 @@ export class JwtFactory {
         private readonly configService: ConfigService
     ) {}
 
-    async generateAccessToken(payload: any): Promise<string> {
+    async generateAccessToken(payload: any) {
         return this.jwtService.signAsync(payload, {
             expiresIn: this.configService.get('JWT_LIFETIME'),
             secret: this.configService.get('JWT_SECRET')
         });
     }
 
-    async generateRefreshToken(ownerID: string): Promise<string> {
+    async generateRefreshToken(ownerID: string) {
         await this.refreshTokenModel.findOneAndDelete({ owner_id: ownerID });
 
         const token = await this.jwtService.signAsync(
