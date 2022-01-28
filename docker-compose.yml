@@ -20,12 +20,9 @@ services:
         restart: always
         volumes:
             - mongodb:/data/db
-        environment:
-            - MONGO_INITDB_ROOT_USERNAME=$MONGODB_ROOT_USER
-            - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_ROOT_PASSWORD
         ports:
             - "27017:27017"
-        env_file: .env
+        env_file: mongodb.env
 
     elastic:
         container_name: "elastic"
@@ -36,13 +33,11 @@ services:
             - cluster.name=elastic-crm
             - bootstrap.memory_lock=true
             - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-            - ELASTIC_USERNAME=$ELASTIC_USERNAME
-            - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
         ports:
             - "9200:9200"
         volumes:
             - elastic:/usr/share/elasticsearch/data
-        env_file: .env
+        env_file: elastic.env
 
 volumes:
     mongodb:
