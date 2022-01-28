@@ -1,9 +1,8 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { TypegooseModule } from 'nestjs-typegoose';
+import { TypegooseConnectionOptions, TypegooseModule } from 'nestjs-typegoose';
 import getMongoConnectionUri from './config/getMongoConnectionUri';
 import { AdminPanelModule } from '../../admin-panel/src/admin-panel.module';
-import { ConnectionOptions } from 'mongoose';
 import { CrmModule } from './crm/crm.module';
 import { HealthCheckModule } from './health-check/health-check.module';
 import Joi from 'joi';
@@ -46,20 +45,20 @@ import Joi from 'joi';
                         configService.get('MONGO_CONNECTION_PARAMS')
                     ),
                     ...({
-                        useCreateIndex: true,
-                        useNewUrlParser: true,
-                        useUnifiedTopology: true,
-                        useFindAndModify: false,
                         auth: {
-                            user: configService.get(
+                            username: configService.get(
                                 'MONGO_INITDB_ROOT_USERNAME'
                             ),
                             password: configService.get(
                                 'MONGO_INITDB_ROOT_PASSWORD'
                             )
                         },
-                        authSource: 'admin'
-                    } as ConnectionOptions)
+                        authSource: 'admin',
+                        useUnifiedTopology: true,
+                        useNewUrlParser: true,
+                        keepAlive: true,
+                        keepAliveInitialDelay: 300000
+                    } as TypegooseConnectionOptions)
                 };
             }
         }),

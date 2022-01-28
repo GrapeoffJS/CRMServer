@@ -12,7 +12,7 @@ import { ApiProperty } from '@nestjs/swagger';
     }
 })
 export class NoteModel extends TimeStamps {
-    @ApiProperty()
+    @ApiProperty({ type: () => String })
     @prop({ type: () => StudentModel, ref: () => StudentModel, required: true })
     owner_id: Ref<StudentModel>;
 
