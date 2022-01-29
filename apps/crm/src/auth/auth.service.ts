@@ -29,7 +29,8 @@ export class AuthService {
             .findOne({
                 login: authDTO.login
             })
-            .select('+password');
+            .select('+password')
+            .exec();
 
         if (!candidate) {
             throw new BadRequestException();
@@ -61,17 +62,21 @@ export class AuthService {
     }
 
     async refresh({ refreshToken }: RefreshDTO) {
-        const oldRefreshToken = await this.refreshTokenModel.findOne({
-            token: refreshToken
-        });
+        const oldRefreshToken = await this.refreshTokenModel
+            .findOne({
+                token: refreshToken
+            })
+            .exec();
 
         if (!oldRefreshToken) {
             throw new UnauthorizedException();
         }
 
-        const user = await this.crmUserModel.findOne({
-            _id: oldRefreshToken.owner_id
-        });
+        const user = await this.crmUserModel
+            .findOne({
+                _id: oldRefreshToken.owner_id
+            })
+            .exec();
 
         return {
             accessToken: await this.jwtFactory.generateAccessToken({
