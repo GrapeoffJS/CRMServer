@@ -29,7 +29,7 @@ export class SeniorTutorsService {
             const user = await this.seniorTutorModel.create(
                 CreateSeniorTutorDTO
             );
-            return this.seniorTutorModel.findById(user.id);
+            return this.seniorTutorModel.findById(user.id).exec();
         } catch (e) {
             throw new BadRequestException('User with this login exists');
         }
@@ -43,7 +43,7 @@ export class SeniorTutorsService {
     }
 
     async getByID(id: string) {
-        const found = await this.seniorTutorModel.findById(id);
+        const found = await this.seniorTutorModel.findById(id).exec();
 
         if (!found) {
             throw new NotFoundException();
@@ -53,20 +53,19 @@ export class SeniorTutorsService {
     }
 
     async update(id: string, updateSeniorTutorDTO: UpdateSeniorTutorDTO) {
-        const updated = this.seniorTutorModel.findByIdAndUpdate(
-            id,
-            updateSeniorTutorDTO
-        );
+        const updated = this.seniorTutorModel
+            .findByIdAndUpdate(id, updateSeniorTutorDTO)
+            .exec();
 
         if (!updated) {
             throw new NotFoundException();
         }
 
-        return this.seniorTutorModel.findById(id);
+        return this.seniorTutorModel.findById(id).exec();
     }
 
     async delete(id: string) {
-        const deleted = this.seniorTutorModel.findByIdAndDelete(id);
+        const deleted = this.seniorTutorModel.findByIdAndDelete(id).exec();
 
         if (!deleted) {
             throw new NotFoundException();

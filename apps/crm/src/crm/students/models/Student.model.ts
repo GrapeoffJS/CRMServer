@@ -7,6 +7,8 @@ import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { NoteModel } from '../notes/models/Note.model';
 import { GroupModel } from '../../groups/models/Group.model';
 import { ApiProperty } from '@nestjs/swagger';
+import { TutorModel } from '../../../../../admin-panel/src/crmusers/models/Tutor.model';
+import { CRMUserModel } from '../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 
 @plugin(mongooseAutoPopulate)
 @modelOptions({
@@ -62,7 +64,8 @@ export class StudentModel extends TimeStamps {
         type: () => SalesFunnelStepModel,
         ref: () => SalesFunnelStepModel,
         required: true,
-        autopopulate: { maxDepth: 1 }
+        autopopulate: { maxDepth: 1 },
+        justOne: true
     })
     salesFunnelStep: Ref<SalesFunnelStepModel>;
 
@@ -93,4 +96,15 @@ export class StudentModel extends TimeStamps {
         autopopulate: { maxDepth: 1 }
     })
     groups: Ref<GroupModel>[];
+
+    // @ApiProperty({ type: () => TutorModel, isArray: true })
+    // @prop({
+    //     type: () => [TutorModel],
+    //     ref: () => TutorModel,
+    //
+    //     localField: 'groups.tutors',
+    //     foreignField: '_id',
+    //     autopopulate: { maxDepth: 1 }
+    // })
+    // tutors: Ref<TutorModel>;
 }

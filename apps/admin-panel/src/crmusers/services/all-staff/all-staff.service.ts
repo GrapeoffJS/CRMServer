@@ -18,7 +18,7 @@ export class AllStaffService {
     }
 
     async getByID(id: string) {
-        const found = await this.crmUserModel.findById(id);
+        const found = await this.crmUserModel.findById(id).exec();
 
         if (!found) {
             throw new NotFoundException();
@@ -28,7 +28,7 @@ export class AllStaffService {
     }
 
     async delete(id: string) {
-        const deleted = await this.crmUserModel.findByIdAndDelete(id);
+        const deleted = await this.crmUserModel.findByIdAndDelete(id).exec();
 
         if (!deleted) {
             throw new NotFoundException();

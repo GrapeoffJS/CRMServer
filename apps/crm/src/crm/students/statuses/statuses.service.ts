@@ -24,20 +24,19 @@ export class StatusesService {
     }
 
     async update(id: string, updateStatusDTO: UpdateStatusDTO) {
-        const found = await this.statusModel.findByIdAndUpdate(
-            id,
-            updateStatusDTO
-        );
+        const found = await this.statusModel
+            .findByIdAndUpdate(id, updateStatusDTO)
+            .exec();
 
         if (!found) {
             throw new NotFoundException();
         }
 
-        return this.statusModel.findById(id);
+        return this.statusModel.findById(id).exec();
     }
 
     async delete(id: string) {
-        const deleted = await this.statusModel.findByIdAndDelete(id);
+        const deleted = await this.statusModel.findByIdAndDelete(id).exec();
 
         if (!deleted) {
             throw new NotFoundException();

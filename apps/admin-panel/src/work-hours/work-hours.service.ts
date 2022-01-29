@@ -12,14 +12,16 @@ export class WorkHoursService {
     ) {}
 
     async create(id: string, { workHours }: CreateWorkHoursDTO) {
-        const teacher = await this.tutorUserModel.findByIdAndUpdate(id, {
-            workHours
-        });
+        const teacher = await this.tutorUserModel
+            .findByIdAndUpdate(id, {
+                workHours
+            })
+            .exec();
 
         if (!teacher) {
             throw new NotFoundException();
         }
 
-        return this.tutorUserModel.findById(id);
+        return this.tutorUserModel.findById(id).exec();
     }
 }

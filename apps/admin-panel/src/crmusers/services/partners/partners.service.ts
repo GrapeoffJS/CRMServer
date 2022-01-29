@@ -25,7 +25,7 @@ export class PartnersService {
 
         try {
             const user = await this.partnerModel.create(CreatePartnerDTO);
-            return this.partnerModel.findById(user.id);
+            return this.partnerModel.findById(user.id).exec();
         } catch (e) {
             throw new BadRequestException('User with this login exists');
         }
@@ -39,7 +39,7 @@ export class PartnersService {
     }
 
     async getByID(id: string) {
-        const found = await this.partnerModel.findById(id);
+        const found = await this.partnerModel.findById(id).exec();
 
         if (!found) {
             throw new NotFoundException();
@@ -49,20 +49,19 @@ export class PartnersService {
     }
 
     async update(id: string, updatePartnerDTO: UpdatePartnerDTO) {
-        const updated = this.partnerModel.findByIdAndUpdate(
-            id,
-            updatePartnerDTO
-        );
+        const updated = this.partnerModel
+            .findByIdAndUpdate(id, updatePartnerDTO)
+            .exec();
 
         if (!updated) {
             throw new NotFoundException();
         }
 
-        return this.partnerModel.findById(id);
+        return this.partnerModel.findById(id).exec();
     }
 
     async delete(id: string) {
-        const deleted = this.partnerModel.findByIdAndDelete(id);
+        const deleted = this.partnerModel.findByIdAndDelete(id).exec();
 
         if (!deleted) {
             throw new NotFoundException();

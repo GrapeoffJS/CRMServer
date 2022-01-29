@@ -27,59 +27,63 @@ export class SalesFunnelService {
     }
 
     async get() {
-        return this.salesFunnelStepModel.find().sort({ order: 1 });
+        return this.salesFunnelStepModel.find().sort({ order: 1 }).exec();
     }
 
     async update(
         id: string,
         updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
     ) {
-        await this.salesFunnelStepModel.updateOne(
-            { _id: id },
-            updateSalesFunnelStepDTO
-        );
+        await this.salesFunnelStepModel
+            .updateOne({ _id: id }, updateSalesFunnelStepDTO)
+            .exec();
 
-        return this.salesFunnelStepModel.findById(id);
+        return this.salesFunnelStepModel.findById(id).exec();
     }
 
     async changeOrders(changeOrderDTO: ChangeOrderDTO[]) {
         for (const step of changeOrderDTO) {
-            await this.salesFunnelStepModel.updateOne(
-                { _id: step.id },
-                { order: step.newOrder }
-            );
+            await this.salesFunnelStepModel
+                .updateOne({ _id: step.id }, { order: step.newOrder })
+                .exec();
         }
 
-        return this.salesFunnelStepModel.find().select({ pupils: 0 });
+        return this.salesFunnelStepModel.find().select({ pupils: 0 }).exec();
     }
 
     async delete(id: string) {
-        const stepToDelete = await this.salesFunnelStepModel.findById(id);
+        const stepToDelete = await this.salesFunnelStepModel
+            .findById(id)
+            .exec();
 
         if (!stepToDelete) {
             throw new NotFoundException();
         }
 
         // If there is at least one pupil in this step
-        const pupilInCurrentStep = await this.studentModel.findOne({
-            salesFunnelStep: id
-        });
+        const pupilInCurrentStep = await this.studentModel
+            .findOne({
+                salesFunnelStep: id
+            })
+            .exec();
 
         if (pupilInCurrentStep) {
             throw new BadRequestException();
         }
 
-        await this.salesFunnelStepModel.findByIdAndDelete(id);
+        await this.salesFunnelStepModel.findByIdAndDelete(id).exec();
 
-        await this.salesFunnelStepModel.updateMany(
-            { order: { $gt: stepToDelete.order } },
-            { $inc: { order: -1 } }
-        );
+        await this.salesFunnelStepModel
+            .updateMany(
+                { order: { $gt: stepToDelete.order } },
+                { $inc: { order: -1 } }
+            )
+            .exec();
 
         return stepToDelete;
     }
 
     async findByOrder(order: number) {
-        return this.salesFunnelStepModel.findOne({ order });
+        return this.salesFunnelStepModel.findOne({ order }).exec();
     }
 }

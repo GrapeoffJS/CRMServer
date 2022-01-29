@@ -25,7 +25,7 @@ export class SupportersService {
 
         try {
             const user = await this.supporterModel.create(CreateSupporterDTO);
-            return this.supporterModel.findById(user.id);
+            return this.supporterModel.findById(user.id).exec();
         } catch (e) {
             throw new BadRequestException('User with this login exists');
         }
@@ -39,7 +39,7 @@ export class SupportersService {
     }
 
     async getByID(id: string) {
-        const found = await this.supporterModel.findById(id);
+        const found = await this.supporterModel.findById(id).exec();
 
         if (!found) {
             throw new NotFoundException();
@@ -49,12 +49,12 @@ export class SupportersService {
     }
 
     async update(id: string, updateSupportDTO: UpdateSupporterDTO) {
-        this.supporterModel.findByIdAndUpdate(id, updateSupportDTO);
-        return this.supporterModel.findById(id);
+        this.supporterModel.findByIdAndUpdate(id, updateSupportDTO).exec();
+        return this.supporterModel.findById(id).exec();
     }
 
     async delete(id: string) {
-        const deleted = await this.supporterModel.findByIdAndDelete(id);
+        const deleted = await this.supporterModel.findByIdAndDelete(id).exec();
 
         if (!deleted) {
             throw new NotFoundException();

@@ -25,7 +25,7 @@ export class ManagersService {
 
         try {
             const user = await this.managerModel.create(CreateManagerDTO);
-            return this.managerModel.findById(user.id);
+            return this.managerModel.findById(user.id).exec();
         } catch (e) {
             throw new BadRequestException('User with this login exists');
         }
@@ -39,7 +39,7 @@ export class ManagersService {
     }
 
     async getByID(id: string) {
-        const found = await this.managerModel.findById(id);
+        const found = await this.managerModel.findById(id).exec();
 
         if (!found) {
             throw new NotFoundException();
@@ -49,20 +49,19 @@ export class ManagersService {
     }
 
     async update(id: string, updateManagerDTO: UpdateManagerDTO) {
-        const updated = this.managerModel.findByIdAndUpdate(
-            id,
-            updateManagerDTO
-        );
+        const updated = this.managerModel
+            .findByIdAndUpdate(id, updateManagerDTO)
+            .exec();
 
         if (!updated) {
             throw new NotFoundException();
         }
 
-        return this.managerModel.findById(id);
+        return this.managerModel.findById(id).exec();
     }
 
     async delete(id: string) {
-        const deleted = this.managerModel.findByIdAndDelete(id);
+        const deleted = this.managerModel.findByIdAndDelete(id).exec();
 
         if (!deleted) {
             throw new NotFoundException();

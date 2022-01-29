@@ -20,7 +20,7 @@ export class NoteModel extends TimeStamps {
     @prop({
         type: () => CRMUserModel,
         ref: () => CRMUserModel,
-        autopopulate: true,
+
         required: true
     })
     author: Ref<CRMUserModel>;

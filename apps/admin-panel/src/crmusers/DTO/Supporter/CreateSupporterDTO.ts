@@ -1,3 +1,9 @@
 import { BasicCRMUserDTO } from '../BasicCRMUserDTO';
+import { IntersectionType } from '@nestjs/swagger';
 
-export class CreateSupporterDTO extends BasicCRMUserDTO {}
+class SupporterDTO {}
+
+export class CreateSupporterDTO extends IntersectionType(
+    SupporterDTO,
+    BasicCRMUserDTO
+) {}

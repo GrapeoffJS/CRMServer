@@ -27,7 +27,7 @@ export class StudentsService {
     }
 
     async getByID(id: string) {
-        const found = await this.studentModel.findById(id);
+        const found = await this.studentModel.findById(id).exec();
 
         if (!found) {
             throw new NotFoundException();
@@ -37,30 +37,31 @@ export class StudentsService {
     }
 
     async update(id: string, updateStudentDTO: UpdateStudentDTO) {
-        const updated = await this.studentModel.findByIdAndUpdate(
-            id,
-            updateStudentDTO
-        );
+        const updated = await this.studentModel
+            .findByIdAndUpdate(id, updateStudentDTO)
+            .exec();
 
         if (!updated) {
             throw new NotFoundException();
         }
 
-        return this.studentModel.findById(id);
+        return this.studentModel.findById(id).exec();
     }
 
     async delete(id: string) {
-        const candidate = await this.studentModel.findById(id);
+        const candidate = await this.studentModel.findById(id).exec();
 
         if (!candidate) {
             throw new NotFoundException();
         }
 
-        await this.groupModel.updateMany(
-            { students: { $all: [candidate.id] } },
-            { $pull: { students: candidate.id } }
-        );
+        await this.groupModel
+            .updateMany(
+                { students: { $all: [candidate.id] } },
+                { $pull: { students: candidate.id } }
+            )
+            .exec();
 
-        return this.studentModel.findByIdAndUpdate(id);
+        return this.studentModel.findByIdAndUpdate(id).exec();
     }
 }

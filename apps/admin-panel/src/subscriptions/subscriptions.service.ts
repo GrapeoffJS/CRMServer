@@ -19,23 +19,22 @@ export class SubscriptionsService {
     }
 
     async get() {
-        return this.subscriptionModel.find();
+        return this.subscriptionModel.find().exec();
     }
 
     async getByID(id: string) {
-        return this.subscriptionModel.findById(id);
+        return this.subscriptionModel.findById(id).exec();
     }
 
     async update(id: string, updateSubscriptionDTO: UpdateSubscriptionDTO) {
-        await this.subscriptionModel.updateOne(
-            { _id: id },
-            updateSubscriptionDTO
-        );
+        await this.subscriptionModel
+            .updateOne({ _id: id }, updateSubscriptionDTO)
+            .exec();
 
-        return this.subscriptionModel.findById(id);
+        return this.subscriptionModel.findById(id).exec();
     }
 
     async delete(id: string) {
-        return this.subscriptionModel.findByIdAndDelete(id);
+        return this.subscriptionModel.findByIdAndDelete(id).exec();
     }
 }

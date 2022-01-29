@@ -1,5 +1,5 @@
 import { CRMUserModel } from './CRMUser.model';
-import { prop } from '@typegoose/typegoose';
+import { post, prop } from '@typegoose/typegoose';
 import { AccountTypes } from '../types/AccountTypes';
 import { ApiProperty } from '@nestjs/swagger';
 

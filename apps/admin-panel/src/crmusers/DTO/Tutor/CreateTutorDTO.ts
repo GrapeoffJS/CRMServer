@@ -1,3 +1,9 @@
 import { BasicCRMUserDTO } from '../BasicCRMUserDTO';
+import { IntersectionType } from '@nestjs/mapped-types';
 
-export class CreateTutorDTO extends BasicCRMUserDTO {}
+class TutorDTO {}
+
+export class CreateTutorDTO extends IntersectionType(
+    TutorDTO,
+    BasicCRMUserDTO
+) {}
