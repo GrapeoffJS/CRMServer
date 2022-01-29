@@ -55,9 +55,7 @@ import Joi from 'joi';
                         },
                         authSource: 'admin',
                         useUnifiedTopology: true,
-                        useNewUrlParser: true,
-                        keepAlive: true,
-                        keepAliveInitialDelay: 300000
+                        useNewUrlParser: true
                     } as TypegooseConnectionOptions)
                 };
             }
