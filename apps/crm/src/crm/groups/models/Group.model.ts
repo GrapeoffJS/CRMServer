@@ -33,11 +33,15 @@ export class GroupModel {
     @prop({
         type: () => [StudentModel],
         ref: () => StudentModel,
-        autopopulate: { maxDepth: 1 }
+        autopopulate: { maxDepth: 0 }
     })
     students: Ref<StudentModel, string>[];
 
     @ApiProperty({ type: () => TutorModel, isArray: true })
-    @prop({ type: () => TutorModel, ref: () => TutorModel, autopopulate: true })
+    @prop({
+        type: () => TutorModel,
+        ref: () => TutorModel,
+        autopopulate: { maxDepth: 0 }
+    })
     tutor: Ref<TutorModel>;
 }

@@ -37,7 +37,7 @@ export class GroupsService {
     }
 
     async getByID(id: string) {
-        const found = await this.groupModel.findById(id);
+        const found = await this.groupModel.findById(id).exec();
 
         if (!found) {
             throw new NotFoundException();
@@ -47,20 +47,19 @@ export class GroupsService {
     }
 
     async update(id: string, updateGroupDTO: UpdateGroupDTO) {
-        const updated = await this.groupModel.findByIdAndUpdate(
-            id,
-            updateGroupDTO
-        );
+        const updated = await this.groupModel
+            .findByIdAndUpdate(id, updateGroupDTO)
+            .exec();
 
         if (!updated) {
             throw new NotFoundException();
         }
 
-        return this.groupModel.findById(id);
+        return this.groupModel.findById(id).exec();
     }
 
     async delete(id: string) {
-        const deleted = await this.groupModel.findByIdAndDelete(id);
+        const deleted = await this.groupModel.findByIdAndDelete(id).exec();
 
         if (!deleted) {
             throw new BadRequestException();

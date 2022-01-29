@@ -1,10 +1,10 @@
 import {
+    ArrayMinSize,
     ArrayUnique,
     IsBoolean,
     IsMongoId,
     IsNotEmpty,
     IsNumber,
-    IsOptional,
     IsString,
     Min
 } from 'class-validator';
@@ -20,23 +20,22 @@ export class CreateGroupDTO {
     @ApiProperty()
     @Type(() => Number)
     @Min(0)
-    @IsNumber()
+    @IsNumber({ allowNaN: false, allowInfinity: false })
     level: number;
 
     @ApiProperty()
     @Type(() => Number)
     @Min(0)
-    @IsNumber()
+    @IsNumber({ allowNaN: false, allowInfinity: false })
     places: number;
 
     @ApiProperty()
-    @IsOptional()
     @IsBoolean()
     trial: boolean;
 
     @ApiProperty()
-    @IsOptional()
     @IsMongoId({ each: true })
+    @ArrayMinSize(0)
     @ArrayUnique()
     students: string[];
 
