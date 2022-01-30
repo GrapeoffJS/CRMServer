@@ -7,8 +7,8 @@ import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { NoteModel } from '../notes/models/Note.model';
 import { GroupModel } from '../../groups/models/Group.model';
 import { ApiProperty } from '@nestjs/swagger';
-import { DocumentType } from '@typegoose/typegoose';
 import { TutorModel } from '../../../../../admin-panel/src/crmusers/models/Tutor.model';
+import { CRMUserModel } from '../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 
 @plugin(mongooseAutoPopulate)
 @modelOptions({
@@ -32,7 +32,7 @@ export class StudentModel extends TimeStamps {
     middleName: string;
 
     @ApiProperty({ enum: () => Genders })
-    @prop({ enum: Genders, default: Genders.NotDefined })
+    @prop({ enum: Genders, default: Genders.NOT_DEFINED })
     gender: string;
 
     @ApiProperty({ type: () => Date })
@@ -63,8 +63,6 @@ export class StudentModel extends TimeStamps {
     @prop({
         type: () => SalesFunnelStepModel,
         ref: () => SalesFunnelStepModel,
-        localField: 'salesFunnelStep',
-        foreignField: '_id',
         required: true,
         autopopulate: { maxDepth: 1 },
         justOne: true
@@ -99,12 +97,12 @@ export class StudentModel extends TimeStamps {
     })
     groups: Ref<GroupModel>[];
 
-    // @ApiProperty({ type: () => TutorModel, isArray: true })
-    // @prop({
-    //     type: () => [TutorModel],
-    //     ref: () => TutorModel,
-    //     foreignField: '_id',
-    //     localField: (doc: DocumentType<GroupModel>) => doc.tutor
-    // })
-    // tutors: Ref<TutorModel>;
+    @ApiProperty({ type: () => TutorModel, isArray: true })
+    @prop({
+        type: () => [CRMUserModel],
+        ref: () => CRMUserModel,
+        foreignField: '_id',
+        localField: doc => doc.groups.tutor
+    })
+    tutors: Ref<TutorModel>[];
 }

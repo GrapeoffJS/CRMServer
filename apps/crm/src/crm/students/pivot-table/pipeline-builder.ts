@@ -28,6 +28,7 @@ export class PipelineBuilder {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
+    // eslint-disable-next-line sonarjs/cognitive-complexity
     build() {
         if (this.pivotTableDTO.names.length !== 0) {
             this.pipeline.push({
@@ -90,6 +91,20 @@ export class PipelineBuilder {
                             )
                         }
                     }))
+                }
+            });
+        }
+
+        if (this.pivotTableDTO.dateOfBirthIsNotDefined) {
+            this.pipeline.push({
+                $match: {
+                    dateOfBirth: null
+                }
+            });
+        } else {
+            this.pipeline.push({
+                $match: {
+                    dateOfBirth: { $ne: null }
                 }
             });
         }

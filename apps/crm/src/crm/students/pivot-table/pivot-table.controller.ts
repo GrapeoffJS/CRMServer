@@ -27,7 +27,7 @@ export class PivotTableController {
         @Query() { limit, offset }: PaginationDTO,
         @Body() studentsPivotTableDTO: StudentsPivotTableDTO
     ) {
-        return this.pivotTableService.filter(
+        return await this.pivotTableService.filter(
             limit,
             offset,
             studentsPivotTableDTO
