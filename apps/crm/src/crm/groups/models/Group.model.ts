@@ -41,8 +41,6 @@ export class GroupModel {
     @prop({
         type: () => TutorModel,
         ref: () => TutorModel,
-        foreignField: '_id',
-        localField: 'tutor',
         autopopulate: { maxDepth: 0 },
         justOne: true
     })
