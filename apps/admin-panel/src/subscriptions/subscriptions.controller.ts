@@ -19,7 +19,7 @@ import {
     ApiParam,
     ApiTags
 } from '@nestjs/swagger';
-import { PublicController } from '../../../crm/src/auth/authentication/PublicController';
+import { PublicController } from '../../../crm/src/authorization/PublicController';
 
 @ApiTags('Admin Panel / Subscriptions')
 @PublicController()

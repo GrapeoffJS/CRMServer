@@ -22,7 +22,7 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PublicController } from '../../../../../crm/src/auth/authentication/PublicController';
+import { PublicController } from '../../../../../crm/src/authorization/PublicController';
 
 @ApiTags('Admin Panel / CRM Users / Supporters')
 @PublicController()

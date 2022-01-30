@@ -22,7 +22,7 @@ import {
     ApiTags
 } from '@nestjs/swagger';
 import { SalesFunnelStepModel } from './models/SalesFunnelStep.model';
-import { PublicController } from '../../../crm/src/auth/authentication/PublicController';
+import { PublicController } from '../../../crm/src/authorization/PublicController';
 
 @ApiTags('Admin Panel / Sales Funnel')
 @PublicController()

@@ -4,7 +4,7 @@ import { MongoID } from '../../../../../../utils/DTO/MongoID';
 import { AllStaffService } from '../../services/all-staff/all-staff.service';
 import { CRMUserModel } from '../../models/CRMUser.model';
 import { ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { PublicController } from '../../../../../crm/src/auth/authentication/PublicController';
+import { PublicController } from '../../../../../crm/src/authorization/PublicController';
 
 @ApiTags('Admin Panel / CRM Users')
 @PublicController()
