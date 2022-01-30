@@ -19,7 +19,8 @@ export class JwtFactory {
     async generateAccessToken(payload: any) {
         return this.jwtService.signAsync(payload, {
             expiresIn: this.configService.get('JWT_LIFETIME'),
-            secret: this.configService.get('JWT_SECRET')
+            secret: this.configService.get('JWT_SECRET'),
+            issuer: this.configService.get('JWT_ISSUER')
         });
     }
 
@@ -30,9 +31,11 @@ export class JwtFactory {
             {},
             {
                 expiresIn: this.configService.get('JWT_REFRESH_LIFETIME'),
-                secret: this.configService.get('JWT_REFRESH_SECRET')
+                secret: this.configService.get('JWT_REFRESH_SECRET'),
+                issuer: this.configService.get('JWT_ISSUER')
             }
         );
+
         await this.refreshTokenModel.create({ token, owner_id: ownerID });
 
         return token;

@@ -6,8 +6,7 @@ import { CRMUserModel } from '../../../admin-panel/src/crmusers/models/CRMUser.m
 import { JwtModule } from '@nestjs/jwt';
 import { RefreshTokenModel } from './models/RefreshToken.model';
 import { JwtFactory } from './jwt.factory';
-import { ConfigModule } from '@nestjs/config';
-import { AuthenticationModule } from './authentication/authentication.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
     imports: [
@@ -15,14 +14,20 @@ import { AuthenticationModule } from './authentication/authentication.module';
             { typegooseClass: CRMUserModel },
             { typegooseClass: RefreshTokenModel }
         ]),
-        JwtModule.register({
-            signOptions: {
-                algorithm: 'HS512',
-                issuer: 'CRMServer'
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory(configService: ConfigService) {
+                return {
+                    secret: configService.get('JWT_SECRET'),
+                    verifyOptions: {
+                        algorithm: 'HS512',
+                        issuer: configService.get('JWT_ISSUER')
+                    }
+                };
             }
         }),
-        ConfigModule,
-        AuthenticationModule
+        ConfigModule
     ],
     providers: [AuthService, JwtFactory],
     controllers: [AuthController]

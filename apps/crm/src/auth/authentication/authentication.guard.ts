@@ -5,13 +5,16 @@ import {
     UnauthorizedException
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { NestFactory, Reflector } from '@nestjs/core';
-import { AuthenticationModule } from './authentication.module';
+import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
-    public constructor(private readonly reflector: Reflector) {}
+    public constructor(
+        private readonly reflector: Reflector,
+        private readonly jwtService: JwtService
+    ) {}
 
     async canActivate(context: ExecutionContext) {
         const isControllerPublic = this.reflector.get<boolean>(
@@ -29,22 +32,14 @@ export class AuthenticationGuard implements CanActivate {
         }
 
         const request = context.switchToHttp().getRequest<Request>();
-
-        const authenticationModule = await NestFactory.createApplicationContext(
-            AuthenticationModule
-        );
-
-        const jwtService: JwtService =
-            authenticationModule.get<JwtService>(JwtService);
-
         try {
-            await jwtService.verify(
+            await this.jwtService.verify(
                 request.headers.authorization.split(' ')[1]
             );
 
             return true;
         } catch (e) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException(e);
         }
     }
 }

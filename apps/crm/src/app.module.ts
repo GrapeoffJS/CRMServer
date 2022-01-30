@@ -7,6 +7,7 @@ import { CrmModule } from './crm/crm.module';
 import { HealthCheckModule } from './health-check/health-check.module';
 import Joi from 'joi';
 import { Reflector } from '@nestjs/core';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 
 @Module({
     imports: [
@@ -32,6 +33,19 @@ import { Reflector } from '@nestjs/core';
                 JWT_LIFETIME: Joi.string().required(),
                 JWT_REFRESH_LIFETIME: Joi.string().required()
             })
+        }),
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory(configService: ConfigService) {
+                return {
+                    secret: configService.get('JWT_SECRET'),
+                    verifyOptions: {
+                        algorithm: 'HS512',
+                        issuer: configService.get('JWT_ISSUER')
+                    }
+                };
+            }
         }),
         TypegooseModule.forRootAsync({
             imports: [ConfigModule],
