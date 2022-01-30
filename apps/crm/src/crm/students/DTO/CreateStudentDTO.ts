@@ -26,10 +26,12 @@ export class CreateStudentDTO {
     middleName: string;
 
     @ApiProperty({ enum: () => Genders })
+    @IsOptional()
     @IsEnum(Genders)
     gender: string;
 
     @ApiProperty({ type: () => Date })
+    @IsOptional()
     @IsISO8601({ strict: true })
     dateOfBirth: Date;
 
@@ -39,11 +41,13 @@ export class CreateStudentDTO {
     phone?: string;
 
     @ApiProperty()
+    @IsOptional()
     @IsNotEmpty()
     @IsString()
     parentPhone: string;
 
     @ApiProperty()
+    @IsOptional()
     @IsNotEmpty()
     @IsString()
     parentFullName: string;

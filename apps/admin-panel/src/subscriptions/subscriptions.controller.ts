@@ -19,8 +19,10 @@ import {
     ApiParam,
     ApiTags
 } from '@nestjs/swagger';
+import { PublicController } from '../../../crm/src/auth/authentication/PublicController';
 
 @ApiTags('Admin Panel / Subscriptions')
+@PublicController()
 @Controller('/admin-panel/subscriptions')
 export class SubscriptionsController {
     constructor(private readonly subscriptionsService: SubscriptionsService) {}

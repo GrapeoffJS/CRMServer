@@ -1,4 +1,5 @@
 export enum Genders {
     Male = 'Мужской',
-    Female = 'Женский'
+    Female = 'Женский',
+    NotDefined = 'Не установлен'
 }

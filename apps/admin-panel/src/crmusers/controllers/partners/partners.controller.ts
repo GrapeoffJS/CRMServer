@@ -22,8 +22,10 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { PublicController } from '../../../../../crm/src/auth/authentication/PublicController';
 
 @ApiTags('Admin Panel / CRM Users / Partners')
+@PublicController()
 @Controller('/admin-panel/crm-users/partners')
 export class PartnersController {
     constructor(private readonly partnersService: PartnersService) {}

@@ -6,6 +6,7 @@ import { AdminPanelModule } from '../../admin-panel/src/admin-panel.module';
 import { CrmModule } from './crm/crm.module';
 import { HealthCheckModule } from './health-check/health-check.module';
 import Joi from 'joi';
+import { Reflector } from '@nestjs/core';
 
 @Module({
     imports: [
@@ -62,7 +63,8 @@ import Joi from 'joi';
         }),
         AdminPanelModule,
         CrmModule,
-        HealthCheckModule
+        HealthCheckModule,
+        Reflector
     ],
     controllers: [],
     providers: []

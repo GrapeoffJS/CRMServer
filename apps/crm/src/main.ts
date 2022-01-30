@@ -1,7 +1,7 @@
 import compression from 'compression';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
@@ -10,7 +10,7 @@ import { AuthenticationGuard } from './auth/authentication/authentication.guard'
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
-    app.enableCors();
+    app.enableCors({ credentials: true });
     app.use(helmet());
     app.use(compression());
 
@@ -24,7 +24,8 @@ async function bootstrap() {
         })
     );
 
-    app.useGlobalGuards(new AuthenticationGuard());
+    const reflector = app.get<Reflector>(Reflector);
+    app.useGlobalGuards(new AuthenticationGuard(reflector));
 
     app.setGlobalPrefix('/api');
     app.enableVersioning({

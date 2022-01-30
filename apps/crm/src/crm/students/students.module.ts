@@ -7,6 +7,7 @@ import { NotesModule } from './notes/notes.module';
 import { PivotTableModule } from './pivot-table/pivot-table.module';
 import { StatusesModule } from './statuses/statuses.module';
 import { GroupModel } from '../groups/models/Group.model';
+import { ImportFileModule } from './import-file/import-file.module';
 
 @Module({
     imports: [
@@ -20,7 +21,8 @@ import { GroupModel } from '../groups/models/Group.model';
         ]),
         NotesModule,
         PivotTableModule,
-        StatusesModule
+        StatusesModule,
+        ImportFileModule
     ],
     providers: [StudentsService],
     controllers: [StudentsController]

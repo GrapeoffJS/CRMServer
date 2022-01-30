@@ -5,21 +5,30 @@ import {
     UnauthorizedException
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AuthenticationModule } from './authentication.module';
 import { Request } from 'express';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
-    async canActivate(context: ExecutionContext) {
-        const request = context.switchToHttp().getRequest<Request>();
+    public constructor(private readonly reflector: Reflector) {}
 
-        if (
-            request.url.indexOf('admin-panel') !== -1 ||
-            request.url.indexOf('auth') !== -1
-        ) {
+    async canActivate(context: ExecutionContext) {
+        const isControllerPublic = this.reflector.get<boolean>(
+            'isControllerPublic',
+            context.getClass()
+        );
+
+        const isEndpointPublic = this.reflector.get<boolean>(
+            'isEndpointPublic',
+            context.getHandler()
+        );
+
+        if (isControllerPublic || isEndpointPublic) {
             return true;
         }
+
+        const request = context.switchToHttp().getRequest<Request>();
 
         const authenticationModule = await NestFactory.createApplicationContext(
             AuthenticationModule

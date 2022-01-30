@@ -19,8 +19,10 @@ import {
     ApiTags
 } from '@nestjs/swagger';
 import { RoleModel } from './models/Role.model';
+import { PublicController } from '../../../crm/src/auth/authentication/PublicController';
 
 @ApiTags('Admin Panel / Roles')
+@PublicController()
 @Controller('/admin-panel/roles')
 export class RolesController {
     constructor(private readonly rolesService: RolesService) {}

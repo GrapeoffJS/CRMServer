@@ -22,8 +22,10 @@ import {
     ApiTags
 } from '@nestjs/swagger';
 import { SalesFunnelStepModel } from './models/SalesFunnelStep.model';
+import { PublicController } from '../../../crm/src/auth/authentication/PublicController';
 
 @ApiTags('Admin Panel / Sales Funnel')
+@PublicController()
 @Controller('/admin-panel/sales-funnel')
 export class SalesFunnelController {
     constructor(private readonly salesFunnelService: SalesFunnelService) {}

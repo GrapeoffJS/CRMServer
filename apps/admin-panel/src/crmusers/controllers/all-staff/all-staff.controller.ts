@@ -4,8 +4,10 @@ import { MongoID } from '../../../../../../utils/DTO/MongoID';
 import { AllStaffService } from '../../services/all-staff/all-staff.service';
 import { CRMUserModel } from '../../models/CRMUser.model';
 import { ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { PublicController } from '../../../../../crm/src/auth/authentication/PublicController';
 
 @ApiTags('Admin Panel / CRM Users')
+@PublicController()
 @Controller('/admin-panel/crm-users')
 export class AllStaffController {
     constructor(private readonly allStaffService: AllStaffService) {}
