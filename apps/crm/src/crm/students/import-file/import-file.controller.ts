@@ -26,12 +26,16 @@ import {
     ApiResponse,
     ApiTags
 } from '@nestjs/swagger';
+import { CsvImportServiceService } from './services/csv-import-service/csv-import-service.service';
 
 @ApiTags('CRM / Students / Import File')
 @ApiBearerAuth()
 @Controller('/crm/students/import-file')
 export class ImportFileController {
-    constructor(private readonly xlsxImportService: XlsxImportServiceService) {}
+    constructor(
+        private readonly xlsxImportService: XlsxImportServiceService,
+        private readonly csvImportService: CsvImportServiceService
+    ) {}
 
     @ApiCreatedResponse({ description: 'File successfully imported' })
     @ApiBadRequestResponse({ description: 'There are errors in imported file' })
@@ -59,15 +63,21 @@ export class ImportFileController {
                 },
                 callback: (error: Error | null, acceptFile: boolean) => void
             ): void {
-                if (file.mimetype === MimeTypes.XLSX) {
-                    callback(null, true);
-                } else {
-                    callback(
-                        new BadRequestException(
-                            `File mime type must be ${MimeTypes.XLSX}`
-                        ),
-                        false
-                    );
+                switch (file.mimetype) {
+                    case MimeTypes.XLSX:
+                        callback(null, true);
+                        break;
+                    case MimeTypes.CSV:
+                        callback(null, true);
+                        break;
+
+                    default:
+                        callback(
+                            new BadRequestException(
+                                `File mime type must be ${MimeTypes.XLSX} or ${MimeTypes.CSV}`
+                            ),
+                            false
+                        );
                 }
             }
         })
@@ -76,7 +86,21 @@ export class ImportFileController {
         @Query() { salesFunnelStepID }: SalesFunnelStepID,
         @UploadedFile() file: Express.Multer.File
     ) {
-        return await this.xlsxImportService.import(salesFunnelStepID, file);
+        switch (file.mimetype) {
+            case MimeTypes.XLSX:
+                return await this.xlsxImportService.import(
+                    salesFunnelStepID,
+                    file
+                );
+                break;
+
+            case MimeTypes.CSV:
+                return await this.csvImportService.import(
+                    salesFunnelStepID,
+                    file
+                );
+                break;
+        }
     }
 
     @ApiResponse({ description: 'Template file' })

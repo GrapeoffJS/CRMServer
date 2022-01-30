@@ -12,7 +12,7 @@ export class XlsxImportServiceService {
         private readonly studentModel: ReturnModelType<typeof StudentModel>
     ) {}
 
-    async import(salesFunnelStep: string, file: Express.Multer.File) {
+    async import(salesFunnelStepID: string, file: Express.Multer.File) {
         const sheet = read(file.buffer, { type: 'buffer' });
         const students: StudentModel[] = utils
             .sheet_to_json<StudentModel>(sheet.Sheets[sheet.SheetNames[0]], {
@@ -22,7 +22,7 @@ export class XlsxImportServiceService {
                 ...student,
                 phone: student.phone.toString(),
                 parentPhone: student.parentPhone.toString(),
-                salesFunnelStep: new Types.ObjectId(salesFunnelStep)
+                salesFunnelStep: new Types.ObjectId(salesFunnelStepID)
             }));
 
         try {

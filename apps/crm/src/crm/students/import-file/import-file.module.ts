@@ -3,6 +3,7 @@ import { XlsxImportServiceService } from './services/xlsx-import-service/xlsx-im
 import { ImportFileController } from './import-file.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { StudentModel } from '../models/Student.model';
+import { CsvImportServiceService } from './services/csv-import-service/csv-import-service.service';
 
 @Module({
     imports: [
@@ -12,7 +13,7 @@ import { StudentModel } from '../models/Student.model';
             }
         ])
     ],
-    providers: [XlsxImportServiceService],
+    providers: [XlsxImportServiceService, CsvImportServiceService],
     controllers: [ImportFileController]
 })
 export class ImportFileModule {}
