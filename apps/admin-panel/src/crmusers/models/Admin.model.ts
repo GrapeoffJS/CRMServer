@@ -5,6 +5,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class AdminModel extends CRMUserModel {
     @ApiProperty()
-    @prop({ type: () => String, default: AccountTypes.Admin })
+    @prop({ type: () => String, default: AccountTypes.ADMIN })
     accountType: string;
 }

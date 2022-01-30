@@ -3,6 +3,7 @@ import { RoleModel } from '../../roles/models/Role.model';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 
 @plugin(mongooseAutoPopulate)
 @modelOptions({ schemaOptions: { collection: 'CRMUsers' } })
@@ -24,6 +25,7 @@ export class CRMUserModel extends TimeStamps {
     login: string;
 
     @ApiProperty()
+    @Exclude()
     @prop({ type: () => String, select: false, required: true })
     password: string;
 
@@ -31,7 +33,7 @@ export class CRMUserModel extends TimeStamps {
     @prop({
         type: () => RoleModel,
         ref: () => RoleModel,
-
+        autopopulate: { maxDepth: 1 },
         required: true
     })
     role: Ref<RoleModel>;

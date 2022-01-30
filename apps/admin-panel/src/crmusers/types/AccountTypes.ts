@@ -1,8 +1,8 @@
 export enum AccountTypes {
-    Admin = 'admin',
-    Manager = 'manager',
-    Tutor = 'tutor',
-    SeniorTutor = 'senior-tutor',
-    Partner = 'partner',
-    Supporter = 'supporter'
+    ADMIN = 'admin',
+    MANAGER = 'manager',
+    TUTOR = 'tutor',
+    SENIOR_TUTOR = 'senior-tutor',
+    PARTNER = 'partner',
+    SUPPORTER = 'supporter'
 }

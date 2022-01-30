@@ -30,6 +30,6 @@ export class TutorModel extends CRMUserModel {
     subject: string;
 
     @ApiProperty()
-    @prop({ type: () => String, default: AccountTypes.Tutor })
+    @prop({ type: () => String, default: AccountTypes.TUTOR })
     accountType: string;
 }
