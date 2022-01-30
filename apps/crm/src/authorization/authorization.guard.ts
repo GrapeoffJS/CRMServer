@@ -10,7 +10,7 @@ import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class AuthenticationGuard implements CanActivate {
+export class AuthorizationGuard implements CanActivate {
     public constructor(
         private readonly reflector: Reflector,
         private readonly jwtService: JwtService

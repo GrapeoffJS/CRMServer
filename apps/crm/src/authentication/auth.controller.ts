@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { AuthDTO } from './DTO/AuthDTO';
 import { RefreshDTO } from './DTO/RefreshDTO';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { PublicController } from './authentication/PublicController';
+import { PublicController } from '../authorization/PublicController';
 
 @ApiTags('Authorization')
 @PublicController()

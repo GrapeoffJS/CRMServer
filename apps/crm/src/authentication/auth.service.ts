@@ -52,8 +52,7 @@ export class AuthService {
                 id: candidate.id,
                 name: candidate.name,
                 surname: candidate.surname,
-                middleName: candidate.middleName,
-                role: candidate.role
+                middleName: candidate.middleName
             }),
             refreshToken: await this.jwtFactory.generateRefreshToken(
                 candidate.id

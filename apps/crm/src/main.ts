@@ -5,10 +5,13 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
-import { AuthenticationGuard } from './auth/authentication/authentication.guard';
+import { AuthorizationGuard } from './authorization/authorization.guard';
+import { JwtService } from '@nestjs/jwt';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+
+    const configService = app.get<ConfigService>(ConfigService);
 
     app.enableCors({ credentials: true });
     app.use(helmet());
@@ -25,7 +28,9 @@ async function bootstrap() {
     );
 
     const reflector = app.get<Reflector>(Reflector);
-    app.useGlobalGuards(new AuthenticationGuard(reflector));
+    const jwtService = app.get<JwtService>(JwtService);
+
+    app.useGlobalGuards(new AuthorizationGuard(reflector, jwtService));
 
     app.setGlobalPrefix('/api');
     app.enableVersioning({
