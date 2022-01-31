@@ -1,0 +1,71 @@
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Query
+} from '@nestjs/common';
+import { RolesService } from './roles.service';
+import { CreateRoleDto } from './dto/CreateRoleDto';
+import {
+    ApiBody,
+    ApiCreatedResponse,
+    ApiOkResponse,
+    ApiParam,
+    ApiQuery,
+    ApiTags
+} from '@nestjs/swagger';
+import { PaginationDto } from '../../../../utils/dto/PaginationDto';
+import { MongoID } from '../../../../utils/dto/MongoID';
+import { UpdateRoleDto } from './dto/UpdateRoleDto';
+import { RoleModel } from './models/Role.model';
+import { PublicController } from '../../../crm/src/authorization/public-controller.decorator';
+
+@ApiTags('Admin Panel / Roles')
+@PublicController()
+@Controller('/admin-panel/roles')
+export class RolesController {
+    constructor(private readonly rolesService: RolesService) {}
+
+    @ApiBody({ type: () => RoleModel })
+    @ApiCreatedResponse({ type: () => RoleModel })
+    @Post()
+    async create(@Body() createRoleDto: CreateRoleDto) {
+        return await this.rolesService.create(createRoleDto);
+    }
+
+    @ApiQuery({ name: 'limit', type: () => Number })
+    @ApiQuery({ name: 'offset', type: () => Number })
+    @ApiOkResponse({ type: () => RoleModel, isArray: true })
+    @Get()
+    async get(@Query() { limit, offset }: PaginationDto) {
+        return await this.rolesService.get(limit, offset);
+    }
+
+    @ApiParam({ name: 'id', type: () => String })
+    @ApiOkResponse({ type: () => RoleModel })
+    @Get(':id')
+    async getByID(@Param() { id }: MongoID) {
+        return await this.rolesService.getByID(id);
+    }
+
+    @ApiParam({ name: 'id', type: () => String })
+    @ApiOkResponse({ type: () => RoleModel })
+    @Patch(':id')
+    async update(
+        @Param() { id }: MongoID,
+        @Body() updateRoleDto: UpdateRoleDto
+    ) {
+        return await this.rolesService.update(id, updateRoleDto);
+    }
+
+    @ApiParam({ name: 'id', type: () => String })
+    @ApiOkResponse({ type: () => RoleModel })
+    @Delete(':id')
+    async delete(@Param() { id }: MongoID) {
+        return await this.rolesService.delete(id);
+    }
+}
