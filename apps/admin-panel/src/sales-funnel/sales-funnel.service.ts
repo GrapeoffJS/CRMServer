@@ -3,12 +3,12 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
+import { CreateSalesFunnelStepDto } from './dto/CreateSalesFunnelStepDto';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
-import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
-import { StudentModel } from '../../../crm/src/crm/students/models/Student.model';
+import { UpdateSalesFunnelStepDto } from './dto/UpdateSalesFunnelStepDto';
+import { ChangeOrderDto } from './dto/ChangeOrderDto';
+import { StudentModel } from '../../../crm/src/crm/students/crud/models/Student.model';
 import { SalesFunnelStepModel } from './models/SalesFunnelStep.model';
 
 @Injectable()
@@ -22,8 +22,8 @@ export class SalesFunnelService {
         private readonly studentModel: ReturnModelType<typeof StudentModel>
     ) {}
 
-    create(createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
-        return this.salesFunnelStepModel.create(createSalesFunnelStepDTO);
+    create(createSalesFunnelStepDto: CreateSalesFunnelStepDto) {
+        return this.salesFunnelStepModel.create(createSalesFunnelStepDto);
     }
 
     async get() {
@@ -32,17 +32,17 @@ export class SalesFunnelService {
 
     async update(
         id: string,
-        updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
+        updateSalesFunnelStepDto: UpdateSalesFunnelStepDto
     ) {
         await this.salesFunnelStepModel
-            .updateOne({ _id: id }, updateSalesFunnelStepDTO)
+            .updateOne({ _id: id }, updateSalesFunnelStepDto)
             .exec();
 
         return this.salesFunnelStepModel.findById(id).exec();
     }
 
-    async changeOrders(changeOrderDTO: ChangeOrderDTO[]) {
-        for (const step of changeOrderDTO) {
+    async changeOrders(changeOrderDto: ChangeOrderDto[]) {
+        for (const step of changeOrderDto) {
             await this.salesFunnelStepModel
                 .updateOne({ _id: step.id }, { order: step.newOrder })
                 .exec();

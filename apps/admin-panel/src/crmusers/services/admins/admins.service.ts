@@ -6,9 +6,9 @@ import {
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { AdminModel } from '../../models/Admin.model';
-import { CreateAdminDTO } from '../../DTO/Admin/CreateAdminDTO';
+import { CreateAdminDto } from '../../dto/Admin/CreateAdminDto';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { UpdateAdminDTO } from '../../DTO/Admin/UpdateAdminDTO';
+import { UpdateAdminDto } from '../../dto/Admin/UpdateAdminDto';
 
 @Injectable()
 export class AdminsService {
@@ -18,13 +18,13 @@ export class AdminsService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createAdminDTO: CreateAdminDTO) {
-        createAdminDTO.password = await this.passwordProtector.hash(
-            createAdminDTO.password
+    async create(createAdminDto: CreateAdminDto) {
+        createAdminDto.password = await this.passwordProtector.hash(
+            createAdminDto.password
         );
 
         try {
-            const user = await this.adminModel.create(createAdminDTO);
+            const user = await this.adminModel.create(createAdminDto);
             return this.adminModel.findById(user.id).exec();
         } catch (e) {
             throw new BadRequestException('User with this login exists');
@@ -48,9 +48,9 @@ export class AdminsService {
         return found;
     }
 
-    async update(id: string, updateAdminDTO: UpdateAdminDTO) {
+    async update(id: string, updateAdminDto: UpdateAdminDto) {
         const updated = await this.adminModel
-            .findByIdAndUpdate(id, updateAdminDTO)
+            .findByIdAndUpdate(id, updateAdminDto)
             .exec();
 
         if (!updated) {

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { read, utils } from 'xlsx';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { StudentModel } from '../../../models/Student.model';
+import { StudentModel } from '../../../crud/models/Student.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { Types } from 'mongoose';
 

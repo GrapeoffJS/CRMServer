@@ -1,5 +1,5 @@
 import { modelOptions, plugin, prop, Ref } from '@typegoose/typegoose';
-import { StudentModel } from '../../models/Student.model';
+import { StudentModel } from '../../crud/models/Student.model';
 import { CRMUserModel } from '../../../../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import mongooseAutoPopulate from 'mongoose-autopopulate';

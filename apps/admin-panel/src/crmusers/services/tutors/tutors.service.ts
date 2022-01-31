@@ -6,8 +6,8 @@ import {
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { CreateTutorDTO } from '../../DTO/Tutor/CreateTutorDTO';
-import { UpdateTutorDTO } from '../../DTO/Tutor/UpdateTutorDTO';
+import { CreateTutorDto } from '../../dto/Tutor/CreateTutorDto';
+import { UpdateTutorDto } from '../../dto/Tutor/UpdateTutorDto';
 import { TutorModel } from '../../models/Tutor.model';
 
 @Injectable()
@@ -18,13 +18,13 @@ export class TutorsService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createTutorDTO: CreateTutorDTO) {
-        createTutorDTO.password = await this.passwordProtector.hash(
-            createTutorDTO.password
+    async create(createTutorDto: CreateTutorDto) {
+        createTutorDto.password = await this.passwordProtector.hash(
+            createTutorDto.password
         );
 
         try {
-            const user = await this.tutorModel.create(createTutorDTO);
+            const user = await this.tutorModel.create(createTutorDto);
             return this.tutorModel.findById(user.id).exec();
         } catch (e) {
             console.log(e);
@@ -49,9 +49,9 @@ export class TutorsService {
         return found;
     }
 
-    async update(id: string, updateTutorDTO: UpdateTutorDTO) {
+    async update(id: string, updateTutorDto: UpdateTutorDto) {
         const updated = this.tutorModel
-            .findByIdAndUpdate(id, updateTutorDTO)
+            .findByIdAndUpdate(id, updateTutorDto)
             .exec();
 
         if (!updated) {

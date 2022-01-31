@@ -3,7 +3,7 @@ import { SalesFunnelController } from './sales-funnel.controller';
 import { SalesFunnelService } from './sales-funnel.service';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { SalesFunnelStepModel } from './models/SalesFunnelStep.model';
-import { StudentModel } from '../../../crm/src/crm/students/models/Student.model';
+import { StudentModel } from '../../../crm/src/crm/students/crud/models/Student.model';
 
 @Module({
     imports: [

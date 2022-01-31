@@ -9,11 +9,11 @@ import {
     Query
 } from '@nestjs/common';
 import { TutorsService } from '../../services/tutors/tutors.service';
-import { CreateTutorDTO } from '../../DTO/Tutor/CreateTutorDTO';
+import { CreateTutorDto } from '../../dto/Tutor/CreateTutorDto';
 import { TutorModel } from '../../models/Tutor.model';
-import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
-import { MongoID } from '../../../../../../utils/DTO/MongoID';
-import { UpdateTutorDTO } from '../../DTO/Tutor/UpdateTutorDTO';
+import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
+import { MongoID } from '../../../../../../utils/dto/MongoID';
+import { UpdateTutorDto } from '../../dto/Tutor/UpdateTutorDto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,7 +22,7 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PublicController } from '../../../../../crm/src/authorization/PublicController';
+import { PublicController } from '../../../../../crm/src/authorization/public-controller.decorator';
 
 @ApiTags('Admin Panel / CRM Users / Tutors')
 @PublicController()
@@ -31,10 +31,10 @@ export class TutorsController {
     constructor(private readonly tutorsService: TutorsService) {}
 
     @ApiCreatedResponse({ type: () => TutorModel })
-    @ApiBody({ type: () => CreateTutorDTO })
+    @ApiBody({ type: () => CreateTutorDto })
     @Post()
-    async create(@Body() createTutorDTO: CreateTutorDTO) {
-        return await this.tutorsService.create(createTutorDTO);
+    async create(@Body() createTutorDto: CreateTutorDto) {
+        return await this.tutorsService.create(createTutorDto);
     }
 
     @ApiOkResponse({
@@ -44,7 +44,7 @@ export class TutorsController {
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get(@Query() { limit, offset }: PaginationDTO) {
+    async get(@Query() { limit, offset }: PaginationDto) {
         const { count, docs } = await this.tutorsService.get(limit, offset);
 
         return {
@@ -62,13 +62,13 @@ export class TutorsController {
 
     @ApiOkResponse({ type: () => TutorModel })
     @ApiParam({ name: 'id', type: () => String })
-    @ApiBody({ type: () => UpdateTutorDTO })
+    @ApiBody({ type: () => UpdateTutorDto })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
-        @Body() updateTutorDTO: UpdateTutorDTO
+        @Body() updateTutorDto: UpdateTutorDto
     ) {
-        return await this.tutorsService.update(id, updateTutorDTO);
+        return await this.tutorsService.update(id, updateTutorDto);
     }
 
     @ApiOkResponse({ type: () => TutorModel })

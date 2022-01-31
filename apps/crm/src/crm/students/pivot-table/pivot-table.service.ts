@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { StudentModel } from '../models/Student.model';
+import { StudentModel } from '../crud/models/Student.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import { StudentsPivotTableDTO } from './DTO/StudentsPivotTableDTO';
+import { StudentsPivotTableDto } from './dto/StudentsPivotTableDto';
 import { PipelineBuilder } from './pipeline-builder';
 
 @Injectable()
@@ -15,17 +15,17 @@ export class PivotTableService {
     async filter(
         limit: number,
         offset: number,
-        studentsPivotTableDTO: StudentsPivotTableDTO
+        studentsPivotTableDto: StudentsPivotTableDto
     ) {
         const count = await this.studentModel
-            .aggregate(new PipelineBuilder(studentsPivotTableDTO).build())
+            .aggregate(new PipelineBuilder(studentsPivotTableDto).build())
             .count('count')
             .exec();
 
         return {
             count: count.length === 0 ? 0 : count[0].count,
             docs: await this.studentModel
-                .aggregate(new PipelineBuilder(studentsPivotTableDTO).build())
+                .aggregate(new PipelineBuilder(studentsPivotTableDto).build())
                 .skip(offset)
                 .limit(limit)
                 .exec()

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { GroupModel } from './models/Group.model';
-import { StudentModel } from '../students/models/Student.model';
+import { StudentModel } from '../students/crud/models/Student.model';
 import { GroupsController } from './groups.controller';
 
 @Module({

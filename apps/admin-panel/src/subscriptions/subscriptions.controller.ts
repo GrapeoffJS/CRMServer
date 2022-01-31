@@ -7,11 +7,11 @@ import {
     Patch,
     Post
 } from '@nestjs/common';
-import { CreateSubscriptionDTO } from './DTO/CreateSubscriptionDTO';
+import { CreateSubscriptionDto } from './dto/CreateSubscriptionDto';
 import { SubscriptionModel } from './models/Subscription.model';
 import { SubscriptionsService } from './subscriptions.service';
-import { UpdateSubscriptionDTO } from './DTO/UpdateSubscriptionDTO';
-import { MongoID } from '../../../../utils/DTO/MongoID';
+import { UpdateSubscriptionDto } from './dto/UpdateSubscriptionDto';
+import { MongoID } from '../../../../utils/dto/MongoID';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -19,7 +19,7 @@ import {
     ApiParam,
     ApiTags
 } from '@nestjs/swagger';
-import { PublicController } from '../../../crm/src/authorization/PublicController';
+import { PublicController } from '../../../crm/src/authorization/public-controller.decorator';
 
 @ApiTags('Admin Panel / Subscriptions')
 @PublicController()
@@ -28,10 +28,10 @@ export class SubscriptionsController {
     constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
     @ApiCreatedResponse({ type: () => SubscriptionModel })
-    @ApiBody({ type: () => CreateSubscriptionDTO })
+    @ApiBody({ type: () => CreateSubscriptionDto })
     @Post()
-    async create(@Body() createSubscriptionDTO: CreateSubscriptionDTO) {
-        return await this.subscriptionsService.create(createSubscriptionDTO);
+    async create(@Body() createSubscriptionDto: CreateSubscriptionDto) {
+        return await this.subscriptionsService.create(createSubscriptionDto);
     }
 
     @ApiOkResponse({ type: () => SubscriptionModel, isArray: true })
@@ -49,15 +49,15 @@ export class SubscriptionsController {
 
     @ApiOkResponse({ type: () => SubscriptionModel })
     @ApiParam({ name: 'id', type: () => String })
-    @ApiBody({ type: () => UpdateSubscriptionDTO })
+    @ApiBody({ type: () => UpdateSubscriptionDto })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
-        @Body() updateSubscriptionDTO: UpdateSubscriptionDTO
+        @Body() updateSubscriptionDto: UpdateSubscriptionDto
     ) {
         return await this.subscriptionsService.update(
             id,
-            updateSubscriptionDTO
+            updateSubscriptionDto
         );
     }
 

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { XlsxImportServiceService } from './services/xlsx-import-service/xlsx-import-service.service';
 import { ImportFileController } from './import-file.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { StudentModel } from '../models/Student.model';
+import { StudentModel } from '../crud/models/Student.model';
 import { CsvImportServiceService } from './services/csv-import-service/csv-import-service.service';
 
 @Module({

@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { XLSXImportServiceService } from '../services/xlsximport-service/xlsximport-service.service';
+import { XlsxImportServiceService } from '../services/xlsx-import-service/xlsx-import-service.service';
 
 describe('XlsximportServiceService', () => {
-  let service: XLSXImportServiceService;
+  let service: XlsxImportServiceService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [XLSXImportServiceService],
+      providers: [XlsxImportServiceService],
     }).compile();
 
-    service = module.get<XLSXImportServiceService>(XLSXImportServiceService);
+    service = module.get<XlsxImportServiceService>(XlsxImportServiceService);
   });
 
   it('should be defined', () => {

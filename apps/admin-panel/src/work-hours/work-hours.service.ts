@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { CreateWorkHoursDTO } from './DTO/CreateWorkHoursDTO';
+import { CreateWorkHoursDto } from './dto/CreateWorkHoursDto';
 import { TutorModel } from '../crmusers/models/Tutor.model';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class WorkHoursService {
         private readonly tutorUserModel: ReturnModelType<typeof TutorModel>
     ) {}
 
-    async create(id: string, { workHours }: CreateWorkHoursDTO) {
+    async create(id: string, { workHours }: CreateWorkHoursDto) {
         const teacher = await this.tutorUserModel
             .findByIdAndUpdate(id, {
                 workHours

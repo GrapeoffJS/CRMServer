@@ -7,8 +7,8 @@ import { InjectModel } from 'nestjs-typegoose';
 import { PartnerModel } from '../../models/Partner.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { CreatePartnerDTO } from '../../DTO/Partner/CreatePartnerDTO';
-import { UpdatePartnerDTO } from '../../DTO/Partner/UpdatePartnerDTO';
+import { CreatePartnerDto } from '../../dto/Partner/CreatePartnerDto';
+import { UpdatePartnerDto } from '../../dto/Partner/UpdatePartnerDto';
 
 @Injectable()
 export class PartnersService {
@@ -18,13 +18,13 @@ export class PartnersService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createPartnerDTO: CreatePartnerDTO) {
-        createPartnerDTO.password = await this.passwordProtector.hash(
-            createPartnerDTO.password
+    async create(createPartnerDto: CreatePartnerDto) {
+        createPartnerDto.password = await this.passwordProtector.hash(
+            createPartnerDto.password
         );
 
         try {
-            const user = await this.partnerModel.create(CreatePartnerDTO);
+            const user = await this.partnerModel.create(CreatePartnerDto);
             return this.partnerModel.findById(user.id).exec();
         } catch (e) {
             throw new BadRequestException('User with this login exists');
@@ -48,9 +48,9 @@ export class PartnersService {
         return found;
     }
 
-    async update(id: string, updatePartnerDTO: UpdatePartnerDTO) {
+    async update(id: string, updatePartnerDto: UpdatePartnerDto) {
         const updated = this.partnerModel
-            .findByIdAndUpdate(id, updatePartnerDTO)
+            .findByIdAndUpdate(id, updatePartnerDto)
             .exec();
 
         if (!updated) {

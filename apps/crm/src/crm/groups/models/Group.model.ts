@@ -1,5 +1,5 @@
 import { modelOptions, plugin, prop, Ref } from '@typegoose/typegoose';
-import { StudentModel } from '../../students/models/Student.model';
+import { StudentModel } from '../../students/crud/models/Student.model';
 import { TutorModel } from '../../../../../admin-panel/src/crmusers/models/Tutor.model';
 import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { ApiProperty } from '@nestjs/swagger';

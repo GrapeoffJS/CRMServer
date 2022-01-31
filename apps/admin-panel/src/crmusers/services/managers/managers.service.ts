@@ -7,8 +7,8 @@ import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
 import { ManagerModel } from '../../models/Manager.model';
-import { UpdateManagerDTO } from '../../DTO/Manager/UpdateManagerDTO';
-import { CreateManagerDTO } from '../../DTO/Manager/CreateManagerDTO';
+import { UpdateManagerDto } from '../../dto/Manager/UpdateManagerDto';
+import { CreateManagerDto } from '../../dto/Manager/CreateManagerDto';
 
 @Injectable()
 export class ManagersService {
@@ -18,13 +18,13 @@ export class ManagersService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createAdminDTO: CreateManagerDTO) {
-        createAdminDTO.password = await this.passwordProtector.hash(
-            createAdminDTO.password
+    async create(createAdminDto: CreateManagerDto) {
+        createAdminDto.password = await this.passwordProtector.hash(
+            createAdminDto.password
         );
 
         try {
-            const user = await this.managerModel.create(CreateManagerDTO);
+            const user = await this.managerModel.create(CreateManagerDto);
             return this.managerModel.findById(user.id).exec();
         } catch (e) {
             throw new BadRequestException('User with this login exists');
@@ -48,9 +48,9 @@ export class ManagersService {
         return found;
     }
 
-    async update(id: string, updateManagerDTO: UpdateManagerDTO) {
+    async update(id: string, updateManagerDto: UpdateManagerDto) {
         const updated = this.managerModel
-            .findByIdAndUpdate(id, updateManagerDTO)
+            .findByIdAndUpdate(id, updateManagerDto)
             .exec();
 
         if (!updated) {

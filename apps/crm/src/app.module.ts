@@ -7,7 +7,7 @@ import { CrmModule } from './crm/crm.module';
 import { HealthCheckModule } from './health-check/health-check.module';
 import Joi from 'joi';
 import { Reflector } from '@nestjs/core';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
     imports: [
@@ -69,7 +69,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
                             )
                         },
                         authSource: 'admin',
-                        useUnifiedTopology: true,
+                        useUnifieDtopology: true,
                         useNewUrlParser: true
                     } as TypegooseConnectionOptions)
                 };

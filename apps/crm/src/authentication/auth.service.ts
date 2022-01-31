@@ -6,10 +6,10 @@ import {
 import { CRMUserModel } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { AuthDTO } from './DTO/AuthDTO';
+import { AuthDto } from './dto/AuthDto';
 import { compare } from 'bcrypt';
 import { JwtFactory } from './jwt.factory';
-import { RefreshDTO } from './DTO/RefreshDTO';
+import { RefreshDto } from './dto/RefreshDto';
 import { RefreshTokenModel } from './models/RefreshToken.model';
 
 @Injectable()
@@ -24,10 +24,10 @@ export class AuthService {
         private readonly jwtFactory: JwtFactory
     ) {}
 
-    async auth(authDTO: AuthDTO) {
+    async auth(authDto: AuthDto) {
         const candidate = await this.crmUserModel
             .findOne({
-                login: authDTO.login
+                login: authDto.login
             })
             .select('+password')
             .exec();
@@ -36,7 +36,7 @@ export class AuthService {
             throw new BadRequestException();
         }
 
-        if (!(await compare(authDTO.password, candidate.password))) {
+        if (!(await compare(authDto.password, candidate.password))) {
             throw new BadRequestException();
         }
 
@@ -52,7 +52,8 @@ export class AuthService {
                 id: candidate.id,
                 name: candidate.name,
                 surname: candidate.surname,
-                middleName: candidate.middleName
+                middleName: candidate.middleName,
+                role: candidate.role
             }),
             refreshToken: await this.jwtFactory.generateRefreshToken(
                 candidate.id
@@ -60,7 +61,7 @@ export class AuthService {
         };
     }
 
-    async refresh({ refreshToken }: RefreshDTO) {
+    async refresh({ refreshToken }: RefreshDto) {
         const oldRefreshToken = await this.refreshTokenModel
             .findOne({
                 token: refreshToken
@@ -78,12 +79,20 @@ export class AuthService {
             .exec();
 
         return {
-            accessToken: await this.jwtFactory.generateAccessToken({
+            user: {
                 id: user.id,
                 login: user.login,
                 name: user.name,
                 surname: user.surname,
                 middleName: user.middleName
+            },
+            accessToken: await this.jwtFactory.generateAccessToken({
+                id: user.id,
+                login: user.login,
+                name: user.name,
+                surname: user.surname,
+                middleName: user.middleName,
+                role: user.role
             }),
             refreshToken: await this.jwtFactory.generateRefreshToken(user.id)
         };

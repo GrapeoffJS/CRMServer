@@ -13,7 +13,7 @@ import { XlsxImportServiceService } from './services/xlsx-import-service/xlsx-im
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MimeTypes } from './types/MimeTypes';
 import { Request, Response } from 'express';
-import { SalesFunnelStepID } from '../DTO/SalesFunnelStepID';
+import { SalesFunnelStepID } from '../crud/dto/SalesFunnelStepID';
 import { createReadStream } from 'fs';
 import path from 'path';
 import {
@@ -27,6 +27,8 @@ import {
     ApiTags
 } from '@nestjs/swagger';
 import { CsvImportServiceService } from './services/csv-import-service/csv-import-service.service';
+import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
+import { ActionRights } from '../../../../../admin-panel/src/roles/rights/ActionRights';
 
 @ApiTags('CRM / Students / Import File')
 @ApiBearerAuth()
@@ -37,6 +39,7 @@ export class ImportFileController {
         private readonly csvImportService: CsvImportServiceService
     ) {}
 
+    @RequiredActionRights(ActionRights.CAN_IMPORT_STUDENTS_VIA_FILE)
     @ApiCreatedResponse({ description: 'File successfully imported' })
     @ApiBadRequestResponse({ description: 'There are errors in imported file' })
     @ApiConsumes('multipart/form-data')
@@ -103,6 +106,7 @@ export class ImportFileController {
         }
     }
 
+    @RequiredActionRights(ActionRights.CAN_IMPORT_STUDENTS_VIA_FILE)
     @ApiResponse({ description: 'Template file' })
     @Get('/template')
     downloadTemplate(@Res({ passthrough: true }) response: Response) {

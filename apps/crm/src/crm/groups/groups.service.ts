@@ -4,11 +4,11 @@ import {
     NotFoundException
 } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { StudentModel } from '../students/models/Student.model';
+import { StudentModel } from '../students/crud/models/Student.model';
 import { GroupModel } from './models/Group.model';
 import { InjectModel } from 'nestjs-typegoose';
-import { CreateGroupDTO } from './DTO/CreateGroupDTO';
-import { UpdateGroupDTO } from './DTO/UpdateGroupDTO';
+import { CreateGroupDto } from './dto/CreateGroupDto';
+import { UpdateGroupDto } from './dto/UpdateGroupDto';
 
 @Injectable()
 export class GroupsService {
@@ -19,14 +19,14 @@ export class GroupsService {
         private readonly groupModel: ReturnModelType<typeof GroupModel>
     ) {}
 
-    async create(createGroupDTO: CreateGroupDTO) {
-        if (createGroupDTO.students.length > createGroupDTO.places) {
+    async create(createGroupDto: CreateGroupDto) {
+        if (createGroupDto.students.length > createGroupDto.places) {
             throw new BadRequestException(
                 "Students' length is more than places"
             );
         }
 
-        return this.groupModel.create(createGroupDTO);
+        return this.groupModel.create(createGroupDto);
     }
 
     async get(limit: number, offset: number) {
@@ -46,9 +46,9 @@ export class GroupsService {
         return found;
     }
 
-    async update(id: string, updateGroupDTO: UpdateGroupDTO) {
+    async update(id: string, updateGroupDto: UpdateGroupDto) {
         const updated = await this.groupModel
-            .findByIdAndUpdate(id, updateGroupDTO)
+            .findByIdAndUpdate(id, updateGroupDto)
             .exec();
 
         if (!updated) {

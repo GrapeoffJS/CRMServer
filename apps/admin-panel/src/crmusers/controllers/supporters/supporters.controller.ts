@@ -9,11 +9,11 @@ import {
     Query
 } from '@nestjs/common';
 import { SupportersService } from '../../services/supporters/supporters.service';
-import { CreateSupporterDTO } from '../../DTO/Supporter/CreateSupporterDTO';
+import { CreateSupporterDto } from '../../dto/Supporter/CreateSupporterDto';
 import { SupporterModel } from '../../models/Supporter.model';
-import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
-import { MongoID } from '../../../../../../utils/DTO/MongoID';
-import { UpdateSupporterDTO } from '../../DTO/Supporter/UpdateSupporterDTO';
+import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
+import { MongoID } from '../../../../../../utils/dto/MongoID';
+import { UpdateSupporterDto } from '../../dto/Supporter/UpdateSupporterDto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,7 +22,7 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PublicController } from '../../../../../crm/src/authorization/PublicController';
+import { PublicController } from '../../../../../crm/src/authorization/public-controller.decorator';
 
 @ApiTags('Admin Panel / CRM Users / Supporters')
 @PublicController()
@@ -31,10 +31,10 @@ export class SupportersController {
     constructor(private readonly supportersService: SupportersService) {}
 
     @ApiCreatedResponse({ type: () => SupporterModel })
-    @ApiBody({ type: () => CreateSupporterDTO })
+    @ApiBody({ type: () => CreateSupporterDto })
     @Post()
-    async create(@Body() createSupporterDTO: CreateSupporterDTO) {
-        return await this.supportersService.create(createSupporterDTO);
+    async create(@Body() createSupporterDto: CreateSupporterDto) {
+        return await this.supportersService.create(createSupporterDto);
     }
 
     @ApiOkResponse({
@@ -44,7 +44,7 @@ export class SupportersController {
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get(@Query() { limit, offset }: PaginationDTO) {
+    async get(@Query() { limit, offset }: PaginationDto) {
         return await this.supportersService.get(limit, offset);
     }
 
@@ -57,13 +57,13 @@ export class SupportersController {
 
     @ApiOkResponse({ type: () => SupporterModel })
     @ApiParam({ name: 'id', type: () => String })
-    @ApiBody({ type: () => UpdateSupporterDTO })
+    @ApiBody({ type: () => UpdateSupporterDto })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
-        @Body() updateSupporterDTO: UpdateSupporterDTO
+        @Body() updateSupporterDto: UpdateSupporterDto
     ) {
-        return await this.supportersService.update(id, updateSupporterDTO);
+        return await this.supportersService.update(id, updateSupporterDto);
     }
 
     @ApiOkResponse({ type: () => SupporterModel })

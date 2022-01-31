@@ -7,11 +7,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { AuthorizationGuard } from './authorization/authorization.guard';
 import { JwtService } from '@nestjs/jwt';
+import { ActionRightsGuard } from './authorization/action-rights-guard.service';
+import { RightsBasedSerializerInterceptor } from './authorization/rights-based-serializer.interceptor';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-
-    const configService = app.get<ConfigService>(ConfigService);
 
     app.enableCors({ credentials: true });
     app.use(helmet());
@@ -30,7 +30,14 @@ async function bootstrap() {
     const reflector = app.get<Reflector>(Reflector);
     const jwtService = app.get<JwtService>(JwtService);
 
-    app.useGlobalGuards(new AuthorizationGuard(reflector, jwtService));
+    app.useGlobalGuards(
+        new AuthorizationGuard(reflector, jwtService),
+        new ActionRightsGuard(reflector, jwtService)
+    );
+
+    app.useGlobalInterceptors(
+        new RightsBasedSerializerInterceptor(reflector, jwtService)
+    );
 
     app.setGlobalPrefix('/api');
     app.enableVersioning({

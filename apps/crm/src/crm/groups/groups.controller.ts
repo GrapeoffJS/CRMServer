@@ -9,10 +9,10 @@ import {
     Query
 } from '@nestjs/common';
 import { GroupsService } from './groups.service';
-import { CreateGroupDTO } from './DTO/CreateGroupDTO';
-import { PaginationDTO } from '../../../../../utils/DTO/PaginationDTO';
-import { MongoID } from '../../../../../utils/DTO/MongoID';
-import { UpdateGroupDTO } from './DTO/UpdateGroupDTO';
+import { CreateGroupDto } from './dto/CreateGroupDto';
+import { PaginationDto } from '../../../../../utils/dto/PaginationDto';
+import { MongoID } from '../../../../../utils/dto/MongoID';
+import { UpdateGroupDto } from './dto/UpdateGroupDto';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -31,10 +31,10 @@ export class GroupsController {
     constructor(private readonly groupsService: GroupsService) {}
 
     @ApiCreatedResponse({ type: () => GroupModel })
-    @ApiBody({ type: () => CreateGroupDTO })
+    @ApiBody({ type: () => CreateGroupDto })
     @Post()
-    async create(@Body() createGroupDTO: CreateGroupDTO) {
-        return await this.groupsService.create(createGroupDTO);
+    async create(@Body() createGroupDto: CreateGroupDto) {
+        return await this.groupsService.create(createGroupDto);
     }
 
     @ApiOkResponse({
@@ -44,7 +44,7 @@ export class GroupsController {
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get(@Query() { limit, offset }: PaginationDTO) {
+    async get(@Query() { limit, offset }: PaginationDto) {
         return await this.groupsService.get(limit, offset);
     }
 
@@ -57,13 +57,13 @@ export class GroupsController {
 
     @ApiOkResponse({ type: () => GroupModel })
     @ApiParam({ name: 'id', type: () => String })
-    @ApiBody({ type: () => CreateGroupDTO })
+    @ApiBody({ type: () => CreateGroupDto })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
-        @Body() updateGroupDTO: UpdateGroupDTO
+        @Body() updateGroupDto: UpdateGroupDto
     ) {
-        return await this.groupsService.update(id, updateGroupDTO);
+        return await this.groupsService.update(id, updateGroupDto);
     }
 
     @ApiOkResponse({ type: () => GroupModel })

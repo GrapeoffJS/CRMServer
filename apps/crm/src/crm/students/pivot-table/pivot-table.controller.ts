@@ -7,9 +7,13 @@ import {
     ApiTags
 } from '@nestjs/swagger';
 import { PivotTableService } from './pivot-table.service';
-import { StudentsPivotTableDTO } from './DTO/StudentsPivotTableDTO';
-import { StudentModel } from '../models/Student.model';
-import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
+import { StudentsPivotTableDto } from './dto/StudentsPivotTableDto';
+import { StudentModel } from '../crud/models/Student.model';
+import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
+import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
+import { ActionRights } from '../../../../../admin-panel/src/roles/rights/ActionRights';
+import { SetTransformationType } from '../../../authorization/set-transformation-type.decorator';
+import { PaginatedResponseDto } from '../crud/dto/PaginatedResponseDto';
 
 @ApiTags('CRM / Students / Pivot Table')
 @ApiBearerAuth()
@@ -17,20 +21,22 @@ import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
 export class PivotTableController {
     constructor(private readonly pivotTableService: PivotTableService) {}
 
+    @SetTransformationType(PaginatedResponseDto)
+    @RequiredActionRights(ActionRights.CAN_SEE_STUDENT)
     @ApiOkResponse({ type: () => StudentModel, isArray: true })
-    @ApiBody({ type: () => StudentsPivotTableDTO })
+    @ApiBody({ type: () => StudentsPivotTableDto })
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @HttpCode(200)
     @Post()
     async filter(
-        @Query() { limit, offset }: PaginationDTO,
-        @Body() studentsPivotTableDTO: StudentsPivotTableDTO
+        @Query() { limit, offset }: PaginationDto,
+        @Body() studentsPivotTableDto: StudentsPivotTableDto
     ) {
         return await this.pivotTableService.filter(
             limit,
             offset,
-            studentsPivotTableDTO
+            studentsPivotTableDto
         );
     }
 }

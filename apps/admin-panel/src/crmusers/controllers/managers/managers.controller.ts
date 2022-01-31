@@ -8,11 +8,11 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
-import { MongoID } from '../../../../../../utils/DTO/MongoID';
-import { UpdateManagerDTO } from '../../DTO/Manager/UpdateManagerDTO';
+import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
+import { MongoID } from '../../../../../../utils/dto/MongoID';
+import { UpdateManagerDto } from '../../dto/Manager/UpdateManagerDto';
 import { ManagerModel } from '../../models/Manager.model';
-import { CreateManagerDTO } from '../../DTO/Manager/CreateManagerDTO';
+import { CreateManagerDto } from '../../dto/Manager/CreateManagerDto';
 import { ManagersService } from '../../services/managers/managers.service';
 import {
     ApiBody,
@@ -22,7 +22,7 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PublicController } from '../../../../../crm/src/authorization/PublicController';
+import { PublicController } from '../../../../../crm/src/authorization/public-controller.decorator';
 
 @ApiTags('Admin Panel / CRM Users / Managers')
 @PublicController()
@@ -31,10 +31,10 @@ export class ManagersController {
     constructor(private readonly managersService: ManagersService) {}
 
     @ApiCreatedResponse({ type: () => ManagerModel })
-    @ApiBody({ type: () => CreateManagerDTO })
+    @ApiBody({ type: () => CreateManagerDto })
     @Post()
-    async create(@Body() createManagerDTO: CreateManagerDTO) {
-        return await this.managersService.create(createManagerDTO);
+    async create(@Body() createManagerDto: CreateManagerDto) {
+        return await this.managersService.create(createManagerDto);
     }
 
     @ApiOkResponse({
@@ -44,7 +44,7 @@ export class ManagersController {
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get(@Query() { limit, offset }: PaginationDTO) {
+    async get(@Query() { limit, offset }: PaginationDto) {
         return await this.managersService.get(limit, offset);
     }
 
@@ -57,13 +57,13 @@ export class ManagersController {
 
     @ApiOkResponse({ type: () => ManagerModel })
     @ApiParam({ name: 'id', type: () => String })
-    @ApiBody({ type: () => UpdateManagerDTO })
+    @ApiBody({ type: () => UpdateManagerDto })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
-        @Body() updateManagerDTO: UpdateManagerDTO
+        @Body() updateManagerDto: UpdateManagerDto
     ) {
-        return await this.managersService.update(id, updateManagerDTO);
+        return await this.managersService.update(id, updateManagerDto);
     }
 
     @ApiOkResponse({ type: () => ManagerModel })

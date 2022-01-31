@@ -1,5 +1,5 @@
 import { modelOptions, prop } from '@typegoose/typegoose';
-import { StudentModel } from '../../../../crm/src/crm/students/models/Student.model';
+import { StudentModel } from '../../../../crm/src/crm/students/crud/models/Student.model';
 import { ApiProperty } from '@nestjs/swagger';
 
 @modelOptions({

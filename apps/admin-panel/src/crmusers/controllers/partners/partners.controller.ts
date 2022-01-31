@@ -8,12 +8,12 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
-import { MongoID } from '../../../../../../utils/DTO/MongoID';
+import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
+import { MongoID } from '../../../../../../utils/dto/MongoID';
 import { PartnerModel } from '../../models/Partner.model';
-import { UpdatePartnerDTO } from '../../DTO/Partner/UpdatePartnerDTO';
+import { UpdatePartnerDto } from '../../dto/Partner/UpdatePartnerDto';
 import { PartnersService } from '../../services/partners/partners.service';
-import { CreatePartnerDTO } from '../../DTO/Partner/CreatePartnerDTO';
+import { CreatePartnerDto } from '../../dto/Partner/CreatePartnerDto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,7 +22,7 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PublicController } from '../../../../../crm/src/authorization/PublicController';
+import { PublicController } from '../../../../../crm/src/authorization/public-controller.decorator';
 
 @ApiTags('Admin Panel / CRM Users / Partners')
 @PublicController()
@@ -31,10 +31,10 @@ export class PartnersController {
     constructor(private readonly partnersService: PartnersService) {}
 
     @ApiCreatedResponse({ type: () => PartnerModel })
-    @ApiBody({ type: () => CreatePartnerDTO })
+    @ApiBody({ type: () => CreatePartnerDto })
     @Post()
-    async create(@Body() createPartnerDTO: CreatePartnerDTO) {
-        return await this.partnersService.create(createPartnerDTO);
+    async create(@Body() createPartnerDto: CreatePartnerDto) {
+        return await this.partnersService.create(createPartnerDto);
     }
     @ApiOkResponse({
         type: () => PartnerModel,
@@ -43,7 +43,7 @@ export class PartnersController {
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get(@Query() { limit, offset }: PaginationDTO) {
+    async get(@Query() { limit, offset }: PaginationDto) {
         return await this.partnersService.get(limit, offset);
     }
 
@@ -56,13 +56,13 @@ export class PartnersController {
 
     @ApiOkResponse({ type: () => PartnerModel })
     @ApiParam({ name: 'id', type: () => String })
-    @ApiBody({ type: () => UpdatePartnerDTO })
+    @ApiBody({ type: () => UpdatePartnerDto })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
-        @Body() updatePartnerDTO: UpdatePartnerDTO
+        @Body() updatePartnerDto: UpdatePartnerDto
     ) {
-        return await this.partnersService.update(id, updatePartnerDTO);
+        return await this.partnersService.update(id, updatePartnerDto);
     }
 
     @ApiOkResponse({ type: () => PartnerModel })

@@ -1,4 +1,4 @@
-import { StudentsPivotTableDTO } from './DTO/StudentsPivotTableDTO';
+import { StudentsPivotTableDto } from './dto/StudentsPivotTableDto';
 import { DateTime } from 'luxon';
 import { PipelineStage, Types } from 'mongoose';
 
@@ -22,7 +22,7 @@ export class PipelineBuilder {
         }
     ];
 
-    constructor(private readonly pivotTableDTO: StudentsPivotTableDTO) {}
+    constructor(private readonly pivotTableDto: StudentsPivotTableDto) {}
 
     private static escapeRegExp(string) {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -30,10 +30,10 @@ export class PipelineBuilder {
 
     // eslint-disable-next-line sonarjs/cognitive-complexity
     build() {
-        if (this.pivotTableDTO.names.length !== 0) {
+        if (this.pivotTableDto.names.length !== 0) {
             this.pipeline.push({
                 $match: {
-                    $or: this.pivotTableDTO.names.map(name => ({
+                    $or: this.pivotTableDto.names.map(name => ({
                         name: new RegExp(
                             PipelineBuilder.escapeRegExp(name),
                             'i'
@@ -43,10 +43,10 @@ export class PipelineBuilder {
             });
         }
 
-        if (this.pivotTableDTO.surnames.length !== 0) {
+        if (this.pivotTableDto.surnames.length !== 0) {
             this.pipeline.push({
                 $match: {
-                    $or: this.pivotTableDTO.surnames.map(surname => ({
+                    $or: this.pivotTableDto.surnames.map(surname => ({
                         surname: new RegExp(
                             PipelineBuilder.escapeRegExp(surname),
                             'i'
@@ -56,10 +56,10 @@ export class PipelineBuilder {
             });
         }
 
-        if (this.pivotTableDTO.middleNames.length !== 0) {
+        if (this.pivotTableDto.middleNames.length !== 0) {
             this.pipeline.push({
                 $match: {
-                    $or: this.pivotTableDTO.middleNames.map(middleName => ({
+                    $or: this.pivotTableDto.middleNames.map(middleName => ({
                         middleName: new RegExp(
                             PipelineBuilder.escapeRegExp(middleName),
                             'i'
@@ -69,16 +69,16 @@ export class PipelineBuilder {
             });
         }
 
-        if (this.pivotTableDTO.genders.length !== 0) {
+        if (this.pivotTableDto.genders.length !== 0) {
             this.pipeline.push({
-                $match: { gender: { $in: this.pivotTableDTO.genders } }
+                $match: { gender: { $in: this.pivotTableDto.genders } }
             });
         }
 
-        if (this.pivotTableDTO.ages.length !== 0) {
+        if (this.pivotTableDto.ages.length !== 0) {
             this.pipeline.push({
                 $match: {
-                    $or: this.pivotTableDTO.ages.map(age => ({
+                    $or: this.pivotTableDto.ages.map(age => ({
                         dateOfBirth: {
                             $gt: new Date(
                                 DateTime.now()
@@ -95,7 +95,7 @@ export class PipelineBuilder {
             });
         }
 
-        if (this.pivotTableDTO.dateOfBirthIsNotDefined) {
+        if (this.pivotTableDto.dateOfBirthIsNotDefined) {
             this.pipeline.push({
                 $match: {
                     dateOfBirth: null
@@ -109,10 +109,10 @@ export class PipelineBuilder {
             });
         }
 
-        if (this.pivotTableDTO.phones.length !== 0) {
+        if (this.pivotTableDto.phones.length !== 0) {
             this.pipeline.push({
                 $match: {
-                    $or: this.pivotTableDTO.phones.map(phone => ({
+                    $or: this.pivotTableDto.phones.map(phone => ({
                         phone: new RegExp(
                             PipelineBuilder.escapeRegExp(phone),
                             'i'
@@ -122,10 +122,10 @@ export class PipelineBuilder {
             });
         }
 
-        if (this.pivotTableDTO.parentPhones.length !== 0) {
+        if (this.pivotTableDto.parentPhones.length !== 0) {
             this.pipeline.push({
                 $match: {
-                    $or: this.pivotTableDTO.parentPhones.map(parentPhone => ({
+                    $or: this.pivotTableDto.parentPhones.map(parentPhone => ({
                         parentPhone: new RegExp(
                             PipelineBuilder.escapeRegExp(parentPhone),
                             'i'
@@ -135,10 +135,10 @@ export class PipelineBuilder {
             });
         }
 
-        if (this.pivotTableDTO.parentFullNames.length !== 0) {
+        if (this.pivotTableDto.parentFullNames.length !== 0) {
             this.pipeline.push({
                 $match: {
-                    $or: this.pivotTableDTO.parentFullNames.map(
+                    $or: this.pivotTableDto.parentFullNames.map(
                         parentFullName => ({
                             parentFullName: new RegExp(
                                 PipelineBuilder.escapeRegExp(parentFullName),
@@ -151,23 +151,23 @@ export class PipelineBuilder {
         }
 
         if (
-            this.pivotTableDTO.debt === true ||
-            this.pivotTableDTO.debt === false
+            this.pivotTableDto.debt === true ||
+            this.pivotTableDto.debt === false
         ) {
             this.pipeline.push({
                 $match: {
                     balance:
-                        this.pivotTableDTO.debt === true
+                        this.pivotTableDto.debt === true
                             ? { $lt: 0 }
                             : { $gte: 0 }
                 }
             });
         }
 
-        if (this.pivotTableDTO.discords.length !== 0) {
+        if (this.pivotTableDto.discords.length !== 0) {
             this.pipeline.push({
                 $match: {
-                    $or: this.pivotTableDTO.discords.map(discord => ({
+                    $or: this.pivotTableDto.discords.map(discord => ({
                         discord: new RegExp(
                             PipelineBuilder.escapeRegExp(discord),
                             'i'
@@ -177,10 +177,10 @@ export class PipelineBuilder {
             });
         }
 
-        if (this.pivotTableDTO.salesFunnelSteps.length !== 0) {
+        if (this.pivotTableDto.salesFunnelSteps.length !== 0) {
             this.pipeline.push({
                 $match: {
-                    $or: this.pivotTableDTO.salesFunnelSteps.map(
+                    $or: this.pivotTableDto.salesFunnelSteps.map(
                         salesFunnelStep => ({
                             salesFunnelStep: new RegExp(
                                 PipelineBuilder.escapeRegExp(salesFunnelStep),
@@ -192,17 +192,17 @@ export class PipelineBuilder {
             });
         }
 
-        if (this.pivotTableDTO.statuses.length !== 0) {
+        if (this.pivotTableDto.statuses.length !== 0) {
             this.pipeline.push({
-                $match: { statuses: { $all: this.pivotTableDTO.statuses } }
+                $match: { statuses: { $all: this.pivotTableDto.statuses } }
             });
         }
 
-        if (this.pivotTableDTO.groups.length !== 0) {
+        if (this.pivotTableDto.groups.length !== 0) {
             this.pipeline.push({
                 $match: {
                     'groups._id': {
-                        $in: this.pivotTableDTO.groups.map(
+                        $in: this.pivotTableDto.groups.map(
                             id => new Types.ObjectId(id)
                         )
                     }
@@ -210,11 +210,11 @@ export class PipelineBuilder {
             });
         }
 
-        if (this.pivotTableDTO.tutors.length !== 0) {
+        if (this.pivotTableDto.tutors.length !== 0) {
             this.pipeline.push({
                 $match: {
                     'tutors._id': {
-                        $in: this.pivotTableDTO.tutors.map(
+                        $in: this.pivotTableDto.tutors.map(
                             id => new Types.ObjectId(id)
                         )
                     }

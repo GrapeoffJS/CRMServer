@@ -10,10 +10,10 @@ import {
 } from '@nestjs/common';
 import { AdminsService } from '../../services/admins/admins.service';
 import { AdminModel } from '../../models/Admin.model';
-import { CreateAdminDTO } from '../../DTO/Admin/CreateAdminDTO';
-import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
-import { MongoID } from '../../../../../../utils/DTO/MongoID';
-import { UpdateAdminDTO } from '../../DTO/Admin/UpdateAdminDTO';
+import { CreateAdminDto } from '../../dto/Admin/CreateAdminDto';
+import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
+import { MongoID } from '../../../../../../utils/dto/MongoID';
+import { UpdateAdminDto } from '../../dto/Admin/UpdateAdminDto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,7 +22,7 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PublicController } from '../../../../../crm/src/authorization/PublicController';
+import { PublicController } from '../../../../../crm/src/authorization/public-controller.decorator';
 
 @ApiTags('Admin Panel / CRM Users / Admins')
 @PublicController()
@@ -31,10 +31,10 @@ export class AdminsController {
     constructor(private readonly adminsService: AdminsService) {}
 
     @ApiCreatedResponse({ type: () => AdminModel })
-    @ApiBody({ type: () => CreateAdminDTO })
+    @ApiBody({ type: () => CreateAdminDto })
     @Post()
-    async create(@Body() createAdminDTO: CreateAdminDTO) {
-        return await this.adminsService.create(createAdminDTO);
+    async create(@Body() createAdminDto: CreateAdminDto) {
+        return await this.adminsService.create(createAdminDto);
     }
 
     @ApiOkResponse({
@@ -44,7 +44,7 @@ export class AdminsController {
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get(@Query() { limit, offset }: PaginationDTO) {
+    async get(@Query() { limit, offset }: PaginationDto) {
         return await this.adminsService.get(limit, offset);
     }
 
@@ -61,13 +61,13 @@ export class AdminsController {
         type: () => AdminModel
     })
     @ApiParam({ name: 'id', type: () => String })
-    @ApiBody({ type: () => UpdateAdminDTO })
+    @ApiBody({ type: () => UpdateAdminDto })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
-        @Body() updateAdminDTO: UpdateAdminDTO
+        @Body() updateAdminDto: UpdateAdminDto
     ) {
-        return await this.adminsService.update(id, updateAdminDTO);
+        return await this.adminsService.update(id, updateAdminDto);
     }
 
     @ApiOkResponse({

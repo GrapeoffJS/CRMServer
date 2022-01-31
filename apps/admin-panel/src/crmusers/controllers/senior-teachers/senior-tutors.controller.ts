@@ -9,11 +9,11 @@ import {
     Query
 } from '@nestjs/common';
 import { SeniorTutorsService } from '../../services/senior-tutors/senior-tutors.service';
-import { CreateSeniorTutorDTO } from '../../DTO/SeniorTutor/CreateSeniorTutorDTO';
+import { CreateSeniorTutorDto } from '../../dto/SeniorTutor/CreateSeniorTutorDto';
 import { SeniorTutorModel } from '../../models/SeniorTutor.model';
-import { PaginationDTO } from '../../../../../../utils/DTO/PaginationDTO';
-import { MongoID } from '../../../../../../utils/DTO/MongoID';
-import { UpdateSeniorTutorDTO } from '../../DTO/SeniorTutor/UpdateSeniorTutorDTO';
+import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
+import { MongoID } from '../../../../../../utils/dto/MongoID';
+import { UpdateSeniorTutorDto } from '../../dto/SeniorTutor/UpdateSeniorTutorDto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,7 +22,7 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PublicController } from '../../../../../crm/src/authorization/PublicController';
+import { PublicController } from '../../../../../crm/src/authorization/public-controller.decorator';
 
 @ApiTags('Admin Panel / CRM Users / Senior Tutors')
 @PublicController()
@@ -31,10 +31,10 @@ export class SeniorTutorsController {
     constructor(private readonly seniorTutorsService: SeniorTutorsService) {}
 
     @ApiCreatedResponse({ type: () => SeniorTutorModel })
-    @ApiBody({ type: () => CreateSeniorTutorDTO })
+    @ApiBody({ type: () => CreateSeniorTutorDto })
     @Post()
-    async create(@Body() createSeniorTutorDTO: CreateSeniorTutorDTO) {
-        return await this.seniorTutorsService.create(createSeniorTutorDTO);
+    async create(@Body() createSeniorTutorDto: CreateSeniorTutorDto) {
+        return await this.seniorTutorsService.create(createSeniorTutorDto);
     }
 
     @ApiOkResponse({
@@ -44,7 +44,7 @@ export class SeniorTutorsController {
     @ApiQuery({ name: 'limit', type: () => Number })
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
-    async get(@Query() { limit, offset }: PaginationDTO) {
+    async get(@Query() { limit, offset }: PaginationDto) {
         return await this.seniorTutorsService.get(limit, offset);
     }
 
@@ -57,13 +57,13 @@ export class SeniorTutorsController {
 
     @ApiOkResponse({ type: () => SeniorTutorModel })
     @ApiParam({ name: 'id', type: () => String })
-    @ApiBody({ type: () => UpdateSeniorTutorDTO })
+    @ApiBody({ type: () => UpdateSeniorTutorDto })
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
-        @Body() updateSeniorTutorDTO: UpdateSeniorTutorDTO
+        @Body() updateSeniorTutorDto: UpdateSeniorTutorDto
     ) {
-        return await this.seniorTutorsService.update(id, updateSeniorTutorDTO);
+        return await this.seniorTutorsService.update(id, updateSeniorTutorDto);
     }
 
     @ApiOkResponse({ type: () => SeniorTutorModel })

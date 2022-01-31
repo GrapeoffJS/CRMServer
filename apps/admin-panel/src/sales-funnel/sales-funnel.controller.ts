@@ -9,11 +9,11 @@ import {
     Post,
     Put
 } from '@nestjs/common';
-import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
+import { CreateSalesFunnelStepDto } from './dto/CreateSalesFunnelStepDto';
 import { SalesFunnelService } from './sales-funnel.service';
-import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
-import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
-import { MongoID } from '../../../../utils/DTO/MongoID';
+import { UpdateSalesFunnelStepDto } from './dto/UpdateSalesFunnelStepDto';
+import { ChangeOrderDto } from './dto/ChangeOrderDto';
+import { MongoID } from '../../../../utils/dto/MongoID';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,7 +22,7 @@ import {
     ApiTags
 } from '@nestjs/swagger';
 import { SalesFunnelStepModel } from './models/SalesFunnelStep.model';
-import { PublicController } from '../../../crm/src/authorization/PublicController';
+import { PublicController } from '../../../crm/src/authorization/public-controller.decorator';
 
 @ApiTags('Admin Panel / Sales Funnel')
 @PublicController()
@@ -31,10 +31,10 @@ export class SalesFunnelController {
     constructor(private readonly salesFunnelService: SalesFunnelService) {}
 
     @ApiCreatedResponse({ type: () => SalesFunnelStepModel })
-    @ApiBody({ type: () => CreateSalesFunnelStepDTO })
+    @ApiBody({ type: () => CreateSalesFunnelStepDto })
     @Post()
-    async create(@Body() createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
-        return await this.salesFunnelService.create(createSalesFunnelStepDTO);
+    async create(@Body() createSalesFunnelStepDto: CreateSalesFunnelStepDto) {
+        return await this.salesFunnelService.create(createSalesFunnelStepDto);
     }
 
     @ApiOkResponse({ type: () => SalesFunnelStepModel, isArray: true })
@@ -55,11 +55,11 @@ export class SalesFunnelController {
     @Patch(':id')
     async update(
         @Param() { id }: MongoID,
-        @Body() updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
+        @Body() updateSalesFunnelStepDto: UpdateSalesFunnelStepDto
     ) {
         return await this.salesFunnelService.update(
             id,
-            updateSalesFunnelStepDTO
+            updateSalesFunnelStepDto
         );
     }
 
@@ -71,9 +71,9 @@ export class SalesFunnelController {
     }
 
     @ApiOkResponse({ type: () => SalesFunnelStepModel, isArray: true })
-    @ApiBody({ type: () => ChangeOrderDTO })
+    @ApiBody({ type: () => ChangeOrderDto })
     @Put()
-    async changeOrders(@Body() changeOrderDTO: ChangeOrderDTO[]) {
-        return await this.salesFunnelService.changeOrders(changeOrderDTO);
+    async changeOrders(@Body() changeOrderDto: ChangeOrderDto[]) {
+        return await this.salesFunnelService.changeOrders(changeOrderDto);
     }
 }

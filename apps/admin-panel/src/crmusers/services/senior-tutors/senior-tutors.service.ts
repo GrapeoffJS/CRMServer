@@ -6,8 +6,8 @@ import {
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { CreateSeniorTutorDTO } from '../../DTO/SeniorTutor/CreateSeniorTutorDTO';
-import { UpdateSeniorTutorDTO } from '../../DTO/SeniorTutor/UpdateSeniorTutorDTO';
+import { CreateSeniorTutorDto } from '../../dto/SeniorTutor/CreateSeniorTutorDto';
+import { UpdateSeniorTutorDto } from '../../dto/SeniorTutor/UpdateSeniorTutorDto';
 import { SeniorTutorModel } from '../../models/SeniorTutor.model';
 
 @Injectable()
@@ -20,14 +20,14 @@ export class SeniorTutorsService {
         private readonly passwordProtector: PasswordProtectorService
     ) {}
 
-    async create(createSeniorTutorDTO: CreateSeniorTutorDTO) {
-        createSeniorTutorDTO.password = await this.passwordProtector.hash(
-            createSeniorTutorDTO.password
+    async create(createSeniorTutorDto: CreateSeniorTutorDto) {
+        createSeniorTutorDto.password = await this.passwordProtector.hash(
+            createSeniorTutorDto.password
         );
 
         try {
             const user = await this.seniorTutorModel.create(
-                CreateSeniorTutorDTO
+                CreateSeniorTutorDto
             );
             return this.seniorTutorModel.findById(user.id).exec();
         } catch (e) {
@@ -52,9 +52,9 @@ export class SeniorTutorsService {
         return found;
     }
 
-    async update(id: string, updateSeniorTutorDTO: UpdateSeniorTutorDTO) {
+    async update(id: string, updateSeniorTutorDto: UpdateSeniorTutorDto) {
         const updated = this.seniorTutorModel
-            .findByIdAndUpdate(id, updateSeniorTutorDTO)
+            .findByIdAndUpdate(id, updateSeniorTutorDto)
             .exec();
 
         if (!updated) {

@@ -1,6 +1,6 @@
 import { CRMUserModel } from './CRMUser.model';
 import { GroupModel } from '../../../../crm/src/crm/groups/models/Group.model';
-import { WorkHours } from '../../work-hours/models/WorkHours';
+import { WorkHours } from '../../work-hours/types/WorkHours';
 import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { AccountTypes } from '../types/AccountTypes';
 import { ApiProperty } from '@nestjs/swagger';

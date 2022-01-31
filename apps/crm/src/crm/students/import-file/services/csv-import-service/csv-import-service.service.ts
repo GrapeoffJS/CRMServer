@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import csvtojson from 'csvtojson';
-import { StudentModel } from '../../../models/Student.model';
+import { StudentModel } from '../../../crud/models/Student.model';
 import { Types } from 'mongoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';

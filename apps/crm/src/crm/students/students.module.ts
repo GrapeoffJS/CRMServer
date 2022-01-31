@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { StudentsService } from './students.service';
+import { CrudService } from './crud/crud.service';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { StudentModel } from './models/Student.model';
-import { StudentsController } from './students.controller';
+import { StudentModel } from './crud/models/Student.model';
+import { CrudController } from './crud/crud.controller';
 import { NotesModule } from './notes/notes.module';
 import { PivotTableModule } from './pivot-table/pivot-table.module';
-import { StatusesModule } from './statuses/statuses.module';
 import { GroupModel } from '../groups/models/Group.model';
 import { ImportFileModule } from './import-file/import-file.module';
 
@@ -21,10 +20,9 @@ import { ImportFileModule } from './import-file/import-file.module';
         ]),
         NotesModule,
         PivotTableModule,
-        StatusesModule,
         ImportFileModule
     ],
-    providers: [StudentsService],
-    controllers: [StudentsController]
+    providers: [CrudService],
+    controllers: [CrudController]
 })
 export class StudentsModule {}
