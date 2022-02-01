@@ -1,8 +1,7 @@
 import { CRMUserModel } from './CRMUser.model';
-import { GroupModel } from '../../../../crm/src/crm/groups/models/Group.model';
+import { GroupModel } from '../../../../crm/src/crm/groups/crud/models/Group.model';
 import { WorkHours } from '../../work-hours/types/WorkHours';
 import { modelOptions, prop, Ref } from '@typegoose/typegoose';
-import { AccountTypes } from '../types/AccountTypes';
 import { ApiProperty } from '@nestjs/swagger';
 
 @modelOptions({
@@ -28,8 +27,4 @@ export class TutorModel extends CRMUserModel {
     @ApiProperty()
     @prop({ type: () => String, default: null })
     subject: string;
-
-    @ApiProperty()
-    @prop({ type: () => String, default: AccountTypes.TUTOR })
-    accountType: string;
 }
