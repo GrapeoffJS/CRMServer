@@ -7,7 +7,8 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs';
 import { Reflector } from '@nestjs/core';
-import { plainToClass } from 'class-transformer';
+// @ts-ignore
+import { plainToInstance } from 'class-transformer';
 import { JwtService } from '@nestjs/jwt';
 import { CRMUserModel } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
 import { Request } from 'express';
@@ -51,7 +52,7 @@ export class RightsBasedSerializerInterceptor implements NestInterceptor {
 
         return next.handle().pipe(
             map(data =>
-                plainToClass(transformationType, data, {
+                plainToInstance(transformationType, data, {
                     groups: userDataRights
                 })
             )
