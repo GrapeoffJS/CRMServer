@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { GroupsService } from './groups.service';
+import { CrudService } from './crud/crud.service';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { GroupModel } from './models/Group.model';
+import { GroupModel } from './crud/models/Group.model';
 import { StudentModel } from '../students/crud/models/Student.model';
-import { GroupsController } from './groups.controller';
+import { CrudController } from './crud/crud.controller';
+import { CompositionModule } from './composition/composition.module';
 
 @Module({
     imports: [
@@ -12,9 +13,10 @@ import { GroupsController } from './groups.controller';
                 typegooseClass: GroupModel
             },
             { typegooseClass: StudentModel }
-        ])
+        ]),
+        CompositionModule
     ],
-    providers: [GroupsService],
-    controllers: [GroupsController]
+    providers: [CrudService],
+    controllers: [CrudController]
 })
 export class GroupsModule {}

@@ -4,14 +4,14 @@ import {
     NotFoundException
 } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { StudentModel } from '../students/crud/models/Student.model';
+import { StudentModel } from '../../students/crud/models/Student.model';
 import { GroupModel } from './models/Group.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { CreateGroupDto } from './dto/CreateGroupDto';
 import { UpdateGroupDto } from './dto/UpdateGroupDto';
 
 @Injectable()
-export class GroupsService {
+export class CrudService {
     constructor(
         @InjectModel(StudentModel)
         private readonly studentModel: ReturnModelType<typeof StudentModel>,
@@ -26,18 +26,34 @@ export class GroupsService {
             );
         }
 
-        return this.groupModel.create(createGroupDto);
+        const created = await this.groupModel.create(createGroupDto);
+
+        return await this.groupModel
+            .findById(created.id)
+            .populate('students tutor')
+            .lean()
+            .exec();
     }
 
     async get(limit: number, offset: number) {
         return {
-            docs: await this.groupModel.find().skip(offset).limit(limit),
+            docs: await this.groupModel
+                .find()
+                .skip(offset)
+                .limit(limit)
+                .populate('students tutor')
+                .lean({ virtuals: true })
+                .exec(),
             count: await this.groupModel.countDocuments().exec()
         };
     }
 
     async getByID(id: string) {
-        const found = await this.groupModel.findById(id).exec();
+        const found = await this.groupModel
+            .findById(id)
+            .lean()
+            .populate('students tutor')
+            .exec();
 
         if (!found) {
             throw new NotFoundException();
@@ -55,11 +71,19 @@ export class GroupsService {
             throw new NotFoundException();
         }
 
-        return this.groupModel.findById(id).exec();
+        return this.groupModel
+            .findById(id)
+            .populate('students tutor')
+            .lean()
+            .exec();
     }
 
     async delete(id: string) {
-        const deleted = await this.groupModel.findByIdAndDelete(id).exec();
+        const deleted = await this.groupModel
+            .findByIdAndDelete(id)
+            .populate('students tutor')
+            .lean()
+            .exec();
 
         if (!deleted) {
             throw new BadRequestException();
