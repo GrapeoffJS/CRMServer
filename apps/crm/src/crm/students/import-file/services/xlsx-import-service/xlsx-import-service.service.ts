@@ -12,24 +12,24 @@ export class XlsxImportServiceService {
         private readonly studentModel: ReturnModelType<typeof StudentModel>
     ) {}
 
-    // async import(salesFunnelStepID: string, file: Express.Multer.File) {
-    //     const sheet = read(file.buffer, { type: 'buffer' });
-    //     const students: StudentModel[] = utils
-    //         .sheet_to_json<StudentModel>(sheet.Sheets[sheet.SheetNames[0]], {
-    //             rawNumbers: true
-    //         })
-    //         .map(student => ({
-    //             ...student,
-    //             phone: student.phone.toString(),
-    //             parentPhone: student.parentPhone.toString(),
-    //             salesFunnelStep: new Types.ObjectId(salesFunnelStepID)
-    //         }));
-    //
-    //     try {
-    //         this.studentModel.insertMany(students);
-    //         return;
-    //     } catch (e) {
-    //         throw new BadRequestException();
-    //     }
-    // }
+    async import(salesFunnelStepID: string, file: Express.Multer.File) {
+        // const sheet = read(file.buffer, { type: 'buffer' });
+        // const students: StudentModel[] = utils
+        //     .sheet_to_json<StudentModel>(sheet.Sheets[sheet.SheetNames[0]], {
+        //         rawNumbers: true
+        //     })
+        //     .map(student => ({
+        //         ...student,
+        //         phone: student.phone.toString(),
+        //         parentPhone: student.parentPhone.toString(),
+        //         salesFunnelStep: new Types.ObjectId(salesFunnelStepID)
+        //     }));
+        //
+        // try {
+        //     this.studentModel.insertMany(students);
+        //     return;
+        // } catch (e) {
+        //     throw new BadRequestException();
+        // }
+    }
 }
