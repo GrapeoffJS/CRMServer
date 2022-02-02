@@ -60,7 +60,7 @@ export class CreateStudentDto {
     @IsOptional()
     @Type(() => PhoneNumber)
     @ValidateNested()
-    phone?: PhoneNumber;
+    phone: PhoneNumber;
 
     @ApiProperty()
     @IsOptional()
