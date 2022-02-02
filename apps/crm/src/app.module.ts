@@ -69,7 +69,7 @@ import { JwtModule } from '@nestjs/jwt';
                             )
                         },
                         authSource: 'admin',
-                        useUnifieDtopology: true,
+                        useUnifiedTopology: true,
                         useNewUrlParser: true
                     } as TypegooseConnectionOptions)
                 };
