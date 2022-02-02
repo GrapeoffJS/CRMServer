@@ -23,7 +23,7 @@ import { ActionRights } from '../../../../../admin-panel/src/roles/rights/Action
 export class NotesController {
     constructor(private readonly notesService: NotesService) {}
 
-    @RequiredActionRights(ActionRights.CAN_CREATE_STUDENT_NOTE)
+    @RequiredActionRights(ActionRights.CREATE_STUDENT_NOTE)
     @ApiCreatedResponse({ type: () => NoteModel })
     @ApiParam({ name: 'id', type: () => String })
     @ApiBody({ type: () => CreateNoteDto })
@@ -35,7 +35,7 @@ export class NotesController {
         return await this.notesService.create(id, createNoteDto);
     }
 
-    @RequiredActionRights(ActionRights.CAN_EDIT_STUDENT_NOTE)
+    @RequiredActionRights(ActionRights.EDIT_STUDENT_NOTE)
     @ApiOkResponse({ type: () => NoteModel })
     @ApiParam({ name: 'studentID', type: () => String })
     @ApiParam({ name: 'noteID', type: () => String })
@@ -48,7 +48,7 @@ export class NotesController {
         return await this.notesService.update(studentID, noteID, updateNoteDto);
     }
 
-    @RequiredActionRights(ActionRights.CAN_DELETE_STUDENT_NOTE)
+    @RequiredActionRights(ActionRights.DELETE_STUDENT_NOTE)
     @ApiOkResponse({ type: () => NoteModel })
     @ApiParam({ name: 'studentID', type: () => String })
     @ApiParam({ name: 'noteID', type: () => String })

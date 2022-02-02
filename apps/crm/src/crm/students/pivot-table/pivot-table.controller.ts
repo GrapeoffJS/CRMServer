@@ -12,7 +12,7 @@ import { StudentModel } from '../crud/models/Student.model';
 import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
 import { ActionRights } from '../../../../../admin-panel/src/roles/rights/ActionRights';
-import { SetTransformationType } from '../../../authorization/set-transformation-type.decorator';
+import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { PaginatedResponseDto } from '../crud/dto/PaginatedResponseDto';
 
 @ApiTags('CRM / Students / Pivot Table')
@@ -21,8 +21,8 @@ import { PaginatedResponseDto } from '../crud/dto/PaginatedResponseDto';
 export class PivotTableController {
     constructor(private readonly pivotTableService: PivotTableService) {}
 
-    @SetTransformationType(PaginatedResponseDto)
-    @RequiredActionRights(ActionRights.CAN_SEE_STUDENT)
+    @SetResponseTransformationType(PaginatedResponseDto)
+    @RequiredActionRights(ActionRights.SEE_STUDENT)
     @ApiOkResponse({ type: () => StudentModel, isArray: true })
     @ApiBody({ type: () => StudentsPivotTableDto })
     @ApiQuery({ name: 'limit', type: () => Number })

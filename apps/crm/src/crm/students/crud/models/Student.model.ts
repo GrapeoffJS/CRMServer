@@ -1,17 +1,18 @@
-import { modelOptions, plugin, prop, Ref } from '@typegoose/typegoose';
+import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { Genders } from '../types/Genders';
-import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
 import { DataRights } from '../../../../../../admin-panel/src/roles/rights/DataRights';
 import { BaseModel } from '../../../../../../../utils/models/Base.model';
 import { StatusModel } from '../../../statuses/models/Status.model';
 import { NoteModel } from '../../notes/models/Note.model';
-import { GroupModel } from '../../../groups/models/Group.model';
+import { GroupModel } from '../../../groups/crud/models/Group.model';
 import { SalesFunnelStepModel } from '../../../../../../admin-panel/src/sales-funnel/models/SalesFunnelStep.model';
 import { TutorModel } from '../../../../../../admin-panel/src/crmusers/models/Tutor.model';
+import { DateTime } from 'luxon';
+import { PhoneNumber } from '../dto/CreateStudentDto';
+import { parsePhoneNumber } from 'libphonenumber-js';
 
-@plugin(mongooseAutoPopulate)
 @modelOptions({
     schemaOptions: {
         toJSON: { virtuals: true },
@@ -21,97 +22,128 @@ import { TutorModel } from '../../../../../../admin-panel/src/crmusers/models/Tu
 })
 export class StudentModel extends BaseModel {
     @ApiProperty()
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_NAME] })
+    @Expose({ groups: [DataRights.SEE_STUDENT_NAME] })
     @prop({ type: () => String, required: true })
     name: string;
 
     @ApiProperty()
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_SURNAME] })
+    @Expose({ groups: [DataRights.SEE_STUDENT_SURNAME] })
     @prop({ type: () => String, required: true })
     surname: string;
 
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_MIDDLE_NAME] })
+    @Expose({ groups: [DataRights.SEE_STUDENT_MIDDLE_NAME] })
     @ApiProperty()
     @prop({ type: () => String, required: true })
     middleName: string;
 
     @ApiProperty({ enum: () => Genders })
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_GENDER] })
+    @Expose({ groups: [DataRights.SEE_STUDENT_GENDER] })
     @prop({ enum: Genders, default: Genders.NOT_DEFINED })
     gender: string;
 
     @ApiProperty({ type: () => Date })
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_DATE_OF_BIRTH] })
+    @Transform(prop =>
+        DateTime.fromJSDate(prop.value)
+            .setLocale('ru')
+            .setZone('Europe/Moscow')
+            .toFormat('DDD')
+    )
+    @Expose({ groups: [DataRights.SEE_STUDENT_DATE_OF_BIRTH] })
     @prop({ type: () => Date, default: null })
     dateOfBirth: Date;
 
     @ApiProperty()
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_PHONE] })
-    @prop({ type: () => String, default: '' })
-    phone: string;
+    @Transform(prop =>
+        Math.floor(
+            DateTime.now().diff(
+                DateTime.fromJSDate(prop.obj.dateOfBirth),
+                'years'
+            ).years
+        )
+    )
+    @Expose({ groups: [DataRights.SEE_STUDENT_DATE_OF_BIRTH] })
+    age: number;
 
     @ApiProperty()
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_PARENT_PHONE] })
-    @prop({ type: () => String, default: '' })
-    parentPhone: string;
+    @Transform(prop =>
+        parsePhoneNumber(
+            prop.value.phone,
+            prop.value.countryCode
+        ).formatInternational()
+    )
+    @Expose({ groups: [DataRights.SEE_STUDENT_PHONE] })
+    @prop({ type: () => Object, _id: false })
+    phone: PhoneNumber;
 
     @ApiProperty()
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_PARENT_FULL_NAME] })
+    @Transform(prop =>
+        parsePhoneNumber(
+            prop.value.phone,
+            prop.value.countryCode
+        ).formatInternational()
+    )
+    @Expose({ groups: [DataRights.SEE_STUDENT_PARENT_PHONE] })
+    @prop({ type: () => Object, _id: false })
+    parentPhone: PhoneNumber;
+
+    @ApiProperty()
+    @Expose({ groups: [DataRights.SEE_STUDENT_PARENT_FULL_NAME] })
     @prop({ type: () => String, default: '' })
     parentFullName: string;
 
     @ApiProperty()
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_BALANCE] })
+    @Expose({ groups: [DataRights.SEE_STUDENT_BALANCE] })
     @prop({ type: () => Number, default: 0 })
     balance: number;
 
     @ApiProperty()
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_DISCORD] })
+    @Expose({ groups: [DataRights.SEE_STUDENT_DISCORD] })
     @prop({ type: () => String, default: '' })
     discord: string;
 
     @ApiProperty({ type: () => SalesFunnelStepModel })
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_SALES_FUNNEL_STEP] })
+    @Type(() => SalesFunnelStepModel)
+    @Expose({ groups: [DataRights.SEE_STUDENT_SALES_FUNNEL_STEP] })
     @prop({
         type: () => SalesFunnelStepModel,
         ref: () => SalesFunnelStepModel,
         required: true,
-        autopopulate: { maxDepth: 1 },
         justOne: true
     })
     salesFunnelStep: Ref<SalesFunnelStepModel>;
 
     @ApiProperty({ type: () => StatusModel, isArray: true })
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_STATUSES] })
+    @Type(() => StatusModel)
+    @Expose({ groups: [DataRights.SEE_STUDENT_STATUSES] })
     @prop({
         type: () => [StatusModel],
-        ref: () => StatusModel,
-        autopopulate: true
+        ref: () => StatusModel
     })
     statuses: Ref<StatusModel>[];
 
     @ApiProperty({ type: () => NoteModel, isArray: true })
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_NOTES] })
+    @Type(() => NoteModel)
+    @Expose({ groups: [DataRights.SEE_STUDENT_NOTES] })
     @prop({
         type: () => [NoteModel],
         ref: () => NoteModel,
         localField: '_id',
-        foreignField: 'owner_id',
-        autopopulate: true
+        foreignField: 'owner_id'
     })
     notes: Ref<NoteModel>[];
 
     @ApiProperty({ type: () => GroupModel, isArray: true })
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_GROUPS] })
+    @Type(() => GroupModel)
+    @Expose({ groups: [DataRights.SEE_STUDENT_GROUPS] })
     @prop({
         type: () => [GroupModel],
         ref: () => GroupModel,
         localField: '_id',
-        foreignField: 'students',
-        autopopulate: { maxDepth: 1 }
+        foreignField: 'students'
     })
     groups: Ref<GroupModel>[];
 
-    @Expose({ groups: [DataRights.CAN_SEE_STUDENT_TUTORS] })
+    @Type(() => TutorModel)
+    @Expose({ groups: [DataRights.SEE_STUDENT_TUTORS] })
     tutors: Ref<TutorModel>[];
 }

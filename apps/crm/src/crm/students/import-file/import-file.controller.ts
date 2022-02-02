@@ -39,7 +39,7 @@ export class ImportFileController {
         private readonly csvImportService: CsvImportServiceService
     ) {}
 
-    @RequiredActionRights(ActionRights.CAN_IMPORT_STUDENTS_VIA_FILE)
+    @RequiredActionRights(ActionRights.IMPORT_STUDENTS_VIA_FILE)
     @ApiCreatedResponse({ description: 'File successfully imported' })
     @ApiBadRequestResponse({ description: 'There are errors in imported file' })
     @ApiConsumes('multipart/form-data')
@@ -106,7 +106,7 @@ export class ImportFileController {
         }
     }
 
-    @RequiredActionRights(ActionRights.CAN_IMPORT_STUDENTS_VIA_FILE)
+    @RequiredActionRights(ActionRights.IMPORT_STUDENTS_VIA_FILE)
     @ApiResponse({ description: 'Template file' })
     @Get('/template')
     downloadTemplate(@Res({ passthrough: true }) response: Response) {

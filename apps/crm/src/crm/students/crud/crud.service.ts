@@ -4,7 +4,7 @@ import { StudentModel } from './models/Student.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { CreateStudentDto } from './dto/CreateStudentDto';
 import { UpdateStudentDto } from './dto/UpdateStudentDto';
-import { GroupModel } from '../../groups/models/Group.model';
+import { GroupModel } from '../../groups/crud/models/Group.model';
 
 @Injectable()
 export class CrudService {
@@ -18,7 +18,11 @@ export class CrudService {
     async create(createStudentDto: CreateStudentDto) {
         const created = await this.studentModel.create(createStudentDto);
 
-        return this.studentModel.findById(created.id).lean().exec();
+        return this.studentModel
+            .findById(created.id)
+            .populate('salesFunnelStep groups statuses notes')
+            .lean()
+            .exec();
     }
 
     async get(limit: number, offset: number) {
@@ -28,13 +32,18 @@ export class CrudService {
                 .find()
                 .skip(offset)
                 .limit(limit)
+                .populate('salesFunnelStep groups statuses notes')
                 .lean()
                 .exec()
         };
     }
 
     async getByID(id: string) {
-        const found = await this.studentModel.findById(id).lean().exec();
+        const found = await this.studentModel
+            .findById(id)
+            .populate('salesFunnelStep groups statuses notes')
+            .lean()
+            .exec();
 
         if (!found) {
             throw new NotFoundException();
@@ -52,7 +61,11 @@ export class CrudService {
             throw new NotFoundException();
         }
 
-        return this.studentModel.findById(id).lean().exec();
+        return this.studentModel
+            .findById(id)
+            .populate('salesFunnelStep groups statuses notes')
+            .lean()
+            .exec();
     }
 
     async delete(id: string) {
@@ -69,6 +82,10 @@ export class CrudService {
             )
             .exec();
 
-        return this.studentModel.findByIdAndUpdate(id).lean().exec();
+        return this.studentModel
+            .findByIdAndUpdate(id)
+            .populate('salesFunnelStep groups statuses notes')
+            .lean()
+            .exec();
     }
 }

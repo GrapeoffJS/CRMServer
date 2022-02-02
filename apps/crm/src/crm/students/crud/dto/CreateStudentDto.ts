@@ -4,10 +4,31 @@ import {
     IsMongoId,
     IsNotEmpty,
     IsOptional,
-    IsString
+    IsPhoneNumber,
+    IsString,
+    ValidateNested
 } from 'class-validator';
 import { Genders } from '../types/Genders';
 import { ApiProperty } from '@nestjs/swagger';
+import { CountryCode, getCountries } from 'libphonenumber-js';
+import { IsCountryCode } from '../lib/IsCountryCode';
+import { Transform, Type } from 'class-transformer';
+import { IsCorrectPhoneNumber } from '../lib/IsCorrectPhoneNumber';
+
+export class PhoneNumber {
+    @ApiProperty({ type: () => getCountries(), isArray: true })
+    @IsCountryCode({ message: 'countryCode must be a correct country code' })
+    countryCode: CountryCode;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    @IsString()
+    @Transform(prop => prop.value.replace(/\D/g, ''))
+    @IsCorrectPhoneNumber({
+        message: 'phone must be correct and match country code'
+    })
+    phone: string;
+}
 
 export class CreateStudentDto {
     @ApiProperty()
@@ -37,14 +58,15 @@ export class CreateStudentDto {
 
     @ApiProperty()
     @IsOptional()
-    @IsString()
-    phone?: string;
+    @Type(() => PhoneNumber)
+    @ValidateNested()
+    phone?: PhoneNumber;
 
     @ApiProperty()
     @IsOptional()
-    @IsNotEmpty()
-    @IsString()
-    parentPhone: string;
+    @Type(() => PhoneNumber)
+    @ValidateNested()
+    parentPhone: PhoneNumber;
 
     @ApiProperty()
     @IsOptional()

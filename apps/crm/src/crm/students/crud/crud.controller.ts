@@ -26,7 +26,7 @@ import {
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
 import { ActionRights } from '../../../../../admin-panel/src/roles/rights/ActionRights';
 import { plainToClass } from 'class-transformer';
-import { SetTransformationType } from '../../../authorization/set-transformation-type.decorator';
+import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { PaginatedResponseDto } from './dto/PaginatedResponseDto';
 
 @ApiTags('CRM / Students')
@@ -35,8 +35,8 @@ import { PaginatedResponseDto } from './dto/PaginatedResponseDto';
 export class CrudController {
     constructor(private readonly studentsService: CrudService) {}
 
-    @SetTransformationType(StudentModel)
-    @RequiredActionRights(ActionRights.CAN_CREATE_STUDENT)
+    @SetResponseTransformationType(StudentModel)
+    @RequiredActionRights(ActionRights.CREATE_STUDENT)
     @ApiCreatedResponse({ type: () => CreateStudentDto })
     @ApiBody({ type: () => CreateStudentDto })
     @Post()
@@ -44,8 +44,8 @@ export class CrudController {
         return await this.studentsService.create(createStudentDto);
     }
 
-    @SetTransformationType(PaginatedResponseDto)
-    @RequiredActionRights(ActionRights.CAN_SEE_STUDENT)
+    @SetResponseTransformationType(PaginatedResponseDto)
+    @RequiredActionRights(ActionRights.SEE_STUDENT)
     @ApiOkResponse({
         type: () => StudentModel,
         isArray: true
@@ -57,8 +57,8 @@ export class CrudController {
         return await this.studentsService.get(limit, offset);
     }
 
-    @SetTransformationType(StudentModel)
-    @RequiredActionRights(ActionRights.CAN_SEE_STUDENT)
+    @SetResponseTransformationType(StudentModel)
+    @RequiredActionRights(ActionRights.SEE_STUDENT)
     @ApiOkResponse({ type: () => StudentModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
@@ -66,8 +66,8 @@ export class CrudController {
         return await this.studentsService.getByID(id);
     }
 
-    @SetTransformationType(StudentModel)
-    @RequiredActionRights(ActionRights.CAN_EDIT_STUDENT)
+    @SetResponseTransformationType(StudentModel)
+    @RequiredActionRights(ActionRights.EDIT_STUDENT)
     @ApiOkResponse({ type: () => StudentModel })
     @ApiParam({ name: 'id', type: () => String })
     @ApiBody({ type: () => UpdateStudentDto })
@@ -79,8 +79,8 @@ export class CrudController {
         return await this.studentsService.update(id, updateStudentDto);
     }
 
-    @SetTransformationType(StudentModel)
-    @RequiredActionRights(ActionRights.CAN_DELETE_STUDENT)
+    @SetResponseTransformationType(StudentModel)
+    @RequiredActionRights(ActionRights.DELETE_STUDENT)
     @ApiOkResponse({ type: () => StudentModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
