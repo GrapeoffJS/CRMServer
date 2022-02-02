@@ -32,7 +32,7 @@ import { ActionRights } from '../../../../admin-panel/src/roles/rights/ActionRig
 export class StatusesController {
     constructor(private readonly statusesService: StatusesService) {}
 
-    @RequiredActionRights(ActionRights.CAN_CREATE_STUDENT_STATUS)
+    @RequiredActionRights(ActionRights.CREATE_STUDENT_STATUS)
     @ApiCreatedResponse({ type: () => StatusModel })
     @ApiBody({ type: () => CreateStatusDto })
     @Post()
@@ -40,7 +40,7 @@ export class StatusesController {
         return this.statusesService.create(createStatusDto);
     }
 
-    @RequiredActionRights(ActionRights.CAN_SEE_STUDENT_STATUSES)
+    @RequiredActionRights(ActionRights.SEE_STUDENT_STATUSES)
     @ApiOkResponse({
         type: () => StatusModel,
         isArray: true
@@ -52,7 +52,7 @@ export class StatusesController {
         return await this.statusesService.get(limit, offset);
     }
 
-    @RequiredActionRights(ActionRights.CAN_EDIT_STUDENT_STATUS)
+    @RequiredActionRights(ActionRights.EDIT_STUDENT_STATUS)
     @ApiCreatedResponse({ type: () => StatusModel })
     @ApiBody({ type: () => UpdateStatusDto })
     @ApiParam({ name: 'id', type: () => String })
@@ -64,7 +64,7 @@ export class StatusesController {
         return await this.statusesService.update(id, updateStatusDto);
     }
 
-    @RequiredActionRights(ActionRights.CAN_DELETE_STUDENT_STATUS)
+    @RequiredActionRights(ActionRights.DELETE_STUDENT_STATUS)
     @ApiCreatedResponse({ type: () => StatusModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
