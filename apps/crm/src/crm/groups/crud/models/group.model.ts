@@ -30,7 +30,7 @@ export class GroupModel extends BaseModel {
     places: number;
 
     @ApiProperty()
-    @Transform(prop => prop.obj.places - prop.obj.students.length)
+    @Transform(prop => prop.obj.places - prop.obj.students?.length)
     @Expose({ groups: [DataRights.SEE_GROUP_PLACES] })
     freePlaces: number;
 
