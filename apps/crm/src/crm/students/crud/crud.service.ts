@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { StudentModel } from './models/Student.model';
+import { StudentModel } from './models/student.model';
 import { InjectModel } from 'nestjs-typegoose';
-import { CreateStudentDto } from './dto/CreateStudentDto';
-import { UpdateStudentDto } from './dto/UpdateStudentDto';
-import { GroupModel } from '../../groups/crud/models/Group.model';
+import { CreateStudentDto } from './dto/create-student.dto';
+import { UpdateStudentDto } from './dto/update-student.dto';
+import { GroupModel } from '../../groups/crud/models/group.model';
 
 @Injectable()
 export class CrudService {
@@ -16,11 +16,19 @@ export class CrudService {
     ) {}
 
     async create(createStudentDto: CreateStudentDto) {
-        const created = await this.studentModel.create(createStudentDto);
+        const student = await this.studentModel.create(createStudentDto);
 
         return this.studentModel
-            .findById(created.id)
-            .populate('salesFunnelStep groups statuses notes')
+            .findById(student.id)
+            .populate([
+                { path: 'salesFunnelStep groups statuses' },
+                {
+                    path: 'notes',
+                    populate: {
+                        path: 'author'
+                    }
+                }
+            ])
             .lean()
             .exec();
     }
@@ -32,7 +40,15 @@ export class CrudService {
                 .find()
                 .skip(offset)
                 .limit(limit)
-                .populate('salesFunnelStep groups statuses notes')
+                .populate([
+                    { path: 'salesFunnelStep groups statuses' },
+                    {
+                        path: 'notes',
+                        populate: {
+                            path: 'author'
+                        }
+                    }
+                ])
                 .lean()
                 .exec()
         };
@@ -41,7 +57,15 @@ export class CrudService {
     async getByID(id: string) {
         const found = await this.studentModel
             .findById(id)
-            .populate('salesFunnelStep groups statuses notes')
+            .populate([
+                { path: 'salesFunnelStep groups statuses' },
+                {
+                    path: 'notes',
+                    populate: {
+                        path: 'author'
+                    }
+                }
+            ])
             .lean()
             .exec();
 
@@ -63,7 +87,15 @@ export class CrudService {
 
         return this.studentModel
             .findById(id)
-            .populate('salesFunnelStep groups statuses notes')
+            .populate([
+                { path: 'salesFunnelStep groups statuses' },
+                {
+                    path: 'notes',
+                    populate: {
+                        path: 'author'
+                    }
+                }
+            ])
             .lean()
             .exec();
     }
@@ -84,7 +116,15 @@ export class CrudService {
 
         return this.studentModel
             .findByIdAndUpdate(id)
-            .populate('salesFunnelStep groups statuses notes')
+            .populate([
+                { path: 'salesFunnelStep groups statuses' },
+                {
+                    path: 'notes',
+                    populate: {
+                        path: 'author'
+                    }
+                }
+            ])
             .lean()
             .exec();
     }

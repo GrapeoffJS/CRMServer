@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { NoteModel } from './models/Note.model';
+import { NoteModel } from './models/note.model';
 import { NotesController } from './notes.controller';
 import { NotesService } from './notes.service';
 

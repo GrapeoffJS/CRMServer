@@ -8,11 +8,11 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
-import { MongoID } from '../../../../../../utils/dto/MongoID';
-import { UpdateManagerDto } from '../../dto/Manager/UpdateManagerDto';
-import { ManagerModel } from '../../models/Manager.model';
-import { CreateManagerDto } from '../../dto/Manager/CreateManagerDto';
+import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { UpdateManagerDto } from '../../dto/Manager/update-manager.dto';
+import { ManagerModel } from '../../models/manager.model';
+import { CreateManagerDto } from '../../dto/Manager/create-manager.dto';
 import { ManagersService } from '../../services/managers/managers.service';
 import {
     ApiBody,
@@ -51,7 +51,7 @@ export class ManagersController {
     @ApiOkResponse({ type: () => ManagerModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID) {
+    async getByID(@Param() { id }: MongoId) {
         return await this.managersService.getByID(id);
     }
 
@@ -60,7 +60,7 @@ export class ManagersController {
     @ApiBody({ type: () => UpdateManagerDto })
     @Patch(':id')
     async update(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() updateManagerDto: UpdateManagerDto
     ) {
         return await this.managersService.update(id, updateManagerDto);
@@ -69,7 +69,7 @@ export class ManagersController {
     @ApiOkResponse({ type: () => ManagerModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.managersService.delete(id);
     }
 }

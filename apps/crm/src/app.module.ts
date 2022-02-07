@@ -6,8 +6,11 @@ import { AdminPanelModule } from '../../admin-panel/src/admin-panel.module';
 import { CrmModule } from './crm/crm.module';
 import { HealthCheckModule } from './health-check/health-check.module';
 import Joi from 'joi';
-import { Reflector } from '@nestjs/core';
+import { APP_GUARD, Reflector } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
+import { TasksModule } from './crm/tasks/tasks.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
     imports: [
@@ -31,7 +34,9 @@ import { JwtModule } from '@nestjs/jwt';
                 JWT_SECRET: Joi.string().required(),
                 JWT_REFRESH_SECRET: Joi.string().required(),
                 JWT_LIFETIME: Joi.string().required(),
-                JWT_REFRESH_LIFETIME: Joi.string().required()
+                JWT_REFRESH_LIFETIME: Joi.string().required(),
+                THROTTLE_TTL: Joi.number().required(),
+                THROTTLE_LIMIT: Joi.number().required()
             })
         }),
         JwtModule.registerAsync({
@@ -75,12 +80,31 @@ import { JwtModule } from '@nestjs/jwt';
                 };
             }
         }),
+        ThrottlerModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory(configService: ConfigService) {
+                return {
+                    limit: configService.get('THROTTLE_LIMIT'),
+                    ttl: configService.get('THROTTLE_TTL')
+                };
+            }
+        }),
+        EventEmitterModule.forRoot({
+            delimiter: '.'
+        }),
         AdminPanelModule,
         CrmModule,
         HealthCheckModule,
-        Reflector
+        Reflector,
+        TasksModule
     ],
     controllers: [],
-    providers: []
+    providers: [
+        {
+            provide: APP_GUARD,
+            useClass: ThrottlerGuard
+        }
+    ]
 })
 export class AppModule {}

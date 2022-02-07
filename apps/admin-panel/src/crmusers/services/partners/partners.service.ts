@@ -4,11 +4,11 @@ import {
     NotFoundException
 } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import { PartnerModel } from '../../models/Partner.model';
+import { PartnerModel } from '../../models/partner.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { CreatePartnerDto } from '../../dto/Partner/CreatePartnerDto';
-import { UpdatePartnerDto } from '../../dto/Partner/UpdatePartnerDto';
+import { CreatePartnerDto } from '../../dto/Partner/create-partner.dto';
+import { UpdatePartnerDto } from '../../dto/Partner/update-partner.dto';
 
 @Injectable()
 export class PartnersService {

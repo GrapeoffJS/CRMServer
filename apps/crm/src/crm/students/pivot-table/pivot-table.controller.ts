@@ -7,13 +7,13 @@ import {
     ApiTags
 } from '@nestjs/swagger';
 import { PivotTableService } from './pivot-table.service';
-import { StudentsPivotTableDto } from './dto/StudentsPivotTableDto';
-import { StudentModel } from '../crud/models/Student.model';
-import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
+import { StudentsPivotTableDto } from './dto/students-pivot-table.dto';
+import { StudentModel } from '../crud/models/student.model';
+import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/ActionRights';
+import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
-import { PaginatedResponseDto } from '../crud/dto/PaginatedResponseDto';
+import { PaginatedResponseDto } from '../crud/dto/paginated-response.dto';
 
 @ApiTags('CRM / Students / Pivot Table')
 @ApiBearerAuth()

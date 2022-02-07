@@ -1,7 +1,7 @@
 import { Body, Controller, Param, Put } from '@nestjs/common';
-import { CreateWorkHoursDto } from './dto/CreateWorkHoursDto';
+import { CreateWorkHoursDto } from './dto/create-work-hours.dto';
 import { WorkHoursService } from './work-hours.service';
-import { MongoID } from '../../../../utils/dto/MongoID';
+import { MongoId } from '../../../../utils/dto/mongo-id';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { PublicController } from '../../../crm/src/authorization/public-controller.decorator';
 
@@ -15,7 +15,7 @@ export class WorkHoursController {
     @ApiBody({ type: () => CreateWorkHoursDto })
     @Put(':id')
     async create(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() createWorkHoursDto: CreateWorkHoursDto
     ) {
         return await this.workHoursService.create(id, createWorkHoursDto);

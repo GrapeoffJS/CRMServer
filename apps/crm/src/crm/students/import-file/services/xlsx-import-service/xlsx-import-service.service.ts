@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { read, utils } from 'xlsx';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { StudentModel } from '../../../crud/models/Student.model';
+import { StudentModel } from '../../../crud/models/student.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { Types } from 'mongoose';
-import { parsePhoneNumber } from 'libphonenumber-js';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 @Injectable()
 export class XlsxImportServiceService {
@@ -20,15 +20,15 @@ export class XlsxImportServiceService {
                 rawNumbers: true
             })
             .map(student => {
-                const studentPhone = parsePhoneNumber(
-                    `+${(student?.phone.toString() as string)?.replace(
+                const studentPhone = parsePhoneNumberFromString(
+                    `+${(student?.phone?.toString() as string)?.replace(
                         /\D/g,
                         ''
                     )}`
                 );
 
-                const parentPhone = parsePhoneNumber(
-                    `+${(student?.parentPhone.toString() as string)?.replace(
+                const parentPhone = parsePhoneNumberFromString(
+                    `+${(student?.parentPhone?.toString() as string)?.replace(
                         /\D/g,
                         ''
                     )}`
@@ -37,11 +37,11 @@ export class XlsxImportServiceService {
                 return {
                     ...student,
                     phone: {
-                        phone: studentPhone.formatInternational(),
+                        phone: studentPhone?.formatInternational(),
                         countryCode: studentPhone?.country
                     },
                     parentPhone: {
-                        phone: parentPhone.formatInternational(),
+                        phone: parentPhone?.formatInternational(),
                         countryCode: parentPhone?.country
                     },
                     salesFunnelStep: new Types.ObjectId(salesFunnelStepID)

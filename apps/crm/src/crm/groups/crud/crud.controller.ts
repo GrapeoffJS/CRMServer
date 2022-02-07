@@ -9,10 +9,10 @@ import {
     Query
 } from '@nestjs/common';
 import { CrudService } from './crud.service';
-import { CreateGroupDto } from './dto/CreateGroupDto';
-import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
-import { MongoID } from '../../../../../../utils/dto/MongoID';
-import { UpdateGroupDto } from './dto/UpdateGroupDto';
+import { CreateGroupDto } from './dto/create-group.dto';
+import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { UpdateGroupDto } from './dto/update-group.dto';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -22,11 +22,11 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { GroupModel } from './models/Group.model';
+import { GroupModel } from './models/group.model';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/ActionRights';
+import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
-import { PaginatedResponseDto } from './dto/PaginatedResponseDto';
+import { PaginatedResponseDto } from './dto/paginated-response.dto';
 
 @ApiTags('CRM / Groups')
 @ApiBearerAuth()
@@ -64,7 +64,7 @@ export class CrudController {
     @ApiOkResponse({ type: () => GroupModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID) {
+    async getByID(@Param() { id }: MongoId) {
         return await this.groupsService.getByID(id);
     }
 
@@ -75,7 +75,7 @@ export class CrudController {
     @ApiBody({ type: () => CreateGroupDto })
     @Patch(':id')
     async update(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() updateGroupDto: UpdateGroupDto
     ) {
         return await this.groupsService.update(id, updateGroupDto);
@@ -85,7 +85,7 @@ export class CrudController {
     @RequiredActionRights(ActionRights.DELETE_GROUP)
     @ApiOkResponse({ type: () => GroupModel })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.groupsService.delete(id);
     }
 }

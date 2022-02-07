@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { CreateWorkHoursDto } from './dto/CreateWorkHoursDto';
-import { TutorModel } from '../crmusers/models/Tutor.model';
+import { CreateWorkHoursDto } from './dto/create-work-hours.dto';
+import { TutorModel } from '../crmusers/models/tutor.model';
 
 @Injectable()
 export class WorkHoursService {

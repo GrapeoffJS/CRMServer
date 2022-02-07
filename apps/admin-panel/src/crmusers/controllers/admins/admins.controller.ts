@@ -9,11 +9,11 @@ import {
     Query
 } from '@nestjs/common';
 import { AdminsService } from '../../services/admins/admins.service';
-import { AdminModel } from '../../models/Admin.model';
-import { CreateAdminDto } from '../../dto/Admin/CreateAdminDto';
-import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
-import { MongoID } from '../../../../../../utils/dto/MongoID';
-import { UpdateAdminDto } from '../../dto/Admin/UpdateAdminDto';
+import { AdminModel } from '../../models/admin.model';
+import { CreateAdminDto } from '../../dto/Admin/create-admin.dto';
+import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { UpdateAdminDto } from '../../dto/Admin/update-admin.dto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -53,7 +53,7 @@ export class AdminsController {
     })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID) {
+    async getByID(@Param() { id }: MongoId) {
         return await this.adminsService.getByID(id);
     }
 
@@ -64,7 +64,7 @@ export class AdminsController {
     @ApiBody({ type: () => UpdateAdminDto })
     @Patch(':id')
     async update(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() updateAdminDto: UpdateAdminDto
     ) {
         return await this.adminsService.update(id, updateAdminDto);
@@ -75,7 +75,7 @@ export class AdminsController {
     })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.adminsService.delete(id);
     }
 }

@@ -1,4 +1,4 @@
-import { PipelineBuilder } from '../pipeline-builder';
+import { PipelineBuilder } from '../lib/pipeline-builder';
 
 describe('PipelineBuilder', () => {
     it('should be defined', () => {

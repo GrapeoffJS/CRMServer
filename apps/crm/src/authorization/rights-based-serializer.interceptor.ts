@@ -9,17 +9,12 @@ import { map } from 'rxjs';
 import { Reflector } from '@nestjs/core';
 // @ts-ignore
 import { plainToInstance } from 'class-transformer';
-import { JwtService } from '@nestjs/jwt';
-import { CRMUserModel } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
-import { Request } from 'express';
-import { RoleModel } from '../../../admin-panel/src/roles/models/Role.model';
+import { RoleModel } from '../../../admin-panel/src/roles/models/role.model';
+import { AuthorizedRequest } from './types/authorized-request';
 
 @Injectable()
 export class RightsBasedSerializerInterceptor implements NestInterceptor {
-    constructor(
-        private readonly reflector: Reflector,
-        private readonly jwtService: JwtService
-    ) {}
+    constructor(private readonly reflector: Reflector) {}
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         const isControllerPublic = this.reflector.get<boolean>(
@@ -36,14 +31,10 @@ export class RightsBasedSerializerInterceptor implements NestInterceptor {
             return next.handle();
         }
 
-        const tokenPayload = this.jwtService.verify<CRMUserModel>(
-            context
-                .switchToHttp()
-                .getRequest<Request>()
-                .headers.authorization.split(' ')[1]
-        );
-
-        const userDataRights = (tokenPayload.role as RoleModel).dataRights;
+        const userDataRights = (
+            context.switchToHttp().getRequest<AuthorizedRequest>().user
+                .role as RoleModel
+        ).dataRights;
 
         const transformationType = this.reflector.get(
             'transformation-type',

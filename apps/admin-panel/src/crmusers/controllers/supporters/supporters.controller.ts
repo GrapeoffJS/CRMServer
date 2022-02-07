@@ -9,11 +9,11 @@ import {
     Query
 } from '@nestjs/common';
 import { SupportersService } from '../../services/supporters/supporters.service';
-import { CreateSupporterDto } from '../../dto/Supporter/CreateSupporterDto';
-import { SupporterModel } from '../../models/Supporter.model';
-import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
-import { MongoID } from '../../../../../../utils/dto/MongoID';
-import { UpdateSupporterDto } from '../../dto/Supporter/UpdateSupporterDto';
+import { CreateSupporterDto } from '../../dto/Supporter/create-supporter.dto';
+import { SupporterModel } from '../../models/supporter.model';
+import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { UpdateSupporterDto } from '../../dto/Supporter/update-supporter.dto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -51,7 +51,7 @@ export class SupportersController {
     @ApiOkResponse({ type: () => SupporterModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID) {
+    async getByID(@Param() { id }: MongoId) {
         return await this.supportersService.getByID(id);
     }
 
@@ -60,7 +60,7 @@ export class SupportersController {
     @ApiBody({ type: () => UpdateSupporterDto })
     @Patch(':id')
     async update(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() updateSupporterDto: UpdateSupporterDto
     ) {
         return await this.supportersService.update(id, updateSupporterDto);
@@ -69,7 +69,7 @@ export class SupportersController {
     @ApiOkResponse({ type: () => SupporterModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.supportersService.delete(id);
     }
 }

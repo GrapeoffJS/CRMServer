@@ -2,16 +2,16 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { CRMUserModel } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
+import { CrmUserModel } from '../../../admin-panel/src/crmusers/models/crm-user.model';
 import { JwtModule } from '@nestjs/jwt';
-import { RefreshTokenModel } from './models/RefreshToken.model';
+import { RefreshTokenModel } from './models/refresh-token.model';
 import { JwtFactory } from './jwt.factory';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
     imports: [
         TypegooseModule.forFeature([
-            { typegooseClass: CRMUserModel },
+            { typegooseClass: CrmUserModel },
             { typegooseClass: RefreshTokenModel }
         ]),
         JwtModule.registerAsync({

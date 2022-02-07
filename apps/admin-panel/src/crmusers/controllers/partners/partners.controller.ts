@@ -8,12 +8,12 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
-import { MongoID } from '../../../../../../utils/dto/MongoID';
-import { PartnerModel } from '../../models/Partner.model';
-import { UpdatePartnerDto } from '../../dto/Partner/UpdatePartnerDto';
+import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { PartnerModel } from '../../models/partner.model';
+import { UpdatePartnerDto } from '../../dto/Partner/update-partner.dto';
 import { PartnersService } from '../../services/partners/partners.service';
-import { CreatePartnerDto } from '../../dto/Partner/CreatePartnerDto';
+import { CreatePartnerDto } from '../../dto/Partner/create-partner.dto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -50,7 +50,7 @@ export class PartnersController {
     @ApiOkResponse({ type: () => PartnerModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID) {
+    async getByID(@Param() { id }: MongoId) {
         return await this.partnersService.getByID(id);
     }
 
@@ -59,7 +59,7 @@ export class PartnersController {
     @ApiBody({ type: () => UpdatePartnerDto })
     @Patch(':id')
     async update(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() updatePartnerDto: UpdatePartnerDto
     ) {
         return await this.partnersService.update(id, updatePartnerDto);
@@ -68,7 +68,7 @@ export class PartnersController {
     @ApiOkResponse({ type: () => PartnerModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.partnersService.delete(id);
     }
 }

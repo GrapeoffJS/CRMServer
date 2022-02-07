@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { CRMUserModel } from './models/CRMUser.model';
-import { TutorModel } from './models/Tutor.model';
-import { AdminModel } from './models/Admin.model';
-import { PartnerModel } from './models/Partner.model';
-import { SeniorTutorModel } from './models/SeniorTutor.model';
-import { SupporterModel } from './models/Supporter.model';
-import { ManagerModel } from './models/Manager.model';
+import { CrmUserModel } from './models/crm-user.model';
+import { TutorModel } from './models/tutor.model';
+import { AdminModel } from './models/admin.model';
+import { PartnerModel } from './models/partner.model';
+import { SeniorTutorModel } from './models/senior-tutor.model';
+import { SupporterModel } from './models/supporter.model';
+import { ManagerModel } from './models/manager.model';
 import { ManagersService } from './services/managers/managers.service';
 import { TutorsService } from './services/tutors/tutors.service';
 import { SeniorTutorsService } from './services/senior-tutors/senior-tutors.service';
@@ -27,7 +27,7 @@ import { PasswordProtectorService } from './services/password-protector/password
     imports: [
         TypegooseModule.forFeature([
             {
-                typegooseClass: CRMUserModel,
+                typegooseClass: CrmUserModel,
                 discriminators: [
                     AdminModel,
                     ManagerModel,

@@ -1,17 +1,12 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { JwtService } from '@nestjs/jwt';
-import { ActionRights } from '../../../admin-panel/src/roles/rights/ActionRights';
-import { CRMUserModel } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
-import { Request } from 'express';
-import { RoleModel } from '../../../admin-panel/src/roles/models/Role.model';
+import { ActionRights } from '../../../admin-panel/src/roles/rights/action-rights';
+import { RoleModel } from '../../../admin-panel/src/roles/models/role.model';
+import { AuthorizedRequest } from './types/authorized-request';
 
 @Injectable()
 export class ActionRightsGuard implements CanActivate {
-    constructor(
-        private readonly reflector: Reflector,
-        private readonly jwtService: JwtService
-    ) {}
+    constructor(private readonly reflector: Reflector) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const isControllerPublic = this.reflector.get<boolean>(
@@ -33,15 +28,11 @@ export class ActionRightsGuard implements CanActivate {
             context.getHandler()
         );
 
-        const user = await this.jwtService.verifyAsync<CRMUserModel>(
-            context
-                .switchToHttp()
-                .getRequest<Request>()
-                .headers.authorization.split(' ')[1]
-        );
-
         return requiredActionRights.every(requiredRight =>
-            (user.role as RoleModel).actionRights.includes(requiredRight)
+            (
+                context.switchToHttp().getRequest<AuthorizedRequest>().user
+                    .role as RoleModel
+            ).actionRights.includes(requiredRight)
         );
     }
 }

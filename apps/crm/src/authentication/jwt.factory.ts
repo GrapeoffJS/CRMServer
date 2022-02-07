@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { RefreshTokenModel } from './models/RefreshToken.model';
+import { RefreshTokenModel } from './models/refresh-token.model';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from 'nestjs-typegoose';
 

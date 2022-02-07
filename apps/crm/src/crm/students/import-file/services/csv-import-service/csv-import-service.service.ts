@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import csvtojson from 'csvtojson';
-import { StudentModel } from '../../../crud/models/Student.model';
+import { StudentModel } from '../../../crud/models/student.model';
 import { Types } from 'mongoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import { parsePhoneNumber } from 'libphonenumber-js';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 @Injectable()
 export class CsvImportServiceService {
@@ -21,15 +21,15 @@ export class CsvImportServiceService {
             .fromString(file.buffer.toString('utf-8'))
             .subscribe(
                 data => {
-                    const studentPhone = parsePhoneNumber(
-                        `+${(data?.phone.toString() as string)?.replace(
+                    const studentPhone = parsePhoneNumberFromString(
+                        `+${(data?.phone?.toString() as string)?.replace(
                             /\D/g,
                             ''
                         )}`
                     );
 
-                    const parentPhone = parsePhoneNumber(
-                        `+${(data?.parentPhone.toString() as string)?.replace(
+                    const parentPhone = parsePhoneNumberFromString(
+                        `+${(data?.parentPhone?.toString() as string)?.replace(
                             /\D/g,
                             ''
                         )}`

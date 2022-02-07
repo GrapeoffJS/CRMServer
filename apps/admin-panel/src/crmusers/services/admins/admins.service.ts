@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { AdminModel } from '../../models/Admin.model';
-import { CreateAdminDto } from '../../dto/Admin/CreateAdminDto';
+import { AdminModel } from '../../models/admin.model';
+import { CreateAdminDto } from '../../dto/Admin/create-admin.dto';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { UpdateAdminDto } from '../../dto/Admin/UpdateAdminDto';
+import { UpdateAdminDto } from '../../dto/Admin/update-admin.dto';
 
 @Injectable()
 export class AdminsService {

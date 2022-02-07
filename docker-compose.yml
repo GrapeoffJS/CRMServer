@@ -1,7 +1,6 @@
 version: "3.9"
 services:
-    server:
-        container_name: "server"
+    backend:
         build: ./
         ports:
             - "4200:4200"
@@ -15,7 +14,6 @@ services:
         env_file: .env
 
     mongodb:
-        container_name: "mongodb"
         image: mongo:4.4.7-focal
         restart: always
         volumes:
@@ -25,7 +23,6 @@ services:
         env_file: mongodb.env
 
     elastic:
-        container_name: "elastic"
         image: elasticsearch:7.13.4
         restart: always
         environment:
@@ -33,6 +30,9 @@ services:
             - cluster.name=elastic-crm
             - bootstrap.memory_lock=true
             - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+            - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+            - ELASTIC_USERNAME=$ELASTIC_USERNAME
+            - xpack.security.enabled=$ELASTIC_SECURITY
         ports:
             - "9200:9200"
         volumes:

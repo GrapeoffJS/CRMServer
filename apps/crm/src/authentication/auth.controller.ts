@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthDto } from './dto/AuthDto';
-import { RefreshDto } from './dto/RefreshDto';
+import { AuthDto } from './dto/auth.dto';
+import { RefreshDto } from './dto/refresh.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { PublicController } from '../authorization/public-controller.decorator';
 

@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { NoteModel } from './models/Note.model';
-import { CreateNoteDto } from './dto/CreateNoteDto';
-import { UpdateNoteDto } from './dto/UpdateNoteDto';
+import { NoteModel } from './models/note.model';
+import { CreateNoteDto } from './dto/create-note.dto';
+import { UpdateNoteDto } from './dto/update-note.dto';
 import { InjectModel } from 'nestjs-typegoose';
 
 @Injectable()
@@ -12,11 +12,22 @@ export class NotesService {
         private readonly noteModel: ReturnModelType<typeof NoteModel>
     ) {}
 
-    async create(studentID: string, createNoteDto: CreateNoteDto) {
-        return this.noteModel.create({
+    async create(
+        author: string,
+        studentID: string,
+        createNoteDto: CreateNoteDto
+    ) {
+        const note = await this.noteModel.create({
             owner_id: studentID,
+            author,
             ...createNoteDto
         });
+
+        return this.noteModel
+            .findById(note.id)
+            .populate('author')
+            .lean()
+            .exec();
     }
 
     async update(
@@ -40,6 +51,8 @@ export class NotesService {
 
         return this.noteModel
             .findOne({ _id: noteID, owner_id: studentID })
+            .populate('author')
+            .lean()
             .exec();
     }
 
@@ -49,6 +62,7 @@ export class NotesService {
                 _id: noteID,
                 owner_id: studentID
             })
+            .lean()
             .exec();
 
         if (!deleted) {

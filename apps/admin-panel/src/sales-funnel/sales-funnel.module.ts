@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { SalesFunnelController } from './sales-funnel.controller';
 import { SalesFunnelService } from './sales-funnel.service';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { SalesFunnelStepModel } from './models/SalesFunnelStep.model';
-import { StudentModel } from '../../../crm/src/crm/students/crud/models/Student.model';
+import { SalesFunnelStepModel } from './models/sales-funnel-step.model';
+import { StudentModel } from '../../../crm/src/crm/students/crud/models/student.model';
 
 @Module({
     imports: [

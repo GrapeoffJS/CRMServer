@@ -9,11 +9,11 @@ import {
     Query
 } from '@nestjs/common';
 import { SeniorTutorsService } from '../../services/senior-tutors/senior-tutors.service';
-import { CreateSeniorTutorDto } from '../../dto/SeniorTutor/CreateSeniorTutorDto';
-import { SeniorTutorModel } from '../../models/SeniorTutor.model';
-import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
-import { MongoID } from '../../../../../../utils/dto/MongoID';
-import { UpdateSeniorTutorDto } from '../../dto/SeniorTutor/UpdateSeniorTutorDto';
+import { CreateSeniorTutorDto } from '../../dto/SeniorTutor/create-senior-tutor.dto';
+import { SeniorTutorModel } from '../../models/senior-tutor.model';
+import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { UpdateSeniorTutorDto } from '../../dto/SeniorTutor/update-senior-tutor.dto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -51,7 +51,7 @@ export class SeniorTutorsController {
     @ApiOkResponse({ type: () => SeniorTutorModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID) {
+    async getByID(@Param() { id }: MongoId) {
         return await this.seniorTutorsService.getByID(id);
     }
 
@@ -60,7 +60,7 @@ export class SeniorTutorsController {
     @ApiBody({ type: () => UpdateSeniorTutorDto })
     @Patch(':id')
     async update(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() updateSeniorTutorDto: UpdateSeniorTutorDto
     ) {
         return await this.seniorTutorsService.update(id, updateSeniorTutorDto);
@@ -69,7 +69,7 @@ export class SeniorTutorsController {
     @ApiOkResponse({ type: () => SeniorTutorModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.seniorTutorsService.delete(id);
     }
 }

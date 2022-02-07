@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 import { WorkHoursService } from './work-hours.service';
 import { WorkHoursController } from './work-hours.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { CRMUserModel } from '../crmusers/models/CRMUser.model';
-import { TutorModel } from '../crmusers/models/Tutor.model';
+import { CrmUserModel } from '../crmusers/models/crm-user.model';
+import { TutorModel } from '../crmusers/models/tutor.model';
 
 @Module({
     imports: [
         TypegooseModule.forFeature([
             {
-                typegooseClass: CRMUserModel,
+                typegooseClass: CrmUserModel,
                 discriminators: [TutorModel]
             }
         ])

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { StudentModel } from '../crud/models/Student.model';
+import { StudentModel } from '../crud/models/student.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import { StudentsPivotTableDto } from './dto/StudentsPivotTableDto';
-import { PipelineBuilder } from './pipeline-builder';
+import { StudentsPivotTableDto } from './dto/students-pivot-table.dto';
+import { PipelineBuilder } from './lib/pipeline-builder';
 
 @Injectable()
 export class PivotTableService {

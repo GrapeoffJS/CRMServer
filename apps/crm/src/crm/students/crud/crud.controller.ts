@@ -9,11 +9,11 @@ import {
     Query
 } from '@nestjs/common';
 import { CrudService } from './crud.service';
-import { CreateStudentDto } from './dto/CreateStudentDto';
-import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
-import { StudentModel } from './models/Student.model';
-import { MongoID } from '../../../../../../utils/dto/MongoID';
-import { UpdateStudentDto } from './dto/UpdateStudentDto';
+import { CreateStudentDto } from './dto/create-student.dto';
+import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
+import { StudentModel } from './models/student.model';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { UpdateStudentDto } from './dto/update-student.dto';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -24,10 +24,9 @@ import {
     ApiTags
 } from '@nestjs/swagger';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/ActionRights';
-import { plainToClass } from 'class-transformer';
+import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
-import { PaginatedResponseDto } from './dto/PaginatedResponseDto';
+import { PaginatedResponseDto } from './dto/paginated-response.dto';
 
 @ApiTags('CRM / Students')
 @ApiBearerAuth()
@@ -62,7 +61,7 @@ export class CrudController {
     @ApiOkResponse({ type: () => StudentModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID) {
+    async getByID(@Param() { id }: MongoId) {
         return await this.studentsService.getByID(id);
     }
 
@@ -73,7 +72,7 @@ export class CrudController {
     @ApiBody({ type: () => UpdateStudentDto })
     @Patch(':id')
     async update(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() updateStudentDto: UpdateStudentDto
     ) {
         return await this.studentsService.update(id, updateStudentDto);
@@ -84,7 +83,7 @@ export class CrudController {
     @ApiOkResponse({ type: () => StudentModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.studentsService.delete(id);
     }
 }

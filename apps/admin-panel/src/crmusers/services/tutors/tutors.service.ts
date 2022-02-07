@@ -6,9 +6,9 @@ import {
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { CreateTutorDto } from '../../dto/Tutor/CreateTutorDto';
-import { UpdateTutorDto } from '../../dto/Tutor/UpdateTutorDto';
-import { TutorModel } from '../../models/Tutor.model';
+import { CreateTutorDto } from '../../dto/Tutor/create-tutor.dto';
+import { UpdateTutorDto } from '../../dto/Tutor/update.tutor.dto';
+import { TutorModel } from '../../models/tutor.model';
 
 @Injectable()
 export class TutorsService {

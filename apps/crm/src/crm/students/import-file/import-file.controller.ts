@@ -13,7 +13,7 @@ import { XlsxImportServiceService } from './services/xlsx-import-service/xlsx-im
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MimeTypes } from './types/MimeTypes';
 import { Request, Response } from 'express';
-import { SalesFunnelStepID } from '../crud/dto/SalesFunnelStepID';
+import { SalesFunnelStepId } from '../crud/dto/sales-funnel-step-id';
 import { createReadStream } from 'fs';
 import path from 'path';
 import {
@@ -28,7 +28,7 @@ import {
 } from '@nestjs/swagger';
 import { CsvImportServiceService } from './services/csv-import-service/csv-import-service.service';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/ActionRights';
+import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 
 @ApiTags('CRM / Students / Import File')
 @ApiBearerAuth()
@@ -86,7 +86,7 @@ export class ImportFileController {
         })
     )
     async import(
-        @Query() { salesFunnelStepID }: SalesFunnelStepID,
+        @Query() { salesFunnelStepID }: SalesFunnelStepId,
         @UploadedFile() file: Express.Multer.File
     ) {
         switch (file.mimetype) {

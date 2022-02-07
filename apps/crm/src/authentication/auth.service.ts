@@ -3,20 +3,20 @@ import {
     Injectable,
     UnauthorizedException
 } from '@nestjs/common';
-import { CRMUserModel } from '../../../admin-panel/src/crmusers/models/CRMUser.model';
+import { CrmUserModel } from '../../../admin-panel/src/crmusers/models/crm-user.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { AuthDto } from './dto/AuthDto';
+import { AuthDto } from './dto/auth.dto';
 import { compare } from 'bcrypt';
 import { JwtFactory } from './jwt.factory';
-import { RefreshDto } from './dto/RefreshDto';
-import { RefreshTokenModel } from './models/RefreshToken.model';
+import { RefreshDto } from './dto/refresh.dto';
+import { RefreshTokenModel } from './models/refresh-token.model';
 
 @Injectable()
 export class AuthService {
     constructor(
-        @InjectModel(CRMUserModel)
-        private readonly crmUserModel: ReturnModelType<typeof CRMUserModel>,
+        @InjectModel(CrmUserModel)
+        private readonly crmUserModel: ReturnModelType<typeof CrmUserModel>,
         @InjectModel(RefreshTokenModel)
         private readonly refreshTokenModel: ReturnModelType<
             typeof RefreshTokenModel
@@ -29,7 +29,6 @@ export class AuthService {
             .findOne({
                 login: authDto.login
             })
-            .select('+password')
             .exec();
 
         if (!candidate) {
@@ -46,7 +45,8 @@ export class AuthService {
                 login: candidate.login,
                 name: candidate.name,
                 surname: candidate.surname,
-                middleName: candidate.middleName
+                middleName: candidate.middleName,
+                role: candidate.role
             },
             accessToken: await this.jwtFactory.generateAccessToken({
                 id: candidate.id,

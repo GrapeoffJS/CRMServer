@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SearchService } from './services/search/search.service';
 import { SearchController } from './controllers/search.controller';
-import { IndexerService } from './services/indexer/indexer.service';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import getESConnectionUri from '../../config/getESConnectionUri';
@@ -26,7 +25,7 @@ import getESConnectionUri from '../../config/getESConnectionUri';
             }
         })
     ],
-    providers: [SearchService, IndexerService],
+    providers: [SearchService],
     controllers: [SearchController]
 })
 export class SearchModule {}

@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import { StatusModel } from './models/Status.model';
+import { StatusModel } from './models/status.model';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { CreateStatusDto } from './dto/CreateStatusDto';
-import { UpdateStatusDto } from './dto/UpdateStatusDto';
+import { CreateStatusDto } from './dto/create-status.dto';
+import { UpdateStatusDto } from './dto/update-status.dto';
 
 @Injectable()
 export class StatusesService {

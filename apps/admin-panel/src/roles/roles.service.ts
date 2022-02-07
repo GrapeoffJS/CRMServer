@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
-import { RoleModel } from './models/Role.model';
+import { RoleModel } from './models/role.model';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { CreateRoleDto } from './dto/CreateRoleDto';
-import { UpdateRoleDto } from './dto/UpdateRoleDto';
+import { CreateRoleDto } from './dto/create-role.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
 
 @Injectable()
 export class RolesService {

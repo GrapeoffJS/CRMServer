@@ -4,11 +4,11 @@ import {
     NotFoundException
 } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { StudentModel } from '../../students/crud/models/Student.model';
-import { GroupModel } from './models/Group.model';
+import { StudentModel } from '../../students/crud/models/student.model';
+import { GroupModel } from './models/group.model';
 import { InjectModel } from 'nestjs-typegoose';
-import { CreateGroupDto } from './dto/CreateGroupDto';
-import { UpdateGroupDto } from './dto/UpdateGroupDto';
+import { CreateGroupDto } from './dto/create-group.dto';
+import { UpdateGroupDto } from './dto/update-group.dto';
 
 @Injectable()
 export class CrudService {

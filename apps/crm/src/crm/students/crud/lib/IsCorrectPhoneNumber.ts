@@ -4,7 +4,7 @@ import {
     ValidationArguments
 } from 'class-validator';
 import { isValidPhoneNumber } from 'libphonenumber-js';
-import { PhoneNumber } from '../dto/CreateStudentDto';
+import { PhoneNumber } from '../dto/create-student.dto';
 
 export function IsCorrectPhoneNumber(validationOptions?: ValidationOptions) {
     // eslint-disable-next-line @typescript-eslint/ban-types

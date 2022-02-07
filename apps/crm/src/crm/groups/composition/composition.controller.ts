@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
 import { CompositionService } from './composition.service';
-import { MongoID } from '../../../../../../utils/dto/MongoID';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -9,10 +9,10 @@ import {
     ApiParam,
     ApiTags
 } from '@nestjs/swagger';
-import { StudentsDto } from './dto/StudentsDto';
-import { GroupModel } from '../crud/models/Group.model';
+import { StudentsDto } from './dto/students.dto';
+import { GroupModel } from '../crud/models/group.model';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/ActionRights';
+import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 
 @ApiTags('CRM / Groups / {id} / Students')
@@ -28,7 +28,7 @@ export class CompositionController {
     @ApiCreatedResponse({ type: () => GroupModel })
     @Post(':id/students')
     async addStudents(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() { students }: StudentsDto
     ) {
         return await this.compositionService.addStudents(id, students);
@@ -41,7 +41,7 @@ export class CompositionController {
     @ApiOkResponse({ type: () => GroupModel })
     @Delete(':id/students')
     async removeStudents(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() { students }: StudentsDto
     ) {
         return await this.compositionService.removeStudents(id, students);

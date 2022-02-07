@@ -9,7 +9,7 @@ import {
     Query
 } from '@nestjs/common';
 import { RolesService } from './roles.service';
-import { CreateRoleDto } from './dto/CreateRoleDto';
+import { CreateRoleDto } from './dto/create-role.dto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -18,10 +18,10 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PaginationDto } from '../../../../utils/dto/PaginationDto';
-import { MongoID } from '../../../../utils/dto/MongoID';
-import { UpdateRoleDto } from './dto/UpdateRoleDto';
-import { RoleModel } from './models/Role.model';
+import { PaginationDto } from '../../../../utils/dto/pagination.dto';
+import { MongoId } from '../../../../utils/dto/mongo-id';
+import { UpdateRoleDto } from './dto/update-role.dto';
+import { RoleModel } from './models/role.model';
 import { PublicController } from '../../../crm/src/authorization/public-controller.decorator';
 
 @ApiTags('Admin Panel / Roles')
@@ -48,7 +48,7 @@ export class RolesController {
     @ApiParam({ name: 'id', type: () => String })
     @ApiOkResponse({ type: () => RoleModel })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID) {
+    async getByID(@Param() { id }: MongoId) {
         return await this.rolesService.getByID(id);
     }
 
@@ -56,7 +56,7 @@ export class RolesController {
     @ApiOkResponse({ type: () => RoleModel })
     @Patch(':id')
     async update(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() updateRoleDto: UpdateRoleDto
     ) {
         return await this.rolesService.update(id, updateRoleDto);
@@ -65,7 +65,7 @@ export class RolesController {
     @ApiParam({ name: 'id', type: () => String })
     @ApiOkResponse({ type: () => RoleModel })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.rolesService.delete(id);
     }
 }

@@ -1,8 +1,8 @@
 import { Controller, Delete, Get, Param, Query } from '@nestjs/common';
-import { PaginationDto } from '../../../../../../utils/dto/PaginationDto';
-import { MongoID } from '../../../../../../utils/dto/MongoID';
+import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
 import { AllStaffService } from '../../services/all-staff/all-staff.service';
-import { CRMUserModel } from '../../models/CRMUser.model';
+import { CrmUserModel } from '../../models/crm-user.model';
 import { ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { PublicController } from '../../../../../crm/src/authorization/public-controller.decorator';
 
@@ -13,7 +13,7 @@ export class AllStaffController {
     constructor(private readonly allStaffService: AllStaffService) {}
 
     @ApiOkResponse({
-        type: () => CRMUserModel,
+        type: () => CrmUserModel,
         isArray: true
     })
     @ApiQuery({ name: 'limit', type: () => Number })
@@ -23,17 +23,17 @@ export class AllStaffController {
         return await this.allStaffService.get(limit, offset);
     }
 
-    @ApiOkResponse({ type: () => CRMUserModel })
+    @ApiOkResponse({ type: () => CrmUserModel })
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
-    async getByID(@Param() { id }: MongoID) {
+    async getByID(@Param() { id }: MongoId) {
         return await this.allStaffService.getByID(id);
     }
 
-    @ApiOkResponse({ type: () => CRMUserModel })
+    @ApiOkResponse({ type: () => CrmUserModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.allStaffService.delete(id);
     }
 }

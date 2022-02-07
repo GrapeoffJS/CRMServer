@@ -9,11 +9,11 @@ import {
     Post,
     Put
 } from '@nestjs/common';
-import { CreateSalesFunnelStepDto } from './dto/CreateSalesFunnelStepDto';
+import { CreateSalesFunnelStepDto } from './dto/create-sales-funnel-step.dto';
 import { SalesFunnelService } from './sales-funnel.service';
-import { UpdateSalesFunnelStepDto } from './dto/UpdateSalesFunnelStepDto';
-import { ChangeOrderDto } from './dto/ChangeOrderDto';
-import { MongoID } from '../../../../utils/dto/MongoID';
+import { UpdateSalesFunnelStepDto } from './dto/update-sales-funnel-step.dto';
+import { ChangeOrderDto } from './dto/change-order.dto';
+import { MongoId } from '../../../../utils/dto/mongo-id';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -21,7 +21,7 @@ import {
     ApiParam,
     ApiTags
 } from '@nestjs/swagger';
-import { SalesFunnelStepModel } from './models/SalesFunnelStep.model';
+import { SalesFunnelStepModel } from './models/sales-funnel-step.model';
 import { PublicController } from '../../../crm/src/authorization/public-controller.decorator';
 
 @ApiTags('Admin Panel / Sales Funnel')
@@ -54,7 +54,7 @@ export class SalesFunnelController {
     @ApiParam({ name: 'id', type: () => String })
     @Patch(':id')
     async update(
-        @Param() { id }: MongoID,
+        @Param() { id }: MongoId,
         @Body() updateSalesFunnelStepDto: UpdateSalesFunnelStepDto
     ) {
         return await this.salesFunnelService.update(
@@ -66,7 +66,7 @@ export class SalesFunnelController {
     @ApiOkResponse({ type: () => SalesFunnelStepModel })
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.salesFunnelService.delete(id);
     }
 

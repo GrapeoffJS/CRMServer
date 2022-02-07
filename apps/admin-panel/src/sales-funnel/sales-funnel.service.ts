@@ -3,13 +3,13 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { CreateSalesFunnelStepDto } from './dto/CreateSalesFunnelStepDto';
+import { CreateSalesFunnelStepDto } from './dto/create-sales-funnel-step.dto';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { UpdateSalesFunnelStepDto } from './dto/UpdateSalesFunnelStepDto';
-import { ChangeOrderDto } from './dto/ChangeOrderDto';
-import { StudentModel } from '../../../crm/src/crm/students/crud/models/Student.model';
-import { SalesFunnelStepModel } from './models/SalesFunnelStep.model';
+import { UpdateSalesFunnelStepDto } from './dto/update-sales-funnel-step.dto';
+import { ChangeOrderDto } from './dto/change-order.dto';
+import { StudentModel } from '../../../crm/src/crm/students/crud/models/student.model';
+import { SalesFunnelStepModel } from './models/sales-funnel-step.model';
 
 @Injectable()
 export class SalesFunnelService {
