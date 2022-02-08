@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-    backend:
+    crm_backend:
         build: ./
         ports:
             - "4200:4200"
@@ -25,14 +25,10 @@ services:
     elastic:
         image: elasticsearch:7.13.4
         restart: always
-        environment:
-            - discovery.type=single-node
-            - cluster.name=elastic-crm
-            - bootstrap.memory_lock=true
-            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-            - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
-            - ELASTIC_USERNAME=$ELASTIC_USERNAME
-            - xpack.security.enabled=$ELASTIC_SECURITY
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
         ports:
             - "9200:9200"
         volumes:
