@@ -10,19 +10,19 @@ import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateSalesFunnelStepDto {
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsNotEmpty()
     @IsString()
     name: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @Type(() => Number)
     @IsNotEmpty()
     @IsNumber()
     @Min(0)
     order: number;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsHexColor()
     background: string;
 

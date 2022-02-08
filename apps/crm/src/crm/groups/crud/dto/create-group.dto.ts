@@ -12,34 +12,34 @@ import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateGroupDto {
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsNotEmpty()
     @IsString()
     name: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @Type(() => Number)
     @Min(0)
     @IsNumber({ allowNaN: false, allowInfinity: false })
     level: number;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @Type(() => Number)
     @Min(0)
     @IsNumber({ allowNaN: false, allowInfinity: false })
     places: number;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsBoolean()
     trial: boolean;
 
-    @ApiProperty()
+    @ApiProperty({ required: true, isArray: true, minLength: 0 })
     @IsMongoId({ each: true })
     @ArrayMinSize(0)
     @ArrayUnique()
     students: string[];
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsMongoId()
     tutor: string;
 }

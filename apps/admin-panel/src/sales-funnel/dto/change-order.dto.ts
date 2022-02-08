@@ -3,11 +3,11 @@ import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ChangeOrderDto {
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsMongoId()
     id: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @Type(() => Number)
     @IsNotEmpty()
     @IsNumber()

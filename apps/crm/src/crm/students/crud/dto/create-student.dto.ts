@@ -31,17 +31,17 @@ export class PhoneNumber {
 }
 
 export class CreateStudentDto {
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsNotEmpty()
     @IsString()
     name: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsNotEmpty()
     @IsString()
     surname: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsNotEmpty()
     @IsString()
     middleName: string;
@@ -80,7 +80,7 @@ export class CreateStudentDto {
     @IsString()
     discord?: string;
 
-    @ApiProperty({ description: 'Must be a mongo id' })
+    @ApiProperty({ description: 'Must be a mongo id', required: true })
     @IsMongoId()
     salesFunnelStep: string;
 }

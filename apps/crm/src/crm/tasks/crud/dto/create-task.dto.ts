@@ -13,13 +13,13 @@ import { Transform } from 'class-transformer';
 import { DateTime } from 'luxon';
 
 export class CreateTaskDto {
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsNotEmpty()
     @IsString()
     @MaxLength(500)
     name: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsMongoId()
     responsible: string;
 
@@ -28,23 +28,23 @@ export class CreateTaskDto {
     @IsMongoId()
     for: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsISO8601()
     @Transform(prop =>
         DateTime.fromISO(prop.value).setZone('Europe/Moscow').toISODate()
     )
     deadline: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: true })
     @IsString()
     @MaxLength(1500)
     text: string;
 
-    @ApiProperty({ enum: () => TaskTypes })
+    @ApiProperty({ enum: () => TaskTypes, required: true })
     @IsEnum(TaskTypes)
     type: number;
 
-    @ApiProperty({ isArray: true })
+    @ApiProperty({ isArray: true, required: true, minProperties: 0 })
     @IsMongoId({ each: true })
     tags: string[];
 }
