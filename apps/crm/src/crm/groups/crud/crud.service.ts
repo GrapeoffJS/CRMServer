@@ -91,4 +91,8 @@ export class CrudService {
 
         return deleted;
     }
+
+    async deleteMany(ids: string[]) {
+        return this.groupModel.deleteMany({ _id: ids });
+    }
 }

@@ -13,7 +13,7 @@ import { BaseModel } from '../../../../../../../utils/models/base.model';
 export class NoteModel extends BaseModel {
     @ApiProperty({ type: () => String })
     @Exclude()
-    @prop({ type: () => StudentModel, ref: () => StudentModel, required: true })
+    // @Expose: () => StudentModel, ref: () => StudentModel, required: true })
     owner_id: Ref<StudentModel>;
 
     @ApiProperty({ type: () => CrmUserModel })

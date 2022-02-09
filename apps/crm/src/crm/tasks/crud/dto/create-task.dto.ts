@@ -1,4 +1,5 @@
 import {
+    ArrayMinSize,
     IsEnum,
     IsISO8601,
     IsMongoId,
@@ -42,9 +43,10 @@ export class CreateTaskDto {
 
     @ApiProperty({ enum: () => TaskTypes, required: true })
     @IsEnum(TaskTypes)
-    type: number;
+    type: TaskTypes;
 
-    @ApiProperty({ isArray: true, required: true, minProperties: 0 })
+    @ApiProperty({ isArray: true, required: true })
     @IsMongoId({ each: true })
+    @ArrayMinSize(0)
     tags: string[];
 }

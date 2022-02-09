@@ -32,7 +32,7 @@ import { PaginatedResponseDto } from './dto/paginated-response.dto';
 @ApiBearerAuth()
 @Controller('/crm/students')
 export class CrudController {
-    constructor(private readonly studentsService: CrudService) {}
+    constructor(private readonly crudService: CrudService) {}
 
     @SetResponseTransformationType(StudentModel)
     @RequiredActionRights(ActionRights.CREATE_STUDENT)
@@ -40,7 +40,7 @@ export class CrudController {
     @ApiBody({ type: () => CreateStudentDto })
     @Post()
     async create(@Body() createStudentDto: CreateStudentDto) {
-        return await this.studentsService.create(createStudentDto);
+        return await this.crudService.create(createStudentDto);
     }
 
     @SetResponseTransformationType(PaginatedResponseDto)
@@ -53,7 +53,7 @@ export class CrudController {
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
     async get(@Query() { limit, offset }: PaginationDto) {
-        return await this.studentsService.get(limit, offset);
+        return await this.crudService.get(limit, offset);
     }
 
     @SetResponseTransformationType(StudentModel)
@@ -62,7 +62,7 @@ export class CrudController {
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
     async getByID(@Param() { id }: MongoId) {
-        return await this.studentsService.getByID(id);
+        return await this.crudService.getByID(id);
     }
 
     @SetResponseTransformationType(StudentModel)
@@ -75,7 +75,7 @@ export class CrudController {
         @Param() { id }: MongoId,
         @Body() updateStudentDto: UpdateStudentDto
     ) {
-        return await this.studentsService.update(id, updateStudentDto);
+        return await this.crudService.update(id, updateStudentDto);
     }
 
     @SetResponseTransformationType(StudentModel)
@@ -84,6 +84,6 @@ export class CrudController {
     @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
     async delete(@Param() { id }: MongoId) {
-        return await this.studentsService.delete(id);
+        return await this.crudService.delete(id);
     }
 }

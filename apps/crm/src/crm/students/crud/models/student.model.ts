@@ -106,7 +106,6 @@ export class StudentModel extends BaseModel {
     @Type(() => SalesFunnelStepModel)
     @Expose({ groups: [DataRights.SEE_STUDENT_SALES_FUNNEL_STEP] })
     @prop({
-        type: () => SalesFunnelStepModel,
         ref: () => SalesFunnelStepModel,
         required: true,
         justOne: true
@@ -117,7 +116,6 @@ export class StudentModel extends BaseModel {
     @Type(() => StatusModel)
     @Expose({ groups: [DataRights.SEE_STUDENT_STATUSES] })
     @prop({
-        type: () => [StatusModel],
         ref: () => StatusModel
     })
     statuses: Ref<StatusModel>[];
@@ -126,7 +124,6 @@ export class StudentModel extends BaseModel {
     @Type(() => NoteModel)
     @Expose({ groups: [DataRights.SEE_STUDENT_NOTES] })
     @prop({
-        type: () => [NoteModel],
         ref: () => NoteModel,
         localField: '_id',
         foreignField: 'owner_id'
@@ -137,7 +134,6 @@ export class StudentModel extends BaseModel {
     @Type(() => GroupModel)
     @Expose({ groups: [DataRights.SEE_STUDENT_GROUPS] })
     @prop({
-        type: () => [GroupModel],
         ref: () => GroupModel,
         localField: '_id',
         foreignField: 'students'
@@ -147,7 +143,6 @@ export class StudentModel extends BaseModel {
     @Type(() => TaskModel)
     @Expose({ groups: [DataRights.SEE_STUDENT_TASKS] })
     @prop({
-        type: () => [TaskModel],
         ref: () => TaskModel,
         localField: '_id',
         foreignField: 'for'

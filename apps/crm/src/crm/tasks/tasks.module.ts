@@ -6,8 +6,6 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { TaskModel } from './crud/models/task.model';
 
 @Module({
-    controllers: [CrudController],
-    providers: [CrudService],
     imports: [
         TypegooseModule.forFeature([
             {
@@ -15,6 +13,8 @@ import { TaskModel } from './crud/models/task.model';
             }
         ]),
         TagsModule
-    ]
+    ],
+    controllers: [CrudController],
+    providers: [CrudService]
 })
 export class TasksModule {}

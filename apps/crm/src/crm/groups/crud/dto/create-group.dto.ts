@@ -33,7 +33,7 @@ export class CreateGroupDto {
     @IsBoolean()
     trial: boolean;
 
-    @ApiProperty({ required: true, isArray: true, minLength: 0 })
+    @ApiProperty({ required: true, isArray: true })
     @IsMongoId({ each: true })
     @ArrayMinSize(0)
     @ArrayUnique()

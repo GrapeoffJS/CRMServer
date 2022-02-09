@@ -56,13 +56,13 @@ export class CreateStudentDto {
     @IsISO8601({ strict: true })
     dateOfBirth: Date;
 
-    @ApiProperty()
+    @ApiProperty({ type: () => PhoneNumber })
     @IsOptional()
     @Type(() => PhoneNumber)
     @ValidateNested()
     phone: PhoneNumber;
 
-    @ApiProperty()
+    @ApiProperty({ type: () => PhoneNumber })
     @IsOptional()
     @Type(() => PhoneNumber)
     @ValidateNested()

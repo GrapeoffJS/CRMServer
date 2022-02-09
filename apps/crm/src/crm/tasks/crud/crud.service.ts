@@ -5,6 +5,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { DateTime } from 'luxon';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class CrudService {
@@ -18,27 +19,220 @@ export class CrudService {
 
         return this.taskModel
             .findById(task.id)
-            .populate('responsible for')
+            .populate('responsible for tags')
             .lean()
             .exec();
     }
 
     async get(id: string, tags: string[]) {
+        const tagsFilter =
+            tags === undefined
+                ? { $match: {} }
+                : {
+                      $match: {
+                          tags: {
+                              $all: tags.map(tag => new Types.ObjectId(tag))
+                          }
+                      }
+                  };
+
         return this.taskModel
-            .find({
-                responsible: id,
-                deadline: {
-                    $lt: DateTime.now()
-                        .plus({ day: 1 })
-                        .set({ hour: 23, minute: 59, second: 59 })
-                        .toJSDate()
-                },
-                tags: tags.length === 0 ? {} : { $all: tags },
-                archived: false
+            .aggregate()
+            .facet({
+                overdue: [
+                    {
+                        $match: {
+                            responsible: new Types.ObjectId(id),
+                            deadline: {
+                                $lt: DateTime.now().toJSDate()
+                            },
+                            archived: false,
+                            done: false
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'CRMUsers',
+                            as: 'responsible',
+                            localField: 'responsible',
+                            foreignField: '_id'
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'Students',
+                            as: 'for',
+                            localField: 'for',
+                            foreignField: '_id'
+                        }
+                    },
+                    tagsFilter,
+                    {
+                        $lookup: {
+                            from: 'TaskTags',
+                            localField: 'tags',
+                            foreignField: '_id',
+                            as: 'tags'
+                        }
+                    },
+                    { $sort: { deadline: 1 } }
+                ],
+                forToday: [
+                    {
+                        $match: {
+                            responsible: new Types.ObjectId(id),
+                            $and: [
+                                {
+                                    deadline: {
+                                        $gte: DateTime.now().toJSDate()
+                                    }
+                                },
+                                {
+                                    deadline: {
+                                        $lte: DateTime.now()
+                                            .set({
+                                                hour: 23,
+                                                minute: 59,
+                                                second: 59
+                                            })
+                                            .toJSDate()
+                                    }
+                                }
+                            ],
+                            archived: false,
+                            done: false
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'CRMUsers',
+                            as: 'responsible',
+                            localField: 'responsible',
+                            foreignField: '_id'
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'Students',
+                            as: 'for',
+                            localField: 'for',
+                            foreignField: '_id'
+                        }
+                    },
+                    tagsFilter,
+                    {
+                        $lookup: {
+                            from: 'TaskTags',
+                            localField: 'tags',
+                            foreignField: '_id',
+                            as: 'tags'
+                        }
+                    },
+                    { $sort: { deadline: 1 } }
+                ],
+                future: [
+                    {
+                        $match: {
+                            responsible: new Types.ObjectId(id),
+                            deadline: {
+                                $gt: DateTime.now()
+                                    .set({
+                                        hour: 23,
+                                        minute: 59,
+                                        second: 59
+                                    })
+                                    .toJSDate()
+                            },
+                            archived: false,
+                            done: false
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'CRMUsers',
+                            as: 'responsible',
+                            localField: 'responsible',
+                            foreignField: '_id'
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'Students',
+                            as: 'for',
+                            localField: 'for',
+                            foreignField: '_id'
+                        }
+                    },
+                    tagsFilter,
+                    {
+                        $lookup: {
+                            from: 'TaskTags',
+                            localField: 'tags',
+                            foreignField: '_id',
+                            as: 'tags'
+                        }
+                    },
+                    { $sort: { deadline: 1 } }
+                ],
+                completedToday: [
+                    {
+                        $match: {
+                            responsible: new Types.ObjectId(id),
+                            $and: [
+                                {
+                                    deadline: {
+                                        $gte: DateTime.now()
+                                            .set({
+                                                hour: 0,
+                                                minute: 0,
+                                                second: 0
+                                            })
+                                            .toJSDate()
+                                    }
+                                },
+                                {
+                                    deadline: {
+                                        $lte: DateTime.now()
+                                            .set({
+                                                hour: 23,
+                                                minute: 59,
+                                                second: 59
+                                            })
+                                            .toJSDate()
+                                    }
+                                }
+                            ],
+                            done: true
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'CRMUsers',
+                            as: 'responsible',
+                            localField: 'responsible',
+                            foreignField: '_id'
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'Students',
+                            as: 'for',
+                            localField: 'for',
+                            foreignField: '_id'
+                        }
+                    },
+                    tagsFilter,
+                    {
+                        $lookup: {
+                            from: 'TaskTags',
+                            localField: 'tags',
+                            foreignField: '_id',
+                            as: 'tags'
+                        }
+                    },
+                    { $sort: { deadline: 1 } }
+                ]
             })
-            .sort({ deadline: 1 })
-            .populate('responsible for')
-            .lean()
             .exec();
     }
 
@@ -51,7 +245,7 @@ export class CrudService {
 
         return this.taskModel
             .findById(id)
-            .populate('responsible for')
+            .populate('responsible for tags')
             .lean()
             .exec();
     }
@@ -59,7 +253,7 @@ export class CrudService {
     async delete(id: string) {
         const deleted = await this.taskModel
             .findByIdAndDelete(id)
-            .populate('responsible for')
+            .populate('responsible for tags')
             .lean()
             .exec();
 

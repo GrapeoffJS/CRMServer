@@ -3,9 +3,10 @@ import { CrmUserModel } from '../../../../../../admin-panel/src/crmusers/models/
 import { StudentModel } from '../../../students/crud/models/student.model';
 import { BaseModel } from '../../../../../../../utils/models/base.model';
 import { TaskTypes } from '../types/task-types';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { TaskTagModel } from '../../tags/models/task-tag.model';
 import { ApiProperty } from '@nestjs/swagger';
+import { DateTime } from 'luxon';
 
 @modelOptions({ schemaOptions: { collection: 'Tasks' } })
 export class TaskModel extends BaseModel {
@@ -16,7 +17,6 @@ export class TaskModel extends BaseModel {
     @ApiProperty({ type: () => CrmUserModel })
     @Type(() => CrmUserModel)
     @prop({
-        type: () => CrmUserModel,
         ref: () => CrmUserModel,
         required: true,
         justOne: true
@@ -25,10 +25,17 @@ export class TaskModel extends BaseModel {
 
     @ApiProperty({ type: () => StudentModel })
     @Type(() => StudentModel)
-    @prop({ type: () => StudentModel, ref: () => StudentModel, justOne: true })
+    @prop({ ref: () => StudentModel, justOne: true })
     for: Ref<StudentModel>;
 
     @ApiProperty({ type: () => Date })
+    @Transform(
+        prop =>
+            `${DateTime.fromJSDate(prop.value)
+                .setZone('Europe/Moscow')
+                .setLocale('ru')
+                .toFormat('DDD HH:mm:ss')} МСК`
+    )
     @prop({ type: () => Date, required: true })
     deadline: Date;
 
@@ -41,12 +48,12 @@ export class TaskModel extends BaseModel {
     text: string;
 
     @ApiProperty({ enum: () => TaskTypes })
-    @prop({ enum: () => TaskTypes, required: true })
+    @prop({ type: () => Number, required: true })
     type: number;
 
     @ApiProperty({ type: () => TaskTagModel, isArray: true })
     @Type(() => TaskTagModel)
-    @prop({ type: () => [TaskTagModel], ref: () => TaskTagModel })
+    @prop({ ref: () => TaskTagModel })
     tags: Ref<TaskTagModel>[];
 
     @ApiProperty()

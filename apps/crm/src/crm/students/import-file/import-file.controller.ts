@@ -111,7 +111,7 @@ export class ImportFileController {
     @Get('/template')
     downloadTemplate(@Res({ passthrough: true }) response: Response) {
         const file = createReadStream(
-            path.join(process.cwd(), './template-files/template.xlsx')
+            path.join(process.cwd(), './static/template.xlsx')
         );
 
         response.set({

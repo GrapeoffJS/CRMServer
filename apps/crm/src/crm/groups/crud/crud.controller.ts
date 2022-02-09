@@ -27,12 +27,13 @@ import { RequiredActionRights } from '../../../authorization/required-action-rig
 import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { PaginatedResponseDto } from './dto/paginated-response.dto';
+import { MongoIds } from '../../../../../../utils/dto/mongo-ids';
 
 @ApiTags('CRM / Groups')
 @ApiBearerAuth()
 @Controller('/crm/groups')
 export class CrudController {
-    constructor(private readonly groupsService: CrudService) {}
+    constructor(private readonly crudService: CrudService) {}
 
     @SetResponseTransformationType(GroupModel)
     @RequiredActionRights(
@@ -43,7 +44,7 @@ export class CrudController {
     @ApiBody({ type: () => CreateGroupDto })
     @Post()
     async create(@Body() createGroupDto: CreateGroupDto) {
-        return await this.groupsService.create(createGroupDto);
+        return await this.crudService.create(createGroupDto);
     }
 
     @SetResponseTransformationType(PaginatedResponseDto)
@@ -56,7 +57,7 @@ export class CrudController {
     @ApiQuery({ name: 'offset', type: () => Number })
     @Get()
     async get(@Query() { limit, offset }: PaginationDto) {
-        return await this.groupsService.get(limit, offset);
+        return await this.crudService.get(limit, offset);
     }
 
     @SetResponseTransformationType(GroupModel)
@@ -65,7 +66,7 @@ export class CrudController {
     @ApiParam({ name: 'id', type: () => String })
     @Get(':id')
     async getByID(@Param() { id }: MongoId) {
-        return await this.groupsService.getByID(id);
+        return await this.crudService.getByID(id);
     }
 
     @SetResponseTransformationType(GroupModel)
@@ -78,7 +79,7 @@ export class CrudController {
         @Param() { id }: MongoId,
         @Body() updateGroupDto: UpdateGroupDto
     ) {
-        return await this.groupsService.update(id, updateGroupDto);
+        return await this.crudService.update(id, updateGroupDto);
     }
 
     @SetResponseTransformationType(GroupModel)
@@ -86,6 +87,12 @@ export class CrudController {
     @ApiOkResponse({ type: () => GroupModel })
     @Delete(':id')
     async delete(@Param() { id }: MongoId) {
-        return await this.groupsService.delete(id);
+        return await this.crudService.delete(id);
+    }
+
+    @RequiredActionRights(ActionRights.DELETE_GROUP)
+    @Delete()
+    async deleteMany(@Body() { ids }: MongoIds) {
+        return await this.crudService.deleteMany(ids);
     }
 }

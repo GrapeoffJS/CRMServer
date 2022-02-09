@@ -42,7 +42,6 @@ export class GroupModel extends BaseModel {
     @Type(() => StudentModel)
     @Expose({ groups: [DataRights.SEE_GROUP_STUDENTS] })
     @prop({
-        type: () => [StudentModel],
         ref: () => StudentModel
     })
     students: Ref<StudentModel>[];
@@ -51,7 +50,6 @@ export class GroupModel extends BaseModel {
     @Type(() => TutorModel)
     @Expose({ groups: [DataRights.SEE_GROUP_TUTOR] })
     @prop({
-        type: () => TutorModel,
         ref: () => TutorModel,
         justOne: true
     })

@@ -58,7 +58,7 @@ export class CrudService {
         const found = await this.studentModel
             .findById(id)
             .populate([
-                { path: 'salesFunnelStep groups statuses' },
+                { path: 'salesFunnelStep groups statuses tasks' },
                 {
                     path: 'notes',
                     populate: {
