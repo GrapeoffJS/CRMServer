@@ -19,7 +19,12 @@ export class ActionRightsGuard implements CanActivate {
             context.getHandler()
         );
 
-        if (isEndpointPublic || isControllerPublic) {
+        const permissionsNotNeeded = this.reflector.get<boolean>(
+            'permissions-not-needed',
+            context.getHandler()
+        );
+
+        if (isEndpointPublic || isControllerPublic || permissionsNotNeeded) {
             return true;
         }
 
