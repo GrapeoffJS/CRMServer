@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { CrudController } from './crud/crud.controller';
-import { CrudService } from './crud/crud.service';
 import { TagsModule } from './tags/tags.module';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { TaskModel } from './crud/models/task.model';
+import { CrudModule } from './crud/crud.module';
 
 @Module({
     imports: [
@@ -12,9 +11,10 @@ import { TaskModel } from './crud/models/task.model';
                 typegooseClass: TaskModel
             }
         ]),
-        TagsModule
+        TagsModule,
+        CrudModule
     ],
-    controllers: [CrudController],
-    providers: [CrudService]
+    controllers: [],
+    providers: []
 })
 export class TasksModule {}
