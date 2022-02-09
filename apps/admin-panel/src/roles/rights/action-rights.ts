@@ -20,5 +20,9 @@ export enum ActionRights {
     CREATE_TASK = 'crm:tasks:create',
     EDIT_TASK = 'crm:tasks:update',
     DELETE_TASK = 'crm:tasks:delete',
-    SEE_TASKS = 'crm:tasks:read'
+    SEE_TASK = 'crm:tasks:read',
+    CREATE_TASK_TAG = 'crm:tasks:tags:create',
+    SEE_TASK_TAG = 'crm:tasks:tags:read',
+    EDIT_TASK_TAG = 'crm:tasks:tags:update',
+    DELETE_TASK_TAG = 'crm:tasks:tags:delete'
 }
