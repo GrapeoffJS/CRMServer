@@ -1,13 +1,13 @@
 import { modelOptions, plugin, prop, Ref } from '@typegoose/typegoose';
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { RoleModel } from '../../roles/models/role.model';
+import { BaseModel } from '../../../../../utils/models/base.model';
 
 @plugin(mongooseAutoPopulate)
 @modelOptions({ schemaOptions: { collection: 'CRMUsers' } })
-export class CrmUserModel extends TimeStamps {
+export class CrmUserModel extends BaseModel {
     @ApiProperty()
     @prop({
         type: () => String,

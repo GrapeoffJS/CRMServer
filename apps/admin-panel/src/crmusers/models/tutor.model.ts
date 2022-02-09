@@ -13,7 +13,6 @@ import { ApiProperty } from '@nestjs/swagger';
 export class TutorModel extends CrmUserModel {
     @ApiProperty({ type: () => GroupModel, isArray: true })
     @prop({
-        type: [GroupModel],
         ref: () => GroupModel,
         localField: '_id',
         foreignField: 'tutor'
