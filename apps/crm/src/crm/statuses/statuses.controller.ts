@@ -26,7 +26,7 @@ import {
 import { RequiredActionRights } from '../../authorization/required-action-rights.decorator';
 import { ActionRights } from '../../../../admin-panel/src/roles/rights/action-rights';
 
-@ApiTags('CRM / Statuses')
+@ApiTags('Statuses')
 @ApiBearerAuth()
 @Controller('/crm/statuses')
 export class StatusesController {

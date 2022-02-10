@@ -15,7 +15,7 @@ import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { PaginatedResponseDto } from '../crud/dto/paginated-response.dto';
 
-@ApiTags('CRM / Students / Pivot Table')
+@ApiTags('Students / Pivot Table')
 @ApiBearerAuth()
 @Controller('/crm/students/pivot-table')
 export class PivotTableController {

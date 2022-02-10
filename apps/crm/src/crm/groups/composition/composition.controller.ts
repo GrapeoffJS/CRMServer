@@ -15,7 +15,7 @@ import { RequiredActionRights } from '../../../authorization/required-action-rig
 import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 
-@ApiTags('CRM / Groups / {id} / Students')
+@ApiTags('Group / Composition')
 @ApiBearerAuth()
 @Controller('crm/groups')
 export class CompositionController {

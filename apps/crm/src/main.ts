@@ -10,7 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ActionRightsGuard } from './authorization/action-rights-guard.service';
 import { RightsBasedSerializerInterceptor } from './authorization/rights-based-serializer.interceptor';
 import { ElasticClientInstance } from './crm/search/ElasticClientInstance';
-import getESConnectionUri from './config/getESConnectionUri';
+import getESConnectionUri from '../../../config/getESConnectionUri';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -69,7 +69,10 @@ async function bootstrap() {
         }
     });
 
-    await app.listen(app.get<ConfigService>(ConfigService).get('PORT'));
+    await app.listen(
+        app.get<ConfigService>(ConfigService).get('CRM_PORT') ||
+            process.env.port
+    );
 }
 
 bootstrap().then(r => r);

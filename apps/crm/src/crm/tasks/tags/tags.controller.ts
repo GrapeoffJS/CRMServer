@@ -15,13 +15,15 @@ import {
     ApiBody,
     ApiCreatedResponse,
     ApiOkResponse,
-    ApiParam
+    ApiParam,
+    ApiTags
 } from '@nestjs/swagger';
 import { TaskTagModel } from './models/task-tag.model';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
 import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 
+@ApiTags('Task Tags')
 @Controller('/crm/tasks/tags')
 export class TagsController {
     constructor(private readonly tagsService: TagsService) {}

@@ -30,7 +30,7 @@ import { CsvImportServiceService } from './services/csv-import-service/csv-impor
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
 import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 
-@ApiTags('CRM / Students / Import File')
+@ApiTags('Students / Import File')
 @ApiBearerAuth()
 @Controller('/crm/students/import-file')
 export class ImportFileController {

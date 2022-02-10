@@ -9,22 +9,17 @@ export class ActionRightsGuard implements CanActivate {
     constructor(private readonly reflector: Reflector) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const isControllerPublic = this.reflector.get<boolean>(
-            'isControllerPublic',
-            context.getClass()
-        );
-
-        const isEndpointPublic = this.reflector.get<boolean>(
-            'isEndpointPublic',
+        const isPublic = this.reflector.getAllAndOverride<boolean>('isPublic', [
+            context.getClass(),
             context.getHandler()
-        );
+        ]);
 
         const permissionsNotNeeded = this.reflector.get<boolean>(
-            'permissions-not-needed',
+            'rights-not-needed',
             context.getHandler()
         );
 
-        if (isEndpointPublic || isControllerPublic || permissionsNotNeeded) {
+        if (isPublic || permissionsNotNeeded) {
             return true;
         }
 

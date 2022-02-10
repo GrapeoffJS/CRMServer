@@ -27,7 +27,7 @@ import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action
 import { AuthorizedRequest } from '../../../authorization/types/authorized-request';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 
-@ApiTags('CRM / Students / Notes')
+@ApiTags('Students / Notes')
 @ApiBearerAuth()
 @Controller('/crm/students')
 export class NotesController {

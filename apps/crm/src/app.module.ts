@@ -1,8 +1,7 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { TypegooseConnectionOptions, TypegooseModule } from 'nestjs-typegoose';
-import getMongoConnectionUri from './config/getMongoConnectionUri';
-import { AdminPanelModule } from '../../admin-panel/src/admin-panel.module';
+import getMongoConnectionUri from '../../../config/getMongoConnectionUri';
 import { CrmModule } from './crm/crm.module';
 import { HealthCheckModule } from './health-check/health-check.module';
 import Joi from 'joi';
@@ -19,7 +18,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
             envFilePath: '.env',
             isGlobal: true,
             validationSchema: Joi.object({
-                PORT: Joi.number().min(0).max(65535).default(4200),
+                CRM_PORT: Joi.number().min(0).max(65535),
                 MONGO_CONNECTION_PROTOCOL: Joi.string().required(),
                 MONGO_HOST: Joi.string().required(),
                 MONGO_INITDB_ROOT_USERNAME: Joi.string().required(),
@@ -93,7 +92,6 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
         EventEmitterModule.forRoot({
             delimiter: '.'
         }),
-        AdminPanelModule,
         CrmModule,
         HealthCheckModule,
         Reflector,

@@ -29,7 +29,7 @@ import { SetResponseTransformationType } from '../../../authorization/set-respon
 import { PaginatedResponseDto } from './dto/paginated-response.dto';
 import { MongoIds } from '../../../../../../utils/dto/mongo-ids';
 
-@ApiTags('CRM / Groups')
+@ApiTags('Groups')
 @ApiBearerAuth()
 @Controller('/crm/groups')
 export class CrudController {

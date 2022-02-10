@@ -7,7 +7,7 @@ import { ElasticSearchHealthIndicatorService } from './indicators/elastic-search
 import { TypegooseModule } from 'nestjs-typegoose';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import getESConnectionUri from '../config/getESConnectionUri';
+import getESConnectionUri from '../../../../config/getESConnectionUri';
 
 @Module({
     imports: [

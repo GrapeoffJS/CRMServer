@@ -28,7 +28,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { MongoId } from '../../../../../../utils/dto/mongo-id';
 import { TagsFilterDto } from './dto/tags-filter.dto';
 
-@ApiTags('CRM / Tasks')
+@ApiTags('Tasks')
 @Controller('/crm/tasks')
 export class CrudController {
     constructor(private readonly crudService: CrudService) {}

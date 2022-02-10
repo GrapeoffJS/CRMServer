@@ -22,10 +22,8 @@ import { PaginationDto } from '../../../../utils/dto/pagination.dto';
 import { MongoId } from '../../../../utils/dto/mongo-id';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { RoleModel } from './models/role.model';
-import { PublicController } from '../../../crm/src/authorization/public-controller.decorator';
 
-@ApiTags('Admin Panel / Roles')
-@PublicController()
+@ApiTags('Roles')
 @Controller('/admin-panel/roles')
 export class RolesController {
     constructor(private readonly rolesService: RolesService) {}

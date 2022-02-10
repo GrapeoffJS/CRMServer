@@ -1,4 +1,6 @@
 import { SetMetadata } from '@nestjs/common';
 
-export const RightsNotNeeded = () =>
-    SetMetadata('permissions-not-needed', true);
+/**
+ * Controllers or endpoints which marked with this decorator won't require action rights
+ */
+export const RightsNotNeeded = () => SetMetadata('rights-not-needed', true);

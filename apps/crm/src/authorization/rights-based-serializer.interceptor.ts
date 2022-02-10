@@ -17,17 +17,12 @@ export class RightsBasedSerializerInterceptor implements NestInterceptor {
     constructor(private readonly reflector: Reflector) {}
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-        const isControllerPublic = this.reflector.get<boolean>(
-            'isControllerPublic',
-            context.getClass()
-        );
-
-        const isEndpointPublic = this.reflector.get<boolean>(
-            'isEndpointPublic',
+        const isPublic = this.reflector.getAllAndOverride<boolean>('isPublic', [
+            context.getClass(),
             context.getHandler()
-        );
+        ]);
 
-        if (isEndpointPublic || isControllerPublic) {
+        if (isPublic) {
             return next.handle();
         }
 

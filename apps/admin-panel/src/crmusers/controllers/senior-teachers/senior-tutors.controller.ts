@@ -22,10 +22,8 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PublicController } from '../../../../../crm/src/authorization/public-controller.decorator';
 
-@ApiTags('Admin Panel / CRM Users / Senior Tutors')
-@PublicController()
+@ApiTags('CRM Users / Senior Tutors')
 @Controller('/admin-panel/crm-users/senior-tutors')
 export class SeniorTutorsController {
     constructor(private readonly seniorTutorsService: SeniorTutorsService) {}

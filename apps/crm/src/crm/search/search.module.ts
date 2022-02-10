@@ -3,7 +3,7 @@ import { SearchService } from './services/search/search.service';
 import { SearchController } from './controllers/search.controller';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import getESConnectionUri from '../../config/getESConnectionUri';
+import getESConnectionUri from '../../../../../config/getESConnectionUri';
 
 @Module({
     imports: [

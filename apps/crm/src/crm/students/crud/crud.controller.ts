@@ -28,7 +28,7 @@ import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { PaginatedResponseDto } from './dto/paginated-response.dto';
 
-@ApiTags('CRM / Students')
+@ApiTags('Students')
 @ApiBearerAuth()
 @Controller('/crm/students')
 export class CrudController {

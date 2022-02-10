@@ -3,10 +3,8 @@ import { CreateWorkHoursDto } from './dto/create-work-hours.dto';
 import { WorkHoursService } from './work-hours.service';
 import { MongoId } from '../../../../utils/dto/mongo-id';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
-import { PublicController } from '../../../crm/src/authorization/public-controller.decorator';
 
-@ApiTags('Admin Panel / Work Hours')
-@PublicController()
+@ApiTags('Work Hours')
 @Controller('/admin-panel/work-hours')
 export class WorkHoursController {
     constructor(private readonly workHoursService: WorkHoursService) {}

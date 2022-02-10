@@ -3,10 +3,10 @@ import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { RefreshDto } from './dto/refresh.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { PublicController } from '../authorization/public-controller.decorator';
+import { Public } from '../authorization/public.decorator';
 
 @ApiTags('Authorization')
-@PublicController()
+@Public()
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}

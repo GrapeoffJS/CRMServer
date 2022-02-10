@@ -5,7 +5,7 @@ import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { TutorModel } from '../../../../admin-panel/src/crmusers/models/tutor.model';
 import { RightsNotNeeded } from '../../authorization/rights-not-needed.decorator';
 
-@ApiTags('CRM / Tutors')
+@ApiTags('Tutors')
 @Controller('/crm/tutors')
 export class TutorsController {
     constructor(private readonly tutorsService: TutorsService) {}
