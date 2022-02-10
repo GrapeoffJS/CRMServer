@@ -14,7 +14,6 @@
         "start:dev": "nest start --watch",
         "start:dev:admin": "nest start --watch admin-panel",
         "start:debug": "nest start --debug --watch",
-        "start:prod": "node $(echo $APP_PATH)",
         "start:prod:crm": "node dist/apps/crm/main.js",
         "start:prod:admin": "node dist/apps/admin-panel/main.js",
         "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

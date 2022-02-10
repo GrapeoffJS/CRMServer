@@ -1,1 +1,1 @@
-web: npm run start:prod
+web: node $(echo $APP_PATH)
