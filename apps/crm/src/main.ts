@@ -71,7 +71,7 @@ async function bootstrap() {
 
     await app.listen(
         app.get<ConfigService>(ConfigService).get('CRM_PORT') ||
-            process.env.port
+            process.env.PORT
     );
 }
 

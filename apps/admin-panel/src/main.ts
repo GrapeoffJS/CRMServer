@@ -41,7 +41,7 @@ async function bootstrap() {
 
     const configService = app.get<ConfigService>(ConfigService);
 
-    await app.listen(configService.get('ADMIN_PANEL_PORT') || process.env.port);
+    await app.listen(configService.get('ADMIN_PANEL_PORT') || process.env.PORT);
 }
 
 bootstrap().then();
