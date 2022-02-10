@@ -4,6 +4,7 @@ import { GroupModel } from '../../groups/crud/models/group.model';
 import { CrudController } from './crud.controller';
 import { CrudService } from './crud.service';
 import { StudentModel } from './models/student.model';
+import { SalesFunnelStepModel } from '../../../../../admin-panel/src/sales-funnel/models/sales-funnel-step.model';
 
 @Module({
     imports: [
@@ -13,6 +14,9 @@ import { StudentModel } from './models/student.model';
             },
             {
                 typegooseClass: StudentModel
+            },
+            {
+                typegooseClass: SalesFunnelStepModel
             }
         ])
     ],

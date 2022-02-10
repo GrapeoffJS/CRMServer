@@ -29,13 +29,6 @@ export class TaskModel extends BaseModel {
     for: Ref<StudentModel>;
 
     @ApiProperty({ type: () => Date })
-    @Transform(
-        prop =>
-            `${DateTime.fromJSDate(prop.value)
-                .setZone('Europe/Moscow')
-                .setLocale('ru')
-                .toFormat('DDD HH:mm:ss')} МСК`
-    )
     @prop({ type: () => Date, required: true })
     deadline: Date;
 
