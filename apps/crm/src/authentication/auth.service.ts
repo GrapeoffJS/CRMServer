@@ -29,6 +29,7 @@ export class AuthService {
             .findOne({
                 login: authDto.login
             })
+            .populate('role')
             .exec();
 
         if (!candidate) {

@@ -17,17 +17,12 @@ export class AuthorizationGuard implements CanActivate {
     ) {}
 
     async canActivate(context: ExecutionContext) {
-        const isControllerPublic = this.reflector.get<boolean>(
-            'isControllerPublic',
-            context.getClass()
-        );
-
-        const isEndpointPublic = this.reflector.get<boolean>(
-            'isEndpointPublic',
+        const isPublic = this.reflector.getAllAndOverride<boolean>('isPublic', [
+            context.getClass(),
             context.getHandler()
-        );
+        ]);
 
-        if (isControllerPublic || isEndpointPublic) {
+        if (isPublic) {
             return true;
         }
 

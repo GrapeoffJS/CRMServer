@@ -7,12 +7,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { RefreshTokenModel } from './models/refresh-token.model';
 import { JwtFactory } from './jwt.factory';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { RoleModel } from '../../../admin-panel/src/roles/models/role.model';
 
 @Module({
     imports: [
         TypegooseModule.forFeature([
             { typegooseClass: CrmUserModel },
-            { typegooseClass: RefreshTokenModel }
+            { typegooseClass: RefreshTokenModel },
+            { typegooseClass: RoleModel }
         ]),
         JwtModule.registerAsync({
             imports: [ConfigModule],

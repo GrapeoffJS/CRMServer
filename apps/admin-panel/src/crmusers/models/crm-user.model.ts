@@ -46,7 +46,6 @@ export class CrmUserModel extends BaseModel {
     @ApiProperty({ type: () => RoleModel })
     @Exclude()
     @prop({
-        type: () => RoleModel,
         ref: () => RoleModel,
         required: true,
         autopopulate: true
