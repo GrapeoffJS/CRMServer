@@ -1,6 +1,7 @@
 import { modelOptions, prop } from '@typegoose/typegoose';
 import { StudentModel } from '../../../../crm/src/crm/students/crud/models/student.model';
 import { ApiProperty } from '@nestjs/swagger';
+import { BaseModel } from '../../../../../utils/models/base.model';
 
 @modelOptions({
     schemaOptions: {
@@ -8,7 +9,7 @@ import { ApiProperty } from '@nestjs/swagger';
         toObject: { virtuals: true }
     }
 })
-export class SalesFunnelStepModel {
+export class SalesFunnelStepModel extends BaseModel {
     @ApiProperty()
     @prop({ type: () => String, required: true })
     name: string;

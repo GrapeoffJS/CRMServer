@@ -9,7 +9,6 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
     const app = await NestFactory.create(AdminPanelModule);
 
-    app.enableCors({ credentials: true });
     app.use(helmet());
     app.use(compression());
 
@@ -30,16 +29,24 @@ async function bootstrap() {
         type: VersioningType.URI
     });
 
-    const config = new DocumentBuilder()
-        .setTitle('AdminPanel API')
-        .setDescription('AdminPanel API Documentation')
-        .setVersion('1')
-        .build();
-
-    const apiDocument = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api/docs', app, apiDocument);
-
     const configService = app.get<ConfigService>(ConfigService);
+
+    app.enableCors({
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+        optionsSuccessStatus: 200,
+        origin: configService.get<string>('ALLOWED_ORIGINS').split(' ')
+    });
+
+    if (configService.get<string>('GENERATE_DOCS') === 'true') {
+        const config = new DocumentBuilder()
+            .setTitle('AdminPanel API')
+            .setDescription('AdminPanel API Documentation')
+            .setVersion('1')
+            .build();
+
+        const apiDocument = SwaggerModule.createDocument(app, config);
+        SwaggerModule.setup('api/docs', app, apiDocument);
+    }
 
     await app.listen(configService.get('ADMIN_PANEL_PORT') || process.env.PORT);
 }
