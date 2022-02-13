@@ -8,8 +8,10 @@ import {
 import { TypegooseHealthIndicatorService } from './indicators/typegoose-health-indicator/typegoose-health-indicator.service';
 import { ElasticSearchHealthIndicatorService } from './indicators/elastic-search-health-indicator/elastic-search-health-indicator.service';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from '../authorization/public.decorator';
 
 @ApiTags('Health Check')
+@Public()
 @Controller('/health-check')
 export class HealthCheckController {
     constructor(
