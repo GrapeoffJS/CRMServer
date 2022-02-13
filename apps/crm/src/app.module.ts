@@ -35,7 +35,9 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
                 JWT_LIFETIME: Joi.string().required(),
                 JWT_REFRESH_LIFETIME: Joi.string().required(),
                 THROTTLE_TTL: Joi.number().required(),
-                THROTTLE_LIMIT: Joi.number().required()
+                THROTTLE_LIMIT: Joi.number().required(),
+                ALLOWED_ORIGINS: Joi.string().required(),
+                GENERATE_DOCS: Joi.string().equal('true', 'false').required()
             })
         }),
         JwtModule.registerAsync({
