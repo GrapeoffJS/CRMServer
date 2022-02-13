@@ -32,7 +32,7 @@ async function bootstrap() {
 
     app.enableCors({
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-        allowedHeaders: configService.get<string>('ALLOWED_ORIGINS').split(' '),
+        allowedHeaders: configService.get<string>('ALLOWED_HEADERS').split(' '),
         optionsSuccessStatus: 200,
         origin: configService.get<string>('ALLOWED_ORIGINS').split(' ')
     });
