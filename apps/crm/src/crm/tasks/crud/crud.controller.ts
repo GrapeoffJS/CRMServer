@@ -10,6 +10,7 @@ import {
     Req
 } from '@nestjs/common';
 import {
+    ApiBearerAuth,
     ApiBody,
     ApiCreatedResponse,
     ApiOkResponse,
@@ -29,6 +30,7 @@ import { MongoId } from '../../../../../../utils/dto/mongo-id';
 import { TagsFilterDto } from './dto/tags-filter.dto';
 
 @ApiTags('Tasks')
+@ApiBearerAuth()
 @Controller('/crm/tasks')
 export class CrudController {
     constructor(private readonly crudService: CrudService) {}

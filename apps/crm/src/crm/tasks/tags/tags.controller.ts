@@ -12,6 +12,7 @@ import { CreateTaskTagDto } from './dto/create-task-tag.dto';
 import { MongoId } from '../../../../../../utils/dto/mongo-id';
 import { UpdateTaskTagDto } from './dto/update-task-tag.dto';
 import {
+    ApiBearerAuth,
     ApiBody,
     ApiCreatedResponse,
     ApiOkResponse,
@@ -24,6 +25,7 @@ import { RequiredActionRights } from '../../../authorization/required-action-rig
 import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 
 @ApiTags('Task Tags')
+@ApiBearerAuth()
 @Controller('/crm/tasks/tags')
 export class TagsController {
     constructor(private readonly tagsService: TagsService) {}
