@@ -9,7 +9,7 @@ module.exports = {
         {
             name: 'Admin Panel',
             script: './dist/apps/admin-panel/main.js',
-            instances: 'max',
+            instances: '1',
             exec_mode: 'cluster'
         }]
 };
