@@ -3,7 +3,7 @@ import { StudentModel } from '../../../students/crud/models/student.model';
 import { TutorModel } from '../../../../../../admin-panel/src/crmusers/models/tutor.model';
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseModel } from '../../../../../../../utils/models/base.model';
-import { Expose, Transform, Type } from 'class-transformer';
+import { Exclude, Expose, Transform, Type } from 'class-transformer';
 import { DataRights } from '../../../../../../admin-panel/src/roles/rights/data-rights';
 
 @modelOptions({
@@ -54,4 +54,7 @@ export class GroupModel extends BaseModel {
         justOne: true
     })
     tutor: Ref<TutorModel>;
+
+    @Exclude()
+    studentsCount: number;
 }
