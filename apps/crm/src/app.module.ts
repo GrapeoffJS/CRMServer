@@ -37,6 +37,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
                 THROTTLE_TTL: Joi.number().required(),
                 THROTTLE_LIMIT: Joi.number().required(),
                 ALLOWED_ORIGINS: Joi.string().required(),
+                ALLOWED_HEADERS: Joi.string().required(),
                 GENERATE_DOCS: Joi.string().equal('true', 'false').required()
             })
         }),
