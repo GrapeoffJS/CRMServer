@@ -22,7 +22,12 @@ export class RightsBasedSerializerInterceptor implements NestInterceptor {
             context.getHandler()
         ]);
 
-        if (isPublic) {
+        const isTransformable = this.reflector.getAllAndOverride<boolean>(
+            'isTransformable',
+            [context.getClass(), context.getHandler()]
+        );
+
+        if (isPublic || !isTransformable) {
             return next.handle();
         }
 
