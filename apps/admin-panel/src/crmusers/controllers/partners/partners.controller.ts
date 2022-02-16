@@ -34,6 +34,7 @@ export class PartnersController {
     async create(@Body() createPartnerDto: CreatePartnerDto) {
         return await this.partnersService.create(createPartnerDto);
     }
+
     @ApiOkResponse({
         type: () => PartnerModel,
         isArray: true

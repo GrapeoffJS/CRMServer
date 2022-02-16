@@ -6,7 +6,8 @@ import { BaseModel } from '../../../../../utils/models/base.model';
 @modelOptions({
     schemaOptions: {
         toJSON: { virtuals: true },
-        toObject: { virtuals: true }
+        toObject: { virtuals: true },
+        collection: 'SalesFunnelSteps'
     }
 })
 export class SalesFunnelStepModel extends BaseModel {

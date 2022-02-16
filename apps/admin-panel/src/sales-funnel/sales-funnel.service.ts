@@ -27,7 +27,11 @@ export class SalesFunnelService {
     }
 
     async get() {
-        return this.salesFunnelStepModel.find().sort({ order: 1 }).exec();
+        return this.salesFunnelStepModel
+            .find()
+            .sort({ order: 1 })
+            .lean()
+            .exec();
     }
 
     async update(
@@ -36,24 +40,31 @@ export class SalesFunnelService {
     ) {
         await this.salesFunnelStepModel
             .updateOne({ _id: id }, updateSalesFunnelStepDto)
+            .lean()
             .exec();
 
-        return this.salesFunnelStepModel.findById(id).exec();
+        return this.salesFunnelStepModel.findById(id).lean().exec();
     }
 
     async changeOrders(changeOrderDto: ChangeOrderDto[]) {
         for (const step of changeOrderDto) {
             await this.salesFunnelStepModel
                 .updateOne({ _id: step.id }, { order: step.newOrder })
+                .lean()
                 .exec();
         }
 
-        return this.salesFunnelStepModel.find().select({ pupils: 0 }).exec();
+        return this.salesFunnelStepModel
+            .find()
+            .select({ pupils: 0 })
+            .lean()
+            .exec();
     }
 
     async delete(id: string) {
         const stepToDelete = await this.salesFunnelStepModel
             .findById(id)
+            .lean()
             .exec();
 
         if (!stepToDelete) {
@@ -65,25 +76,27 @@ export class SalesFunnelService {
             .findOne({
                 salesFunnelStep: id
             })
+            .lean()
             .exec();
 
         if (pupilInCurrentStep) {
             throw new BadRequestException();
         }
 
-        await this.salesFunnelStepModel.findByIdAndDelete(id).exec();
+        await this.salesFunnelStepModel.findByIdAndDelete(id).lean().exec();
 
         await this.salesFunnelStepModel
             .updateMany(
                 { order: { $gt: stepToDelete.order } },
                 { $inc: { order: -1 } }
             )
+            .lean()
             .exec();
 
         return stepToDelete;
     }
 
     async findByOrder(order: number) {
-        return this.salesFunnelStepModel.findOne({ order }).exec();
+        return this.salesFunnelStepModel.findOne({ order }).lean().exec();
     }
 }

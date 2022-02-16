@@ -12,8 +12,7 @@ import { StudentModel } from '../../../crm/src/crm/students/crud/models/student.
                 typegooseClass: StudentModel
             },
             {
-                typegooseClass: SalesFunnelStepModel,
-                schemaOptions: { collection: 'SalesFunnelSteps' }
+                typegooseClass: SalesFunnelStepModel
             }
         ])
     ],

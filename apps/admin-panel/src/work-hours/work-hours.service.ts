@@ -16,12 +16,13 @@ export class WorkHoursService {
             .findByIdAndUpdate(id, {
                 workHours
             })
+            .lean()
             .exec();
 
         if (!teacher) {
             throw new NotFoundException();
         }
 
-        return this.tutorUserModel.findById(id).exec();
+        return this.tutorUserModel.findById(id).lean().exec();
     }
 }

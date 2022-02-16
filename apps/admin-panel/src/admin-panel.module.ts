@@ -8,7 +8,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import Joi from 'joi';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { CrmUsersIndexerModule } from './crm-users-indexer/crm-users-indexer.module';
 import getMongoConnectionUri from '../../../config/getMongoConnectionUri';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
     imports: [
@@ -61,10 +63,6 @@ import getMongoConnectionUri from '../../../config/getMongoConnectionUri';
                 };
             }
         }),
-        CrmUsersModule,
-        SalesFunnelModule,
-        WorkHoursModule,
-        RolesModule,
         ThrottlerModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
@@ -74,7 +72,13 @@ import getMongoConnectionUri from '../../../config/getMongoConnectionUri';
                     ttl: configService.get('THROTTLE_TTL')
                 };
             }
-        })
+        }),
+        EventEmitterModule.forRoot({ delimiter: '.' }),
+        CrmUsersModule,
+        SalesFunnelModule,
+        WorkHoursModule,
+        RolesModule,
+        CrmUsersIndexerModule
     ],
     controllers: [],
     providers: [

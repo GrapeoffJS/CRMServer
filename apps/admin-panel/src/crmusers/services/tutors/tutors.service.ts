@@ -9,13 +9,20 @@ import { PasswordProtectorService } from '../password-protector/password-protect
 import { CreateTutorDto } from '../../dto/Tutor/create-tutor.dto';
 import { UpdateTutorDto } from '../../dto/Tutor/update.tutor.dto';
 import { TutorModel } from '../../models/tutor.model';
+import {
+    AccountTypes,
+    CrmUserCreatedOrUpdatedEvent
+} from '../../../crm-users-indexer/types/crm-user-created-or-updated-event';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { CrmUserDeletedEvent } from '../../../crm-users-indexer/types/crm-user-deleted-event';
 
 @Injectable()
 export class TutorsService {
     constructor(
         @InjectModel(TutorModel)
         private readonly tutorModel: ReturnModelType<typeof TutorModel>,
-        private readonly passwordProtector: PasswordProtectorService
+        private readonly passwordProtector: PasswordProtectorService,
+        private readonly eventEmitter: EventEmitter2
     ) {}
 
     async create(createTutorDto: CreateTutorDto) {
@@ -25,9 +32,20 @@ export class TutorsService {
 
         try {
             const user = await this.tutorModel.create(createTutorDto);
-            return this.tutorModel.findById(user.id).exec();
+
+            this.eventEmitter.emit(
+                'crmuser.created',
+                new CrmUserCreatedOrUpdatedEvent({
+                    id: user.id,
+                    accountType: AccountTypes.TUTOR,
+                    name: user.name,
+                    surname: user.surname,
+                    middleName: user.middleName
+                })
+            );
+
+            return this.tutorModel.findById(user.id).lean().exec();
         } catch (e) {
-            console.log(e);
             throw new BadRequestException('User with this login exists');
         }
     }
@@ -35,12 +53,17 @@ export class TutorsService {
     async get(limit: number, offset: number) {
         return {
             count: await this.tutorModel.countDocuments().exec(),
-            docs: await this.tutorModel.find().skip(offset).limit(limit)
+            docs: await this.tutorModel
+                .find()
+                .skip(offset)
+                .limit(limit)
+                .lean()
+                .exec()
         };
     }
 
     async getByID(id: string) {
-        const found = await this.tutorModel.findById(id).exec();
+        const found = await this.tutorModel.findById(id).lean().exec();
 
         if (!found) {
             throw new NotFoundException();
@@ -50,23 +73,45 @@ export class TutorsService {
     }
 
     async update(id: string, updateTutorDto: UpdateTutorDto) {
-        const updated = this.tutorModel
+        const updated = await this.tutorModel
             .findByIdAndUpdate(id, updateTutorDto)
+            .lean()
             .exec();
 
         if (!updated) {
             throw new NotFoundException();
         }
 
-        return this.tutorModel.findById(id).exec();
+        const user = await this.tutorModel.findById(id).lean().exec();
+
+        this.eventEmitter.emit(
+            'crmuser.updated',
+            new CrmUserCreatedOrUpdatedEvent({
+                id,
+                accountType: AccountTypes.TUTOR,
+                name: user.name,
+                surname: user.surname,
+                middleName: user.middleName
+            })
+        );
+
+        return user;
     }
 
     async delete(id: string) {
-        const deleted = await this.tutorModel.findByIdAndDelete(id).exec();
+        const deleted = await this.tutorModel
+            .findByIdAndDelete(id)
+            .lean()
+            .exec();
 
         if (!deleted) {
             throw new NotFoundException();
         }
+
+        this.eventEmitter.emit(
+            'crmuser.deleted',
+            new CrmUserDeletedEvent(deleted.id)
+        );
 
         return deleted;
     }

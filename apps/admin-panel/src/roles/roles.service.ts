@@ -18,7 +18,7 @@ export class RolesService {
 
     async get(limit: number, offset: number) {
         return {
-            count: await this.roleModel.countDocuments().exec(),
+            count: await this.roleModel.countDocuments().lean().exec(),
             docs: await this.roleModel.find().skip(offset).limit(limit)
         };
     }
