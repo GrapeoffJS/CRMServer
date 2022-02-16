@@ -73,7 +73,11 @@ export class StudentModel extends BaseModel {
         )?.formatInternational()
     )
     @Expose({ groups: [DataRights.SEE_STUDENT_PHONE] })
-    @prop({ type: () => Object, _id: false })
+    @prop({
+        type: () => Object,
+        _id: false,
+        default: { phone: '', countryCode: '' }
+    })
     phone: PhoneNumber;
 
     @ApiProperty()

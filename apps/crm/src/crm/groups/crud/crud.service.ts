@@ -9,6 +9,10 @@ import { GroupModel } from './models/group.model';
 import { InjectModel } from 'nestjs-typegoose';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { GroupCreatedOrUpdatedEvent } from '../../search/indexer/services/group-indexer/types/group-created-or-updated-event';
+import { GroupDeletedEvent } from '../../search/indexer/services/group-indexer/types/group-deleted-event';
+import { GroupDeletedManyEvent } from '../../search/indexer/services/group-indexer/types/group-deleted-many-event';
 
 @Injectable()
 export class CrudService {
@@ -16,7 +20,8 @@ export class CrudService {
         @InjectModel(StudentModel)
         private readonly studentModel: ReturnModelType<typeof StudentModel>,
         @InjectModel(GroupModel)
-        private readonly groupModel: ReturnModelType<typeof GroupModel>
+        private readonly groupModel: ReturnModelType<typeof GroupModel>,
+        private readonly eventEmitter: EventEmitter2
     ) {}
 
     async create(createGroupDto: CreateGroupDto) {
@@ -27,6 +32,14 @@ export class CrudService {
         }
 
         const created = await this.groupModel.create(createGroupDto);
+
+        this.eventEmitter.emit(
+            'group.created',
+            new GroupCreatedOrUpdatedEvent({
+                id: created.id,
+                name: created.name
+            })
+        );
 
         return await this.groupModel
             .findById(created.id)
@@ -71,11 +84,18 @@ export class CrudService {
             throw new NotFoundException();
         }
 
-        return this.groupModel
+        const group = await this.groupModel
             .findById(id)
             .populate('students tutor')
             .lean()
             .exec();
+
+        this.eventEmitter.emit(
+            'group.updated',
+            new GroupCreatedOrUpdatedEvent({ id, name: group.name })
+        );
+
+        return group;
     }
 
     async delete(id: string) {
@@ -89,10 +109,26 @@ export class CrudService {
             throw new BadRequestException();
         }
 
+        this.eventEmitter.emit(
+            'group.deleted',
+            new GroupDeletedEvent(deleted.id)
+        );
+
         return deleted;
     }
 
     async deleteMany(ids: string[]) {
+        for (const id of ids) {
+            if (!(await this.groupModel.exists({ _id: id }))) {
+                throw new BadRequestException();
+            }
+        }
+
+        this.eventEmitter.emit(
+            'group.deletedMany',
+            new GroupDeletedManyEvent(ids)
+        );
+
         return this.groupModel.deleteMany({ _id: ids });
     }
 }
