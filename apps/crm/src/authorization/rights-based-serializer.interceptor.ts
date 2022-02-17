@@ -22,12 +22,13 @@ export class RightsBasedSerializerInterceptor implements NestInterceptor {
             context.getHandler()
         ]);
 
-        const isTransformable = this.reflector.getAllAndOverride<boolean>(
-            'isTransformable',
-            [context.getClass(), context.getHandler()]
-        );
+        const skipResponseTransformation =
+            this.reflector.getAllAndOverride<boolean>(
+                'skip-response-transformation',
+                [context.getClass(), context.getHandler()]
+            );
 
-        if (isPublic || !isTransformable) {
+        if (isPublic || skipResponseTransformation) {
             return next.handle();
         }
 

@@ -55,7 +55,7 @@ export class CrudService {
                 .skip(offset)
                 .limit(limit)
                 .populate('students tutor')
-                .lean({ virtuals: true })
+                .lean()
                 .exec(),
             count: await this.groupModel.countDocuments().exec()
         };
