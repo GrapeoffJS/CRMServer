@@ -1,6 +1,6 @@
-import { IsMongoId, IsNotEmpty, IsNumber, Min } from 'class-validator';
-import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsMongoId, IsNotEmpty, IsNumber, Min } from 'class-validator';
 
 export class ChangeOrderDto {
     @ApiProperty({ required: true })

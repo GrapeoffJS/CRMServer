@@ -9,11 +9,6 @@ import {
     Post,
     Put
 } from '@nestjs/common';
-import { CreateSalesFunnelStepDto } from './dto/create-sales-funnel-step.dto';
-import { SalesFunnelService } from './sales-funnel.service';
-import { UpdateSalesFunnelStepDto } from './dto/update-sales-funnel-step.dto';
-import { ChangeOrderDto } from './dto/change-order.dto';
-import { MongoId } from '../../../../utils/dto/mongo-id';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -21,7 +16,12 @@ import {
     ApiParam,
     ApiTags
 } from '@nestjs/swagger';
+import { MongoId } from '../../../../utils/dto/mongo-id';
+import { ChangeOrderDto } from './dto/change-order.dto';
+import { CreateSalesFunnelStepDto } from './dto/create-sales-funnel-step.dto';
+import { UpdateSalesFunnelStepDto } from './dto/update-sales-funnel-step.dto';
 import { SalesFunnelStepModel } from './models/sales-funnel-step.model';
+import { SalesFunnelService } from './sales-funnel.service';
 
 @ApiTags('Sales Funnel')
 @Controller('/admin-panel/sales-funnel')

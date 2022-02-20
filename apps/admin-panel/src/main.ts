@@ -1,10 +1,10 @@
-import { NestFactory } from '@nestjs/core';
-import { AdminPanelModule } from './admin-panel.module';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import helmet from 'helmet';
-import compression from 'compression';
 import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import compression from 'compression';
+import helmet from 'helmet';
+import { AdminPanelModule } from './admin-panel.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AdminPanelModule);

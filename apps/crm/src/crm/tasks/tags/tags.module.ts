@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
+import { TypegooseModule } from 'nestjs-typegoose';
+import { TaskTagModel } from './models/task-tag.model';
 import { TagsController } from './tags.controller';
 import { TagsService } from './tags.service';
-import { TaskTagModel } from './models/task-tag.model';
-import { TypegooseModule } from 'nestjs-typegoose';
 
 @Module({
     imports: [

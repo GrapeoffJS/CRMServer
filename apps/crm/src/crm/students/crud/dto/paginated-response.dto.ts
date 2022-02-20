@@ -1,5 +1,5 @@
-import { StudentModel } from '../models/student.model';
 import { Type } from 'class-transformer';
+import { StudentModel } from '../models/student.model';
 
 export class PaginatedResponseDto {
     count: number;

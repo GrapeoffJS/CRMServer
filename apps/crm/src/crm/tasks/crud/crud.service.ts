@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { TaskModel } from './models/task.model';
+import { DateTime } from 'luxon';
+import { Types } from 'mongoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { DateTime } from 'luxon';
-import { Types } from 'mongoose';
+import { TaskModel } from './models/task.model';
 
 @Injectable()
 export class CrudService {

@@ -1,3 +1,4 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import {
     Body,
     Controller,
@@ -8,12 +9,6 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { StatusesService } from './statuses.service';
-import { CreateStatusDto } from './dto/create-status.dto';
-import { UpdateStatusDto } from './dto/update-status.dto';
-import { MongoId } from '../../../../../utils/dto/mongo-id';
-import { PaginationDto } from '../../../../../utils/dto/pagination.dto';
-import { StatusModel } from './models/status.model';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -23,8 +18,13 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
+import { PaginationDto } from '@utils/dto/pagination.dto';
 import { RequiredActionRights } from '../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../admin-panel/src/roles/rights/action-rights';
+import { CreateStatusDto } from './dto/create-status.dto';
+import { UpdateStatusDto } from './dto/update-status.dto';
+import { StatusModel } from './models/status.model';
+import { StatusesService } from './statuses.service';
 
 @ApiTags('Statuses')
 @ApiBearerAuth()

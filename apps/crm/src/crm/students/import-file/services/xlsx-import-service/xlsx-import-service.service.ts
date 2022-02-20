@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { read, utils } from 'xlsx';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { StudentModel } from '../../../crud/models/student.model';
-import { InjectModel } from 'nestjs-typegoose';
-import { Types } from 'mongoose';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { Types } from 'mongoose';
+import { InjectModel } from 'nestjs-typegoose';
+import { read, utils } from 'xlsx';
+import { StudentModel } from '../../../crud/models/student.model';
 
 @Injectable()
 export class XlsxImportServiceService {

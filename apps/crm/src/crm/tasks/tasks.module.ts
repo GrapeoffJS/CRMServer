@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { TagsModule } from './tags/tags.module';
 
 import { CrudModule } from './crud/crud.module';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
     imports: [TagsModule, CrudModule],

@@ -1,15 +1,14 @@
 import { Transform, Type } from 'class-transformer';
 import {
-    ArrayMinSize,
-    IsString,
-    ArrayUnique,
     ArrayMaxSize,
+    ArrayMinSize,
+    ArrayUnique,
     IsEnum,
     IsNotEmpty,
     IsNumber,
-    Min,
+    IsString,
     Max,
-    NotEquals
+    Min
 } from 'class-validator';
 
 enum Indices {

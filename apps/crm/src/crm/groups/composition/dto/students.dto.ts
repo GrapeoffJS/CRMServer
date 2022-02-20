@@ -1,5 +1,5 @@
-import { ArrayNotEmpty, ArrayUnique, IsMongoId } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { ArrayNotEmpty, ArrayUnique, IsMongoId } from 'class-validator';
 
 export class StudentsDto {
     @ApiProperty()

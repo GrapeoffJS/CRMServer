@@ -1,13 +1,13 @@
+import { CrmUserModel } from '@apps/admin-panel/crmusers/models/crm-user.model';
+import { RoleModel } from '@apps/admin-panel/roles/models/role.model';
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { TypegooseModule } from 'nestjs-typegoose';
-import { CrmUserModel } from '../../../admin-panel/src/crmusers/models/crm-user.model';
-import { JwtModule } from '@nestjs/jwt';
-import { RefreshTokenModel } from './models/refresh-token.model';
-import { JwtFactory } from './jwt.factory';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { RoleModel } from '../../../admin-panel/src/roles/models/role.model';
+import { JwtModule } from '@nestjs/jwt';
+import { TypegooseModule } from 'nestjs-typegoose';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { JwtFactory } from './jwt.factory';
+import { RefreshTokenModel } from './models/refresh-token.model';
 
 @Module({
     imports: [

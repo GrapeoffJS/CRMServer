@@ -1,3 +1,4 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import {
     Body,
     Controller,
@@ -7,13 +8,6 @@ import {
     Post,
     Req
 } from '@nestjs/common';
-import { NotesService } from './notes.service';
-import { CreateNoteDto } from './dto/create-note.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
-import { StudentId } from '../crud/dto/student-id';
-import { NoteId } from './dto/note-id';
-import { UpdateNoteDto } from './dto/update-note.dto';
-import { NoteModel } from './models/note.model';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -22,10 +16,16 @@ import {
     ApiParam,
     ApiTags
 } from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
-import { AuthorizedRequest } from '../../../authorization/types/authorized-request';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
+import { AuthorizedRequest } from '../../../authorization/types/authorized-request';
+import { StudentId } from '../crud/dto/student-id';
+import { CreateNoteDto } from './dto/create-note.dto';
+import { NoteId } from './dto/note-id';
+import { UpdateNoteDto } from './dto/update-note.dto';
+import { NoteModel } from './models/note.model';
+import { NotesService } from './notes.service';
 
 @ApiTags('Students / Notes')
 @ApiBearerAuth()

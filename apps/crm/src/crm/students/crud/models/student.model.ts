@@ -1,18 +1,18 @@
-import { modelOptions, prop, Ref } from '@typegoose/typegoose';
-import { Genders } from '../types/genders';
+import { TutorModel } from '@apps/admin-panel/crmusers/models/tutor.model';
+import { DataRights } from '@apps/admin-panel/roles/rights/data-rights';
+import { SalesFunnelStepModel } from '@apps/admin-panel/sales-funnel/models/sales-funnel-step.model';
 import { ApiProperty } from '@nestjs/swagger';
+import { modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { BaseModel } from '@utils/models/base.model';
 import { Expose, Transform, Type } from 'class-transformer';
-import { DataRights } from '../../../../../../admin-panel/src/roles/rights/data-rights';
-import { BaseModel } from '../../../../../../../utils/models/base.model';
-import { StatusModel } from '../../../statuses/models/status.model';
-import { NoteModel } from '../../notes/models/note.model';
-import { GroupModel } from '../../../groups/crud/models/group.model';
-import { SalesFunnelStepModel } from '../../../../../../admin-panel/src/sales-funnel/models/sales-funnel-step.model';
-import { TutorModel } from '../../../../../../admin-panel/src/crmusers/models/tutor.model';
-import { DateTime } from 'luxon';
-import { PhoneNumber } from '../dto/create-student.dto';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { DateTime } from 'luxon';
+import { GroupModel } from '../../../groups/crud/models/group.model';
+import { StatusModel } from '../../../statuses/models/status.model';
 import { TaskModel } from '../../../tasks/crud/models/task.model';
+import { NoteModel } from '../../notes/models/note.model';
+import { PhoneNumber } from '../dto/create-student.dto';
+import { Genders } from '../types/genders';
 
 @modelOptions({
     schemaOptions: {

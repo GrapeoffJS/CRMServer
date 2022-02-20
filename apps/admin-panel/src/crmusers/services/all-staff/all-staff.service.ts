@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { CrmUserModel } from '../../models/crm-user.model';
 import { InjectModel } from 'nestjs-typegoose';
+import { CrmUserModel } from '../../models/crm-user.model';
 
 @Injectable()
 export class AllStaffService {

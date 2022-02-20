@@ -1,3 +1,4 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import { Body, Controller, HttpCode, Post, Query } from '@nestjs/common';
 import {
     ApiBearerAuth,
@@ -6,14 +7,13 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PivotTableService } from './pivot-table.service';
-import { StudentsPivotTableDto } from './dto/students-pivot-table.dto';
-import { StudentModel } from '../crud/models/student.model';
-import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
+import { PaginationDto } from '@utils/dto/pagination.dto';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { PaginatedResponseDto } from '../crud/dto/paginated-response.dto';
+import { StudentModel } from '../crud/models/student.model';
+import { StudentsPivotTableDto } from './dto/students-pivot-table.dto';
+import { PivotTableService } from './pivot-table.service';
 
 @ApiTags('Students / Pivot Table')
 @ApiBearerAuth()

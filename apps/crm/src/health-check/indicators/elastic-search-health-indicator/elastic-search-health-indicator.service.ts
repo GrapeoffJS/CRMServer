@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { HealthCheckError, HealthIndicator } from '@nestjs/terminus';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
+import { HealthCheckError, HealthIndicator } from '@nestjs/terminus';
 
 @Injectable()
 export class ElasticSearchHealthIndicatorService extends HealthIndicator {

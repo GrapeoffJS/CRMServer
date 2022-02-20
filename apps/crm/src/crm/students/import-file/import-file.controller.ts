@@ -1,3 +1,4 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import {
     BadRequestException,
     Controller,
@@ -9,13 +10,7 @@ import {
     UploadedFile,
     UseInterceptors
 } from '@nestjs/common';
-import { XlsxImportServiceService } from './services/xlsx-import-service/xlsx-import-service.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { MimeTypes } from './types/MimeTypes';
-import { Request, Response } from 'express';
-import { SalesFunnelStepId } from '../crud/dto/sales-funnel-step-id';
-import { createReadStream } from 'fs';
-import path from 'path';
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
@@ -26,9 +21,14 @@ import {
     ApiResponse,
     ApiTags
 } from '@nestjs/swagger';
-import { CsvImportServiceService } from './services/csv-import-service/csv-import-service.service';
+import { Request, Response } from 'express';
+import { createReadStream } from 'fs';
+import path from 'path';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
+import { SalesFunnelStepId } from '../crud/dto/sales-funnel-step-id';
+import { CsvImportServiceService } from './services/csv-import-service/csv-import-service.service';
+import { XlsxImportServiceService } from './services/xlsx-import-service/xlsx-import-service.service';
+import { MimeTypes } from './types/MimeTypes';
 
 @ApiTags('Students / Import File')
 @ApiBearerAuth()

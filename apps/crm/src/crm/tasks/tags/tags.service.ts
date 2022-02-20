@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateTaskTagDto } from './dto/create-task-tag.dto';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { TaskTagModel } from './models/task-tag.model';
 import { InjectModel } from 'nestjs-typegoose';
+import { CreateTaskTagDto } from './dto/create-task-tag.dto';
 import { UpdateTaskTagDto } from './dto/update-task-tag.dto';
+import { TaskTagModel } from './models/task-tag.model';
 
 @Injectable()
 export class TagsService {

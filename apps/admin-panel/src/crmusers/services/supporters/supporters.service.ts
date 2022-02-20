@@ -3,18 +3,18 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { InjectModel } from 'nestjs-typegoose';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { CreateSupporterDto } from '../../dto/Supporter/create-supporter.dto';
-import { UpdateSupporterDto } from '../../dto/Supporter/update-supporter.dto';
-import { SupporterModel } from '../../models/supporter.model';
+import { InjectModel } from 'nestjs-typegoose';
 import {
     AccountTypes,
     CrmUserCreatedOrUpdatedEvent
 } from '../../../crm-users-indexer/types/crm-user-created-or-updated-event';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CrmUserDeletedEvent } from '../../../crm-users-indexer/types/crm-user-deleted-event';
+import { CreateSupporterDto } from '../../dto/Supporter/create-supporter.dto';
+import { UpdateSupporterDto } from '../../dto/Supporter/update-supporter.dto';
+import { SupporterModel } from '../../models/supporter.model';
+import { PasswordProtectorService } from '../password-protector/password-protector.service';
 
 @Injectable()
 export class SupportersService {

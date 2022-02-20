@@ -1,19 +1,18 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { Transform, Type } from 'class-transformer';
 import {
     IsEnum,
     IsISO8601,
     IsMongoId,
     IsNotEmpty,
     IsOptional,
-    IsPhoneNumber,
     IsString,
     ValidateNested
 } from 'class-validator';
-import { Genders } from '../types/genders';
-import { ApiProperty } from '@nestjs/swagger';
 import { CountryCode, getCountries } from 'libphonenumber-js';
-import { IsCountryCode } from '../lib/IsCountryCode';
-import { Transform, Type } from 'class-transformer';
 import { IsCorrectPhoneNumber } from '../lib/IsCorrectPhoneNumber';
+import { IsCountryCode } from '../lib/IsCountryCode';
+import { Genders } from '../types/genders';
 
 export class PhoneNumber {
     @ApiProperty({ type: () => getCountries(), isArray: true })

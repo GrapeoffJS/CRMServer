@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { StatusesController } from './statuses.controller';
-import { StatusesService } from './statuses.service';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { StatusModel } from './models/status.model';
+import { StatusesController } from './statuses.controller';
+import { StatusesService } from './statuses.service';
 
 @Module({
     imports: [

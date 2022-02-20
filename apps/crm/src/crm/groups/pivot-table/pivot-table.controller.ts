@@ -1,7 +1,5 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import { Body, Controller, HttpCode, Post, Query } from '@nestjs/common';
-import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
-import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -9,11 +7,13 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
+import { PaginationDto } from '@utils/dto/pagination.dto';
+import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
+import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { PaginatedResponseDto } from '../crud/dto/paginated-response.dto';
-import { PivotTableService } from './pivot-table.service';
 import { GroupModel } from '../crud/models/group.model';
 import { GroupsPivotTableDto } from './dto/groups-pivot-table.dto';
+import { PivotTableService } from './pivot-table.service';
 
 @ApiTags('Groups / Pivot Table')
 @ApiBearerAuth()

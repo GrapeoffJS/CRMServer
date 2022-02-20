@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
     ArrayMinSize,
     IsEnum,
@@ -9,7 +10,6 @@ import {
     MaxLength
 } from 'class-validator';
 import { TaskTypes } from '../types/task-types';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTaskDto {
     @ApiProperty({ required: true })

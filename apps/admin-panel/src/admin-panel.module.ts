@@ -1,16 +1,16 @@
+import { getMongoConnectionUri } from '@config/get-mongo-connection-uri';
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import Joi from 'joi';
+import { TypegooseConnectionOptions, TypegooseModule } from 'nestjs-typegoose';
+import { CrmUsersIndexerModule } from './crm-users-indexer/crm-users-indexer.module';
 import { CrmUsersModule } from './crmusers/crmusers.module';
+import { RolesModule } from './roles/roles.module';
 import { SalesFunnelModule } from './sales-funnel/sales-funnel.module';
 import { WorkHoursModule } from './work-hours/work-hours.module';
-import { RolesModule } from './roles/roles.module';
-import { TypegooseConnectionOptions, TypegooseModule } from 'nestjs-typegoose';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import Joi from 'joi';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { APP_GUARD } from '@nestjs/core';
-import { CrmUsersIndexerModule } from './crm-users-indexer/crm-users-indexer.module';
-import getMongoConnectionUri from '../../../config/getMongoConnectionUri';
-import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
     imports: [

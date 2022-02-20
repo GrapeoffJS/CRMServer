@@ -1,5 +1,5 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import { SetMetadata } from '@nestjs/common';
-import { ActionRights } from '../../../admin-panel/src/roles/rights/action-rights';
 
 /**
  * Controllers or endpoints which marked with this decorator will require rights that passed into arguments

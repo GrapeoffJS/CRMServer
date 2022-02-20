@@ -1,15 +1,15 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { getMongoConnectionUri } from '@config/get-mongo-connection-uri';
 import { Module } from '@nestjs/common';
-import { TypegooseConnectionOptions, TypegooseModule } from 'nestjs-typegoose';
-import getMongoConnectionUri from '../../../config/getMongoConnectionUri';
-import { CrmModule } from './crm/crm.module';
-import { HealthCheckModule } from './health-check/health-check.module';
-import Joi from 'joi';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD, Reflector } from '@nestjs/core';
-import { JwtModule } from '@nestjs/jwt';
-import { TasksModule } from './crm/tasks/tasks.module';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { JwtModule } from '@nestjs/jwt';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import Joi from 'joi';
+import { TypegooseConnectionOptions, TypegooseModule } from 'nestjs-typegoose';
+import { CrmModule } from './crm/crm.module';
+import { TasksModule } from './crm/tasks/tasks.module';
+import { HealthCheckModule } from './health-check/health-check.module';
 
 @Module({
     imports: [

@@ -1,9 +1,9 @@
-import { modelOptions, plugin, prop, Ref } from '@typegoose/typegoose';
-import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { ApiProperty } from '@nestjs/swagger';
+import { modelOptions, plugin, prop, Ref } from '@typegoose/typegoose';
 import { Exclude } from 'class-transformer';
-import { RoleModel } from '../../roles/models/role.model';
+import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { BaseModel } from '../../../../../utils/models/base.model';
+import { RoleModel } from '../../roles/models/role.model';
 
 @plugin(mongooseAutoPopulate)
 @modelOptions({ schemaOptions: { collection: 'CRMUsers' } })

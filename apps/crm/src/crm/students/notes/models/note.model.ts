@@ -1,9 +1,9 @@
-import { modelOptions, prop, Ref } from '@typegoose/typegoose';
-import { StudentModel } from '../../crud/models/student.model';
-import { CrmUserModel } from '../../../../../../admin-panel/src/crmusers/models/crm-user.model';
+import { CrmUserModel } from '@apps/admin-panel/crmusers/models/crm-user.model';
 import { ApiProperty } from '@nestjs/swagger';
+import { modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { BaseModel } from '@utils/models/base.model';
 import { Exclude, Type } from 'class-transformer';
-import { BaseModel } from '../../../../../../../utils/models/base.model';
+import { StudentModel } from '../../crud/models/student.model';
 
 @modelOptions({
     schemaOptions: {

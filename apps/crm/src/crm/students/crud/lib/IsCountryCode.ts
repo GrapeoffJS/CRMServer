@@ -1,7 +1,7 @@
 import {
     registerDecorator,
-    ValidationOptions,
-    ValidationArguments
+    ValidationArguments,
+    ValidationOptions
 } from 'class-validator';
 import { getCountries } from 'libphonenumber-js';
 

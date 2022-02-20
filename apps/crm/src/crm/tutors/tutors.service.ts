@@ -1,6 +1,6 @@
+import { TutorModel } from '@apps/admin-panel/crmusers/models/tutor.model';
 import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { TutorModel } from '../../../../admin-panel/src/crmusers/models/tutor.model';
 import { InjectModel } from 'nestjs-typegoose';
 
 @Injectable()

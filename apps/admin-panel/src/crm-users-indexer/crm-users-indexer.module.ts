@@ -1,9 +1,9 @@
+import { getEsConnectionUri } from '@config/get-es-connection-uri';
 import { Module } from '@nestjs/common';
-import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CrmUsersIndexerService } from './crm-users-indexer.service';
-import getESConnectionUri from '../../../../config/getESConnectionUri';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { crmUsersIndexName } from './crm-users-index-name';
+import { CrmUsersIndexerService } from './crm-users-indexer.service';
 
 @Module({
     imports: [
@@ -12,7 +12,7 @@ import { crmUsersIndexName } from './crm-users-index-name';
             inject: [ConfigService],
             useFactory(configService: ConfigService) {
                 return {
-                    node: getESConnectionUri(
+                    node: getEsConnectionUri(
                         configService.get('ELASTIC_SEARCH_PROTOCOL'),
                         configService.get('ELASTIC_SEARCH_HOST'),
                         configService.get('ELASTIC_SEARCH_PORT')

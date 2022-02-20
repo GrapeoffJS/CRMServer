@@ -8,12 +8,6 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { AdminsService } from '../../services/admins/admins.service';
-import { AdminModel } from '../../models/admin.model';
-import { CreateAdminDto } from '../../dto/Admin/create-admin.dto';
-import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
-import { UpdateAdminDto } from '../../dto/Admin/update-admin.dto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,6 +16,12 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { PaginationDto } from '@utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { CreateAdminDto } from '../../dto/Admin/create-admin.dto';
+import { UpdateAdminDto } from '../../dto/Admin/update-admin.dto';
+import { AdminModel } from '../../models/admin.model';
+import { AdminsService } from '../../services/admins/admins.service';
 
 @ApiTags('CRM Users / Admins')
 @Controller('/admin-panel/crm-users/admins')

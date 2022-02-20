@@ -1,3 +1,4 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import {
     Body,
     Controller,
@@ -17,17 +18,16 @@ import {
     ApiParam,
     ApiTags
 } from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
+import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
+import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
+import { AuthorizedRequest } from '../../../authorization/types/authorized-request';
 import { CrudService } from './crud.service';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { TaskModel } from './models/task.model';
-import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
-import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { ResponseDto } from './dto/response.dto';
-import { AuthorizedRequest } from '../../../authorization/types/authorized-request';
-import { UpdateTaskDto } from './dto/update-task.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
 import { TagsFilterDto } from './dto/tags-filter.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
+import { TaskModel } from './models/task.model';
 
 @ApiTags('Tasks')
 @ApiBearerAuth()

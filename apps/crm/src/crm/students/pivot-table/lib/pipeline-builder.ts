@@ -1,6 +1,6 @@
-import { StudentsPivotTableDto } from '../dto/students-pivot-table.dto';
 import { DateTime } from 'luxon';
 import { PipelineStage, Types } from 'mongoose';
+import { StudentsPivotTableDto } from '../dto/students-pivot-table.dto';
 
 export class PipelineBuilder {
     private pipeline: PipelineStage[] = [

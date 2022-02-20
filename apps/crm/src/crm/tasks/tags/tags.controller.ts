@@ -1,3 +1,4 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import {
     Body,
     Controller,
@@ -7,10 +8,6 @@ import {
     Patch,
     Post
 } from '@nestjs/common';
-import { TagsService } from './tags.service';
-import { CreateTaskTagDto } from './dto/create-task-tag.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
-import { UpdateTaskTagDto } from './dto/update-task-tag.dto';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -19,10 +16,13 @@ import {
     ApiParam,
     ApiTags
 } from '@nestjs/swagger';
-import { TaskTagModel } from './models/task-tag.model';
-import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
+import { MongoId } from '@utils/dto/mongo-id';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
+import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
+import { CreateTaskTagDto } from './dto/create-task-tag.dto';
+import { UpdateTaskTagDto } from './dto/update-task-tag.dto';
+import { TaskTagModel } from './models/task-tag.model';
+import { TagsService } from './tags.service';
 
 @ApiTags('Task Tags')
 @ApiBearerAuth()

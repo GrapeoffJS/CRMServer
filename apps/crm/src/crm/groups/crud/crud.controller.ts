@@ -1,3 +1,4 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import {
     Body,
     Controller,
@@ -8,11 +9,6 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { CrudService } from './crud.service';
-import { CreateGroupDto } from './dto/create-group.dto';
-import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
-import { UpdateGroupDto } from './dto/update-group.dto';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -22,12 +18,16 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { GroupModel } from './models/group.model';
+import { MongoId } from '@utils/dto/mongo-id';
+import { MongoIds } from '@utils/dto/mongo-ids';
+import { PaginationDto } from '@utils/dto/pagination.dto';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
+import { CrudService } from './crud.service';
+import { CreateGroupDto } from './dto/create-group.dto';
 import { PaginatedResponseDto } from './dto/paginated-response.dto';
-import { MongoIds } from '../../../../../../utils/dto/mongo-ids';
+import { UpdateGroupDto } from './dto/update-group.dto';
+import { GroupModel } from './models/group.model';
 
 @ApiTags('Groups')
 @ApiBearerAuth()

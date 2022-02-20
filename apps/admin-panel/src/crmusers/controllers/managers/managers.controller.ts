@@ -8,12 +8,6 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
-import { UpdateManagerDto } from '../../dto/Manager/update-manager.dto';
-import { ManagerModel } from '../../models/manager.model';
-import { CreateManagerDto } from '../../dto/Manager/create-manager.dto';
-import { ManagersService } from '../../services/managers/managers.service';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,6 +16,12 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { PaginationDto } from '@utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { CreateManagerDto } from '../../dto/Manager/create-manager.dto';
+import { UpdateManagerDto } from '../../dto/Manager/update-manager.dto';
+import { ManagerModel } from '../../models/manager.model';
+import { ManagersService } from '../../services/managers/managers.service';
 
 @ApiTags('CRM Users / Managers')
 @Controller('/admin-panel/crm-users/managers')

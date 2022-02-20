@@ -8,8 +8,6 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { RolesService } from './roles.service';
-import { CreateRoleDto } from './dto/create-role.dto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -18,10 +16,12 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
-import { PaginationDto } from '../../../../utils/dto/pagination.dto';
+import { PaginationDto } from '@utils/dto/pagination.dto';
 import { MongoId } from '../../../../utils/dto/mongo-id';
+import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { RoleModel } from './models/role.model';
+import { RolesService } from './roles.service';
 
 @ApiTags('Roles')
 @Controller('/admin-panel/roles')

@@ -4,8 +4,8 @@ import {
     NotFoundException
 } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { GroupModel } from '../crud/models/group.model';
 import { InjectModel } from 'nestjs-typegoose';
+import { GroupModel } from '../crud/models/group.model';
 
 @Injectable()
 export class CompositionService {

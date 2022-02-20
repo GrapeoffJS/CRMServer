@@ -1,15 +1,15 @@
+import { CrmUserModel } from '@apps/admin-panel/crmusers/models/crm-user.model';
 import {
     BadRequestException,
     Injectable,
     UnauthorizedException
 } from '@nestjs/common';
-import { CrmUserModel } from '../../../admin-panel/src/crmusers/models/crm-user.model';
-import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { AuthDto } from './dto/auth.dto';
 import { compare } from 'bcrypt';
-import { JwtFactory } from './jwt.factory';
+import { InjectModel } from 'nestjs-typegoose';
+import { AuthDto } from './dto/auth.dto';
 import { RefreshDto } from './dto/refresh.dto';
+import { JwtFactory } from './jwt.factory';
 import { RefreshTokenModel } from './models/refresh-token.model';
 
 @Injectable()

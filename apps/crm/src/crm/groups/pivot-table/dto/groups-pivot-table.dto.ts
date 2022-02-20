@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
     ArrayMinSize,
     ArrayUnique,
@@ -7,7 +8,6 @@ import {
     IsString,
     Min
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class GroupsPivotTableDto {
     @ApiProperty({ isArray: true, type: () => String, required: true })

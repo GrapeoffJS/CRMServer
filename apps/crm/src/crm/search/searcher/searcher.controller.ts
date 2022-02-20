@@ -1,11 +1,11 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import { Controller, Get, Query, UseInterceptors } from '@nestjs/common';
-import { SearchDto } from './dto/search.dto';
-import { SearcherService } from './searcher.service';
-import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
-import { SkipResponseTransformation } from '../../../authorization/skip-response-transformation.decorator';
-import { SearcherInterceptor } from './searcher.interceptor';
 import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
+import { SkipResponseTransformation } from '../../../authorization/skip-response-transformation.decorator';
+import { SearchDto } from './dto/search.dto';
+import { SearcherInterceptor } from './searcher.interceptor';
+import { SearcherService } from './searcher.service';
 
 @ApiBearerAuth()
 @UseInterceptors(SearcherInterceptor)

@@ -1,8 +1,8 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { modelOptions, prop } from '@typegoose/typegoose';
+import { BaseModel } from '../../../../../utils/models/base.model';
 import { ActionRights } from '../rights/action-rights';
 import { DataRights } from '../rights/data-rights';
-import { modelOptions, prop } from '@typegoose/typegoose';
-import { ApiProperty } from '@nestjs/swagger';
-import { BaseModel } from '../../../../../utils/models/base.model';
 
 @modelOptions({ schemaOptions: { collection: 'Roles' } })
 export class RoleModel extends BaseModel {

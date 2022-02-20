@@ -3,18 +3,18 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { InjectModel } from 'nestjs-typegoose';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { CreateSeniorTutorDto } from '../../dto/SeniorTutor/create-senior-tutor.dto';
-import { UpdateSeniorTutorDto } from '../../dto/SeniorTutor/update-senior-tutor.dto';
-import { SeniorTutorModel } from '../../models/senior-tutor.model';
+import { InjectModel } from 'nestjs-typegoose';
 import {
     AccountTypes,
     CrmUserCreatedOrUpdatedEvent
 } from '../../../crm-users-indexer/types/crm-user-created-or-updated-event';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CrmUserDeletedEvent } from '../../../crm-users-indexer/types/crm-user-deleted-event';
+import { CreateSeniorTutorDto } from '../../dto/SeniorTutor/create-senior-tutor.dto';
+import { UpdateSeniorTutorDto } from '../../dto/SeniorTutor/update-senior-tutor.dto';
+import { SeniorTutorModel } from '../../models/senior-tutor.model';
+import { PasswordProtectorService } from '../password-protector/password-protector.service';
 
 @Injectable()
 export class SeniorTutorsService {

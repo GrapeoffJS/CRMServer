@@ -3,16 +3,16 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { ReturnModelType } from '@typegoose/typegoose';
-import { StudentModel } from '../../students/crud/models/student.model';
-import { GroupModel } from './models/group.model';
-import { InjectModel } from 'nestjs-typegoose';
-import { CreateGroupDto } from './dto/create-group.dto';
-import { UpdateGroupDto } from './dto/update-group.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { ReturnModelType } from '@typegoose/typegoose';
+import { InjectModel } from 'nestjs-typegoose';
 import { GroupCreatedOrUpdatedEvent } from '../../search/indexer/services/group-indexer/types/group-created-or-updated-event';
 import { GroupDeletedEvent } from '../../search/indexer/services/group-indexer/types/group-deleted-event';
 import { GroupDeletedManyEvent } from '../../search/indexer/services/group-indexer/types/group-deleted-many-event';
+import { StudentModel } from '../../students/crud/models/student.model';
+import { CreateGroupDto } from './dto/create-group.dto';
+import { UpdateGroupDto } from './dto/update-group.dto';
+import { GroupModel } from './models/group.model';
 
 @Injectable()
 export class CrudService {

@@ -1,9 +1,9 @@
 import { Controller, Delete, Get, Param, Query } from '@nestjs/common';
-import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
-import { AllStaffService } from '../../services/all-staff/all-staff.service';
-import { CrmUserModel } from '../../models/crm-user.model';
 import { ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { PaginationDto } from '@utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { CrmUserModel } from '../../models/crm-user.model';
+import { AllStaffService } from '../../services/all-staff/all-staff.service';
 
 @ApiTags('CRM Users')
 @Controller('/admin-panel/crm-users')

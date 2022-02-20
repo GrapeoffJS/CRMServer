@@ -1,4 +1,4 @@
-export default (
+export const getMongoConnectionUri = (
     protocol: string,
     host: string,
     port = '',

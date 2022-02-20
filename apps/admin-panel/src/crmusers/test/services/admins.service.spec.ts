@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AdminsService } from '../../services/admins/admins.service';
 import { getModelToken } from 'nestjs-typegoose';
+import { AdminsService } from '../../services/admins/admins.service';
 
 
 describe('AdminService', () => {

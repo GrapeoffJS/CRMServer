@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { HealthCheckError, HealthIndicator } from '@nestjs/terminus';
-import { getConnectionToken } from 'nestjs-typegoose';
 import { mongoose } from '@typegoose/typegoose';
+import { getConnectionToken } from 'nestjs-typegoose';
 
 @Injectable()
 export class TypegooseHealthIndicatorService extends HealthIndicator {

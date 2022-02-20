@@ -1,6 +1,6 @@
-import { TaskModel } from '../models/task.model';
-import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { TaskModel } from '../models/task.model';
 
 export class ResponseDto {
     @ApiProperty({ type: () => TaskModel, isArray: true })

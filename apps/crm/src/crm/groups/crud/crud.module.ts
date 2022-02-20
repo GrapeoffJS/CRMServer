@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { GroupModel } from './models/group.model';
 import { StudentModel } from '../../students/crud/models/student.model';
 import { CrudController } from './crud.controller';
 import { CrudService } from './crud.service';
+import { GroupModel } from './models/group.model';
 
 @Module({
     imports: [

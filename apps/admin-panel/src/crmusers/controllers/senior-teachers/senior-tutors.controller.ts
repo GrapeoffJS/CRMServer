@@ -8,12 +8,6 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { SeniorTutorsService } from '../../services/senior-tutors/senior-tutors.service';
-import { CreateSeniorTutorDto } from '../../dto/SeniorTutor/create-senior-tutor.dto';
-import { SeniorTutorModel } from '../../models/senior-tutor.model';
-import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
-import { UpdateSeniorTutorDto } from '../../dto/SeniorTutor/update-senior-tutor.dto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,6 +16,12 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { PaginationDto } from '@utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { CreateSeniorTutorDto } from '../../dto/SeniorTutor/create-senior-tutor.dto';
+import { UpdateSeniorTutorDto } from '../../dto/SeniorTutor/update-senior-tutor.dto';
+import { SeniorTutorModel } from '../../models/senior-tutor.model';
+import { SeniorTutorsService } from '../../services/senior-tutors/senior-tutors.service';
 
 @ApiTags('CRM Users / Senior Tutors')
 @Controller('/admin-panel/crm-users/senior-tutors')

@@ -1,6 +1,6 @@
-import { modelOptions, prop } from '@typegoose/typegoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseModel } from '../../../../../../utils/models/base.model';
+import { modelOptions, prop } from '@typegoose/typegoose';
+import { BaseModel } from '@utils/models/base.model';
 
 @modelOptions({ schemaOptions: { collection: 'Statuses' } })
 export class StatusModel extends BaseModel {

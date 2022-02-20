@@ -8,12 +8,6 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
-import { PartnerModel } from '../../models/partner.model';
-import { UpdatePartnerDto } from '../../dto/Partner/update-partner.dto';
-import { PartnersService } from '../../services/partners/partners.service';
-import { CreatePartnerDto } from '../../dto/Partner/create-partner.dto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,6 +16,12 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { PaginationDto } from '@utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { CreatePartnerDto } from '../../dto/Partner/create-partner.dto';
+import { UpdatePartnerDto } from '../../dto/Partner/update-partner.dto';
+import { PartnerModel } from '../../models/partner.model';
+import { PartnersService } from '../../services/partners/partners.service';
 
 @ApiTags('CRM Users / Partners')
 @Controller('/admin-panel/crm-users/partners')

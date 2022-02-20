@@ -1,10 +1,10 @@
-import { modelOptions, prop, Ref } from '@typegoose/typegoose';
-import { StudentModel } from '../../../students/crud/models/student.model';
-import { TutorModel } from '../../../../../../admin-panel/src/crmusers/models/tutor.model';
+import { TutorModel } from '@apps/admin-panel/crmusers/models/tutor.model';
+import { DataRights } from '@apps/admin-panel/roles/rights/data-rights';
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseModel } from '../../../../../../../utils/models/base.model';
+import { modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { BaseModel } from '@utils/models/base.model';
 import { Exclude, Expose, Transform, Type } from 'class-transformer';
-import { DataRights } from '../../../../../../admin-panel/src/roles/rights/data-rights';
+import { StudentModel } from '../../../students/crud/models/student.model';
 
 @modelOptions({
     schemaOptions: {

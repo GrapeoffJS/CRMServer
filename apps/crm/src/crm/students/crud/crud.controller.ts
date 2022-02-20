@@ -1,3 +1,4 @@
+import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import {
     Body,
     Controller,
@@ -8,12 +9,6 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { CrudService } from './crud.service';
-import { CreateStudentDto } from './dto/create-student.dto';
-import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
-import { StudentModel } from './models/student.model';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
-import { UpdateStudentDto } from './dto/update-student.dto';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -23,10 +18,15 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
+import { PaginationDto } from '@utils/dto/pagination.dto';
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
-import { ActionRights } from '../../../../../admin-panel/src/roles/rights/action-rights';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
+import { CrudService } from './crud.service';
+import { CreateStudentDto } from './dto/create-student.dto';
 import { PaginatedResponseDto } from './dto/paginated-response.dto';
+import { UpdateStudentDto } from './dto/update-student.dto';
+import { StudentModel } from './models/student.model';
 
 @ApiTags('Students')
 @ApiBearerAuth()

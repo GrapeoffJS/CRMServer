@@ -1,14 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import {
     DiskHealthIndicator,
     HealthCheck,
     HealthCheckService,
     MemoryHealthIndicator
 } from '@nestjs/terminus';
-import { TypegooseHealthIndicatorService } from './indicators/typegoose-health-indicator/typegoose-health-indicator.service';
-import { ElasticSearchHealthIndicatorService } from './indicators/elastic-search-health-indicator/elastic-search-health-indicator.service';
-import { ApiTags } from '@nestjs/swagger';
 import { Public } from '../authorization/public.decorator';
+import { ElasticSearchHealthIndicatorService } from './indicators/elastic-search-health-indicator/elastic-search-health-indicator.service';
+import { TypegooseHealthIndicatorService } from './indicators/typegoose-health-indicator/typegoose-health-indicator.service';
 
 @ApiTags('Health Check')
 @Public()

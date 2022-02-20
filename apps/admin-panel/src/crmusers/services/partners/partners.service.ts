@@ -3,18 +3,18 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { InjectModel } from 'nestjs-typegoose';
-import { PartnerModel } from '../../models/partner.model';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { CreatePartnerDto } from '../../dto/Partner/create-partner.dto';
-import { UpdatePartnerDto } from '../../dto/Partner/update-partner.dto';
+import { InjectModel } from 'nestjs-typegoose';
 import {
     AccountTypes,
     CrmUserCreatedOrUpdatedEvent
 } from '../../../crm-users-indexer/types/crm-user-created-or-updated-event';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CrmUserDeletedEvent } from '../../../crm-users-indexer/types/crm-user-deleted-event';
+import { CreatePartnerDto } from '../../dto/Partner/create-partner.dto';
+import { UpdatePartnerDto } from '../../dto/Partner/update-partner.dto';
+import { PartnerModel } from '../../models/partner.model';
+import { PasswordProtectorService } from '../password-protector/password-protector.service';
 
 @Injectable()
 export class PartnersService {

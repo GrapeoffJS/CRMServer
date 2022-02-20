@@ -1,15 +1,14 @@
+import { RoleModel } from '@apps/admin-panel/roles/models/role.model';
 import {
     CallHandler,
     ExecutionContext,
     Injectable,
     NestInterceptor
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs';
 import { Reflector } from '@nestjs/core';
 // @ts-ignore
 import { plainToInstance } from 'class-transformer';
-import { RoleModel } from '../../../admin-panel/src/roles/models/role.model';
+import { map, Observable } from 'rxjs';
 import { AuthorizedRequest } from './types/authorized-request';
 
 @Injectable()

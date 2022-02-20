@@ -3,18 +3,18 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { InjectModel } from 'nestjs-typegoose';
-import { ReturnModelType } from '@typegoose/typegoose';
-import { AdminModel } from '../../models/admin.model';
-import { CreateAdminDto } from '../../dto/Admin/create-admin.dto';
-import { PasswordProtectorService } from '../password-protector/password-protector.service';
-import { UpdateAdminDto } from '../../dto/Admin/update-admin.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { ReturnModelType } from '@typegoose/typegoose';
+import { InjectModel } from 'nestjs-typegoose';
 import {
     AccountTypes,
     CrmUserCreatedOrUpdatedEvent
 } from '../../../crm-users-indexer/types/crm-user-created-or-updated-event';
 import { CrmUserDeletedEvent } from '../../../crm-users-indexer/types/crm-user-deleted-event';
+import { CreateAdminDto } from '../../dto/Admin/create-admin.dto';
+import { UpdateAdminDto } from '../../dto/Admin/update-admin.dto';
+import { AdminModel } from '../../models/admin.model';
+import { PasswordProtectorService } from '../password-protector/password-protector.service';
 
 @Injectable()
 export class AdminsService {

@@ -1,4 +1,4 @@
-import { Genders } from '../../crud/types/genders';
+import { ApiProperty } from '@nestjs/swagger';
 import {
     ArrayMaxSize,
     ArrayMinSize,
@@ -8,7 +8,7 @@ import {
     IsNumber,
     IsString
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { Genders } from '../../crud/types/genders';
 
 export class StudentsPivotTableDto {
     @ApiProperty({ isArray: true, type: () => String })

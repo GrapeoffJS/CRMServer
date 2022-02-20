@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common';
-import { HealthCheckController } from './health-check.controller';
-import { TerminusModule } from '@nestjs/terminus';
+import { getEsConnectionUri } from '@config/get-es-connection-uri';
 import { HttpModule } from '@nestjs/axios';
-import { TypegooseHealthIndicatorService } from './indicators/typegoose-health-indicator/typegoose-health-indicator.service';
-import { ElasticSearchHealthIndicatorService } from './indicators/elastic-search-health-indicator/elastic-search-health-indicator.service';
-import { TypegooseModule } from 'nestjs-typegoose';
-import { ElasticsearchModule } from '@nestjs/elasticsearch';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import getESConnectionUri from '../../../../config/getESConnectionUri';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
+import { TerminusModule } from '@nestjs/terminus';
+import { TypegooseModule } from 'nestjs-typegoose';
+import { HealthCheckController } from './health-check.controller';
+import { ElasticSearchHealthIndicatorService } from './indicators/elastic-search-health-indicator/elastic-search-health-indicator.service';
+import { TypegooseHealthIndicatorService } from './indicators/typegoose-health-indicator/typegoose-health-indicator.service';
 
 @Module({
     imports: [
@@ -16,7 +16,7 @@ import getESConnectionUri from '../../../../config/getESConnectionUri';
             inject: [ConfigService],
             useFactory(configService: ConfigService) {
                 return {
-                    node: getESConnectionUri(
+                    node: getEsConnectionUri(
                         configService.get('ELASTIC_SEARCH_PROTOCOL'),
                         configService.get('ELASTIC_SEARCH_HOST'),
                         configService.get('ELASTIC_SEARCH_PORT')

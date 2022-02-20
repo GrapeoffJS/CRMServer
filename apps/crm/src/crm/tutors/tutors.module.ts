@@ -1,9 +1,9 @@
+import { CrmUserModel } from '@apps/admin-panel/crmusers/models/crm-user.model';
+import { TutorModel } from '@apps/admin-panel/crmusers/models/tutor.model';
 import { Module } from '@nestjs/common';
-import { TutorsService } from './tutors.service';
-import { TutorsController } from './tutors.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { CrmUserModel } from '../../../../admin-panel/src/crmusers/models/crm-user.model';
-import { TutorModel } from '../../../../admin-panel/src/crmusers/models/tutor.model';
+import { TutorsController } from './tutors.controller';
+import { TutorsService } from './tutors.service';
 
 @Module({
     imports: [

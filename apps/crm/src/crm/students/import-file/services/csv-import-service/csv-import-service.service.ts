@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import csvtojson from 'csvtojson';
-import { StudentModel } from '../../../crud/models/student.model';
-import { Types } from 'mongoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { InjectModel } from 'nestjs-typegoose';
+import csvtojson from 'csvtojson';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { Types } from 'mongoose';
+import { InjectModel } from 'nestjs-typegoose';
+import { StudentModel } from '../../../crud/models/student.model';
 
 @Injectable()
 export class CsvImportServiceService {

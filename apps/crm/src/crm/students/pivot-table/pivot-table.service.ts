@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { StudentModel } from '../crud/models/student.model';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
+import { StudentModel } from '../crud/models/student.model';
 import { StudentsPivotTableDto } from './dto/students-pivot-table.dto';
 import { PipelineBuilder } from './lib/pipeline-builder';
 

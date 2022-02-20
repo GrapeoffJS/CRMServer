@@ -1,11 +1,11 @@
-import { modelOptions, prop, Ref } from '@typegoose/typegoose';
-import { CrmUserModel } from '../../../../../../admin-panel/src/crmusers/models/crm-user.model';
-import { StudentModel } from '../../../students/crud/models/student.model';
-import { BaseModel } from '../../../../../../../utils/models/base.model';
-import { TaskTypes } from '../types/task-types';
-import { Type } from 'class-transformer';
-import { TaskTagModel } from '../../tags/models/task-tag.model';
+import { CrmUserModel } from '@apps/admin-panel/crmusers/models/crm-user.model';
 import { ApiProperty } from '@nestjs/swagger';
+import { modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { BaseModel } from '@utils/models/base.model';
+import { Type } from 'class-transformer';
+import { StudentModel } from '../../../students/crud/models/student.model';
+import { TaskTagModel } from '../../tags/models/task-tag.model';
+import { TaskTypes } from '../types/task-types';
 
 @modelOptions({ schemaOptions: { collection: 'Tasks' } })
 export class TaskModel extends BaseModel {

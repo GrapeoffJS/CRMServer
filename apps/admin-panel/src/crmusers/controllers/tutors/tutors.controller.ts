@@ -8,12 +8,6 @@ import {
     Post,
     Query
 } from '@nestjs/common';
-import { TutorsService } from '../../services/tutors/tutors.service';
-import { CreateTutorDto } from '../../dto/Tutor/create-tutor.dto';
-import { TutorModel } from '../../models/tutor.model';
-import { PaginationDto } from '../../../../../../utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
-import { UpdateTutorDto } from '../../dto/Tutor/update.tutor.dto';
 import {
     ApiBody,
     ApiCreatedResponse,
@@ -22,6 +16,12 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { PaginationDto } from '@utils/dto/pagination.dto';
+import { MongoId } from '../../../../../../utils/dto/mongo-id';
+import { CreateTutorDto } from '../../dto/Tutor/create-tutor.dto';
+import { UpdateTutorDto } from '../../dto/Tutor/update.tutor.dto';
+import { TutorModel } from '../../models/tutor.model';
+import { TutorsService } from '../../services/tutors/tutors.service';
 
 @ApiTags('CRM Users / Tutors')
 @Controller('/admin-panel/crm-users/tutors')

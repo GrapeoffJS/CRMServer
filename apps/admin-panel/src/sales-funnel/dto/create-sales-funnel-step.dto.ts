@@ -1,3 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
     IsHexColor,
     IsNotEmpty,
@@ -6,8 +8,6 @@ import {
     IsString,
     Min
 } from 'class-validator';
-import { Type } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateSalesFunnelStepDto {
     @ApiProperty({ required: true })
