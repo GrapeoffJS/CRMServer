@@ -2,6 +2,7 @@ import { RoleModel } from '@apps/admin-panel/roles/models/role.model';
 import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+
 import { AuthorizedRequest } from './types/authorized-request';
 
 @Injectable()

@@ -1,6 +1,7 @@
 import { ActionRights } from '@apps/admin-panel/roles/rights/action-rights';
 import { Controller, Get, Query, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
 import { SkipResponseTransformation } from '../../../authorization/skip-response-transformation.decorator';
 import { SearchDto } from './dto/search.dto';

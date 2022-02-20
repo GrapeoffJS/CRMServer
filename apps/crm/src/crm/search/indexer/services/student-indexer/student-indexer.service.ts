@@ -1,6 +1,7 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { OnEvent } from '@nestjs/event-emitter';
+
 import { StudentCreatedOrUpdatedEvent } from './types/student-created-or-updated-event';
 import { StudentDeletedEvent } from './types/student-deleted-event';
 

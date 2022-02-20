@@ -16,8 +16,9 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
 import { PaginationDto } from '@utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
+
 import { CreatePartnerDto } from '../../dto/Partner/create-partner.dto';
 import { UpdatePartnerDto } from '../../dto/Partner/update-partner.dto';
 import { PartnerModel } from '../../models/partner.model';

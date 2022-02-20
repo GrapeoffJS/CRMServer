@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
+
 import { StudentModel } from '../../../crm/src/crm/students/crud/models/student.model';
 import { ChangeOrderDto } from './dto/change-order.dto';
 import { CreateSalesFunnelStepDto } from './dto/create-sales-funnel-step.dto';

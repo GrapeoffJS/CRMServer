@@ -9,6 +9,7 @@ import { Reflector } from '@nestjs/core';
 // @ts-ignore
 import { plainToInstance } from 'class-transformer';
 import { map, Observable } from 'rxjs';
+
 import { AuthorizedRequest } from './types/authorized-request';
 
 @Injectable()

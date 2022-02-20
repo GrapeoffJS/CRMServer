@@ -16,8 +16,9 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
 import { PaginationDto } from '@utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
+
 import { CreateManagerDto } from '../../dto/Manager/create-manager.dto';
 import { UpdateManagerDto } from '../../dto/Manager/update-manager.dto';
 import { ManagerModel } from '../../models/manager.model';

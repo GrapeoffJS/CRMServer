@@ -1,6 +1,7 @@
 import { Body, Controller, Param, Put } from '@nestjs/common';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
-import { MongoId } from '../../../../utils/dto/mongo-id';
+import { MongoId } from '@utils/dto/mongo-id';
+
 import { CreateWorkHoursDto } from './dto/create-work-hours.dto';
 import { WorkHoursService } from './work-hours.service';
 

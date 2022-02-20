@@ -6,6 +6,7 @@ import {
     HealthCheckService,
     MemoryHealthIndicator
 } from '@nestjs/terminus';
+
 import { Public } from '../authorization/public.decorator';
 import { ElasticSearchHealthIndicatorService } from './indicators/elastic-search-health-indicator/elastic-search-health-indicator.service';
 import { TypegooseHealthIndicatorService } from './indicators/typegoose-health-indicator/typegoose-health-indicator.service';

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
+
 import { GroupModel } from '../crud/models/group.model';
 import { GroupsPivotTableDto } from './dto/groups-pivot-table.dto';
 import { PipelineBuilder } from './lib/pipeline-builder';

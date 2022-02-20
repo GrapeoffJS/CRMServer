@@ -1,6 +1,7 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { OnEvent } from '@nestjs/event-emitter';
+
 import { CrmUserCreatedOrUpdatedEvent } from './types/crm-user-created-or-updated-event';
 import { CrmUserDeletedEvent } from './types/crm-user-deleted-event';
 

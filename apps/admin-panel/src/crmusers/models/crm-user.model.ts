@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { modelOptions, plugin, prop, Ref } from '@typegoose/typegoose';
+import { BaseModel } from '@utils/models/base.model';
 import { Exclude } from 'class-transformer';
 import mongooseAutoPopulate from 'mongoose-autopopulate';
-import { BaseModel } from '../../../../../utils/models/base.model';
+
 import { RoleModel } from '../../roles/models/role.model';
 
 @plugin(mongooseAutoPopulate)

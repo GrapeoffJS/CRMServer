@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { modelOptions, prop } from '@typegoose/typegoose';
-import { BaseModel } from '../../../../../utils/models/base.model';
+import { BaseModel } from '@utils/models/base.model';
+
 import { ActionRights } from '../rights/action-rights';
 import { DataRights } from '../rights/data-rights';
 

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { modelOptions, prop, Ref } from '@typegoose/typegoose';
+
 import { GroupModel } from '../../../../crm/src/crm/groups/crud/models/group.model';
 import { WorkHours } from '../../work-hours/types/work-hours';
 import { CrmUserModel } from './crm-user.model';

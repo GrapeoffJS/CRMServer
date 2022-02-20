@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypegooseModule } from 'nestjs-typegoose';
+
 import { AdminsController } from './controllers/admins/admins.controller';
 import { AllStaffController } from './controllers/all-staff/all-staff.controller';
 import { ManagersController } from './controllers/managers/managers.controller';

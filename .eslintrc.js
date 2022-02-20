@@ -4,7 +4,7 @@ module.exports = {
         project: 'tsconfig.json',
         sourceType: 'module'
     },
-    plugins: ['@typescript-eslint/eslint-plugin', 'sonarjs'],
+    plugins: ['@typescript-eslint/eslint-plugin', 'sonarjs', 'simple-import-sort'],
     extends: [
         'plugin:@typescript-eslint/recommended',
         'plugin:prettier/recommended',
@@ -22,6 +22,8 @@ module.exports = {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         'sonarjs/no-duplicate-string': 'off',
-        'sonarjs/no-identical-functions': 'off'
+        'sonarjs/no-identical-functions': 'off',
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error"
     }
 };

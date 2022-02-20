@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { BaseModel } from '@utils/models/base.model';
 import { Exclude, Type } from 'class-transformer';
+
 import { StudentModel } from '../../crud/models/student.model';
 
 @modelOptions({

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+
 import { AuthModule } from '../authentication/auth.module';
 import { GroupsModule } from './groups/groups.module';
 import { SearchModule } from './search/search.module';

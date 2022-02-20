@@ -1,7 +1,8 @@
 import { Controller, Delete, Get, Param, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
 import { PaginationDto } from '@utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
+
 import { CrmUserModel } from '../../models/crm-user.model';
 import { AllStaffService } from '../../services/all-staff/all-staff.service';
 

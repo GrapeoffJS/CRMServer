@@ -16,7 +16,8 @@ import {
     ApiParam,
     ApiTags
 } from '@nestjs/swagger';
-import { MongoId } from '../../../../utils/dto/mongo-id';
+import { MongoId } from '@utils/dto/mongo-id';
+
 import { ChangeOrderDto } from './dto/change-order.dto';
 import { CreateSalesFunnelStepDto } from './dto/create-sales-funnel-step.dto';
 import { UpdateSalesFunnelStepDto } from './dto/update-sales-funnel-step.dto';

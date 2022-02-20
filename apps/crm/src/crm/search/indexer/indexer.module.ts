@@ -2,6 +2,7 @@ import { getEsConnectionUri } from '@config/get-es-connection-uri';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
+
 import { GroupIndexerService } from './services/group-indexer/group-indexer.service';
 import { groupsIndexName } from './services/group-indexer/groups-index-name';
 import { StudentIndexerService } from './services/student-indexer/student-indexer.service';

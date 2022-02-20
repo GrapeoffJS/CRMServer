@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypegooseModule } from 'nestjs-typegoose';
+
 import { CrmUserModel } from '../crmusers/models/crm-user.model';
 import { TutorModel } from '../crmusers/models/tutor.model';
 import { WorkHoursController } from './work-hours.controller';

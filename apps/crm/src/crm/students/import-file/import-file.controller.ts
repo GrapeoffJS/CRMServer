@@ -24,6 +24,7 @@ import {
 import { Request, Response } from 'express';
 import { createReadStream } from 'fs';
 import path from 'path';
+
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
 import { SalesFunnelStepId } from '../crud/dto/sales-funnel-step-id';
 import { CsvImportServiceService } from './services/csv-import-service/csv-import-service.service';
@@ -95,14 +96,12 @@ export class ImportFileController {
                     salesFunnelStepID,
                     file
                 );
-                break;
 
             case MimeTypes.CSV:
                 return await this.csvImportService.import(
                     salesFunnelStepID,
                     file
                 );
-                break;
         }
     }
 

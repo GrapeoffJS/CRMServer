@@ -1,4 +1,5 @@
 import { PipelineStage, Types } from 'mongoose';
+
 import { GroupsPivotTableDto } from '../dto/groups-pivot-table.dto';
 
 export class PipelineBuilder {

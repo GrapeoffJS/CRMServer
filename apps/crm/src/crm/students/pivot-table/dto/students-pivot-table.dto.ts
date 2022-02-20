@@ -8,6 +8,7 @@ import {
     IsNumber,
     IsString
 } from 'class-validator';
+
 import { Genders } from '../../crud/types/genders';
 
 export class StudentsPivotTableDto {

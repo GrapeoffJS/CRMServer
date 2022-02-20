@@ -16,8 +16,9 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
 import { PaginationDto } from '@utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
+
 import { CreateSupporterDto } from '../../dto/Supporter/create-supporter.dto';
 import { UpdateSupporterDto } from '../../dto/Supporter/update-supporter.dto';
 import { SupporterModel } from '../../models/supporter.model';

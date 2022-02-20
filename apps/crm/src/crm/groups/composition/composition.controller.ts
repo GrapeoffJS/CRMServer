@@ -9,6 +9,7 @@ import {
     ApiTags
 } from '@nestjs/swagger';
 import { MongoId } from '@utils/dto/mongo-id';
+
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { GroupModel } from '../crud/models/group.model';

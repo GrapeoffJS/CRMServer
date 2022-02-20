@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
+
 import { GroupModel } from '../../groups/crud/models/group.model';
 import { StudentCreatedOrUpdatedEvent } from '../../search/indexer/services/student-indexer/types/student-created-or-updated-event';
 import { StudentDeletedEvent } from '../../search/indexer/services/student-indexer/types/student-deleted-event';

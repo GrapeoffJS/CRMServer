@@ -2,6 +2,7 @@ import { getEsConnectionUri } from '@config/get-es-connection-uri';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
+
 import { crmUsersIndexName } from './crm-users-index-name';
 import { CrmUsersIndexerService } from './crm-users-indexer.service';
 

@@ -7,6 +7,7 @@ import {
 import { ReturnModelType } from '@typegoose/typegoose';
 import { compare } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
+
 import { AuthDto } from './dto/auth.dto';
 import { RefreshDto } from './dto/refresh.dto';
 import { JwtFactory } from './jwt.factory';

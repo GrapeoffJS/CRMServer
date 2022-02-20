@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import Joi from 'joi';
 import { TypegooseConnectionOptions, TypegooseModule } from 'nestjs-typegoose';
+
 import { CrmModule } from './crm/crm.module';
 import { TasksModule } from './crm/tasks/tasks.module';
 import { HealthCheckModule } from './health-check/health-check.module';

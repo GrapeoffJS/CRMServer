@@ -8,6 +8,7 @@ import {
     ApiTags
 } from '@nestjs/swagger';
 import { PaginationDto } from '@utils/dto/pagination.dto';
+
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { PaginatedResponseDto } from '../crud/dto/paginated-response.dto';

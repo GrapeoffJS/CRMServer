@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsObject } from 'class-validator';
+
 import { WorkHours } from '../types/work-hours';
 
 export class CreateWorkHoursDto {

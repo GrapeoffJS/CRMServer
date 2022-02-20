@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ArrayUnique, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+
 import { ActionRights } from '../rights/action-rights';
 import { DataRights } from '../rights/data-rights';
 

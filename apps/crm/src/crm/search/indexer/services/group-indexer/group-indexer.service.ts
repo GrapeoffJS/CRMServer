@@ -1,6 +1,7 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { OnEvent } from '@nestjs/event-emitter';
+
 import { GroupCreatedOrUpdatedEvent } from './types/group-created-or-updated-event';
 import { GroupDeletedEvent } from './types/group-deleted-event';
 import { GroupDeletedManyEvent } from './types/group-deleted-many-event';

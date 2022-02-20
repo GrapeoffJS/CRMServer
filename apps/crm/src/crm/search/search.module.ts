@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+
 import { IndexerModule } from './indexer/indexer.module';
 import { SearcherModule } from './searcher/searcher.module';
 

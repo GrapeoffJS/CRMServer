@@ -16,8 +16,9 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
 import { PaginationDto } from '@utils/dto/pagination.dto';
-import { MongoId } from '../../../../../../utils/dto/mongo-id';
+
 import { CreateTutorDto } from '../../dto/Tutor/create-tutor.dto';
 import { UpdateTutorDto } from '../../dto/Tutor/update.tutor.dto';
 import { TutorModel } from '../../models/tutor.model';

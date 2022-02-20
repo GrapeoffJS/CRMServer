@@ -7,6 +7,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+
 import { AuthorizedRequest } from './types/authorized-request';
 
 @Injectable()

@@ -16,8 +16,9 @@ import {
     ApiQuery,
     ApiTags
 } from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
 import { PaginationDto } from '@utils/dto/pagination.dto';
-import { MongoId } from '../../../../utils/dto/mongo-id';
+
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { RoleModel } from './models/role.model';

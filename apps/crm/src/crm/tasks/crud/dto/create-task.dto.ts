@@ -9,6 +9,7 @@ import {
     IsString,
     MaxLength
 } from 'class-validator';
+
 import { TaskTypes } from '../types/task-types';
 
 export class CreateTaskDto {

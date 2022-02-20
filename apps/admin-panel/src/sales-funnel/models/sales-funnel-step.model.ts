@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { modelOptions, prop } from '@typegoose/typegoose';
-import { BaseModel } from '../../../../../utils/models/base.model';
+import { BaseModel } from '@utils/models/base.model';
+
 import { StudentModel } from '../../../../crm/src/crm/students/crud/models/student.model';
 
 @modelOptions({

@@ -20,6 +20,7 @@ import {
 } from '@nestjs/swagger';
 import { MongoId } from '@utils/dto/mongo-id';
 import { PaginationDto } from '@utils/dto/pagination.dto';
+
 import { RequiredActionRights } from '../../../authorization/required-action-rights.decorator';
 import { SetResponseTransformationType } from '../../../authorization/set-response-transformation-type.decorator';
 import { CrudService } from './crud.service';

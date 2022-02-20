@@ -6,6 +6,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import Joi from 'joi';
 import { TypegooseConnectionOptions, TypegooseModule } from 'nestjs-typegoose';
+
 import { CrmUsersIndexerModule } from './crm-users-indexer/crm-users-indexer.module';
 import { CrmUsersModule } from './crmusers/crmusers.module';
 import { RolesModule } from './roles/roles.module';

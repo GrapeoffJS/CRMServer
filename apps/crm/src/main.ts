@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import compression from 'compression';
 import helmet from 'helmet';
+
 import { AppModule } from './app.module';
 import { ActionRightsGuard } from './authorization/action-rights-guard.service';
 import { AuthorizationGuard } from './authorization/authorization.guard';
