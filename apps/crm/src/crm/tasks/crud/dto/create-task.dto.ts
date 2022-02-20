@@ -10,8 +10,6 @@ import {
 } from 'class-validator';
 import { TaskTypes } from '../types/task-types';
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { DateTime } from 'luxon';
 
 export class CreateTaskDto {
     @ApiProperty({ required: true })
@@ -31,9 +29,6 @@ export class CreateTaskDto {
 
     @ApiProperty({ required: true })
     @IsISO8601()
-    @Transform(prop =>
-        DateTime.fromISO(prop.value).setZone('Europe/Moscow').toISODate()
-    )
     deadline: string;
 
     @ApiProperty({ required: true })

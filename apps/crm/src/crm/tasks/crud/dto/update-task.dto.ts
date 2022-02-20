@@ -8,9 +8,6 @@ export class UpdateTaskDto extends PartialType(CreateTaskDto) {
     @IsOptional()
     @ApiProperty()
     @IsISO8601()
-    @Transform(prop =>
-        DateTime.fromISO(prop.value).setZone('Europe/Moscow').toISODate()
-    )
     completedOn: string;
 
     @IsOptional()

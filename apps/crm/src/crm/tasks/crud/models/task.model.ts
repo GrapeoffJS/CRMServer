@@ -3,10 +3,9 @@ import { CrmUserModel } from '../../../../../../admin-panel/src/crmusers/models/
 import { StudentModel } from '../../../students/crud/models/student.model';
 import { BaseModel } from '../../../../../../../utils/models/base.model';
 import { TaskTypes } from '../types/task-types';
-import { Transform, Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 import { TaskTagModel } from '../../tags/models/task-tag.model';
 import { ApiProperty } from '@nestjs/swagger';
-import { DateTime } from 'luxon';
 
 @modelOptions({ schemaOptions: { collection: 'Tasks' } })
 export class TaskModel extends BaseModel {
@@ -25,7 +24,7 @@ export class TaskModel extends BaseModel {
 
     @ApiProperty({ type: () => StudentModel })
     @Type(() => StudentModel)
-    @prop({ ref: () => StudentModel, justOne: true })
+    @prop({ ref: () => StudentModel, justOne: true, default: null })
     for: Ref<StudentModel>;
 
     @ApiProperty({ type: () => Date })
