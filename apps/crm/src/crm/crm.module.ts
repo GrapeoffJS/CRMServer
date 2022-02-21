@@ -6,6 +6,7 @@ import { GroupsModule } from './groups/groups.module';
 import { SearchModule } from './search/search.module';
 import { StatusesModule } from './statuses/statuses.module';
 import { StudentsModule } from './students/students.module';
+import { TasksModule } from './tasks/tasks.module';
 import { TutorsModule } from './tutors/tutors.module';
 
 @Module({
@@ -16,7 +17,8 @@ import { TutorsModule } from './tutors/tutors.module';
         SearchModule,
         StudentsModule,
         StatusesModule,
-        TutorsModule
+        TutorsModule,
+        TasksModule
     ]
 })
 export class CrmModule {}
