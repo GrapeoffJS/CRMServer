@@ -98,8 +98,7 @@ import { HealthCheckModule } from './health-check/health-check.module';
         }),
         CrmModule,
         HealthCheckModule,
-        Reflector,
-        TasksModule
+        Reflector
     ],
     controllers: [],
     providers: [
