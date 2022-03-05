@@ -238,7 +238,10 @@ export class CrudService {
     }
 
     async update(id: string, updateTaskDto: UpdateTaskDto) {
-        const updated = this.taskModel.findByIdAndUpdate(id, updateTaskDto);
+        const updated = await this.taskModel.findByIdAndUpdate(
+            id,
+            updateTaskDto
+        );
 
         if (!updated) {
             throw new NotFoundException();
