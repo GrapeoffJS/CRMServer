@@ -179,30 +179,6 @@ export class CrudService {
                     {
                         $match: {
                             responsible: new Types.ObjectId(id),
-                            $and: [
-                                {
-                                    deadline: {
-                                        $gte: DateTime.now()
-                                            .set({
-                                                hour: 0,
-                                                minute: 0,
-                                                second: 0
-                                            })
-                                            .toJSDate()
-                                    }
-                                },
-                                {
-                                    deadline: {
-                                        $lte: DateTime.now()
-                                            .set({
-                                                hour: 23,
-                                                minute: 59,
-                                                second: 59
-                                            })
-                                            .toJSDate()
-                                    }
-                                }
-                            ],
                             done: true
                         }
                     },
