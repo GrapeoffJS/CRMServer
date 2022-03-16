@@ -7,11 +7,9 @@ services:
             - "4200:4200"
         depends_on:
             - mongodb
-            - elastic
         restart: always
         links:
             - mongodb
-            - elastic
         env_file: .env
 
     mongodb:
@@ -27,21 +25,21 @@ services:
             - "27017:27017"
         env_file: mongodb.env
 
-    elastic:
-        container_name: "elastic"
-        image: elasticsearch:7.13.4
-        restart: always
-        environment:
-            - discovery.type=single-node
-            - cluster.name=elastic-crm
-            - bootstrap.memory_lock=true
-            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-            - ELASTIC_USERNAME=$ELASTIC_USERNAME
-            - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
-        ports:
-            - "9200:9200"
-        volumes:
-            - elastic:/usr/share/elasticsearch/data
+#    elastic:
+#        container_name: "elastic"
+#        image: elasticsearch:7.13.4
+#        restart: always
+#        environment:
+#            - discovery.type=single-node
+#            - cluster.name=elastic-crm
+#            - bootstrap.memory_lock=true
+#            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#            - ELASTIC_USERNAME=$ELASTIC_USERNAME
+#            - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+#        ports:
+#            - "9200:9200"
+#        volumes:
+#            - elastic:/usr/share/elasticsearch/data
 volumes:
     mongodb:
     elastic:
