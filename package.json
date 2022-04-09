@@ -45,7 +45,7 @@
     "install": "^0.13.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mongoose": "^5.13.7",
     "mongoose-autopopulate": "^0.14.0",
     "nestjs-typegoose": "^7.1.38",
