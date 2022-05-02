@@ -1,45 +1,51 @@
 version: "3.9"
+
+volumes:
+    mongodb:
+    elastic:
+
 services:
-    server:
-        container_name: "server"
-        build: ./
+    nginx:
+        container_name: nginx
+        build: Nginx.Dockerfile
         ports:
-            - "4200:4200"
+            - "80:80"
+            - "443:443"
+        restart: always
+        depends_on:
+            - backend
+
+    server:
+        container_name: server
+        build: Backend.Dockerfile
+        ports:
+            - "4200"
         depends_on:
             - mongodb
+            - elastic
         restart: always
-        links:
-            - mongodb
         env_file: .env
 
     mongodb:
-        container_name: "mongodb"
+        container_name: mongodb
         image: mongo:4.4.7-focal
         restart: always
         volumes:
             - mongodb:/data/db
-        environment:
-            - MONGO_INITDB_ROOT_USERNAME=$MONGODB_ROOT_USER
-            - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_ROOT_PASSWORD
         ports:
             - "27017:27017"
         env_file: mongodb.env
 
-#    elastic:
-#        container_name: "elastic"
-#        image: elasticsearch:7.13.4
-#        restart: always
-#        environment:
-#            - discovery.type=single-node
-#            - cluster.name=elastic-crm
-#            - bootstrap.memory_lock=true
-#            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-#            - ELASTIC_USERNAME=$ELASTIC_USERNAME
-#            - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
-#        ports:
-#            - "9200:9200"
-#        volumes:
-#            - elastic:/usr/share/elasticsearch/data
-volumes:
-    mongodb:
-    elastic:
+    elasticsearch:
+        container_name: elasticsearch
+        image: elasticsearch:7.13.4
+        restart: always
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        ports:
+            - "9200:9200"
+        volumes:
+            - elastic:/usr/share/elasticsearch/data
+        env_file: elastic.env

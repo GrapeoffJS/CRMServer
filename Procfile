@@ -1,0 +1,1 @@
+web: node $(echo $APP_PATH)

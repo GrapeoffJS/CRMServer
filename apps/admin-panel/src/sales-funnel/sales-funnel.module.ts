@@ -1,20 +1,19 @@
 import { Module } from '@nestjs/common';
+import { TypegooseModule } from 'nestjs-typegoose';
+
+import { StudentModel } from '../../../crm/src/crm/students/crud/models/student.model';
+import { SalesFunnelStepModel } from './models/sales-funnel-step.model';
 import { SalesFunnelController } from './sales-funnel.controller';
 import { SalesFunnelService } from './sales-funnel.service';
-import { TypegooseModule } from 'nestjs-typegoose';
-import { SalesFunnelStep } from './models/SalesFunnelStep.model';
-import Pupil from '../../../crmserver/src/crm/pupils/models/Pupil.model';
 
 @Module({
     imports: [
         TypegooseModule.forFeature([
             {
-                typegooseClass: Pupil,
-                schemaOptions: { collection: 'Pupils' }
+                typegooseClass: StudentModel
             },
             {
-                typegooseClass: SalesFunnelStep,
-                schemaOptions: { collection: 'SalesFunnelSteps' }
+                typegooseClass: SalesFunnelStepModel
             }
         ])
     ],

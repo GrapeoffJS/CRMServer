@@ -1,50 +1,59 @@
-import {
-    BadRequestException,
-    Injectable,
-    NotFoundException
-} from '@nestjs/common';
-import { CreateRoleDTO } from './DTO/CreateRoleDTO';
-import { InjectModel } from 'nestjs-typegoose';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { Role } from './models/Role.model';
-import { UpdateRoleDTO } from './DTO/UpdateRoleDTO';
+import { InjectModel } from 'nestjs-typegoose';
+
+import { CreateRoleDto } from './dto/create-role.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
+import { RoleModel } from './models/role.model';
 
 @Injectable()
 export class RolesService {
     constructor(
-        @InjectModel(Role)
-        private readonly RoleModel: ReturnModelType<typeof Role>
+        @InjectModel(RoleModel)
+        private readonly roleModel: ReturnModelType<typeof RoleModel>
     ) {}
 
-    async create(createRoleDTO: CreateRoleDTO) {
-        try {
-            return await this.RoleModel.create(createRoleDTO);
-        } catch (e) {
-            throw new BadRequestException();
-        }
+    async create(createRoleDto: CreateRoleDto) {
+        return this.roleModel.create(createRoleDto);
     }
 
-    async findAll() {
-        return this.RoleModel.find();
+    async get(limit: number, offset: number) {
+        return {
+            count: await this.roleModel.countDocuments().lean().exec(),
+            docs: await this.roleModel.find().skip(offset).limit(limit)
+        };
+    }
+
+    async getByID(id: string) {
+        const found = await this.roleModel.findById(id);
+
+        if (!found) {
+            throw new NotFoundException();
+        }
+
+        return found;
+    }
+
+    async update(id: string, updateRoleDto: UpdateRoleDto) {
+        const updated = await this.roleModel.findByIdAndUpdate(
+            id,
+            updateRoleDto
+        );
+
+        if (!updated) {
+            throw new NotFoundException();
+        }
+
+        return this.roleModel.findById(id);
     }
 
     async delete(id: string) {
-        const role = await this.RoleModel.findByIdAndDelete(id);
+        const deleted = await this.roleModel.findByIdAndDelete(id);
 
-        if (!role) {
+        if (!deleted) {
             throw new NotFoundException();
         }
 
-        return this.RoleModel.findById(id);
-    }
-
-    async edit(id: string, updateRoleDTO: UpdateRoleDTO) {
-        const role = await this.RoleModel.findByIdAndUpdate(id, updateRoleDTO);
-
-        if (!role) {
-            throw new NotFoundException();
-        }
-
-        return this.RoleModel.findById(id);
+        return deleted;
     }
 }

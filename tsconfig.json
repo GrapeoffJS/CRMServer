@@ -13,6 +13,16 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "paths": {}
+    "paths": {
+        "@utils/*": [
+            "utils/*"
+        ],
+        "@config/*": [
+            "config/*"
+        ],
+        "@apps/admin-panel/*": [
+            "apps/admin-panel/src/*"
+        ]
+    }
   }
 }

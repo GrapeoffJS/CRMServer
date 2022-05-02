@@ -3,82 +3,101 @@ import {
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
-import { InjectModel } from 'nestjs-typegoose';
-import { SalesFunnelStep } from './models/SalesFunnelStep.model';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
-import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
-import Pupil from '../../../crmserver/src/crm/pupils/models/Pupil.model';
+import { InjectModel } from 'nestjs-typegoose';
+
+import { StudentModel } from '../../../crm/src/crm/students/crud/models/student.model';
+import { ChangeOrderDto } from './dto/change-order.dto';
+import { CreateSalesFunnelStepDto } from './dto/create-sales-funnel-step.dto';
+import { UpdateSalesFunnelStepDto } from './dto/update-sales-funnel-step.dto';
+import { SalesFunnelStepModel } from './models/sales-funnel-step.model';
 
 @Injectable()
 export class SalesFunnelService {
     constructor(
-        @InjectModel(SalesFunnelStep)
-        private readonly SalesFunnelStepModel: ReturnModelType<
-            typeof SalesFunnelStep
+        @InjectModel(SalesFunnelStepModel)
+        private readonly salesFunnelStepModel: ReturnModelType<
+            typeof SalesFunnelStepModel
         >,
-        @InjectModel(Pupil)
-        private readonly PupilModel: ReturnModelType<typeof Pupil>
+        @InjectModel(StudentModel)
+        private readonly studentModel: ReturnModelType<typeof StudentModel>
     ) {}
 
-    create(createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
-        return this.SalesFunnelStepModel.create(createSalesFunnelStepDTO);
+    create(createSalesFunnelStepDto: CreateSalesFunnelStepDto) {
+        return this.salesFunnelStepModel.create(createSalesFunnelStepDto);
     }
 
-    async findAll() {
-        return this.SalesFunnelStepModel.find()
-            .select({ pupils: 0 })
-            .sort({ order: 1 });
+    async get() {
+        return this.salesFunnelStepModel
+            .find()
+            .sort({ order: 1 })
+            .lean()
+            .exec();
     }
 
-    async edit(id: string, updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO) {
-        await this.SalesFunnelStepModel.updateOne(
-            { _id: id },
-            updateSalesFunnelStepDTO
-        );
+    async update(
+        id: string,
+        updateSalesFunnelStepDto: UpdateSalesFunnelStepDto
+    ) {
+        await this.salesFunnelStepModel
+            .updateOne({ _id: id }, updateSalesFunnelStepDto)
+            .lean()
+            .exec();
 
-        return this.SalesFunnelStepModel.findById(id);
+        return this.salesFunnelStepModel.findById(id).lean().exec();
     }
 
-    async changeOrders(changeOrderDTO: ChangeOrderDTO[]) {
-        for (const step of changeOrderDTO) {
-            await this.SalesFunnelStepModel.updateOne(
-                { _id: step.id },
-                { order: step.newOrder }
-            );
+    async changeOrders(changeOrderDto: ChangeOrderDto[]) {
+        for (const step of changeOrderDto) {
+            await this.salesFunnelStepModel
+                .updateOne({ _id: step.id }, { order: step.newOrder })
+                .lean()
+                .exec();
         }
 
-        return this.SalesFunnelStepModel.find().select({ pupils: 0 });
+        return this.salesFunnelStepModel
+            .find()
+            .select({ pupils: 0 })
+            .lean()
+            .exec();
     }
 
     async delete(id: string) {
-        const stepToDelete = await this.SalesFunnelStepModel.findById(id);
+        const stepToDelete = await this.salesFunnelStepModel
+            .findById(id)
+            .lean()
+            .exec();
 
         if (!stepToDelete) {
             throw new NotFoundException();
         }
 
         // If there is at least one pupil in this step
-        const pupilInCurrentStep = await this.PupilModel.findOne({
-            salesFunnelStep: id
-        });
+        const pupilInCurrentStep = await this.studentModel
+            .findOne({
+                salesFunnelStep: id
+            })
+            .lean()
+            .exec();
 
         if (pupilInCurrentStep) {
             throw new BadRequestException();
         }
 
-        await this.SalesFunnelStepModel.findByIdAndDelete(id);
+        await this.salesFunnelStepModel.findByIdAndDelete(id).lean().exec();
 
-        await this.SalesFunnelStepModel.updateMany(
-            { order: { $gt: stepToDelete.order } },
-            { $inc: { order: -1 } }
-        );
+        await this.salesFunnelStepModel
+            .updateMany(
+                { order: { $gt: stepToDelete.order } },
+                { $inc: { order: -1 } }
+            )
+            .lean()
+            .exec();
 
         return stepToDelete;
     }
 
     async findByOrder(order: number) {
-        return this.SalesFunnelStepModel.findOne({ order });
+        return this.salesFunnelStepModel.findOne({ order }).lean().exec();
     }
 }

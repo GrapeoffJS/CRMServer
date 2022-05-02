@@ -9,47 +9,70 @@ import {
     Post,
     Put
 } from '@nestjs/common';
-import { CreateSalesFunnelStepDTO } from './DTO/CreateSalesFunnelStepDTO';
-import { SalesFunnelService } from './sales-funnel.service';
-import { UpdateSalesFunnelStepDTO } from './DTO/UpdateSalesFunnelStepDTO';
-import { ChangeOrderDTO } from './DTO/ChangeOrderDTO';
-import { MongoID } from '../../../DTO/MongoID';
-import { path } from './path';
+import {
+    ApiBody,
+    ApiCreatedResponse,
+    ApiOkResponse,
+    ApiParam,
+    ApiTags
+} from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
 
-@Controller(path)
+import { ChangeOrderDto } from './dto/change-order.dto';
+import { CreateSalesFunnelStepDto } from './dto/create-sales-funnel-step.dto';
+import { UpdateSalesFunnelStepDto } from './dto/update-sales-funnel-step.dto';
+import { SalesFunnelStepModel } from './models/sales-funnel-step.model';
+import { SalesFunnelService } from './sales-funnel.service';
+
+@ApiTags('Sales Funnel')
+@Controller('/admin-panel/sales-funnel')
 export class SalesFunnelController {
     constructor(private readonly salesFunnelService: SalesFunnelService) {}
 
+    @ApiCreatedResponse({ type: () => SalesFunnelStepModel })
+    @ApiBody({ type: () => CreateSalesFunnelStepDto })
     @Post()
-    async create(@Body() createSalesFunnelStepDTO: CreateSalesFunnelStepDTO) {
-        return await this.salesFunnelService.create(createSalesFunnelStepDTO);
+    async create(@Body() createSalesFunnelStepDto: CreateSalesFunnelStepDto) {
+        return await this.salesFunnelService.create(createSalesFunnelStepDto);
     }
 
+    @ApiOkResponse({ type: () => SalesFunnelStepModel, isArray: true })
     @Get()
-    async findAll() {
-        return await this.salesFunnelService.findAll();
+    async get() {
+        return await this.salesFunnelService.get();
     }
 
+    @ApiOkResponse({ type: () => SalesFunnelStepModel })
+    @ApiParam({ name: 'order', type: () => Number })
     @Get(':order')
     async getByOrder(@Param('order', ParseIntPipe) order: number) {
         return await this.salesFunnelService.findByOrder(order);
     }
 
+    @ApiOkResponse({ type: () => SalesFunnelStepModel })
+    @ApiParam({ name: 'id', type: () => String })
     @Patch(':id')
-    async edit(
-        @Param() { id }: MongoID,
-        @Body() updateSalesFunnelStepDTO: UpdateSalesFunnelStepDTO
+    async update(
+        @Param() { id }: MongoId,
+        @Body() updateSalesFunnelStepDto: UpdateSalesFunnelStepDto
     ) {
-        return await this.salesFunnelService.edit(id, updateSalesFunnelStepDTO);
+        return await this.salesFunnelService.update(
+            id,
+            updateSalesFunnelStepDto
+        );
     }
 
+    @ApiOkResponse({ type: () => SalesFunnelStepModel })
+    @ApiParam({ name: 'id', type: () => String })
     @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
+    async delete(@Param() { id }: MongoId) {
         return await this.salesFunnelService.delete(id);
     }
 
+    @ApiOkResponse({ type: () => SalesFunnelStepModel, isArray: true })
+    @ApiBody({ type: () => ChangeOrderDto })
     @Put()
-    async changeOrders(@Body() changeOrderDTO: ChangeOrderDTO[]) {
-        return await this.salesFunnelService.changeOrders(changeOrderDTO);
+    async changeOrders(@Body() changeOrderDto: ChangeOrderDto[]) {
+        return await this.salesFunnelService.changeOrders(changeOrderDto);
     }
 }

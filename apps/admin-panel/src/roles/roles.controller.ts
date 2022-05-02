@@ -5,38 +5,66 @@ import {
     Get,
     Param,
     Patch,
-    Post
+    Post,
+    Query
 } from '@nestjs/common';
-import { CreateRoleDTO } from './DTO/CreateRoleDTO';
-import { path } from './path';
-import { RolesService } from './roles.service';
-import { UpdateRoleDTO } from './DTO/UpdateRoleDTO';
-import { MongoID } from '../../../DTO/MongoID';
+import {
+    ApiBody,
+    ApiCreatedResponse,
+    ApiOkResponse,
+    ApiParam,
+    ApiQuery,
+    ApiTags
+} from '@nestjs/swagger';
+import { MongoId } from '@utils/dto/mongo-id';
+import { PaginationDto } from '@utils/dto/pagination.dto';
 
-@Controller(path)
+import { CreateRoleDto } from './dto/create-role.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
+import { RoleModel } from './models/role.model';
+import { RolesService } from './roles.service';
+
+@ApiTags('Roles')
+@Controller('/admin-panel/roles')
 export class RolesController {
     constructor(private readonly rolesService: RolesService) {}
 
+    @ApiBody({ type: () => RoleModel })
+    @ApiCreatedResponse({ type: () => RoleModel })
     @Post()
-    async create(@Body() createRoleDTO: CreateRoleDTO) {
-        return await this.rolesService.create(createRoleDTO);
+    async create(@Body() createRoleDto: CreateRoleDto) {
+        return await this.rolesService.create(createRoleDto);
     }
 
+    @ApiQuery({ name: 'limit', type: () => Number })
+    @ApiQuery({ name: 'offset', type: () => Number })
+    @ApiOkResponse({ type: () => RoleModel, isArray: true })
     @Get()
-    async findAll() {
-        return await this.rolesService.findAll();
+    async get(@Query() { limit, offset }: PaginationDto) {
+        return await this.rolesService.get(limit, offset);
     }
 
-    @Delete(':id')
-    async delete(@Param() { id }: MongoID) {
-        return await this.rolesService.delete(id);
+    @ApiParam({ name: 'id', type: () => String })
+    @ApiOkResponse({ type: () => RoleModel })
+    @Get(':id')
+    async getByID(@Param() { id }: MongoId) {
+        return await this.rolesService.getByID(id);
     }
 
+    @ApiParam({ name: 'id', type: () => String })
+    @ApiOkResponse({ type: () => RoleModel })
     @Patch(':id')
     async update(
-        @Param() { id }: MongoID,
-        @Body() updateRoleDTO: UpdateRoleDTO
+        @Param() { id }: MongoId,
+        @Body() updateRoleDto: UpdateRoleDto
     ) {
-        return await this.rolesService.edit(id, updateRoleDTO);
+        return await this.rolesService.update(id, updateRoleDto);
+    }
+
+    @ApiParam({ name: 'id', type: () => String })
+    @ApiOkResponse({ type: () => RoleModel })
+    @Delete(':id')
+    async delete(@Param() { id }: MongoId) {
+        return await this.rolesService.delete(id);
     }
 }

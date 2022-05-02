@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+  <a href="https://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+CRM System REST API server.
 
 ## Installation
 
@@ -40,15 +40,37 @@ $ yarn install
 
 ```bash
 # development
-$ yarn start
-
-# watch mode
 $ yarn start:dev
 
 # production mode
 $ yarn build
 $ yarn start:prod
 ```
+
+## Generating documentation
+
+```bash
+$ yarn doc
+```
+
+Then open [http://localhost:8080](http://localhost:8080/) in your browser.
+
+## API Documentation
+
+If you need API Documentation, do these following steps:
+
+1. Start the application
+```bash
+$ yarn start
+```
+2. Open [http://localhost:4200/api/docs](http://localhost:4200/api/docs) in your browser.
+
+## Deployment
+```bash
+$ docker compose up --build -d
+```
+
+It requires at least 16GB RAM.
 
 ## License
 
